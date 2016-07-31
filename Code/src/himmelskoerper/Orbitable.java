@@ -18,4 +18,10 @@ public interface Orbitable {
 	 */
 	public void add(InOrbit objectInOrbit);		//TODO wie kann ich ne referenz auf dieses Objekt machen?
 	
+	/**
+	 * berechnet den Gesamt Radius, den ein Körper mit seinen InOrbits einnimmt
+	 * @return radius den Radius von dem Gesamtsystem (z.B. Sonnensystem)
+	 */
+	public double getSystemRadius();
+	
 }

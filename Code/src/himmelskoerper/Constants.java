@@ -12,4 +12,13 @@ public final class Constants {
 	 * Einheit: km^3 / (kg * s^2)
 	 */
 	static final double G = 6.67408 * Math.pow(10, -20);
+	
+	/**
+	 * attribut für gasförmige Himmelskörper
+	 */
+	static final String GAS = "gas";
+	/**
+	 * attribut für feste himmelskörper
+	 */
+	static final String FEST = "fest";
 }

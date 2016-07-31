@@ -22,7 +22,7 @@ public class Main {
 		sonne = new Stern(null, 0, masse, radius);		//Sonne nicht in einem Orbit
 		
 		//Planeten hinzufügen
-		Planet erde = new Planet(sonne, 149600000, 5.972 * Math.pow(10, 24), "fest");
+		FestPlanet erde = new FestPlanet(sonne, 149600000, 5.972 * Math.pow(10, 24));
 		
 		Mond mond = new Mond(erde, 384400, 7.349 * Math.pow(10, 22));
 		

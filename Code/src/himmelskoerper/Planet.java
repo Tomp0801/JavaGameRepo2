@@ -65,4 +65,11 @@ public class Planet extends InOrbit implements Orbitable
 			}
 		}
 	}
+	
+	@Override
+	public double getSystemRadius() {
+		Mond aeussersterMond = monde.getLast();		//Mond mit größter Umlaufbahn
+		return aeussersterMond.getOrbitRadius() + aeussersterMond.getRadius() / 2;
+	}
+	
 }

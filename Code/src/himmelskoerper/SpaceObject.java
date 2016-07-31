@@ -82,10 +82,26 @@ public class SpaceObject
 	}
 
 	/**
-	 * @param position the position to set
+	 * @param r Länge des Positionsvektors
+	 * @param angleXY Winkel, der in der XY-Ebene liegt
+	 * @param angleYZ Winkel, der in der YZ-Ebene liegt
 	 */
 	public void setPosition(double r, double angleXY, double angleYZ) {
 		Vector<Double> positionsVektor = new Vector<Double>(3);
+		
+		//beide Winkel in den Bereich von 0 bis 2*pi bringen, falls sie größer oder kleiner sind
+		while (angleXY >= 2 * Math.PI) {
+			angleXY = angleXY - 2 * Math.PI;
+		}
+		while (angleXY < 0) {
+			angleXY = angleXY + 2 * Math.PI;
+		}
+		while (angleYZ >= 2 * Math.PI) {
+			angleYZ = angleYZ - 2 * Math.PI;
+		}
+		while (angleYZ < 0) {
+			angleYZ = angleYZ + 2 * Math.PI;
+		}
 		
 		positionsVektor.add(r);
 		positionsVektor.add(angleXY);

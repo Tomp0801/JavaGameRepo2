@@ -1,5 +1,7 @@
 package himmelskoerper;
 
+import map.Karte;
+
 /**
  * Interface für Objekte, die von Spielfiguren betretbar sind
  * 
@@ -13,5 +15,5 @@ public interface Betretbar {
 	 * @return map des Objekts, die begehbar und bebaubar ist
 	 * TODO return type
 	 */
-	public void getMap();
+	public Karte getKarte();
 }
