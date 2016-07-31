@@ -55,5 +55,11 @@ public class Stern extends InOrbit implements Orbitable
 		}
 
 	}
+	
+	@Override
+	public double getSystemRadius() {
+		Planet aeussersterPlanet = planeten.getLast();		//Planet mit größter Umlaufbahn
+		return aeussersterPlanet.getOrbitRadius() + aeussersterPlanet.getRadius() / 2;
+	}
 
 }
