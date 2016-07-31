@@ -11,7 +11,7 @@ public class Mond extends InOrbit
 {
 
 	public Mond(Planet bezugsKoerper, double distanz, double masse) {
-		super(bezugsKoerper, distanz, masse, "fest");
+		super(bezugsKoerper, distanz, masse, Constants.FEST);
 		// TODO Auto-generated constructor stub
 	}
 

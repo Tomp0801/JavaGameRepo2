@@ -3,7 +3,7 @@ package himmelskoerper;
 public class SchwarzesLoch extends SpaceObject implements Orbitable {
 
 	public SchwarzesLoch(double masse, float radius) {
-		super(masse, radius, "fest");
+		super(masse, radius, Constants.FEST);
 		// TODO Auto-generated constructor stub
 	}
 

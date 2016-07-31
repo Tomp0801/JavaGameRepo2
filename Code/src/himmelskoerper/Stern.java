@@ -25,7 +25,7 @@ public class Stern extends InOrbit implements Orbitable
 	 */
 	Stern(SchwarzesLoch bezugsKoerper, double distanz, double masse, float radius) {
 		//TODO radius
-		super(bezugsKoerper, distanz, masse, "gas");
+		super(bezugsKoerper, distanz, masse, Constants.GAS);
 		
 		planeten = new LinkedList<Planet>();
 	}
