@@ -11,7 +11,7 @@ package himmelskoerper;
 public class Main {
 	
 	public static void main(String[] args) {
-		/**
+		/**ffg
 		 * Sonne des Sonnensystems
 		 */
 		Stern sonne;
