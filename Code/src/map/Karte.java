@@ -57,7 +57,13 @@ public class Karte {
 	 */
 	private void generate() {
 		//TODO generieren erstellen
+	}
 
+	/**
+	 * @return the felder
+	 */
+	public Bereich[][] getBereiche() {
+		return bereiche;
 	}
 	
 	/**
@@ -73,11 +79,14 @@ public class Karte {
 			if (bereiche[x][y] == null) {
 				bereiche[x][y] = new Bereich(this, Main.standards.getGelaendeArten().get(1) ,bodenschaetze);	//TODO typen
 			}
-			
 			return bereiche[x][y];			
 		} else {
 			return null;
 		}
+	}
+	
+	public void setBereiche(Bereich[][] bereiche) {
+		this.bereiche = bereiche;
 	}
 
 	/**

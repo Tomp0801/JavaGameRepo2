@@ -74,4 +74,6 @@ public class Bereich {
 	public GelaendeArt getTyp() {
 		return typ;
 	}
+
+
 }

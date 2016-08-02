@@ -21,12 +21,6 @@ public class Feld {
 	 */
 	private HashMap<Bodenschatz, Float> rohstoffe;
 	
-	/**
-	 * Platz, an dem ein Gebäude o.ä. errichtet werden kann
-	 * Kann auch durch natürliche Objekte eingenommen werden
-	 */
-	private Platzierbar bauplatz;
-	
 	Feld(Bereich bereich, ArrayList<Bodenschatz> bodenschaetze) {
 		this.parentBereich = bereich;
 		
@@ -47,6 +41,12 @@ public class Feld {
 			}
 		}
 	}
+	
+	/**
+	 * Platz, an dem ein Gebäude o.ä. errichtet werden kann
+	 * Kann auch durch natürliche Objekte eingenommen werden
+	 */
+	private Platzierbar bauplatz;
 
 	/**
 	 * Stellt die Menge des angegebenen Rohstoffs für das Feld ein
