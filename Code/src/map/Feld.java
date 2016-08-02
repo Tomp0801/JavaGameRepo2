@@ -17,7 +17,13 @@ public class Feld {
 	/**
 	 * Auflistung der Rohstoffe und deren Menge, die das Feld enthält
 	 */
-	private HashMap<String, Float> rohstoffe;
+	private HashMap<Rohstoff, Float> rohstoffe;
+	
+	/**
+	 * Platz, an dem ein Gebäude o.ä. errichtet werden kann
+	 * Kann auch durch natürliche Objekte eingenommen werden
+	 */
+	private Platzierbar bauplatz;
 
 	/**
 	 * Stellt die Menge des angegebenen Rohstoffs für das Feld ein
@@ -26,7 +32,7 @@ public class Feld {
 	 * @param rohstoff Art des Rohstoffs
 	 * @param menge Menge des Rostoffs
 	 */
-	public void setRohstoff(String rohstoff, Float menge) {
+	public void setRohstoff(Rohstoff rohstoff, Float menge) {
 		rohstoffe.put(rohstoff, menge);
 	}
 	
@@ -47,14 +53,14 @@ public class Feld {
 	/**
 	 * @return the rohstoffe
 	 */
-	public HashMap<String, Float> getRohstoffe() {
+	public HashMap<Rohstoff, Float> getRohstoffe() {
 		return rohstoffe;
 	}
 
 	/**
 	 * @param rohstoffe the rohstoffe to set
 	 */
-	public void setRohstoffe(HashMap<String, Float> rohstoffe) {
+	public void setRohstoffe(HashMap<Rohstoff, Float> rohstoffe) {
 		this.rohstoffe = rohstoffe;
 	}
 }

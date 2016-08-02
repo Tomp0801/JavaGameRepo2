@@ -14,9 +14,8 @@ import java.util.Vector;
  *
  * @author Thomas
  * @version 2.0
- * @param <BezugsKoerperKlasse>	Körper, um den das Objekt sich kreist
  */
-public abstract class InOrbit extends SpaceObject {
+public abstract class InOrbit extends Himmelskoerper {
 	/**
 	 * entfernung des Objekts zu seinem BezugsObjekt
 	 * in km
@@ -60,7 +59,7 @@ public abstract class InOrbit extends SpaceObject {
 			 * ergibt sich aus der Gleichsetzung von Zentrifugal- und Gravitationskraft
 			 * Einheit: km pro s
 			 */
-			float v = (float) Math.sqrt(((SpaceObject) bezugsKoerper).getMasse() * Constants.G / getOrbitRadius());
+			float v = (float) Math.sqrt(bezugsKoerper.getMasse() * Constants.G / getOrbitRadius());
 			//TODO für 3D abändern
 			int random = (int)Math.round(Math.random()) * 2 - 1;	//zufallszahl: +1 oder -1
 			this.setBewegungsVektor(random * v, (float)0); //für 2D nur x-Teil des Vektors einstellen 

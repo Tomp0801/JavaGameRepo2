@@ -12,7 +12,7 @@ import java.util.Vector;
  * @author Thomas
  * @version 1.0
  */
-public class SpaceObject 
+public class Himmelskoerper 
 {
 	/**
 	 * Masse des Objekts in Kg 
@@ -37,6 +37,7 @@ public class SpaceObject
 	
 	/**
 	 * Zeitpunkt der Letzten Positions- und Zustandsberechnung
+	 * TODO soll Zeit nicht vom System sondern von einem Zeitsimulator holen
 	 */
 	private long lastRefresh;
 
@@ -46,7 +47,7 @@ public class SpaceObject
  	 * @param radius sets radius der Kugel
  	 * @param art sets art des Objekts (fest oder gasförmig)
 	 */
-	public SpaceObject(double masse, float radius, String art) {
+	public Himmelskoerper(double masse, float radius, String art) {
 		this.masse = masse;
 		this.radius = radius;
 		this.art = art;
