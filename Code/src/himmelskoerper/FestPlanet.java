@@ -31,7 +31,8 @@ public class FestPlanet extends Planet implements Betretbar {
 		breite = (int) Math.round(2 * Math.PI * this.getRadius());
 		hoehe = breite;
 		
-		karte = new Karte(breite, hoehe);		//Karte erstellen
+		//TODO Karte erstellen mit (Typ) und Bodenschaetzen
+		//karte = new Karte(breite, hoehe);
 	}
 
 	@Override
