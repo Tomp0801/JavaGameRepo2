@@ -16,7 +16,7 @@ public interface Orbitable {
 	 * Fügt ein Objekt in den Orbit um dieses Objekt ein
 	 * @param objectInOrbit das Objekt, das in den Orbit soll
 	 */
-	public void add(InOrbit objectInOrbit);		//TODO wie kann ich ne referenz auf dieses Objekt machen?
+	public void add(InOrbit objectInOrbit);
 	
 	/**
 	 * berechnet den Gesamt Radius, den ein Körper mit seinen InOrbits einnimmt

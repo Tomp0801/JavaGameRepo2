@@ -9,9 +9,9 @@ package map;
  */
 public class Karte {
 	/**
-	 * 2D-Array der felder, die die Karte aufbauen
+	 * 2D-Array der bereiche, die die Karte aufbauen
 	 */
-	private Feld[][] felder;
+	private Bereich[][] bereiche;
 	
 	/**
 	 * Breite der Karte
@@ -34,7 +34,7 @@ public class Karte {
 			this.breite = breite;
 			this.hoehe = hoehe;
 			
-			felder = new Feld[breite][hoehe];
+			bereiche = new Bereich[breite][hoehe];
 		} else {
 			//TODO throw exception
 		}
@@ -52,15 +52,15 @@ public class Karte {
 	/**
 	 * @return the felder
 	 */
-	public Feld[][] getFelder() {
-		return felder;
+	public Bereich[][] getBereiche() {
+		return bereiche;
 	}
 
 	/**
 	 * @param felder the felder to set
 	 */
-	public void setFelder(Feld[][] felder) {
-		this.felder = felder;
+	public void setBereiche(Bereich[][] bereiche) {
+		this.bereiche = bereiche;
 	}
 
 	/**

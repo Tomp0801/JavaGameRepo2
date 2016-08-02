@@ -2,7 +2,7 @@ package himmelskoerper;
 
 import java.util.LinkedList;
 
-public class SchwarzesLoch extends SpaceObject implements Orbitable {
+public class SchwarzesLoch extends Himmelskoerper implements Orbitable {
 	/**
 	 * Liste alle Sterne, die um das Schwarze Loch kreisen
 	 * in aufsteigender Reihenfolge nach dem orbitRadius
