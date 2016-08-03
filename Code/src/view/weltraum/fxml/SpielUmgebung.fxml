@@ -6,11 +6,11 @@
 <?import javafx.scene.layout.*?>
 
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="506.0" prefWidth="735.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="506.0" prefWidth="735.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.weltraum.fxml.SpielUmgebungController">
    <top>
       <HBox alignment="CENTER_RIGHT" prefHeight="15.0" prefWidth="600.0" BorderPane.alignment="CENTER">
          <children>
-            <Button minHeight="20.0" minWidth="35.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="35.0" text="Menu">
+            <Button fx:id="spielMenuButton" minHeight="20.0" minWidth="35.0" mnemonicParsing="false" onAction="#actionHandler" prefHeight="20.0" prefWidth="35.0" text="Menu">
                <font>
                   <Font size="9.0" />
                </font>

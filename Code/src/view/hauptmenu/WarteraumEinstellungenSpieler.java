@@ -1,4 +1,4 @@
-package view;
+package view.hauptmenu;
 
 import java.io.IOException;
 import java.net.InetAddress;

@@ -1,4 +1,4 @@
-package view;
+package view.hauptmenu;
 
 /**
  * in dieser Klasse werden Konstanen abgespeichert

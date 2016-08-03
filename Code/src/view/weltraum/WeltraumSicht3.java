@@ -51,22 +51,28 @@ public class WeltraumSicht3 extends StackPane
 	public WeltraumSicht3(Sektion sektion, Scene scene)
 	{   
 		this.scene = scene;
-		subScene = new SubScene(this , 400 , 400);
+		
+		subScene = new SubScene(this , this.getWidth()+500 , this.getHeight()+500);
+		
+		//TODO
+		subScene.widthProperty().bind(this.widthProperty());
+		subScene.heightProperty().bind(this.heightProperty());
+		
 		subScene.setCamera(kamera);
 		
         //-------------Hintergrund wird erstellt--------------------------------------
-        hintergrund.setWidth(sektion.getSize()+50);
-        hintergrund.setHeight(sektion.getSize()+50);		
-        //Hintergrund wird angemalt
-        GraphicsContext graphic = hintergrund.getGraphicsContext2D();
-		graphic.setFill(Color.BLACK);
-		graphic.fillRect(0, 0, hintergrund.getWidth(), hintergrund.getHeight());
+//        hintergrund.setWidth(sektion.getSize()+50);
+//        hintergrund.setHeight(sektion.getSize()+50);		
+//        //Hintergrund wird angemalt
+//        GraphicsContext graphic = hintergrund.getGraphicsContext2D();
+//		graphic.setFill(Color.BLACK);
+//		graphic.fillRect(0, 0, hintergrund.getWidth(), hintergrund.getHeight());
         //----------------------------------------------------------------------------
         
 		kamera.setPosition(50, 45, -200);
              
 		//---------------------ein Demo Planet zum Testen---------------------------------
-        Image image = new Image("view/startMenu/Erde.jpg"); 
+        Image image = new Image("view/hauptmenu/Erde.jpg"); 
         PhongMaterial material1 = new PhongMaterial();
         material1.setDiffuseMap(image);
         erdkugel.setMaterial(material1);

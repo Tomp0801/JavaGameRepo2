@@ -7,7 +7,8 @@ import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
-import view.Config;
+
+import view.hauptmenu.Config;
 
 /**
  * ein Server zum aufbauen der Verbindungen zu andern Spielern und zum starten des Spiels

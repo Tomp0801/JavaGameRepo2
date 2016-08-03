@@ -1,6 +1,6 @@
 package controller;
 
-import view.StageController;
+import view.hauptmenu.StageController;
 /**
  * 
  * Die Mainklasse des Spiels 

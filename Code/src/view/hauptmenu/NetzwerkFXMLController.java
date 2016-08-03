@@ -1,4 +1,4 @@
-package view;
+package view.hauptmenu;
 
 import java.awt.datatransfer.StringSelection;
 import java.io.BufferedReader;

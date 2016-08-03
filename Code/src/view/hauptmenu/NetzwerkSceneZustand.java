@@ -1,4 +1,4 @@
-package view;
+package view.hauptmenu;
 
 /**
  * Hier sind Enums die den aktuellen Zustand der Scene von NetzwerkFXML darstellen

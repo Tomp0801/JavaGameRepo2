@@ -1,4 +1,4 @@
-package view;
+package view.hauptmenu;
 
 import java.awt.Toolkit;
 import java.net.URL;

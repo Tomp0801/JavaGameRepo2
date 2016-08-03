@@ -1,4 +1,4 @@
-package view;
+package view.hauptmenu;
 
 /**
  * Eine Sammlung von Enum um den wechsel zweischen Scenen zu vereinfachen

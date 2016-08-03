@@ -1,31 +1,39 @@
 package view.weltraum;
 
-import com.sun.corba.se.impl.protocol.BootstrapServerRequestDispatcher;
-
 import javafx.application.Application;
-import javafx.event.EventHandler;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
-import javafx.scene.PerspectiveCamera;
 import javafx.scene.Scene;
 import javafx.scene.SubScene;
 import javafx.scene.control.Button;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Border;
+import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.transform.Rotate;
 import javafx.stage.Stage;
 import map.Sektion;
+import view.weltraum.fxml.SpielUmgebungController;
 
 /**
  * 
- * Hier werden die Einzelnen Scenen verwaltet.
+ * Hier werden die Einzelnen Scenen verwaltet. Der StageController beinhaltet eine Stage. 
+ * Auf Dieser Stage laeuft das gesammte Spielgeschehen ab. 
  * 
  * @author Dennis
  *
  */
 public class StageController extends Application
 {
-		int i = 0;
+	/**
+	 * diese Scene wird zur DemoVersion verwendet. 
+	 */
+	private Scene spielSceneDemo;
+	
+	/**
+	 * zum laden der Scene
+	 */
+	private FXMLLoader loader; 
+	
+	private SpielUmgebungController spielUmgebungController; 
+	
 	public static void main(String[] args) 
 	{
 		launch();
@@ -34,26 +42,46 @@ public class StageController extends Application
 	@Override
 	public void start(Stage stage) throws Exception 
 	{
-		Button testButton = new Button("Ich bin ein Test Button");
-		BorderPane testPane = new BorderPane();
-		testPane.setTop(testButton);
+		//Damit man nicht mit ESCAP den FullScreen schließen kann
+		stage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
+		//Damit keine Nachricht erscheint nach dem eröffnen des FullScreens
+		stage.setFullScreenExitHint("");
+		stage.setFullScreen(true);
+
+		loader = new FXMLLoader(getClass().getResource("/view/weltraum/fxml/SpielUmgebung.fxml"));
+		loader.load();
+		
+		spielUmgebungController = loader.getController();
+		spielSceneDemo = new Scene(loader.getRoot());
 		
 		Sektion demoSektion = new Sektion();
+		WeltraumSicht3 demo = new WeltraumSicht3(demoSektion, spielSceneDemo);
+		spielUmgebungController.wechsleZentrum(demo.getSceneSicht());
 		
-		
-		Group group = new Group(testPane);
-		Scene scene = new Scene(group);
-		
-		WeltraumSicht3 demo = new WeltraumSicht3(demoSektion, scene);
-
-		SubScene subScene = demo.getSceneSicht();
-		testPane.setCenter(subScene);
-
-		stage.setScene(scene);
+		stage.setScene(spielSceneDemo);
 		stage.show();
-		
-	
-		System.out.println("Demo Spiel wurde gestartet");
-	}
 
+		
+		
+		//-----------------------Test-TODO---loechen------------------------------------
+//		Button testButton = new Button("Ich bin ein Test Button");
+//		BorderPane testPane = new BorderPane();
+//		testPane.setTop(testButton);
+//		
+//		Sektion demoSektion = new Sektion();
+//		
+//		
+//		Group group = new Group(testPane);
+//		Scene scene = new Scene(group);
+//		
+//		WeltraumSicht3 demo = new WeltraumSicht3(demoSektion, scene);
+//
+//		SubScene subScene = demo.getSceneSicht();
+//		testPane.setCenter(subScene);
+//
+//		stage.setScene(scene);
+//		stage.show();
+		
+	//---------------------------------------------------------------------------------------------------//
+	}
 }
