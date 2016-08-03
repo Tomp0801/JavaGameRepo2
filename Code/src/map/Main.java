@@ -2,6 +2,8 @@ package map;
 
 import java.util.HashMap;
 
+import global.Random;
+
 /**
  * Main Klasse für reine Testzwecke
  * @author Thomas
@@ -29,12 +31,18 @@ public class Main {
 			}
 		}
 		
-		/*
+		Random PRNG = new Random(2);
+		
 		//Programmschleife
 		while (true) {
+			System.out.println(PRNG.random());
 			
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
-		*/
 	}
-
 }

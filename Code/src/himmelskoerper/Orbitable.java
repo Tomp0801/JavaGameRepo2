@@ -13,6 +13,18 @@ public interface Orbitable {
 	public double getMasse();
 	
 	/**
+	 * 
+	 * @return den radius des Körpers
+	 */
+	public double getRadius();
+	
+	/**
+	 * 
+	 * @return die Oberflächen Temperatur des Körpers
+	 */
+	public float getOberflaechenTemperatur();
+	
+	/**
 	 * Fügt ein Objekt in den Orbit um dieses Objekt ein
 	 * @param objectInOrbit das Objekt, das in den Orbit soll
 	 */

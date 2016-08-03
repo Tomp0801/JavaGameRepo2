@@ -1,5 +1,6 @@
 package himmelskoerper;
 
+import global.Constants;
 import map.Karte;
 
 /**
@@ -22,22 +23,31 @@ public class FestPlanet extends Planet implements Betretbar {
 	 * @param distanz
 	 * @param masse
 	 */
-	public FestPlanet(Stern bezugsKoerper, double distanz, double masse) {
-		super(bezugsKoerper, distanz, masse, Constants.FEST);
+	public FestPlanet(Stern bezugsKoerper, double distanz, double masse, double radius) {
+		super(bezugsKoerper, distanz, masse, radius, Constants.FEST);
 		
-		int breite, hoehe;
+		int breite;
 		//Größe der Karte aus dem Radius ermitteln
-		//breite = Umfang; TODO hoehe vielleicht ändern
+		//breite = Umfang;
 		breite = (int) Math.round(2 * Math.PI * this.getRadius());
-		hoehe = breite;
 		
 		//TODO Karte erstellen mit (Typ) und Bodenschaetzen
 		//karte = new Karte(breite, hoehe);
+	}
+	
+	public FestPlanet(Stern bezugsKoerper, int seed) {
+		super(bezugsKoerper, seed);
 	}
 
 	@Override
 	public Karte getKarte() {
 		return karte;
+	}
+
+	@Override
+	protected void generate() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

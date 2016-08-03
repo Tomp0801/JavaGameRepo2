@@ -11,23 +11,29 @@ package himmelskoerper;
 public class Main {
 	
 	public static void main(String[] args) {
-		/**ffg
+		/**
 		 * Sonne des Sonnensystems
 		 */
 		Stern sonne;
 
 		double masse = (1.989 * Math.pow(10, 30)); 
-		float radius = 695700;
+		double radius = 695700;
 		sonne = new Stern(null, 0, masse, radius);		//Sonne nicht in einem Orbit
 		
-		//Planeten hinzufügen
-		FestPlanet erde = new FestPlanet(sonne, 149600000, 5.972 * Math.pow(10, 24));
+		//zufällig generiertes Schwarzes Loch mit Stern
+		SchwarzesLoch SL = new SchwarzesLoch(1234);
 		
-		Mond mond = new Mond(erde, 384400, 7.349 * Math.pow(10, 22));
+		Stern stern = new Stern(SL, 438);
+		SL.add(stern);
+		
+		//Planeten hinzufügen
+		//FestPlanet erde = new FestPlanet(sonne, 149600000, 5.972 * Math.pow(10, 24));
+		
+		//Mond mond = new Mond(erde, 384400, 7.349 * Math.pow(10, 22), );
 		
 		//"programmschleife"
 		while (true) {
-			erde.refresh();
+			/*erde.refresh();
 			System.out.println("Erde: ");
 			erde.printStatus();
 			
@@ -37,7 +43,16 @@ public class Main {
 			
 			sonne.bewegen();
 			System.out.println("Sonne: ");
-			sonne.printStatus();
+			sonne.printStatus();*/
+			
+			System.out.println("SL: ");
+			SL.printStatus();
+			
+			stern.bewegen();
+			System.out.println("Stern: ");
+			stern.printStatus();
+			
+			
 			
 			System.out.println("___________________________________________________________");
 			

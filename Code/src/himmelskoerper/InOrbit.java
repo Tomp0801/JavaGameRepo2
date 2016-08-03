@@ -2,6 +2,9 @@ package himmelskoerper;
 
 import java.util.Vector;
 
+import global.Constants;
+import global.GameTime;
+
 /**
  * Eine abstrakte Klasse für Objekte, die sich im Orbit um ein anderes Objekt befinden
  * In dieser Klasse werden für den Orbit wichtige Parameter definiert
@@ -46,26 +49,16 @@ public abstract class InOrbit extends Himmelskoerper {
 	 * @param distanz die Distanz, mit der das Objekt den Körper umkreist
 	 * @param masse Masse des Objekts
 	 */
-	public InOrbit(Orbitable bezugsKoerper, double distanz, double masse, String art) {
-		//TODO Radius
-		super(masse, 0, art);
+	public InOrbit(Orbitable bezugsKoerper, double distanz, double masse, double radius, String art) {
+		super(masse, radius, art);
 		this.setBezugsKoerper(bezugsKoerper);
 		this.setOrbitRadius(distanz);
 		
 		if (bezugsKoerper != null) {
-			/*
-			 * Bewegungsgeschwindigkeit v:
-			 * v = sqrt(masseBezugsStern * Gravitationskonstante / orbitRadius)
-			 * ergibt sich aus der Gleichsetzung von Zentrifugal- und Gravitationskraft
-			 * Einheit: km pro s
-			 */
-			float v = (float) Math.sqrt(bezugsKoerper.getMasse() * Constants.G / getOrbitRadius());
-			//TODO für 3D abändern
-			int random = (int)Math.round(Math.random()) * 2 - 1;	//zufallszahl: +1 oder -1
-			this.setBewegungsVektor(random * v, (float)0); //für 2D nur x-Teil des Vektors einstellen 
+			calcBewegungsVektor();
 			
-			//TODO an zufälliger Position um den Stern herum platzieren
-			this.setPosition(orbitRadius, 0, 0);
+			//an zufälliger Position um den Stern herum platzieren
+			setRandomPosition();
 			
 			//dem Bezugskörper hinzufügen
 			bezugsKoerper.add(this);
@@ -73,9 +66,41 @@ public abstract class InOrbit extends Himmelskoerper {
 			this.setBewegungsVektor((float)0, (float)0);
 		}
 	
-		setLastRefresh(System.currentTimeMillis());	//last Refresh initialisieren
+		setLastRefresh(GameTime.timeMillis());	//last Refresh initialisieren
 	}
 	
+	public InOrbit(Orbitable bezugsKoerper, int seed) {
+		super(seed);
+		
+		this.bezugsKoerper = bezugsKoerper;
+		bezugsKoerper.add(this);
+		
+		generate();
+		
+		//bewegungsVektor setzen
+		calcBewegungsVektor();
+		//an zufällige Stell im Orbit platzieren
+		setRandomPosition();
+	}
+	
+	private void calcBewegungsVektor() {
+		/*
+		 * Bewegungsgeschwindigkeit v:
+		 * v = sqrt(masseBezugsStern * Gravitationskonstante / orbitRadius)
+		 * ergibt sich aus der Gleichsetzung von Zentrifugal- und Gravitationskraft
+		 * Einheit: km pro s
+		 */
+		float v = (float) Math.sqrt(bezugsKoerper.getMasse() * Constants.G / this.getOrbitRadius());
+		//TODO für 3D abändern
+		int random = (int)Math.round(Math.random()) * 2 - 1;	//zufallszahl: +1 oder -1
+		this.setBewegungsVektor(random * v, (float)0); //für 2D nur x-Teil des Vektors einstellen 
+	}
+	
+	private void setRandomPosition() {
+		//zufällige Position auf dem Orbit erstellen
+		//TODO für 3D auch angleYZ random
+		setPosition(this.getOrbitRadius(), getRandom() * 2*Math.PI, 0);
+	}
 	
 	/**
 	 * @return the orbitRadius
@@ -137,7 +162,7 @@ public abstract class InOrbit extends Himmelskoerper {
 	public void bewegen() {
 		long passedTime;
 		long prevRefresh = getLastRefresh();
-		setLastRefresh(System.currentTimeMillis());
+		setLastRefresh(GameTime.timeMillis());
 		double angleX, angleY;
 		double wegX, wegY;
 		Vector<Double> position = this.getPosition(); 
