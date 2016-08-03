@@ -1,6 +1,8 @@
 package map;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 
 /**
  * Ein Feld eines gewissen typs, das bebaut werden kann und/oder Objekte enthalten kann
@@ -10,14 +12,41 @@ import java.util.HashMap;
  */
 public class Feld {
 	/**
-	 * Art des Feldes: Stein, Wüste, Wiese, Wald, etc.
+	 * Bereich, zu dem dieses Feld gehört
 	 */
-	private String art;
+	private Bereich parentBereich;
 	
 	/**
 	 * Auflistung der Rohstoffe und deren Menge, die das Feld enthält
 	 */
-	private HashMap<String, Float> rohstoffe;
+	private HashMap<Bodenschatz, Float> rohstoffe;
+	
+	Feld(Bereich bereich, ArrayList<Bodenschatz> bodenschaetze) {
+		this.parentBereich = bereich;
+		
+		rohstoffe = new HashMap<Bodenschatz, Float>();
+		
+		//rohstoffe generieren
+		//Alle Bodenschaetze, die dem Feld in der ArrayList übergeben wurden
+		Iterator<Bodenschatz> iterator = bodenschaetze.iterator();
+		Bodenschatz temp;
+		double random;
+		while (iterator.hasNext()) {
+			temp = iterator.next();
+			
+			//Vorkommenswahrscheinlichkeit
+			random = Math.random();
+			if (random <= temp.getVorkommensWkeit() * parentBereich.getTyp().getBodenReichtum()) {	//ist Random kleiner/gleich w-keit
+				setRohstoff(temp, (float)1); //1 entspricht 100%
+			}
+		}
+	}
+	
+	/**
+	 * Platz, an dem ein Gebäude o.ä. errichtet werden kann
+	 * Kann auch durch natürliche Objekte eingenommen werden
+	 */
+	private Platzierbar bauplatz;
 
 	/**
 	 * Stellt die Menge des angegebenen Rohstoffs für das Feld ein
@@ -26,35 +55,21 @@ public class Feld {
 	 * @param rohstoff Art des Rohstoffs
 	 * @param menge Menge des Rostoffs
 	 */
-	public void setRohstoff(String rohstoff, Float menge) {
+	public void setRohstoff(Bodenschatz rohstoff, Float menge) {
 		rohstoffe.put(rohstoff, menge);
 	}
 	
 	/**
-	 * @return the art
+	 * @return the bereich
 	 */
-	public String getArt() {
-		return art;
-	}
-
-	/**
-	 * @param art the art to set
-	 */
-	public void setArt(String art) {
-		this.art = art;
+	public Bereich getParentBereich() {
+		return parentBereich;
 	}
 
 	/**
 	 * @return the rohstoffe
 	 */
-	public HashMap<String, Float> getRohstoffe() {
+	public HashMap<Bodenschatz, Float> getRohstoffe() {
 		return rohstoffe;
-	}
-
-	/**
-	 * @param rohstoffe the rohstoffe to set
-	 */
-	public void setRohstoffe(HashMap<String, Float> rohstoffe) {
-		this.rohstoffe = rohstoffe;
 	}
 }

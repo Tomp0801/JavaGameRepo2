@@ -12,7 +12,7 @@ import java.util.LinkedList;
  * @author Thomas
  * @version 1.0
  */
-public class Planet extends InOrbit implements Orbitable
+public abstract class Planet extends InOrbit implements Orbitable
 {
 	/**
 	 * Liste der Monde des Planeten
@@ -26,10 +26,14 @@ public class Planet extends InOrbit implements Orbitable
 	 * @param masse
 	 * @param typ der Typ des Planeten (gas oder fest)
 	 */
-	public Planet(Stern bezugsKoerper, double distanz, double masse, String art) {
-		super(bezugsKoerper, distanz, masse, art);
+	public Planet(Stern bezugsKoerper, double distanz, double masse, double radius, String art) {
+		super(bezugsKoerper, distanz, masse, radius, art);
 		
 		monde = new LinkedList<Mond>();
+	}
+	
+	public Planet(Stern bezugsKoerper, int seed) {
+		super(bezugsKoerper, seed);
 	}
 
 	/**
@@ -71,5 +75,4 @@ public class Planet extends InOrbit implements Orbitable
 		Mond aeussersterMond = monde.getLast();		//Mond mit größter Umlaufbahn
 		return aeussersterMond.getOrbitRadius() + aeussersterMond.getRadius() / 2;
 	}
-	
 }

@@ -2,28 +2,45 @@ package himmelskoerper;
 
 import java.util.Vector;
 
+
+import global.GameTime;
+import global.Random;
+
 /**
  * Ein kugelförmiges Objekt mit Masse und einer Position im Raum;
  *  natürlichen Ursprungs oder auch nicht
  *  
- *  TODO vielleicht umbenennen
  *  TODO zusammenhang zwischen art, masse, radius und material
  * 
  * @author Thomas
  * @version 1.0
  */
-public class Himmelskoerper 
+public abstract class Himmelskoerper 
 {
 	/**
+	 * der Seed des Himmelskörpers, nach dem er generiert wurde
+	 */
+	private int seed;
+	
+	/**
+	 * Pseudo-Random Number Generator für dieses Objekt
+	 */
+	private Random prng;
+	
+	/**
 	 * Masse des Objekts in Kg 
-	 * TODO Masse aus dem Radius des Objekts ermitteln
 	 */
 	private double masse;
 	
 	/**
 	 * Radius des Kugelförmigen Objekts
 	 */
-	private float radius;
+	private double radius;
+	
+	/**
+	 * OberflächenTemperatur des Objekts in Celsius
+	 */
+	private float oberflaechenTemperatur;
 	
 	/**
 	 * Position der aktuellen Sektion (Sonnensystem) in Polarkoordinaten
@@ -37,20 +54,43 @@ public class Himmelskoerper
 	
 	/**
 	 * Zeitpunkt der Letzten Positions- und Zustandsberechnung
+	 * TODO soll Zeit nicht vom System sondern von einem Zeitsimulator holen
 	 */
 	private long lastRefresh;
 
 	/**
-	 * Konstruktor
+	 * manueller Konstruktor
  	 * @param masse sets Masse des Objekts
  	 * @param radius sets radius der Kugel
  	 * @param art sets art des Objekts (fest oder gasförmig)
 	 */
-	public Himmelskoerper(double masse, float radius, String art) {
+	public Himmelskoerper(double masse, double radius, String art) {
 		this.masse = masse;
 		this.radius = radius;
 		this.art = art;
+		this.seed = 0;	//kein seed wurde verwendet -> seed = 0 setzen
+		
 		setPosition(0, 0, 0); 	//Position initialisieren mit 0
+		this.lastRefresh = GameTime.timeMillis();		//lastRefresh initialisieren
+	}
+	
+	/**
+	 * Konstruktor zur zufälligen generierung
+	 * @param seed der Seed nach dem generiert wird
+	 */
+	public Himmelskoerper(int seed) {
+		this.seed = seed;
+		prng = new Random(seed);	//PRNG erstellen
+		
+		setPosition(0, 0, 0); 	//Position initialisieren mit 0
+		this.lastRefresh = GameTime.timeMillis();		//lastRefresh initialisieren
+	}
+	
+	/**
+	 * @return the seed
+	 */
+	public int getSeed() {
+		return seed;
 	}
 	
 	/**
@@ -59,19 +99,40 @@ public class Himmelskoerper
 	public double getMasse() {
 		return masse;
 	}
+	
+	/**
+	 * @param masse the masse to set
+	 */
+	protected void setMasse(double masse) {
+		this.masse = masse;
+	}
 
 	/**
 	 * @return the radius
 	 */
-	public float getRadius() {
+	public double getRadius() {
 		return radius;
 	}
 
 	/**
 	 * @param radius the radius to set
 	 */
-	public void setRadius(float radius) {
+	protected void setRadius(double radius) {
 		this.radius = radius;
+	}
+
+	/**
+	 * @return the oberflaechenTemperatur
+	 */
+	public float getOberflaechenTemperatur() {
+		return oberflaechenTemperatur;
+	}
+
+	/**
+	 * @param oberflaechenTemperatur the oberflaechenTemperatur to set
+	 */
+	protected void setOberflaechenTemperatur(float oberflaechenTemperatur) {
+		this.oberflaechenTemperatur = oberflaechenTemperatur;
 	}
 
 	/**
@@ -82,6 +143,7 @@ public class Himmelskoerper
 	}
 
 	/**
+	 * Position setzen
 	 * @param r Länge des Positionsvektors
 	 * @param angleXY Winkel, der in der XY-Ebene liegt
 	 * @param angleYZ Winkel, der in der YZ-Ebene liegt
@@ -110,11 +172,35 @@ public class Himmelskoerper
 		this.position = positionsVektor;
 	}
 	
+	
+	
+	/**
+	 * Eine Methode zum zufälligen generieren der Eigenschaften des Himmelskörpers
+	 * @param seed der Seed, nach dem generiert werden soll
+	 */
+	protected abstract void generate();
+	
+	/**
+	 * 
+	 * @return eine ZufallsZahl vom Objekteigenen PRNG
+	 */
+	protected double getRandom() {
+		return prng.random();
+	}
+	
 	/**
 	 * @return the art
 	 */
 	public String getArt() {
 		return art;
+	}
+	
+	/**
+	 * 
+	 * @param art sets the art
+	 */
+	protected void setArt(String art) {
+		this.art = art;
 	}
 
 	/**
@@ -137,8 +223,12 @@ public class Himmelskoerper
 	 */
 	public void printStatus() {
 		Vector<Double> pos = getPosition();
-		System.out.print("Tick: " + getLastRefresh()/1000 + ": ");
-		System.out.println(pos.get(0) + " " + pos.get(1) + " " + pos.get(2));
+		System.out.println(" _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _");
+		System.out.println("| Tick: " + getLastRefresh()/1000 + ": ");
+		System.out.println("| Position: " + pos.get(0) + " " + pos.get(1) + " " + pos.get(2));
+		System.out.println("| Radius: " + this.radius);
+		System.out.println("| Masse: "+ this.masse);
+		System.out.println(" _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _");
 	}
 	
 }
