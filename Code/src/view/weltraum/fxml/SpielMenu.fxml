@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="164.0" prefWidth="227.0" spacing="10.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Button mnemonicParsing="false" prefWidth="200.0" text="Speichern" />
+      <Button mnemonicParsing="false" prefWidth="200.0" text="Laden" />
+      <Button mnemonicParsing="false" prefWidth="200.0" text="Einstellungen" />
+      <Button mnemonicParsing="false" prefWidth="200.0" text="Beenden" />
+   </children>
+</VBox>
