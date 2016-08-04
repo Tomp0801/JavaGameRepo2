@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox fx:id="menuBox" alignment="CENTER" blendMode="DARKEN" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" opacity="0.72" prefHeight="164.0" prefWidth="227.0" spacing="10.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="SpielMenuController">
+   <children>
+      <Button fx:id="speichern" mnemonicParsing="false" onAction="#actionHandler" prefWidth="200.0" text="Speichern">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <font>
+            <Font name="AR BERKLEY" size="12.0" />
+         </font>
+      </Button>
+      <Button fx:id="laden" mnemonicParsing="false" onAction="#actionHandler" prefWidth="200.0" text="Laden">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <font>
+            <Font name="AR BERKLEY" size="12.0" />
+         </font>
+      </Button>
+      <Button fx:id="einstellungen" mnemonicParsing="false" onAction="#actionHandler" prefWidth="200.0" text="Einstellungen">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <font>
+            <Font name="AR BERKLEY" size="12.0" />
+         </font>
+      </Button>
+      <Button fx:id="beenden" mnemonicParsing="false" onAction="#actionHandler" prefWidth="200.0" text="Beenden">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <font>
+            <Font name="AR BERKLEY" size="12.0" />
+         </font>
+      </Button>
+   </children>
+   <effect>
+      <Lighting diffuseConstant="1.51" specularConstant="1.0" specularExponent="21.86" surfaceScale="10.0">
+         <bumpInput>
+            <Shadow />
+         </bumpInput>
+         <light>
+            <Light.Distant azimuth="308.72" color="#fbf9fc" elevation="153.84" />
+         </light>
+      </Lighting>
+   </effect>
+</VBox>
