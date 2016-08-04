@@ -23,7 +23,7 @@ import javafx.scene.transform.Rotate;
  * @author Dennis
  *
  */
-public class StartGameFXMLController implements Initializable, Runnable
+public class HauptmenuController implements Initializable, Runnable
 {
 	/**
 	 * drehende Erdkugel 
@@ -83,10 +83,9 @@ public class StartGameFXMLController implements Initializable, Runnable
 		//Musik startet
 		Musikspieler musik = Musikspieler.getInstance();
 		musik.starteMusik();
-		
-		
+
 		//Bild der Erde wird auf der Kugel gelegt
-        Image image = new Image("view/Erde.jpg"); 
+        Image image = new Image("view/hauptmenu/Erde.jpg"); 
         PhongMaterial material1 = new PhongMaterial();
         material1.setDiffuseMap(image);
         erdkugel.setMaterial(material1);
@@ -155,6 +154,7 @@ public class StartGameFXMLController implements Initializable, Runnable
 		if (e.getSource() == einzelspielerButton)
 		{
 			System.out.println("Einzelspielerfunktion noch nicht Vorhanden");
+			StageController.getInstance();
 		}
 		
 		else if (e.getSource() == mehrspielerButton)

@@ -32,7 +32,7 @@ import netzwerk.StartNetzwerkspielServer;
  * @author Dennis
  *
  */
-public class NetzwerkFXMLController implements Initializable
+public class NetzwerkspielEingangsraumController implements Initializable
 {
 	
 	//------------Buttons--------------------------------------------------------------------//
@@ -344,7 +344,7 @@ public class NetzwerkFXMLController implements Initializable
 	 */
 	public void addNeuenSpieler(String ankommendeAnweisung)
 	{	
-		NetzwerkFXMLController instance = this; 
+		NetzwerkspielEingangsraumController instance = this; 
 		
 		Platform.runLater(new Runnable()
 		{

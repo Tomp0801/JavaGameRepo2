@@ -1,5 +1,7 @@
 package view.weltraum;
 
+import java.io.IOException;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -19,7 +21,7 @@ import view.weltraum.fxml.SpielUmgebungController;
  * @author Dennis
  *
  */
-public class StageController extends Application
+public class StageControllerSpiel 
 {
 	/**
 	 * diese Scene wird zur DemoVersion verwendet. 
@@ -33,25 +35,20 @@ public class StageController extends Application
 	
 	private SpielUmgebungController spielUmgebungController; 
 	
-	public static void main(String[] args) 
+	public StageControllerSpiel(Stage stage)
 	{
-		launch();
-	}
-
-	@Override
-	public void start(Stage stage) throws Exception 
-	{
-		//Damit man nicht mit ESCAP den FullScreen schließen kann
+		//-------------------Stage wird erstellt-----------------------------------------------------//
 		stage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
-		//Damit keine Nachricht erscheint nach dem eröffnen des FullScreens
 		stage.setFullScreenExitHint("");
 		stage.setFullScreen(true);
-
+		//--------------------Spiel-Umgebunng-wird-geladen-------------------------------------------//
 		loader = new FXMLLoader(getClass().getResource("/view/weltraum/fxml/SpielUmgebung.fxml"));
-		loader.load();
+	
+		try{loader.load();}catch (IOException e){e.printStackTrace();}
 		
 		spielUmgebungController = loader.getController();
 		spielSceneDemo = new Scene(loader.getRoot());
+		//-------------------------------------------------------------------------------------------//
 		
 		Sektion demoSektion = new Sektion();
 		WeltraumSicht3 demo = new WeltraumSicht3(demoSektion, spielSceneDemo);

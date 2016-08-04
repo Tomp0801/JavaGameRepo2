@@ -17,7 +17,7 @@ public class WarteraumEinstellungenSpieler
 	/**
 	 * Controller der Noodes
 	 */
-	private WarteraumEinstellungenSpielerController controller;
+	private WarteraumSpielereinstellungenController controller;
 
 	/**
 	 * In dieser Liste werden alle erstellten Objekte der Klasse drin gespeichert. Dies ist notwendig 
@@ -43,9 +43,9 @@ public class WarteraumEinstellungenSpieler
 	/**
 	 * erstellt ein Objekt dier Klasse
 	 * @param name
-	 * @param NetzwerkFXMLController muss mit uebergeben werden um eine benachrichtung ueber veraenderungen zu erhalten
+	 * @param NetzwerkspielEingangsraumController muss mit uebergeben werden um eine benachrichtung ueber veraenderungen zu erhalten
 	 */
-	protected WarteraumEinstellungenSpieler(String name, NetzwerkFXMLController observer) 
+	protected WarteraumEinstellungenSpieler(String name, NetzwerkspielEingangsraumController observer) 
 	{
 		loader = new  FXMLLoader(getClass().getResource("WarteraumEinstellungenSpielerFXML.fxml"));
 		try 

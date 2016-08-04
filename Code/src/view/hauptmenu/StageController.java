@@ -6,6 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCombination;
 import javafx.stage.Stage;
+import view.weltraum.StageControllerSpiel;
 
 //diese Methode ist vergleichbar mit der Mainmethode. Funktioniert quasie genau so
 /**
@@ -50,17 +51,22 @@ public class StageController extends Application
 	@Override
 	public void start(Stage primaryStage) throws Exception 
 	{    
-		instance = this; 
-		this.stage = primaryStage;
+		//zum laden eines DemoSpiels
+		StageControllerSpiel demoSpiel = new StageControllerSpiel(primaryStage);
 		
-		//Damit man nicht mit ESCAP den FullScreen schließen kann
-		primaryStage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
-		//Damit keine Nachricht erscheint nach dem eröffnen des FullScreens
-		primaryStage.setFullScreenExitHint("");
-		primaryStage.setFullScreen(true);
-		primaryStage.show();
-		
-		wechselScene(SceneEnum.STARTGAME);
+		//nicht loeschen
+//		instance = this; 
+//		this.stage = primaryStage;
+//		
+//		//Damit man nicht mit ESCAP den FullScreen schließen kann
+//		primaryStage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
+//		//Damit keine Nachricht erscheint nach dem eröffnen des FullScreens
+//		primaryStage.setFullScreenExitHint("");
+//		primaryStage.setFullScreen(true);
+//		primaryStage.show();
+//		
+//		wechselScene(SceneEnum.STARTGAME);
+		//nicht loeschen
 	
 	}
 	
@@ -103,8 +109,7 @@ public class StageController extends Application
 		
 		switch (scene) 
 		{
-		case STARTGAME:
-			
+		case STARTGAME:		
 			loader = ladeFXMLDatei("StartGameFXML.fxml"); 
 			startGameScene = new Scene(loader.getRoot()); 
 			break;

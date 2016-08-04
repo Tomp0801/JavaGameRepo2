@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.shape.*?>
 
-<StackPane fx:id="stackPane" maxHeight="4000.0" maxWidth="4000.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.hauptmenu.StartGameFXMLController">
+<StackPane fx:id="stackPane" maxHeight="4000.0" maxWidth="4000.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.hauptmenu.HauptmenuController">
    <children>
       <Canvas fx:id="hintergrund" height="234.0" width="284.0">
          <StackPane.margin>

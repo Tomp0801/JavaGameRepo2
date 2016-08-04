@@ -61,7 +61,7 @@ public class WeltraumSicht3 extends StackPane
 		subScene.setFill(Color.BLACK);
 		subScene.setCamera(kamera);
 		//-------------erstellt-die-Spielumgebung-auf-dieser-befinden-sich-alle-Elemente-der-Sektion-----------//
-        spielWelt.setStyle("-fx-background-color:BLACK");        
+        spielWelt.setStyle("-fx-background-color:BLACK");   
         spielWelt.setBackground(null);
         this.getChildren().add(spielWelt);
 
@@ -83,10 +83,11 @@ public class WeltraumSicht3 extends StackPane
         erdkugel.setLayoutX(50);
         erdkugel.setLayoutY(60);
         erdkugel.setTranslateZ(200);
-        
+
         spielWelt.getChildren().addAll( erdkugel);
         //--------------------------------------------------------------------------------------     
 
+        //Diese Methode wurde in die Kamera ausgelagert
 //        initEventScene(scene);
 	}
 	

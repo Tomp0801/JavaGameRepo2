@@ -41,7 +41,7 @@ public class WarteraumEinstellungenSpielerController implements Initializable
 	/**
 	 * wird informietr, wenn sich an den Enistellungenwas geaendert hat.
 	 */
-	private NetzwerkFXMLController spielerEinstellungenObserver;
+	private NetzwerkspielEingangsraumController spielerEinstellungenObserver;
 	
 	/**
 	 * initialiesert den Controller
@@ -101,7 +101,7 @@ public class WarteraumEinstellungenSpielerController implements Initializable
 	/**
 	 * fuegt einen Observer hinzu,der Informiert wird, wenn eine aenderung statfindet
 	 */
-	protected void addObserver(NetzwerkFXMLController spielerEinstellungen)
+	protected void addObserver(NetzwerkspielEingangsraumController spielerEinstellungen)
 	{
 		this.spielerEinstellungenObserver = spielerEinstellungen; 
 	}

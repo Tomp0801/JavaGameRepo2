@@ -205,10 +205,10 @@ public class Kamera extends PerspectiveCamera
 			veraenderePosition(-c, 0, a);
 			break;
 		case E: 
-			veraenderePosition(0 , c, 0);
+			veraenderePosition(0 , 5, 0);
 			break;
 		case Q: 
-			veraenderePosition(0, -c, 0);
+			veraenderePosition(0, -5, 0);
 			break;
 		default:
 			break;

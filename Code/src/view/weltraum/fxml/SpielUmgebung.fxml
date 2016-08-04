@@ -6,7 +6,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="506.0" prefWidth="735.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.weltraum.fxml.SpielUmgebungController">
+<BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="506.0" prefWidth="735.0" style="-fx-background-color: BLACK;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.weltraum.fxml.SpielUmgebungController">
    <top>
       <HBox alignment="CENTER_RIGHT" prefHeight="15.0" prefWidth="600.0" spacing="15.0" style="-fx-background-color: BLACK;" BorderPane.alignment="CENTER">
          <children>
@@ -76,9 +76,10 @@
       </HBox>
    </top>
    <center>
-      <StackPane style="-fx-background-color: BLACK;">
+      <StackPane style="-fx-background-color: BLACK; -fx-border-color: BLACK;">
          <children>
-            <StackPane fx:id="centerPane" prefHeight="150.0" prefWidth="200.0" style="-fx-background-color: BLACK;" BorderPane.alignment="CENTER" />
+            <StackPane fx:id="centerPane" prefHeight="150.0" prefWidth="200.0" style="-fx-background-color: BLACK; -fx-border-color: BLACK;" BorderPane.alignment="CENTER" />
+            <VBox fx:id="navigationBox" opacity="0.56" prefHeight="200.0" prefWidth="100.0" spacing="5.0" />
          </children>
       </StackPane>
    </center>
