@@ -1,4 +1,4 @@
-package view.hauptmenu;
+package view.hauptmenu.fxml;
 
 import java.net.URL;
 import java.util.ResourceBundle;

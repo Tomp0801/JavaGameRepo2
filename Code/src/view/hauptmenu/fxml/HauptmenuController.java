@@ -1,4 +1,4 @@
-package view.hauptmenu;
+package view.hauptmenu.fxml;
 
 import java.awt.Toolkit;
 import java.net.URL;
@@ -16,6 +16,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.Sphere;
 import javafx.scene.transform.Rotate;
+import view.hauptmenu.SceneEnum;
+import view.hauptmenu.StageController;
 
 /**
  * Das Startmenu. Dies ist das erste was der Spiele zusehen bekommt.

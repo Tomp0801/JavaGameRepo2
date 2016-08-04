@@ -1,4 +1,4 @@
-package view.hauptmenu;
+package view.hauptmenu.fxml;
 
 import java.awt.datatransfer.StringSelection;
 import java.io.BufferedReader;
@@ -25,6 +25,10 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import netzwerk.ServerBefehle;
 import netzwerk.StartNetzwerkspielServer;
+import view.hauptmenu.Config;
+import view.hauptmenu.NetzwerkSceneZustand;
+import view.hauptmenu.SceneEnum;
+import view.hauptmenu.StageController;
 
 /**
  * Eine GUI zum starten eines Netzwerkspieles.
