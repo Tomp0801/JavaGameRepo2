@@ -1,8 +1,16 @@
 package view.weltraum;
 
+import java.awt.MouseInfo;
+import java.awt.Point;
+
+import javafx.event.EventHandler;
 import javafx.geometry.Point3D;
 import javafx.scene.PerspectiveCamera;
+import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.transform.Rotate;
 
 /**
@@ -35,7 +43,7 @@ public class Kamera extends PerspectiveCamera
 	/**
 	 * erstellt eine Kamera
 	 */
-	public Kamera()
+	public Kamera(Scene scene)
 	{
 		super(true);
 	
@@ -47,7 +55,87 @@ public class Kamera extends PerspectiveCamera
 		//maximale naehe
 		this.setNearClip(10000);
 		this.getTransforms().addAll(rotationX , rotationY);
+		
+		initEventScene(scene);
 	}
+	
+	
+	
+	private void initEventScene(Scene scene)
+	{
+		Point positionMaus = new Point(0,0);
+		
+		scene.setOnKeyPressed(new EventHandler<KeyEvent>()
+	        {
+				@Override
+				public void handle(KeyEvent event) 
+				{
+					doBewegung(event.getCode());	
+				}
+	        });
+	        
+			scene.setOnMousePressed(new EventHandler<MouseEvent>()
+	        {
+
+				@Override
+				public void handle(MouseEvent event) 
+				{
+					if (event.getButton() == MouseButton.PRIMARY)
+					{
+						positionMaus.setLocation(MouseInfo.getPointerInfo().getLocation());
+						setRotaion(true);
+					}
+				}   	
+	        });
+	        	
+			scene.setOnMouseDragged(new EventHandler<MouseEvent>() 
+	        {
+	        	double mouseOldX = 0; 
+	        	double mouseOldY = 0;
+	        	
+	        	double mousePosX = 0;
+	        	double mousePosY = 0;
+	        	
+	        	double mouseDeltaX = 0;
+	        	double mouseDeltaY = 0;
+	        	
+				@Override
+				public void handle(MouseEvent event) 
+				{
+		        	mouseOldX = mousePosX;
+	                mouseOldY = mousePosY;
+	                mousePosX = MouseInfo.getPointerInfo().getLocation().getX();
+	                mousePosY = MouseInfo.getPointerInfo().getLocation().getY();
+	                
+	                mouseDeltaX = mousePosX - mouseOldX;
+	                mouseDeltaY = mousePosY - mouseOldY;
+	                   
+	                if (mouseDeltaX >= 5 || mouseDeltaX <= -5)
+	                {
+	                	mouseDeltaX = 0;
+	                }
+	                if (mouseDeltaY >= 5 || mouseDeltaY <= -5  )
+	                {
+	                	mouseDeltaY = 0;
+	                }
+	                
+					rotation(mouseDeltaX , mouseDeltaY );
+				}
+			});
+	        
+			scene.setOnMouseReleased(new EventHandler<MouseEvent>()
+	        {
+				@Override
+				public void handle(MouseEvent event) 
+				{
+					if (event.getButton() == MouseButton.PRIMARY)
+					{
+						setRotaion(false);
+					}
+				}   	
+	        });        
+	}
+	
 	
 	
 	/**

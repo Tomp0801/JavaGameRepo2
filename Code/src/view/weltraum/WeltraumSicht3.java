@@ -3,20 +3,14 @@ package view.weltraum;
 import java.awt.MouseInfo;
 import java.awt.Point;
 import javafx.event.EventHandler;
-import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.SubScene;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.Sphere;
@@ -33,44 +27,53 @@ public class WeltraumSicht3 extends StackPane
 	/**
 	 * eine Kamera zum steuern der Sicht
 	 */
-	private Kamera kamera = new Kamera();
+	private Kamera kamera;
 	
-	private AnchorPane anchorPane = new AnchorPane(); 
+	/**
+	 * Auf dieser AnchoPane befindet sich die Spielwelt. 
+	 * Alle Elemente (Planete,Raumschiffe,Sonnen und weiteres befinden sich auf der spielWelt
+	 */
+	private AnchorPane spielWelt = new AnchorPane(); 
 	
-	private Canvas hintergrund = new Canvas();
-	
-	private Sphere erdkugel = new Sphere();
-	
-	private Scene scene;
-	
-	int i = 0; 
-	
+	private Sphere erdkugel = new Sphere(); //Zum testen
+
+	/**
+	 * dieser SubScene wird die Kamera zugeordnet. 
+	 */
 	private SubScene subScene;
 	
+//	private Sonnensystem[] sonnensystem; TODO
 	
+	/**
+	 * erstelle ein Objekt dieser Sicht
+	 * 
+	 * @param sektion
+	 * @param scene
+	 */
 	public WeltraumSicht3(Sektion sektion, Scene scene)
 	{   
-		this.scene = scene;
+		kamera = new Kamera(scene);
+//		kamera.setPosition(sektion.getSize()/2, sektion.getSize()/2, sektion.getSize()/2);
+		kamera.setPosition(50, 50, -200);	
 		
-		subScene = new SubScene(this , this.getWidth()+500 , this.getHeight()+500);
-		
-		//TODO
-		subScene.widthProperty().bind(this.widthProperty());
-		subScene.heightProperty().bind(this.heightProperty());
-		
+		//-------------erstellt-die-SubScene-fuer-die-Kammera--------------------------------------------------//
+		subScene = new SubScene(this , 500 , 500, true, null);
+		subScene.setFill(Color.BLACK);
 		subScene.setCamera(kamera);
-		
-        //-------------Hintergrund wird erstellt--------------------------------------
-//        hintergrund.setWidth(sektion.getSize()+50);
-//        hintergrund.setHeight(sektion.getSize()+50);		
-//        //Hintergrund wird angemalt
-//        GraphicsContext graphic = hintergrund.getGraphicsContext2D();
-//		graphic.setFill(Color.BLACK);
-//		graphic.fillRect(0, 0, hintergrund.getWidth(), hintergrund.getHeight());
-        //----------------------------------------------------------------------------
+		//-------------erstellt-die-Spielumgebung-auf-dieser-befinden-sich-alle-Elemente-der-Sektion-----------//
+        spielWelt.setStyle("-fx-background-color:BLACK");        
+        spielWelt.setBackground(null);
+        this.getChildren().add(spielWelt);
+
         
-		kamera.setPosition(50, 45, -200);
-             
+        //hier werden die Elemente der Sektion eine Position zugeordnet TODO
+//        for (int i = 0 ..i. )
+//        spielWelt.getChildren().addAll( erdkugel);
+
+        
+        
+        
+
 		//---------------------ein Demo Planet zum Testen---------------------------------
         Image image = new Image("view/hauptmenu/Erde.jpg"); 
         PhongMaterial material1 = new PhongMaterial();
@@ -79,102 +82,106 @@ public class WeltraumSicht3 extends StackPane
         erdkugel.setRadius(40);
         erdkugel.setLayoutX(50);
         erdkugel.setLayoutY(60);
-     
-        anchorPane.getChildren().addAll(erdkugel);
-      
-        this.getChildren().add(anchorPane);
+        erdkugel.setTranslateZ(200);
+        
+        spielWelt.getChildren().addAll( erdkugel);
+        //--------------------------------------------------------------------------------------     
 
-//        scene = new Scene(this);
-//        scene.setCamera(kamera);
-          
-        initEventScene();
-
+//        initEventScene(scene);
 	}
 	
 	
-	private void initEventScene()
-	{
-		Point positionMaus = new Point(0,0);
-		
-		scene.setOnKeyPressed(new EventHandler<KeyEvent>()
-	        {
-				@Override
-				public void handle(KeyEvent event) 
-				{
-					kamera.doBewegung(event.getCode());	
-				}
-	        });
-	        
-			scene.setOnMousePressed(new EventHandler<MouseEvent>()
-	        {
-
-				@Override
-				public void handle(MouseEvent event) 
-				{
-					if (event.getButton() == MouseButton.PRIMARY)
-					{
-						positionMaus.setLocation(MouseInfo.getPointerInfo().getLocation());
-						kamera.setRotaion(true);
-					}
-				}   	
-	        });
-	        	
-			scene.setOnMouseDragged(new EventHandler<MouseEvent>() 
-	        {
-	        	double mouseOldX = 0; 
-	        	double mouseOldY = 0;
-	        	
-	        	double mousePosX = 0;
-	        	double mousePosY = 0;
-	        	
-	        	double mouseDeltaX = 0;
-	        	double mouseDeltaY = 0;
-	        	
-				@Override
-				public void handle(MouseEvent event) 
-				{
-		        	mouseOldX = mousePosX;
-	                mouseOldY = mousePosY;
-	                mousePosX = MouseInfo.getPointerInfo().getLocation().getX();
-	                mousePosY = MouseInfo.getPointerInfo().getLocation().getY();
-	                
-	                mouseDeltaX = mousePosX - mouseOldX;
-	                mouseDeltaY = mousePosY - mouseOldY;
-	                   
-	                if (mouseDeltaX >= 5 || mouseDeltaX <= -5)
-	                {
-	                	mouseDeltaX = 0;
-	                }
-	                if (mouseDeltaY >= 5 || mouseDeltaY <= -5  )
-	                {
-	                	mouseDeltaY = 0;
-	                }
-	                
-					kamera.rotation(mouseDeltaX , mouseDeltaY );
-				}
-			});
-	        
-			scene.setOnMouseReleased(new EventHandler<MouseEvent>()
-	        {
-				@Override
-				public void handle(MouseEvent event) 
-				{
-					if (event.getButton() == MouseButton.PRIMARY)
-					{
-						kamera.setRotaion(false);
-					}
-				}   	
-	        });        
-	}
+	//Diese Methode wurde in die Kamera ausgelagert
+//	private void initEventScene(Scene scene)
+//	{
+//		Point positionMaus = new Point(0,0);
+//		
+//		scene.setOnKeyPressed(new EventHandler<KeyEvent>()
+//	        {
+//				@Override
+//				public void handle(KeyEvent event) 
+//				{
+//					kamera.doBewegung(event.getCode());	
+//				}
+//	        });
+//	        
+//			scene.setOnMousePressed(new EventHandler<MouseEvent>()
+//	        {
+//
+//				@Override
+//				public void handle(MouseEvent event) 
+//				{
+//					if (event.getButton() == MouseButton.PRIMARY)
+//					{
+//						positionMaus.setLocation(MouseInfo.getPointerInfo().getLocation());
+//						kamera.setRotaion(true);
+//					}
+//				}   	
+//	        });
+//	        	
+//			scene.setOnMouseDragged(new EventHandler<MouseEvent>() 
+//	        {
+//	        	double mouseOldX = 0; 
+//	        	double mouseOldY = 0;
+//	        	
+//	        	double mousePosX = 0;
+//	        	double mousePosY = 0;
+//	        	
+//	        	double mouseDeltaX = 0;
+//	        	double mouseDeltaY = 0;
+//	        	
+//				@Override
+//				public void handle(MouseEvent event) 
+//				{
+//		        	mouseOldX = mousePosX;
+//	                mouseOldY = mousePosY;
+//	                mousePosX = MouseInfo.getPointerInfo().getLocation().getX();
+//	                mousePosY = MouseInfo.getPointerInfo().getLocation().getY();
+//	                
+//	                mouseDeltaX = mousePosX - mouseOldX;
+//	                mouseDeltaY = mousePosY - mouseOldY;
+//	                   
+//	                if (mouseDeltaX >= 5 || mouseDeltaX <= -5)
+//	                {
+//	                	mouseDeltaX = 0;
+//	                }
+//	                if (mouseDeltaY >= 5 || mouseDeltaY <= -5  )
+//	                {
+//	                	mouseDeltaY = 0;
+//	                }
+//	                
+//					kamera.rotation(mouseDeltaX , mouseDeltaY );
+//				}
+//			});
+//	        
+//			scene.setOnMouseReleased(new EventHandler<MouseEvent>()
+//	        {
+//				@Override
+//				public void handle(MouseEvent event) 
+//				{
+//					if (event.getButton() == MouseButton.PRIMARY)
+//					{
+//						kamera.setRotaion(false);
+//					}
+//				}   	
+//	        });        
+//	}
 	
 	
+	/**
+	 * 
+	 * @return gibt die Kamerea dieser Sicht
+	 */
 	public Kamera getKamera()
 	{
 		return kamera;
 	}
 	
 	
-	public SubScene getSceneSicht()
+	/**
+	 * gibt die SubScene der Sicht.
+	 */
+	public SubScene getSubScene()
 	{
 		return subScene;
 	}

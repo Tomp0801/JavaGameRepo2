@@ -2,13 +2,12 @@ package view.weltraum;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.SubScene;
-import javafx.scene.control.Button;
 import javafx.scene.input.KeyCombination;
-import javafx.scene.layout.BorderPane;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import map.Sektion;
 import view.weltraum.fxml.SpielUmgebungController;
 
@@ -56,13 +55,17 @@ public class StageController extends Application
 		
 		Sektion demoSektion = new Sektion();
 		WeltraumSicht3 demo = new WeltraumSicht3(demoSektion, spielSceneDemo);
-		spielUmgebungController.wechsleZentrum(demo.getSceneSicht());
+		SubScene subScene = demo.getSubScene();
+		
+		subScene.widthProperty().bind(spielUmgebungController.getStackPaneZentrum().widthProperty());
+		subScene.heightProperty().bind(spielUmgebungController.getStackPaneZentrum().heightProperty());
+		
+		spielUmgebungController.wechsleZentrum(subScene);
 		
 		stage.setScene(spielSceneDemo);
 		stage.show();
-
 		
-		
+	
 		//-----------------------Test-TODO---loechen------------------------------------
 //		Button testButton = new Button("Ich bin ein Test Button");
 //		BorderPane testPane = new BorderPane();

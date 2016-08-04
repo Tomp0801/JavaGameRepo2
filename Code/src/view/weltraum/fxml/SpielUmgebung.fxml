@@ -1,24 +1,85 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.effect.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-
 <BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="506.0" prefWidth="735.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.weltraum.fxml.SpielUmgebungController">
    <top>
-      <HBox alignment="CENTER_RIGHT" prefHeight="15.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+      <HBox alignment="CENTER_RIGHT" prefHeight="15.0" prefWidth="600.0" spacing="15.0" style="-fx-background-color: BLACK;" BorderPane.alignment="CENTER">
          <children>
+            <HBox alignment="CENTER" spacing="4.0">
+               <children>
+                  <Button fx:id="modusKampf" minHeight="20.0" minWidth="70.0" mnemonicParsing="false" onAction="#actionHandler" prefHeight="20.0" prefWidth="70.0" text="Kampf">
+                     <font>
+                        <Font size="9.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="modusDiplomatie" minHeight="20.0" minWidth="70.0" mnemonicParsing="false" onAction="#actionHandler" prefHeight="20.0" prefWidth="70.0" text="Diplomatie">
+                     <font>
+                        <Font size="9.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="modusHandel" minHeight="20.0" minWidth="70.0" mnemonicParsing="false" onAction="#actionHandler" prefHeight="20.0" prefWidth="70.0" text="Handel">
+                     <font>
+                        <Font size="9.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="modusAufbau" minHeight="20.0" minWidth="70.0" mnemonicParsing="false" onAction="#actionHandler" prefHeight="20.0" prefWidth="70.0" text="Aubau">
+                     <font>
+                        <Font size="9.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="modusAbenteuer" minHeight="20.0" minWidth="70.0" mnemonicParsing="false" onAction="#actionHandler" prefHeight="20.0" prefWidth="70.0" text="Abenteuer">
+                     <font>
+                        <Font size="9.0" />
+                     </font>
+                  </Button>
+               </children>
+               <effect>
+                  <Glow level="0.52">
+                     <input>
+                        <Lighting diffuseConstant="0.75" specularConstant="0.0" specularExponent="2.79" surfaceScale="7.43">
+                           <bumpInput>
+                              <Shadow />
+                           </bumpInput>
+                           <light>
+                              <Light.Distant azimuth="25.12" elevation="132.91" />
+                           </light>
+                        </Lighting>
+                     </input>
+                  </Glow>
+               </effect>
+            </HBox>
             <Button fx:id="spielMenuButton" minHeight="20.0" minWidth="35.0" mnemonicParsing="false" onAction="#actionHandler" prefHeight="20.0" prefWidth="35.0" text="Menu">
                <font>
                   <Font size="9.0" />
                </font>
+               <effect>
+                  <Glow level="0.7">
+                     <input>
+                        <Lighting diffuseConstant="1.82" specularConstant="0.84" specularExponent="40.0" surfaceScale="4.39">
+                           <bumpInput>
+                              <Shadow />
+                           </bumpInput>
+                           <light>
+                              <Light.Distant azimuth="12.56" color="#4c35a8" elevation="141.27" />
+                           </light>
+                        </Lighting>
+                     </input>
+                  </Glow>
+               </effect>
             </Button>
          </children>
       </HBox>
    </top>
    <center>
-      <StackPane prefHeight="150.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+      <StackPane style="-fx-background-color: BLACK;">
+         <children>
+            <StackPane fx:id="centerPane" prefHeight="150.0" prefWidth="200.0" style="-fx-background-color: BLACK;" BorderPane.alignment="CENTER" />
+         </children>
+      </StackPane>
    </center>
 </BorderPane>
