@@ -58,11 +58,11 @@ public class WeltraumSicht3 extends StackPane
 		
 		//-------------erstellt-die-SubScene-fuer-die-Kammera--------------------------------------------------//
 		subScene = new SubScene(this , 500 , 500, true, null);
-		subScene.setFill(Color.BLACK);
+//		subScene.setFill(Color.BLACK); TODO wieder hinzufuegen
 		subScene.setCamera(kamera);
 		//-------------erstellt-die-Spielumgebung-auf-dieser-befinden-sich-alle-Elemente-der-Sektion-----------//
-        spielWelt.setStyle("-fx-background-color:BLACK");   
-        spielWelt.setBackground(null);
+//        spielWelt.setStyle("-fx-background-color:BLACK");   
+//        spielWelt.setBackground(null);
         this.getChildren().add(spielWelt);
 
         
