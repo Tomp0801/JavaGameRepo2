@@ -2,13 +2,20 @@ package view.weltraum.fxml;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import javafx.animation.Animation.Status;
+import javafx.animation.FadeTransition;
+import javafx.animation.ScaleTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.SubScene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
+import javafx.util.Duration;
 
 /**
  * 
@@ -34,6 +41,11 @@ public class SpielUmgebungController implements Initializable
 	@FXML 
 	private StackPane centerPane;
 	
+	/**
+	 * ein Spiel Menu
+	 */
+	@FXML 
+	private VBox spielMenu;
 	
 	
 	//---------------------------Oberre-MenuLeiste--------------------------------------------------//
@@ -73,8 +85,44 @@ public class SpielUmgebungController implements Initializable
 	@FXML
 	private Button modusAbenteuer;
 	
-	//----------------------------------------------------------------------------------------------//
+	//-------------------------Buttons-Spiel-Menu-------------------------------------------------------------------//
 	
+	/**
+	 * ein Button um ein anders Spiel zu laden
+	 */
+	@FXML
+	private Button laden;
+	
+	/**
+	 * ein Button um ein Spiel zu speichern
+	 */
+	@FXML
+	private Button speichern;
+	
+	/**
+	 * ein Button um in die Einstellungen zu gelangen
+	 */
+	@FXML
+	private Button einstellungen;
+	
+	/**
+	 * ein Button um das Spiel zu beenden
+	 */
+	@FXML
+	private Button beenden;
+	
+	/**
+	 * ein Button um das Spielmen wieder zu verlassen
+	 */
+	@FXML
+	private Button back;
+	//-----------------------------------------------------------------------------------------------------//
+	
+	
+	/**
+	 * die aktuell verwendete Scene von der KeyEvents abgefangen werden
+	 */
+	private Scene scene;	
 	
 	/**
 	 * initialisiert den Controller
@@ -90,9 +138,10 @@ public class SpielUmgebungController implements Initializable
 	@FXML
 	public void actionHandler(ActionEvent e)
 	{
+		//----------------------------Obere-Menuleiste-Buttons------------------------------------//
 		if(e.getSource() == spielMenuButton)
 		{
-			//TODO oeffne das Menu (SpielMenu.fxml)
+			oeffneMenu();
 		}
 		else if (e.getSource() == modusAufbau)
 		{
@@ -119,7 +168,27 @@ public class SpielUmgebungController implements Initializable
 			System.err.println("Diplomatiemodus noch nicht vorhanden");
 			//TODO	
 		}
-			
+		//-------------------------------------Spielmenu-Buttons-----------------------------------------------------//
+		else if (e.getSource() == laden)
+		{
+			System.err.println("Die Ladefunktion ist noch nicht verfügbar");
+		}
+		else if (e.getSource() == speichern)
+		{
+			System.err.println("Die Speicherfunktion ist noch nicht verfügbar");
+		}
+		else if (e.getSource() == einstellungen)
+		{
+			System.err.println("Die Einstellungen sind noch nicht verfügbar");
+		}
+		else if (e.getSource() == beenden)
+		{
+			//TODO
+		}
+		else if (e.getSource() == back)
+		{
+			verlasseDasSpielMenu();
+		}
 	}
 	
 	
@@ -135,10 +204,80 @@ public class SpielUmgebungController implements Initializable
 	
 	
 	/**
+	 * setzt eine Scene von der KeyEvents abgefangen werden
+	 */
+	public void setScene(Scene scene)
+	{
+		this.scene = scene;
+	}
+	
+	
+	/**
 	 * gib das Zentrum von der BorderPane wieder die zum wechseln der Sicht wichtig ist
 	 */
 	public StackPane getStackPaneZentrum()
 	{
 		return centerPane;
+	}
+	
+	/**
+	 * offnet das SpielMenu
+	 */
+	private void oeffneMenu()
+	{
+		ScaleTransition trainsition = new ScaleTransition(Duration.seconds(2) ,  this.spielMenu);
+		trainsition.setFromX(0.001);
+		trainsition.setFromY(0.001);
+		trainsition.setToX(2);
+		trainsition.setToY(2);
+		
+		FadeTransition fadeTransition = new FadeTransition(Duration.seconds(2), this.spielMenu);
+		fadeTransition.setFromValue(0.0001);
+		fadeTransition.setToValue(1);
+		
+		fadeTransition.play();
+		trainsition.play();
+
+		spielMenu.setVisible(true);
+	}
+	
+	
+	/**
+	 * verlaest das Spielmenu wieder
+	 */
+	private void verlasseDasSpielMenu()
+	{
+		ScaleTransition trainsition = new ScaleTransition(Duration.seconds(2) ,  this.spielMenu);
+		
+		trainsition.setFromX(2);
+		trainsition.setFromY(2);
+		trainsition.setToX(0.1);
+		trainsition.setToY(0.1);
+		
+		FadeTransition fadeTransition = new FadeTransition(Duration.seconds(2), this.spielMenu);
+		fadeTransition.setFromValue(1);
+		fadeTransition.setToValue(0.0001);
+		
+		fadeTransition.play();
+		trainsition.play();
+		
+		new Runnable()
+		{
+			@Override
+			public void run() 
+			{
+				while (fadeTransition.getStatus() == Status.RUNNING)
+				{
+					try {
+						Thread.sleep(100);
+					} catch (InterruptedException e)
+					{
+						e.printStackTrace();
+					}
+				}
+				spielMenu.setVisible(false);
+				
+			}	
+		};
 	}
 }

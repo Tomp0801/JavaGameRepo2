@@ -3,6 +3,7 @@ package view.weltraum;
 import java.awt.MouseInfo;
 import java.awt.Point;
 
+import javafx.animation.RotateTransition;
 import javafx.event.EventHandler;
 import javafx.geometry.Point3D;
 import javafx.scene.PerspectiveCamera;
@@ -12,6 +13,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.transform.Rotate;
+import javafx.util.Duration;
 
 /**
  * das ist die Kamera der WeltraumSicht. 
@@ -39,7 +41,7 @@ public class Kamera extends PerspectiveCamera
 	 * rotation um die Z Achse
 	 */
 	private Rotate rotationY = new Rotate(0, Rotate.X_AXIS);
-
+	
 	/**
 	 * erstellt eine Kamera
 	 */
@@ -110,7 +112,7 @@ public class Kamera extends PerspectiveCamera
 	                mouseDeltaX = mousePosX - mouseOldX;
 	                mouseDeltaY = mousePosY - mouseOldY;
 	                   
-	                if (mouseDeltaX >= 5 || mouseDeltaX <= -5)
+	                if (mouseDeltaX >= 8 || mouseDeltaX <= -8)
 	                {
 	                	mouseDeltaX = 0;
 	                }
@@ -215,21 +217,21 @@ public class Kamera extends PerspectiveCamera
 		}
 	}
 	
-	
+
 	/**
 	 * rotiert die Kamera
 	 * @param mouseDeltaY
 	 * @param mouseDeltaX
 	 */
 	public void rotation(double mouseDeltaY , double mouseDeltaX)
-	{			
+	{	
+
 		if(this.isRotation)
 		{	
-			this.rotationY.setAngle(rotationY.getAngle() - mouseDeltaX/5);
-			this.rotationX.setAngle(rotationX.getAngle() + mouseDeltaY/5);
+			this.rotationY.setAngle(rotationY.getAngle() - mouseDeltaX/7);
+			this.rotationX.setAngle(rotationX.getAngle() + mouseDeltaY/7);
 		}
 	}
-	
 	
 	/**
 	 * setzt isRotaion bei rotation auf true
