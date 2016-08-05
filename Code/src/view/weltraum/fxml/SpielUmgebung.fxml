@@ -1,19 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import java.lang.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.effect.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="506.0" prefWidth="735.0" style="" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="view.weltraum.fxml.SpielUmgebungController">
+<BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="506.0" prefWidth="735.0" style="" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.weltraum.fxml.SpielUmgebungController">
   <center>
-    <StackPane style="">
+    <StackPane style="-fx-background-color: transparent; -fx-border-color: transparent;">
       <children>
-        <StackPane fx:id="centerPane" prefHeight="150.0" prefWidth="200.0" style="" />
-        <VBox fx:id="navigationBox" opacity="0.56" prefHeight="200.0" prefWidth="100.0" spacing="5.0" />
-        <VBox fx:id="spielMenu" alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0" visible="false">
+        <StackPane fx:id="centerPane" prefHeight="150.0" prefWidth="200.0" style="-fx-background-color: transparent; -fx-border-color: transparent;" />
+        <VBox fx:id="navigationBox" opacity="0.56" prefHeight="200.0" prefWidth="100.0" spacing="5.0" style="-fx-background-color: transparent; -fx-border-color: transparent;" />
+        <VBox fx:id="spielMenu" alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0" style="-fx-background-color: transparent; -fx-border-color: transparent;" visible="false">
           <children>
             <Button fx:id="speichern" mnemonicParsing="false" onAction="#actionHandler" prefWidth="200.0" text="Speichern">
               <font>
@@ -40,7 +39,7 @@
     </StackPane>
   </center>
   <top>
-    <HBox alignment="CENTER_RIGHT" prefHeight="15.0" prefWidth="600.0" spacing="15.0" style="-fx-background-color: BLACK;" BorderPane.alignment="CENTER">
+    <HBox alignment="CENTER_RIGHT" maxHeight="15.0" minHeight="15.0" minWidth="600.0" prefHeight="15.0" prefWidth="600.0" spacing="15.0" style="-fx-background-color: BLACK;" BorderPane.alignment="CENTER">
       <children>
         <HBox alignment="CENTER" spacing="4.0">
           <children>

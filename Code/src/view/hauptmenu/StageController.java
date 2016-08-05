@@ -54,15 +54,15 @@ public class StageController extends Application
 		//zum laden eines DemoSpiels
 		StageControllerSpiel demoSpiel = new StageControllerSpiel(primaryStage);
 		
-		//nicht loeschen
-//		instance = this; 
-//		this.stage = primaryStage;
-//		
-//		//Damit man nicht mit ESCAP den FullScreen schließen kann
-//		primaryStage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
-//		//Damit keine Nachricht erscheint nach dem eröffnen des FullScreens
-//		primaryStage.setFullScreenExitHint("");
-//		primaryStage.setFullScreen(true);
+
+		instance = this; 
+		this.stage = primaryStage;
+		//Damit man nicht mit ESCAP den FullScreen schließen kann
+		primaryStage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
+		//Damit keine Nachricht erscheint nach dem eröffnen des FullScreens
+		primaryStage.setFullScreenExitHint("");
+		primaryStage.setFullScreen(true);
+		
 //		primaryStage.show();
 //		
 //		wechselScene(SceneEnum.STARTGAME);
