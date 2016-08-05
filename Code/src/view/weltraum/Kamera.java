@@ -2,8 +2,6 @@ package view.weltraum;
 
 import java.awt.MouseInfo;
 import java.awt.Point;
-
-import javafx.animation.RotateTransition;
 import javafx.event.EventHandler;
 import javafx.geometry.Point3D;
 import javafx.scene.PerspectiveCamera;
@@ -13,7 +11,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.transform.Rotate;
-import javafx.util.Duration;
+
 
 /**
  * das ist die Kamera der WeltraumSicht. 

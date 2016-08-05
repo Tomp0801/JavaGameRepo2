@@ -118,6 +118,14 @@ public class SpielUmgebungController implements Initializable
 	private Button back;
 	//-----------------------------------------------------------------------------------------------------//
 	
+	@FXML
+	private StackPane testStackPane;
+	
+	/**
+	 * unterstuetzt das navigieren in einer Sektion. Beinhaltet eine Liste von Planeten
+	 */
+	@FXML
+	private VBox navigationBox;
 	
 	/**
 	 * die aktuell verwendete Scene von der KeyEvents abgefangen werden
@@ -129,7 +137,14 @@ public class SpielUmgebungController implements Initializable
 	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) 
-	{}
+	{
+		System.out.println("bin im SpielUmgebungsController");
+		System.out.println("Styl einer testStackPane   "+ testStackPane.getStyle());
+		System.out.println("Styl einer borderPane  "+ borderPane.getStyle());
+		System.out.println("Styl einer centerPane "+ centerPane.getStyle());
+		System.out.println("Styl einer nacigationBox  "+ navigationBox.getStyle());
+		System.out.println("Styl einer spieMenu  "+ spielMenu.getStyle());
+	}
 	
 	
 	/**
@@ -200,6 +215,7 @@ public class SpielUmgebungController implements Initializable
 	{
 		centerPane.getChildren().clear();
 		centerPane.getChildren().add(subScene);
+		System.out.println("Übergabe der SubScene der SpielUmgebung war erfolgreich wenn die größe der centerPane größer als null ist.       größe: "+centerPane.getChildren().size());
 	}
 	
 	
@@ -208,6 +224,7 @@ public class SpielUmgebungController implements Initializable
 	 */
 	public void setScene(Scene scene)
 	{
+		System.out.println("Die Scene wurde der Spielumgebung übergeben");
 		this.scene = scene;
 	}
 	

@@ -51,6 +51,7 @@ public class StageController extends Application
 	@Override
 	public void start(Stage primaryStage) throws Exception 
 	{    
+		System.out.println("Spiel wird gestartet");
 		//zum laden eines DemoSpiels
 		StageControllerSpiel demoSpiel = new StageControllerSpiel(primaryStage);
 		
