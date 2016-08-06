@@ -28,6 +28,12 @@ public class GasPlanet extends Planet {
 
 	@Override
 	protected void generate() {
+		/*
+		 * Mittlere Materiedichte: p = 3 m/ (4* pi* r^3)
+		 * p <= 2 g/cm^3 für GasPlaneten
+		 * 
+		 * Jupiter Radius: 69.911 km, Masse: 1,898 × 10^27 kg (317,8 M)
+		 */
 		// TODO Auto-generated method stub
 		
 	}

@@ -9,6 +9,8 @@ import global.Agregat;
  * Ein Himmelskörper, bewohnbar, wenn fest
  * Umkreist einen Stern
  * 
+ * Gibt auch Planeten ohne Sonne : Planemos
+ * 
  * TODO rotation klären
  * 
  * @author Thomas

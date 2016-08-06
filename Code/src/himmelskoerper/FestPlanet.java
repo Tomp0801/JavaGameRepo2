@@ -46,6 +46,10 @@ public class FestPlanet extends Planet implements Betretbar {
 
 	@Override
 	protected void generate() {
+		/*
+		 * Mittlere Materiedichte: p = 3 m/ (4* pi* r^3)
+		 * p >= 3 g/cm^3 für FestPlaneten
+		 */
 		// TODO Auto-generated method stub
 		
 	}
