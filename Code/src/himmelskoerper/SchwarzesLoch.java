@@ -3,7 +3,7 @@ package himmelskoerper;
 import java.util.Iterator;
 import java.util.LinkedList;
 
-
+import global.Agregat;
 import global.Constants;
 
 public class SchwarzesLoch extends Himmelskoerper implements Orbitable {
@@ -14,7 +14,7 @@ public class SchwarzesLoch extends Himmelskoerper implements Orbitable {
 	private LinkedList<Stern> sterne;
 	
 	public SchwarzesLoch(double masse, float radius) {
-		super(masse, radius, Constants.FEST);
+		super(masse, radius, Agregat.FEST);
 		
 		sterne = new LinkedList<Stern>();
 	}
@@ -68,7 +68,7 @@ public class SchwarzesLoch extends Himmelskoerper implements Orbitable {
 		double radius = masse / maxMasse * maxRadius;
 		setMasse(masse);
 		setRadius(radius);
-		setArt(Constants.FEST);
+		setArt(Agregat.FEST);
 		
 		sterne = new LinkedList<Stern>();
 	}

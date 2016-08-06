@@ -17,13 +17,4 @@ public final class Constants {
 	 * Sonnenmasse M = 1,989 * 10^30 kg
 	 */
 	public static final double M = 1.989 * Math.pow(10, 30);
-	
-	/**
-	 * attribut für gasförmige Himmelskörper
-	 */
-	public static final String GAS = "gas";
-	/**
-	 * attribut für feste himmelskörper
-	 */
-	public static final String FEST = "fest";
 }

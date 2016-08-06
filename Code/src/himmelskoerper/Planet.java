@@ -3,6 +3,8 @@ package himmelskoerper;
 import java.util.Iterator;
 import java.util.LinkedList;
 
+import global.Agregat;
+
 /**
  * Ein Himmelskörper, bewohnbar, wenn fest
  * Umkreist einen Stern
@@ -26,7 +28,7 @@ public abstract class Planet extends InOrbit implements Orbitable
 	 * @param masse
 	 * @param typ der Typ des Planeten (gas oder fest)
 	 */
-	public Planet(Stern bezugsKoerper, double distanz, double masse, double radius, String art) {
+	public Planet(Stern bezugsKoerper, double distanz, double masse, double radius, Agregat art) {
 		super(bezugsKoerper, distanz, masse, radius, art);
 		
 		monde = new LinkedList<Mond>();

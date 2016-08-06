@@ -1,6 +1,6 @@
 package himmelskoerper;
 
-import global.Constants;
+import global.Agregat;
 
 /**
  * Ein Himmelskörper, bewohnbar, wenn fest
@@ -13,7 +13,7 @@ public class Mond extends InOrbit
 {
 
 	public Mond(Planet bezugsKoerper, double distanz, double masse, double radius) {
-		super(bezugsKoerper, distanz, masse, radius, Constants.FEST);
+		super(bezugsKoerper, distanz, masse, radius, Agregat.FEST);
 		// TODO Auto-generated constructor stub
 	}
 	

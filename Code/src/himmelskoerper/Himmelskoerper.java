@@ -2,7 +2,7 @@ package himmelskoerper;
 
 import java.util.Vector;
 
-
+import global.Agregat;
 import global.GameTime;
 import global.Random;
 
@@ -50,7 +50,7 @@ public abstract class Himmelskoerper
 	/**
 	 * Art des Objekts : Gas oder Fest 
 	 */
-	private String art;
+	private Agregat art;
 	
 	/**
 	 * Zeitpunkt der Letzten Positions- und Zustandsberechnung
@@ -64,7 +64,7 @@ public abstract class Himmelskoerper
  	 * @param radius sets radius der Kugel
  	 * @param art sets art des Objekts (fest oder gasförmig)
 	 */
-	public Himmelskoerper(double masse, double radius, String art) {
+	public Himmelskoerper(double masse, double radius, Agregat art) {
 		this.masse = masse;
 		this.radius = radius;
 		this.art = art;
@@ -191,7 +191,7 @@ public abstract class Himmelskoerper
 	/**
 	 * @return the art
 	 */
-	public String getArt() {
+	public Agregat getArt() {
 		return art;
 	}
 	
@@ -199,7 +199,7 @@ public abstract class Himmelskoerper
 	 * 
 	 * @param art sets the art
 	 */
-	protected void setArt(String art) {
+	protected void setArt(Agregat art) {
 		this.art = art;
 	}
 

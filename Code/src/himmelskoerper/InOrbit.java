@@ -2,6 +2,7 @@ package himmelskoerper;
 
 import java.util.Vector;
 
+import global.Agregat;
 import global.Constants;
 import global.GameTime;
 
@@ -49,7 +50,7 @@ public abstract class InOrbit extends Himmelskoerper {
 	 * @param distanz die Distanz, mit der das Objekt den Körper umkreist
 	 * @param masse Masse des Objekts
 	 */
-	public InOrbit(Orbitable bezugsKoerper, double distanz, double masse, double radius, String art) {
+	public InOrbit(Orbitable bezugsKoerper, double distanz, double masse, double radius, Agregat art) {
 		super(masse, radius, art);
 		this.setBezugsKoerper(bezugsKoerper);
 		this.setOrbitRadius(distanz);

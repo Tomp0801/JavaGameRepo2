@@ -3,6 +3,7 @@ package himmelskoerper;
 import java.util.Iterator;
 import java.util.LinkedList;
 
+import global.Agregat;
 import global.Constants;
 
 
@@ -26,7 +27,7 @@ public class Stern extends InOrbit implements Orbitable
 	 * @param radius sets radius of Stern
 	 */
 	public Stern(SchwarzesLoch bezugsKoerper, double distanz, double masse, double radius) {
-		super(bezugsKoerper, distanz, masse, radius, Constants.GAS);
+		super(bezugsKoerper, distanz, masse, radius, Agregat.GAS);
 		
 		planeten = new LinkedList<Planet>();
 	}
@@ -99,7 +100,7 @@ public class Stern extends InOrbit implements Orbitable
 		setMasse(masse);
 		setRadius(radius);
 		setOberflaechenTemperatur(temperatur);
-		setArt(Constants.GAS);
+		setArt(Agregat.GAS);
 		
 		//Distanz zum bezugsKoerper zufällig
 		//TODO nicht zufällig?

@@ -1,6 +1,6 @@
 package himmelskoerper;
 
-import global.Constants;
+import global.Agregat;
 
 /**
  * Ein Planet aus Gas, nicht betretbar
@@ -18,7 +18,7 @@ public class GasPlanet extends Planet {
 	 * @param masse
 	 */
 	public GasPlanet(Stern bezugsKoerper, double distanz, double masse, double radius) {
-		super(bezugsKoerper, distanz, masse, radius, Constants.GAS);
+		super(bezugsKoerper, distanz, masse, radius, Agregat.GAS);
 		
 	}
 	

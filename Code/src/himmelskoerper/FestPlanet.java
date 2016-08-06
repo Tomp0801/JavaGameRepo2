@@ -1,6 +1,6 @@
 package himmelskoerper;
 
-import global.Constants;
+import global.Agregat;
 import map.Karte;
 
 /**
@@ -24,7 +24,7 @@ public class FestPlanet extends Planet implements Betretbar {
 	 * @param masse
 	 */
 	public FestPlanet(Stern bezugsKoerper, double distanz, double masse, double radius) {
-		super(bezugsKoerper, distanz, masse, radius, Constants.FEST);
+		super(bezugsKoerper, distanz, masse, radius, Agregat.FEST);
 		
 		int breite;
 		//Größe der Karte aus dem Radius ermitteln
