@@ -94,6 +94,7 @@ public class WeltraumSicht3 extends StackPane
         erdkugel.setLayoutX(50);
         erdkugel.setLayoutY(60);
         erdkugel.setTranslateZ(200);
+        erdkugel.toFront();
         System.out.println("Position des Planeten (X/Y/Z/Radius):      "+erdkugel.getTranslateX()+"/"+erdkugel.getTranslateY()+"/"+erdkugel.getTranslateZ()+"/"+erdkugel.getRadius());
         spielWelt.getChildren().addAll( erdkugel);     
         System.out.println("Die Menge der Elemente die sich auf den Spielfeld befinden:  "+spielWelt.getChildren().size());

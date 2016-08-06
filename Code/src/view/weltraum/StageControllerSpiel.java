@@ -56,7 +56,6 @@ public class StageControllerSpiel
 		subScene.widthProperty().bind(spielUmgebungController.getStackPaneZentrum().widthProperty());
 		subScene.heightProperty().bind(spielUmgebungController.getStackPaneZentrum().heightProperty());
 		
-		System.out.println("große der SubScene(x/y):      "+subScene.getWidth()+"/"+subScene.getHeight()+"  die größe muss nicht identisch sein. sie darf aber nicht klein sein also nicht zwischen 0 und 100 liegen   ");
 		//---------------------In-der-Mitte-des-Fensters-wird-die-spielumgebeung-plaziert------------------------------------------------------------------------------//
 		spielUmgebungController.wechsleZentrum(subScene);	
 		//-------------------Stage wird erstellt-----------------------------------------------------//

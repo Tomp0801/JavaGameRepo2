@@ -11,7 +11,7 @@
     <StackPane fx:id="testStackPane" style="-fx-background-color: transparent; -fx-border-color: transparent;">
       <children>
         <StackPane fx:id="centerPane" prefHeight="150.0" prefWidth="200.0" style="-fx-background-color: transparent; -fx-border-color: transparent;" />
-        <VBox fx:id="navigationBox" opacity="0.56" prefHeight="200.0" prefWidth="100.0" spacing="5.0" style="-fx-background-color: transparent; -fx-border-color: transparent;" />
+        <VBox fx:id="navigationBox" opacity="0.56" prefHeight="200.0" prefWidth="100.0" spacing="5.0" style="-fx-background-color: transparent; -fx-border-color: transparent;" visible="false" />
         <VBox fx:id="spielMenu" alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0" style="-fx-background-color: transparent; -fx-border-color: transparent;" visible="false">
           <children>
             <Button fx:id="speichern" mnemonicParsing="false" onAction="#actionHandler" prefWidth="200.0" text="Speichern">
