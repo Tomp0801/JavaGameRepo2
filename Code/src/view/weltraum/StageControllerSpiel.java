@@ -66,6 +66,7 @@ public class StageControllerSpiel
 		stage.setScene(spielSceneDemo);
 		stage.show();
 		
+		subScene.toFront();
 		System.out.println("große der SubScene(x/y):      "+subScene.getWidth()+"/"+subScene.getHeight()+"  die größe muss nicht identisch sein. sie darf aber nicht klein sein also nicht zwischen 0 und 100 liegen   ");
 		//-----------------------Test-TODO---loechen------------------------------------
 //		Button testButton = new Button("Ich bin ein Test Button");
