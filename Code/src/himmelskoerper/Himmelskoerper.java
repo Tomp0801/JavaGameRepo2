@@ -18,11 +18,6 @@ import global.Random;
 public abstract class Himmelskoerper 
 {
 	/**
-	 * der Seed des Himmelskörpers, nach dem er generiert wurde
-	 */
-	private int seed;
-	
-	/**
 	 * Pseudo-Random Number Generator für dieses Objekt
 	 */
 	private Random prng;
@@ -68,7 +63,8 @@ public abstract class Himmelskoerper
 		this.masse = masse;
 		this.radius = radius;
 		this.art = art;
-		this.seed = 0;	//kein seed wurde verwendet -> seed = 0 setzen
+		//prng mit zufälliger Zahl initialisieren
+		prng = new Random((int) Math.round(Math.random() * 2147483647));
 		
 		setPosition(0, 0, 0); 	//Position initialisieren mit 0
 		this.lastRefresh = GameTime.timeMillis();		//lastRefresh initialisieren
@@ -79,18 +75,10 @@ public abstract class Himmelskoerper
 	 * @param seed der Seed nach dem generiert wird
 	 */
 	public Himmelskoerper(int seed) {
-		this.seed = seed;
 		prng = new Random(seed);	//PRNG erstellen
 		
 		setPosition(0, 0, 0); 	//Position initialisieren mit 0
 		this.lastRefresh = GameTime.timeMillis();		//lastRefresh initialisieren
-	}
-	
-	/**
-	 * @return the seed
-	 */
-	public int getSeed() {
-		return seed;
 	}
 	
 	/**
@@ -182,10 +170,10 @@ public abstract class Himmelskoerper
 	
 	/**
 	 * 
-	 * @return eine ZufallsZahl vom Objekteigenen PRNG
+	 * @return prng
 	 */
-	protected double getRandom() {
-		return prng.random();
+	protected Random getPRNG() {
+		return prng;
 	}
 	
 	/**
@@ -224,10 +212,12 @@ public abstract class Himmelskoerper
 	public void printStatus() {
 		Vector<Double> pos = getPosition();
 		System.out.println(" _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _");
-		System.out.println("| Tick: " + getLastRefresh()/1000 + ": ");
+		System.out.println("| Seed: " + getPRNG().getSeed());
+		System.out.println("| Art: " + this.art);
 		System.out.println("| Position: " + pos.get(0) + " " + pos.get(1) + " " + pos.get(2));
 		System.out.println("| Radius: " + this.radius);
 		System.out.println("| Masse: "+ this.masse);
+		System.out.println("| Tick: " + getLastRefresh()/1000 + ": ");
 		System.out.println(" _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _");
 	}
 	

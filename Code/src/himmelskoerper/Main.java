@@ -11,48 +11,26 @@ package himmelskoerper;
 public class Main {
 	
 	public static void main(String[] args) {
-		/**
-		 * Sonne des Sonnensystems
-		 */
-		Stern sonne;
 
-		double masse = (1.989 * Math.pow(10, 30)); 
-		double radius = 695700;
-		sonne = new Stern(null, 0, masse, radius);		//Sonne nicht in einem Orbit
-		
-		//zufällig generiertes Schwarzes Loch mit Stern
-		SchwarzesLoch SL = new SchwarzesLoch(1234);
-		
-		Stern stern = new Stern(SL, 438);
-		SL.add(stern);
-		
-		//Planeten hinzufügen
-		//FestPlanet erde = new FestPlanet(sonne, 149600000, 5.972 * Math.pow(10, 24));
-		
-		//Mond mond = new Mond(erde, 384400, 7.349 * Math.pow(10, 22), );
-		
+		SchwarzesLoch SL = new SchwarzesLoch(123456789, 1234567);
+		Stern sonne = new Stern(SL, 2435346);
+
+		SL.add(sonne);
+
 		//"programmschleife"
 		while (true) {
-			/*erde.refresh();
-			System.out.println("Erde: ");
-			erde.printStatus();
+					
+			System.out.println("Anzahl Sterne: " + SL.getChildren().size());
+			System.out.println("Anzahl Planeten: " + sonne.getChildren().size());
 			
-			mond.bewegen();
-			System.out.println("Mond: ");
-			mond.printStatus();
-			
-			sonne.bewegen();
-			System.out.println("Sonne: ");
-			sonne.printStatus();*/
-			
-			System.out.println("SL: ");
-			SL.printStatus();
-			
-			stern.bewegen();
-			System.out.println("Stern: ");
-			stern.printStatus();
+			System.out.println("Größe des Sonnensystems: " + sonne.getSystemRadius());
 			
 			
+			sonne.printStatus();
+			for (int i = 0; i < sonne.getChildren().size(); i++) {
+				System.out.println(i);
+				sonne.getChildren().get(i).printStatus();
+			}
 			
 			System.out.println("___________________________________________________________");
 			

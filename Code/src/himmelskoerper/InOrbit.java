@@ -75,8 +75,8 @@ public abstract class InOrbit extends Himmelskoerper {
 		super(seed);
 		
 		this.bezugsKoerper = bezugsKoerper;
-		bezugsKoerper.add(this);
-		
+		bezugsKoerper.add(this);	//zu bezugsKoerper hinzufuegen
+
 		generate();
 		
 		//bewegungsVektor setzen
@@ -101,7 +101,7 @@ public abstract class InOrbit extends Himmelskoerper {
 	private void setRandomPosition() {
 		//zufällige Position auf dem Orbit erstellen
 		//TODO für 3D auch angleYZ random
-		setPosition(this.getOrbitRadius(), getRandom() * 2*Math.PI, 0);
+		setPosition(this.getOrbitRadius(), getPRNG().random(0, 2 * Math.PI), 0);
 	}
 	
 	/**
@@ -183,5 +183,23 @@ public abstract class InOrbit extends Himmelskoerper {
 			//Winkel auf aktuelle Position addieren
 			this.setPosition(orbitRadius, position.get(1) + angleX, position.get(2) + angleY);
 		}
+	}
+	
+	/**
+	 * Berechnet Temperatur für dieses Objekt, die durch Bestrahlung des Bezugskörpers entsteht
+	 * eigene Wärme entwicklung wird nicht mit einberechnet
+	 * 
+	 * @param bezugsKoerper Körper um dieser kreist
+	 * @param distanz von diesem Körper zum BezugsKörper
+	 * @return die errechnete Oberflächen Temperatur dieses Körpers 
+	 */
+	protected double calcTemperatur(Orbitable bezugsKoerper, double distanz) {
+		//http://www.semibyte.de/wp/physics/atomphysics-qm/beispiel-zum-stefan-boltzmann-strahlungsgesetz-temperatur-erde/
+		
+		double T = Math.pow(bezugsKoerper.getRadius(), 2) * Math.pow(bezugsKoerper.getOberflaechenTemperatur(), 4);
+		T = T / Math.pow(distanz, 2);
+		T = Math.pow(T, 1/4);
+		
+		return T;
 	}
 }

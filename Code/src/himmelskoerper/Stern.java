@@ -18,7 +18,7 @@ public class Stern extends InOrbit implements Orbitable
 	/**
 	 * Liste der Planeten, die den Stern umkreisen
 	 */
-	LinkedList<Planet> planeten;
+	LinkedList<InOrbit> planeten;
 	
 	/**
 	 * Konstruktor
@@ -29,13 +29,15 @@ public class Stern extends InOrbit implements Orbitable
 	public Stern(SchwarzesLoch bezugsKoerper, double distanz, double masse, double radius) {
 		super(bezugsKoerper, distanz, masse, radius, Agregat.GAS);
 		
-		planeten = new LinkedList<Planet>();
+		planeten = new LinkedList<InOrbit>();
 	}
 	
 	public Stern(SchwarzesLoch bezugsKoerper, int seed) {
 		super(bezugsKoerper, seed);
 		
-		planeten = new LinkedList<Planet>();
+		planeten = new LinkedList<InOrbit>();
+		
+		generateChildren();		//Planeten in Orbit zufällig generieren
 	}
 
 	/**
@@ -49,7 +51,7 @@ public class Stern extends InOrbit implements Orbitable
 		if (planeten.isEmpty()) {		//wenn die Liste noch leer ist
 			planeten.add(newPlanet);
 		} else {		//wenn schon Planeten vorhanden sind, sortiert einfügen
-			Iterator<Planet> iterator = planeten.iterator();
+			Iterator<InOrbit> iterator = planeten.iterator();
 			int index = 0;
 											//solange die Distanz zum neuen Planeten kleiner ist als die des nächsten
 			while (iterator.hasNext() && newPlanet.getOrbitRadius() < iterator.next().getOrbitRadius()) {
@@ -65,7 +67,7 @@ public class Stern extends InOrbit implements Orbitable
 	
 	@Override
 	public double getSystemRadius() {
-		Planet aeussersterPlanet = planeten.getLast();		//Planet mit größter Umlaufbahn
+		Planet aeussersterPlanet = (Planet)planeten.getLast();		//Planet mit größter Umlaufbahn
 		return aeussersterPlanet.getOrbitRadius() + aeussersterPlanet.getRadius() / 2;
 	}
 
@@ -88,12 +90,12 @@ public class Stern extends InOrbit implements Orbitable
 														
 		
 		//Masse Zufällig
-		double masse = getRandom() * (maxMasse - minMasse) + minMasse;
+		double masse = getPRNG().random(minMasse, maxMasse);
 		//Radius zufällig
-		double radius = getRandom() * (maxRadius - minRadius) + minRadius;
+		double radius = getPRNG().random(minRadius, maxRadius);
 		//grob : temperatur T ~ Volumen/Masse 
-		float maxTemperatur = (float) ((4.0/3.0 * Math.PI * Math.pow(maxRadius, 3)) / maxMasse);	//maximal mögliche Temperatur
-		float temperatur = (float) ((4.0/3.0 * Math.PI * Math.pow(radius, 3)) / masse);
+		float maxTemperatur = (float) ((4.0/3.0 * Math.PI * Math.pow(maxRadius, 3.0)) / maxMasse);	//maximal mögliche Temperatur
+		float temperatur = (float) ((4.0/3.0 * Math.PI * Math.pow(radius, 3.0)) / masse);
 		//prozentZahl zur max. möglichen Temp., mal max. reale Temp.
 		temperatur = (float)(temperatur / maxTemperatur * 99726.85);
 		
@@ -104,9 +106,31 @@ public class Stern extends InOrbit implements Orbitable
 		
 		//Distanz zum bezugsKoerper zufällig
 		//TODO nicht zufällig?
-		double distanz = (getBezugsKoerper().getRadius() * 10) + getBezugsKoerper().getRadius() * getRandom() * 90;	//distanz zwischen 10 und 100 fachem des bezugsKörper-radius
+		double distanz = getPRNG().random(getBezugsKoerper().getRadius() * 10 , getBezugsKoerper().getRadius() * 100);	//distanz zwischen 10 und 100 fachem des bezugsKörper-radius
 		
 		setOrbitRadius(distanz);
+	}
+
+	@Override
+	public void generateChildren() {		
+		//TODO Anzahl Planeten zusammenhängend mit Masse 
+		int numPlanets = (int) getPRNG().random(0, 20);
+		
+		//Planeten generieren
+		for (int i = 1; i <= numPlanets; i++) {
+			//zufällig gas oder fest planet
+			//Planeten werden mit ZUfalls Konstruktor erstellt
+			if (getPRNG().randomBoolean() == true) {
+				add(new FestPlanet(this, getPRNG().randomInt()));
+			} else {
+				add(new GasPlanet(this, getPRNG().randomInt()));
+			}
+		}
+	}
+
+	@Override
+	public LinkedList<InOrbit> getChildren() {
+		return planeten;
 	}
 
 }

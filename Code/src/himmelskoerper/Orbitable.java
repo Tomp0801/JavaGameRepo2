@@ -1,5 +1,7 @@
 package himmelskoerper;
 
+import java.util.LinkedList;
+
 /**
  * Interface für SpaceObjects, um die andere Objekte im Orbit sein können
  * 
@@ -36,4 +38,13 @@ public interface Orbitable {
 	 */
 	public double getSystemRadius();
 	
+	/**
+	 * generiert zufällig die Objekte, die um dieses kreisen
+	 */
+	public void generateChildren();
+	
+	/**
+	 * @return liste der Objekte im orbit
+	 */
+	public LinkedList<InOrbit> getChildren();
 }

@@ -17,4 +17,15 @@ public final class Constants {
 	 * Sonnenmasse M = 1,989 * 10^30 kg
 	 */
 	public static final double M = 1.989 * Math.pow(10, 30);
+	
+	/**
+	 * Radius unserer Sonne in km
+	 */
+	public static final double SONNENRADIUS = 695700;
+	
+	/**
+	 * Astronomische Einheit: 149597870.7 km
+	 * Entfernung der Erde zur Sonne
+	 */
+	public static final double AE = 149597870.7;
 }

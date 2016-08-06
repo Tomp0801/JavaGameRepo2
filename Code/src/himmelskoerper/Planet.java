@@ -21,7 +21,7 @@ public abstract class Planet extends InOrbit implements Orbitable
 	/**
 	 * Liste der Monde des Planeten
 	 */
-	LinkedList<Mond> monde;
+	LinkedList<InOrbit> monde;
 	
 	/**
 	 * Konstruktor 
@@ -33,7 +33,7 @@ public abstract class Planet extends InOrbit implements Orbitable
 	public Planet(Stern bezugsKoerper, double distanz, double masse, double radius, Agregat art) {
 		super(bezugsKoerper, distanz, masse, radius, art);
 		
-		monde = new LinkedList<Mond>();
+		monde = new LinkedList<InOrbit>();
 	}
 	
 	public Planet(Stern bezugsKoerper, int seed) {
@@ -60,7 +60,7 @@ public abstract class Planet extends InOrbit implements Orbitable
 		if (monde.isEmpty()) {		//wenn die Liste noch leer ist
 			monde.add(newMoon);
 		} else {		//wenn schon Monde vorhanden sind
-			Iterator<Mond> iterator = monde.iterator();
+			Iterator<InOrbit> iterator = monde.iterator();
 			int index = 0;
 											//solange die Distanz zum neuen Mond kleiner ist als die des nächsten
 			while (iterator.hasNext() && newMoon.getOrbitRadius() < iterator.next().getOrbitRadius()) {
@@ -76,7 +76,12 @@ public abstract class Planet extends InOrbit implements Orbitable
 	
 	@Override
 	public double getSystemRadius() {
-		Mond aeussersterMond = monde.getLast();		//Mond mit größter Umlaufbahn
+		Mond aeussersterMond = (Mond)monde.getLast();		//Mond mit größter Umlaufbahn
 		return aeussersterMond.getOrbitRadius() + aeussersterMond.getRadius() / 2;
+	}
+	
+	@Override
+	public LinkedList<InOrbit> getChildren() {
+		return monde;
 	}
 }
