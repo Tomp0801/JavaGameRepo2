@@ -5,6 +5,8 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCombination;
+import javafx.scene.layout.StackPane;
+import javafx.scene.shape.Sphere;
 import javafx.stage.Stage;
 import view.weltraum.StageControllerSpiel;
 
@@ -52,19 +54,26 @@ public class StageController extends Application
 	public void start(Stage primaryStage) throws Exception 
 	{    
 		System.out.println("Spiel wird gestartet");
-		//zum laden eines DemoSpiels
-		StageControllerSpiel demoSpiel = new StageControllerSpiel(primaryStage);
+//		//zum laden eines DemoSpiels
+//		StageControllerSpiel demoSpiel = new StageControllerSpiel(primaryStage);
+//		
+//
+//		instance = this; 
+//		this.stage = primaryStage;
+//		//Damit man nicht mit ESCAP den FullScreen schließen kann
+//		primaryStage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
+//		//Damit keine Nachricht erscheint nach dem eröffnen des FullScreens
+//		primaryStage.setFullScreenExitHint("");
+//		primaryStage.setFullScreen(true);
 		
-
-		instance = this; 
-		this.stage = primaryStage;
-		//Damit man nicht mit ESCAP den FullScreen schließen kann
-		primaryStage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
-		//Damit keine Nachricht erscheint nach dem eröffnen des FullScreens
-		primaryStage.setFullScreenExitHint("");
-		primaryStage.setFullScreen(true);
+		//--------------------3D-Test-----------------------------------//
 		
-//		primaryStage.show();
+		StackPane pane = new StackPane();
+		Sphere kugel = new Sphere(50);
+		pane.getChildren().add(kugel);
+		Scene scene3DTest = new Scene(pane); 
+		primaryStage.setScene(scene3DTest);
+		primaryStage.show();
 //		
 //		wechselScene(SceneEnum.STARTGAME);
 		//nicht loeschen
