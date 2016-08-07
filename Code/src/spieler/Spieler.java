@@ -4,7 +4,7 @@ package spieler;
  * 
  * @author Dennis
  */
-public class Profil 
+public class Spieler 
 {
 
 	/**
@@ -12,7 +12,7 @@ public class Profil
 	 */
 	private String name; 
 	
-	public Profil(String name)
+	public Spieler(String name)
 	{
 		this.name = name; 
 	}
