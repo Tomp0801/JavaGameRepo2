@@ -45,7 +45,7 @@ public class Stern extends InOrbit implements Orbitable
 	 * @param onjectInOrbit der Planet, der hinzugefügt werden soll
 	 */
 	@Override
-	public void add(InOrbit objectInOrbit) {
+	public void add(InOrbit objectInOrbit) {		
 		Planet newPlanet = (Planet) objectInOrbit;
 		
 		if (planeten.isEmpty()) {		//wenn die Liste noch leer ist
@@ -121,9 +121,9 @@ public class Stern extends InOrbit implements Orbitable
 			//zufällig gas oder fest planet
 			//Planeten werden mit ZUfalls Konstruktor erstellt
 			if (getPRNG().randomBoolean() == true) {
-				add(new FestPlanet(this, getPRNG().randomInt()));
+				new FestPlanet(this, getPRNG().randomInt());
 			} else {
-				add(new GasPlanet(this, getPRNG().randomInt()));
+				new GasPlanet(this, getPRNG().randomInt());
 			}
 		}
 	}
@@ -131,6 +131,15 @@ public class Stern extends InOrbit implements Orbitable
 	@Override
 	public LinkedList<InOrbit> getChildren() {
 		return planeten;
+	}
+
+	@Override
+	public InOrbit getChild(int index) {
+		if (index < planeten.size()) {
+			return planeten.get(index);
+		} else {
+			return null;
+		}
 	}
 
 }

@@ -47,4 +47,11 @@ public interface Orbitable {
 	 * @return liste der Objekte im orbit
 	 */
 	public LinkedList<InOrbit> getChildren();
+	
+	/**
+	 * 
+	 * @param index des Körpers den man haben möchte
+	 * @return den Körper in Orbit mit dem angegebnen Index
+	 */
+	public InOrbit getChild(int index);
 }

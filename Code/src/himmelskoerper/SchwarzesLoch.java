@@ -25,6 +25,8 @@ public class SchwarzesLoch extends Himmelskoerper implements Orbitable {
 		sterne = new LinkedList<InOrbit>();
 		
 		generate();
+		
+		generateChildren();
 	}
 
 	@Override
@@ -79,13 +81,22 @@ public class SchwarzesLoch extends Himmelskoerper implements Orbitable {
 		//Planeten generieren
 		for (int i = 0; i <= numSterne; i++) {
 			//Sterne werden mit Zufalls Konstruktor erstellt
-			add(new Stern(this, getPRNG().randomInt()));
+			new Stern(this, getPRNG().randomInt());
 		}
 	}
 
 	@Override
 	public LinkedList<InOrbit> getChildren() {
 		return sterne;
+	}
+
+	@Override
+	public InOrbit getChild(int index) {
+		if (index < sterne.size()) {
+			return sterne.get(index);
+		} else {
+			return null;
+		}
 	}
 
 }

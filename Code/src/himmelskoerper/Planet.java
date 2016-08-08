@@ -38,6 +38,9 @@ public abstract class Planet extends InOrbit implements Orbitable
 	
 	public Planet(Stern bezugsKoerper, int seed) {
 		super(bezugsKoerper, seed);
+		
+		monde = new LinkedList<InOrbit>();
+		generateChildren();
 	}
 
 	/**
@@ -83,5 +86,14 @@ public abstract class Planet extends InOrbit implements Orbitable
 	@Override
 	public LinkedList<InOrbit> getChildren() {
 		return monde;
+	}
+	
+	@Override
+	public InOrbit getChild(int index) {
+		if (index < monde.size()) {
+			return monde.get(index);
+		} else {
+			return null;
+		}
 	}
 }

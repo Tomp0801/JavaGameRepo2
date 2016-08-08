@@ -69,7 +69,7 @@ public class GasPlanet extends Planet {
 		//Monde generieren
 		for (int i = 0; i <= numSterne; i++) {
 			//Monde werden mit Zufalls Konstruktor erstellt
-			add(new Mond(this, getPRNG().randomInt()));
+			new Mond(this, getPRNG().randomInt());
 		}
 		
 	}
