@@ -187,7 +187,7 @@ public abstract class InOrbit extends Himmelskoerper {
 	
 	/**
 	 * Berechnet Temperatur für dieses Objekt, die durch Bestrahlung des Bezugskörpers entsteht
-	 * eigene Wärme entwicklung wird nicht mit einberechnet
+	 * eigene Wärme entwicklung oder andere Quellen werden nicht mit einberechnet
 	 * 
 	 * @param bezugsKoerper Körper um dieser kreist
 	 * @param distanz von diesem Körper zum BezugsKörper
@@ -198,7 +198,7 @@ public abstract class InOrbit extends Himmelskoerper {
 		
 		double T = Math.pow(bezugsKoerper.getRadius(), 2) * Math.pow(bezugsKoerper.getOberflaechenTemperatur(), 4);
 		T = T / Math.pow(distanz, 2);
-		T = Math.pow(T, 1/4);
+		T = Math.pow(T, 1.0/4.0);
 		
 		return T;
 	}

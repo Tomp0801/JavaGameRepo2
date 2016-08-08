@@ -14,7 +14,9 @@ public class Main {
 	
 	public static void main(String[] args) {
 
-		SchwarzesLoch SL = new SchwarzesLoch(3);
+		int seed = 5;
+		
+		SchwarzesLoch SL = new SchwarzesLoch(seed);
 
 		System.out.println("Anzahl Sterne: " + SL.getChildren().size());
 		int planeten = 0;
@@ -56,8 +58,14 @@ public class Main {
 			currentStern = (Stern)(SL.getChild(0));
 			currentPlanet = (Planet) currentStern.getChild(0);
 			currentMond = (Mond)currentPlanet.getChild(0);
+			
+			System.out.println("SchwarzesLoch:");
+			SL.printStatus();
+			System.out.println("Stern:");
 			currentStern.printStatus();
+			System.out.println("Planet:");
 			currentPlanet.printStatus();
+			System.out.println("Mond:");
 			currentMond.printStatus();
 			
 			System.out.println("Alle bewegungen berechnet in: " + (System.currentTimeMillis() - time) + " Millisekunden");

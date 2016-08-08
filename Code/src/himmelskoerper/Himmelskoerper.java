@@ -217,6 +217,7 @@ public abstract class Himmelskoerper
 		System.out.println("| Position: " + pos.get(0) + " " + pos.get(1) + " " + pos.get(2));
 		System.out.println("| Radius: " + this.radius);
 		System.out.println("| Masse: "+ this.masse);
+		System.out.println("| Temperatur: "+ this.oberflaechenTemperatur);
 		System.out.println("| Tick: " + getLastRefresh()/1000 + ": ");
 		System.out.println(" _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _");
 	}
