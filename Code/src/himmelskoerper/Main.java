@@ -1,5 +1,7 @@
 package himmelskoerper;
 
+import java.util.Iterator;
+
 /**
  * Klasse für reine Testzwecke
  * 
@@ -11,48 +13,62 @@ package himmelskoerper;
 public class Main {
 	
 	public static void main(String[] args) {
-		/**
-		 * Sonne des Sonnensystems
-		 */
-		Stern sonne;
 
-		double masse = (1.989 * Math.pow(10, 30)); 
-		double radius = 695700;
-		sonne = new Stern(null, 0, masse, radius);		//Sonne nicht in einem Orbit
+		int seed = 5;
 		
-		//zufällig generiertes Schwarzes Loch mit Stern
-		SchwarzesLoch SL = new SchwarzesLoch(1234);
+		SchwarzesLoch SL = new SchwarzesLoch(seed);
+
+		System.out.println("Anzahl Sterne: " + SL.getChildren().size());
+		int planeten = 0;
+		Stern currentStern;
+		int monde = 0;
+		Planet currentPlanet;
+		for (Iterator<InOrbit> it = SL.getChildren().iterator(); it.hasNext();) {
+			currentStern = (Stern) it.next();
+			planeten = planeten + currentStern.getChildren().size();
+			
+			for (Iterator<InOrbit> it2 = currentStern.getChildren().iterator(); it2.hasNext();) {
+				currentPlanet = (Planet) it2.next();
+				monde = monde + currentPlanet.getChildren().size();
+			}
+		}
+		System.out.println("Anzahl Planeten: " + planeten);
+		System.out.println("Anzahl Monde: " + monde);
 		
-		Stern stern = new Stern(SL, 438);
-		SL.add(stern);
-		
-		//Planeten hinzufügen
-		//FestPlanet erde = new FestPlanet(sonne, 149600000, 5.972 * Math.pow(10, 24));
-		
-		//Mond mond = new Mond(erde, 384400, 7.349 * Math.pow(10, 22), );
-		
+		Mond currentMond;
+		long time;
 		//"programmschleife"
 		while (true) {
-			/*erde.refresh();
-			System.out.println("Erde: ");
-			erde.printStatus();
+					
+			time = System.currentTimeMillis();
+			for (Iterator<InOrbit> itSterne = SL.getChildren().iterator(); itSterne.hasNext();) {
+				currentStern = (Stern) itSterne.next();
+				currentStern.bewegen();
+				
+				for (Iterator<InOrbit> itPlaneten = currentStern.getChildren().iterator(); itPlaneten.hasNext();) {
+					currentPlanet = (Planet) itPlaneten.next();
+					currentPlanet.bewegen();
+					for (Iterator<InOrbit> itMonde = currentPlanet.getChildren().iterator(); itMonde.hasNext();) {
+						currentMond = (Mond) itMonde.next();
+						currentMond.bewegen();
+					}
+				}
+			}
 			
-			mond.bewegen();
-			System.out.println("Mond: ");
-			mond.printStatus();
+			currentStern = (Stern)(SL.getChild(0));
+			currentPlanet = (Planet) currentStern.getChild(0);
+			currentMond = (Mond)currentPlanet.getChild(0);
 			
-			sonne.bewegen();
-			System.out.println("Sonne: ");
-			sonne.printStatus();*/
-			
-			System.out.println("SL: ");
+			System.out.println("SchwarzesLoch:");
 			SL.printStatus();
+			System.out.println("Stern:");
+			currentStern.printStatus();
+			System.out.println("Planet:");
+			currentPlanet.printStatus();
+			System.out.println("Mond:");
+			currentMond.printStatus();
 			
-			stern.bewegen();
-			System.out.println("Stern: ");
-			stern.printStatus();
-			
-			
+			System.out.println("Alle bewegungen berechnet in: " + (System.currentTimeMillis() - time) + " Millisekunden");
 			
 			System.out.println("___________________________________________________________");
 			

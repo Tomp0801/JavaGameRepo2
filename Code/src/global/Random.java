@@ -23,11 +23,52 @@ public class Random {
 		random();
 	}
 	
+	/**
+	 * erstellt die nächste zufällige Zahl
+	 * @return Zufallszahl double zwischen 0 und 1
+	 */
 	public double random() {
 		currentSeed = (currentSeed * 16807) % 2147483647;
 	    return Math.abs((double)currentSeed / 0x7FFFFFFF + 0.000000000233);
 	}
 	
+	/**
+	 * Erstellt die nächste zufallszahl und gibt sie als int in einem bestimmten Zahlenbereich wieder
+	 * @param from Anfang des Intervalls
+	 * @param to Ende des Intervalls
+	 * @return zufällige Zahl aus dem festgelegten Intervall
+	 */
+	public int random(int from, int to) {
+		return (from + (int) Math.round((random() * (to - from)))); 
+	}
+	
+	/**
+	 * Erstellt die nächste zufallszahl und gibt sie als double in einem bestimmten Zahlenbereich wieder
+	 * @param from Anfang des Intervalls
+	 * @param to Ende des Intervalls
+	 * @return zufällige Zahl aus dem festgelegten Intervall
+	 */
+	public double random(double from, double to) {
+		return (from + random() * (to - from)); 
+	}
+	
+	public int randomInt() {
+		return random(0, 2147483647);
+	}
+	
+	public boolean randomBoolean() {
+		int random = random(0, 1);
+		if (random==1) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	/**
+	 * Gibt den benutzten seed der PRNG wieder
+	 * @return den Seed, der zum initialisieren benutzt wurde
+	 */
 	public int getSeed() {
 		return seed;
 	}
