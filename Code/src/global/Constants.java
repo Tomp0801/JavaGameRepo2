@@ -19,11 +19,13 @@ public final class Constants {
 	public static final double M = 1.989 * Math.pow(10, 30);
 	
 	/**
-	 * attribut für gasförmige Himmelskörper
+	 * Radius unserer Sonne in km
 	 */
-	public static final String GAS = "gas";
+	public static final double SONNENRADIUS = 695700;
+	
 	/**
-	 * attribut für feste himmelskörper
+	 * Astronomische Einheit: 149597870.7 km
+	 * Entfernung der Erde zur Sonne
 	 */
-	public static final String FEST = "fest";
+	public static final double AE = 149597870.7;
 }
