@@ -24,6 +24,11 @@ public class Civilization
 	private ArrayList<Sektion> sektionsListeDerCivilisation = new ArrayList<Sektion>();
 	
 	/**
+	 * Liste aller Civilisationen die endeckt wurden
+	 */
+	private ArrayList<Civilization> endeckteSpieler = new ArrayList<Civilization>();
+	
+	/**
 	 * erstellt eine Civilisation
 	 */
 	Civilization()

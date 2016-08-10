@@ -1,4 +1,6 @@
 package spieler;
+
+
 /**
  * Profil eines Spielers
  * 
