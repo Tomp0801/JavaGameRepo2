@@ -6,12 +6,12 @@ package map;
  * @author Thomas
  *
  */
-public class Bodenschatz {
+public class BodenMaterial extends Material {
 	/**
-	 * Bezeichnung des Bodenschatzes
+	 * 
 	 */
-	private String name;
-	
+	private static final long serialVersionUID = 7537111714172956705L;
+
 	/**
 	 * die Wahrscheinlichkeit, dass dieser Rohstoff vorkommt in Prozent ( > 1)
 	 * abhängig von einer einstellung LOW, MID, HIGH (0, 1, 2)
@@ -27,21 +27,14 @@ public class Bodenschatz {
 	 * Konstruktor
 	 * @param abbauMethode legt abbauMethode oder Werkzeug fest
 	 */
-	Bodenschatz(String name, String abbauWerkzeug, float vorkommensWkeit) {
-		this.name = name;
+	public BodenMaterial(String name, String abbauWerkzeug, float vorkommensWkeit) {
+		setName(name);
 		this.abbauWerkzeug = abbauWerkzeug;
 		
 		if (vorkommensWkeit < 1 && vorkommensWkeit > 0) {
 			this.vorkommensWkeit = vorkommensWkeit;
 		}
 		//TODO else throw exception
-	}
-
-	/**
-	 * @return the name
-	 */
-	public String getName() {
-		return name;
 	}
 
 	/**
@@ -64,6 +57,4 @@ public class Bodenschatz {
 	public String getAbbauWerkzeug() {
 		return abbauWerkzeug;
 	}
-	
-	
 }

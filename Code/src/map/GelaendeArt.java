@@ -14,7 +14,7 @@ public class GelaendeArt {
 	private String name;
 	
 	/**
-	 * Material, aus dem der Boden grundsätzlich besteht 
+	 * Material, aus dem der Boden hauptsächlich besteht 
 	 */
 	private String grundBoden;
 	
@@ -51,6 +51,22 @@ public class GelaendeArt {
 	 */
 	public String getGrundBoden() {
 		return grundBoden;
+	}
+	
+	/**
+	 * 
+	 * @return die temperatur
+	 */
+	public float getTemperatur() {
+		return temperatur;
+	}
+
+	/**
+	 * sets die temperatur
+	 * @param temperatur
+	 */
+	public void setTemperatur(float temperatur) {
+		this.temperatur = temperatur;
 	}
 
 	/**

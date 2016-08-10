@@ -1,36 +1,33 @@
-package map;
+package speicherverwaltung;
 
 import java.util.ArrayList;
 
-/**
- * stellt standard Objekte zur verfügung
- * TODO sollte vielleicht aus einer Datei gelesen werden; über Daten verwaltung
- * 
- * @author Thomas
- *
- */
-public class Standards {
+import map.BodenMaterial;
+
+public class RessourcenObjekte {
+	
 	/**
 	 * Liste der Standard Bodenschaetze
 	 */
 	private ArrayList<BodenMaterial> bodenschaetze;
 	
 	/**
-	 * Liste der Standard Geländearten
+	 * die Materialen aus denen der Boden auf Karten bestehen kann
 	 */
-	private ArrayList<GelaendeArt> gelaendeArten; 
+	private ArrayList<BodenMaterial> bodentypen;
 	
 	/**
 	 * Konstruktor
 	 */
-	public Standards() {
+	public RessourcenObjekte() {
 		//Bodenschatze hinzufügen
 		setBodenschaetze();
-		setGelaendeArten();
+		setBodentypen();
 	}
-	
+		
 	/**
 	 * stellt die Bodenschaetze ein
+	 * TODO vervollständigen
 	 */
 	private void setBodenschaetze() {
 		bodenschaetze = new ArrayList<BodenMaterial>();
@@ -42,11 +39,17 @@ public class Standards {
 		bodenschaetze.add(new BodenMaterial("Eisen", "Spitzhacke", (float)0.2));
 	}
 	
-	private void setGelaendeArten() {
-		gelaendeArten = new ArrayList<GelaendeArt>();
-		gelaendeArten.add(new GelaendeArt("Wüste", (float)1.2));
-		gelaendeArten.add(new GelaendeArt("Fels", (float)2));
-		gelaendeArten.add(new GelaendeArt("Wiese", (float)0.7));
+	/**
+	 * stellt die Bodentypen ein
+	 * TODO vervollständigen
+	 */
+	private void setBodentypen() {
+		bodentypen = new ArrayList<BodenMaterial>();
+		bodentypen.add(new BodenMaterial("Stein", "Spitzhacke", (float)0.3));
+		bodentypen.add(new BodenMaterial("Erde", "Schaufel", (float)0.5));
+		bodentypen.add(new BodenMaterial("Sand", "Schaufel", (float)0.3));
+		bodentypen.add(new BodenMaterial("Kies", "Schaufel", (float)0.1));
+		bodentypen.add(new BodenMaterial("Dreck", "Schaufel", (float)0.2));
 	}
 	
 	/**
@@ -56,8 +59,11 @@ public class Standards {
 	public ArrayList<BodenMaterial> getBodenschaetze() {
 		return bodenschaetze;
 	}
-	
-	public ArrayList<GelaendeArt> getGelaendeArten() {
-		return gelaendeArten;
+
+	/**
+	 * @return the bodenTypen
+	 */
+	public ArrayList<BodenMaterial> getBodentypen() {
+		return bodentypen;
 	}
 }

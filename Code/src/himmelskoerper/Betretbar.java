@@ -16,4 +16,6 @@ public interface Betretbar {
 	 * TODO return type
 	 */
 	public Karte getKarte();
+	
+	public float getOberflaechenTemperatur();
 }

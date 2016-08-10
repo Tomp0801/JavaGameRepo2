@@ -1,7 +1,5 @@
 package map;
 
-import java.util.ArrayList;
-
 /**
  * Ein Bereich von Feldern, auf denen z.B. eine Stadt errichtet werden kann
  * 
@@ -21,6 +19,11 @@ public class Bereich {
 	public final int HOEHE = 10;
 	
 	/**
+	 * kennzeichnet, ob dieser Bereich bereits initialisiert wurde, oder noch nicht
+	 */
+	private boolean init;
+	
+	/**
 	 * Die Karte zu der dieser Bereich gehört
 	 */
 	private Karte parentKarte;
@@ -30,27 +33,22 @@ public class Bereich {
 	 */
 	private Feld[][] felder;
 	
-	/**
-	 * Typ des Bereichs (wüste, wiese, wald...)
-	 */
-	private GelaendeArt typ;
-	
-	Bereich(Karte parentKarte, GelaendeArt typ, ArrayList<Bodenschatz> bodenschaetze) {
-		felder = new Feld[BREITE][HOEHE];	
-		this.typ = typ;
+	Bereich(Karte parentKarte) {
+		this.parentKarte = parentKarte;
+		felder = new Feld[BREITE][HOEHE];
 		
+		init = false;
+	}
+	
+	public void initFelder() {
+		//Felder initialisieren/erstellen
 		for (int y = 0; y < HOEHE; y++) {
 			for (int x = 0; x < BREITE; x++) {
-				felder[x][y] = new Feld(this, bodenschaetze);
+				felder[x][y] = new Feld(this, parentKarte.getBodenschaetze());
 			}
 		}
-	}
-
-	/**
-	 * @return the parentKarte
-	 */
-	public Karte getParentKarte() {
-		return parentKarte;
+		
+		init = true;
 	}
 	
 	/**
@@ -67,13 +65,18 @@ public class Bereich {
 			return null;
 		}
 	}
-
+	
 	/**
-	 * @return the typ
+	 * @return the init
 	 */
-	public GelaendeArt getTyp() {
-		return typ;
+	public boolean isInit() {
+		return init;
 	}
 
-
+	/**
+	 * @return the parentKarte
+	 */
+	public Karte getParentKarte() {
+		return parentKarte;
+	}
 }
