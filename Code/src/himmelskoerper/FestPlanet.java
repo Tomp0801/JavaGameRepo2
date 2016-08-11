@@ -37,12 +37,8 @@ public class FestPlanet extends Planet implements Betretbar {
 	 */
 	public FestPlanet(Stern bezugsKoerper, int seed) {
 		super(bezugsKoerper, seed);
+		int breite = getKartenBreite();
 		
-		int breite;
-		//Größe der Karte aus dem Radius ermitteln
-		//breite = Umfang; Karte quadratisch (der einfachheit halber)
-		//ein planet so groß wie die erde soll in etwa eine Karte von 10 * 10 haben, deswegen '/ 4000'
-		breite = (int) Math.round(2 * Math.PI * this.getRadius() / 4000);
 		karte = new Karte(this, breite, breite, getPRNG().randomInt());
 	}
 
@@ -96,5 +92,15 @@ public class FestPlanet extends Planet implements Betretbar {
 			//Monde werden mit Zufalls Konstruktor erstellt
 			new Mond(this, getPRNG().randomInt());
 		}
+	}
+
+	@Override
+	public int getKartenBreite() {
+		int breite;
+		//Größe der Karte aus dem Radius ermitteln
+		//breite = Umfang; Karte quadratisch (der einfachheit halber)
+		//ein planet so groß wie die erde soll in etwa eine Karte von 10 * 10 haben, deswegen '/ 4000'
+		breite = (int) Math.round(2 * Math.PI * this.getRadius() / 4000);
+		return breite;
 	}
 }

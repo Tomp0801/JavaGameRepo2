@@ -18,19 +18,22 @@ public class Deserializer {
 	private static ArrayList<BodenMaterial> bodentypen;
 	
 	private static void init() {
-		bodenschaetze = deserializeBodenMaterial("src/speicherverwaltung/bodenschaetze");
-		bodentypen = deserializeBodenMaterial("src/speicherverwaltung/bodentypen");
+		bodenschaetze = deserializeArrayList("src/speicherverwaltung/bodenschaetze");
+		bodentypen = deserializeArrayList("src/speicherverwaltung/bodentypen");
 	}
 	
 	/**
 	 * Lieﬂt Objekte des Typs BodenMaterial aus einer Datei
+	 * Datei Muss die entsprechende Art von Objekten beinhalten TODO: entsprechende Exception
+	 * 
 	 * @param path der DateiPfad 
 	 * @return Liste der BodenMaterialen die inder Datei gefunden wurden 
 	 */
-	private static ArrayList<BodenMaterial> deserializeBodenMaterial(String path) {
+	@SuppressWarnings("unchecked")
+	private static <T> ArrayList<T> deserializeArrayList(String path) {
 		FileInputStream fstream;
 		ObjectInputStream ostream;
-		ArrayList<BodenMaterial> bodenMaterial = new ArrayList<BodenMaterial>();
+		ArrayList<T> list = new ArrayList<T>();
 		boolean eof = false;
 		
 		try {
@@ -40,7 +43,7 @@ public class Deserializer {
 			//auslesen, bis zum ende der Datei
 			while (!eof) {
 				try {
-					bodenMaterial.add((BodenMaterial)ostream.readObject());	//in array Schreiben
+					list.add((T) ostream.readObject());	//in array Schreiben
 				} catch (EOFException eofExcept) {	//Ende der Datei erreicht
 					ostream.close();
 					eof = true;	
@@ -51,7 +54,7 @@ public class Deserializer {
 			System.out.println(e.getMessage());
 			return null;
 		}
-		return bodenMaterial;
+		return list;
 	}
 
 	/**

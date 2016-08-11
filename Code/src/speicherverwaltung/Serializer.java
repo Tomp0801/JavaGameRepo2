@@ -4,8 +4,6 @@ import java.io.FileOutputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
-import map.BodenMaterial;
-
 /**
  * Klasse zum schreiben von Objekten in eine Datei, um diese dann für das Spiel 
  * verwenden zu können
@@ -18,12 +16,12 @@ public class Serializer {
 		
 		RessourcenObjekte ressourcen = new RessourcenObjekte();
 		
-		serializeBodenMaterial("src/speicherverwaltung/bodenschaetze", ressourcen.getBodenschaetze());
-		serializeBodenMaterial("src/speicherverwaltung/bodentypen", ressourcen.getBodentypen());
+		serializeArray("src/speicherverwaltung/bodenschaetze", ressourcen.getBodenschaetze());
+		serializeArray("src/speicherverwaltung/bodentypen", ressourcen.getBodentypen());
 
 	}
 
-	private static void serializeBodenMaterial(String path, ArrayList<BodenMaterial> objects) {
+	private static <T> void serializeArray(String path, ArrayList<T> objects) {
 		FileOutputStream fstream;
 		ObjectOutputStream ostream;
 		
