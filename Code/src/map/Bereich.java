@@ -2,6 +2,10 @@ package map;
 
 import java.util.ArrayList;
 
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
+
 /**
  * Ein Bereich von Feldern, auf denen z.B. eine Stadt errichtet werden kann
  * 
@@ -75,5 +79,23 @@ public class Bereich {
 		return typ;
 	}
 
-
+	
+	/**
+	 * 
+	 * @return gibt ein Canvas zurueck mit einem zum Bereich passenden Hintergrund zurueck
+	 */
+	public Canvas getAussehen()
+	{
+		Canvas oberflaeche = new Canvas();
+		GraphicsContext grafik = oberflaeche.getGraphicsContext2D();
+		
+		//TODO
+//		if (typ.getBodenReichtum() = )
+//		Color farbe = new Color(red, green, blue, 0);
+//		
+//		grafik.setFill(farbe);
+		grafik.fillRect(0, 0, 400, 400);
+				
+		return new Canvas(); 
+	}
 }

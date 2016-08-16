@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
+
 /**
  * Ein Feld eines gewissen typs, das bebaut werden kann und/oder Objekte enthalten kann
  * 
@@ -71,5 +74,24 @@ public class Feld {
 	 */
 	public HashMap<Bodenschatz, Float> getRohstoffe() {
 		return rohstoffe;
+	}
+	
+	/**
+	 * 
+	 * @return gibt ein Canvas mit einem zum Feld passendem Aussehen zurueck
+	 */
+	public Canvas getAussehen()
+	{
+		Canvas oberflaeche = new Canvas();
+		GraphicsContext grafik = oberflaeche.getGraphicsContext2D();
+		
+		//TODO
+//		if (typ.getBodenReichtum() = )
+//		Color farbe = new Color(red, green, blue, 0);
+//		
+//		grafik.setFill(farbe);
+		grafik.fillRect(0, 0, 400, 400);
+				
+		return new Canvas(); 
 	}
 }

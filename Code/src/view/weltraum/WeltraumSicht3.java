@@ -1,19 +1,10 @@
 package view.weltraum;
 
-import java.awt.MouseInfo;
-import java.awt.Point;
-
-import himmelskoerper.Planet;
 import himmelskoerper.Stern;
-import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.SubScene;
 import javafx.scene.image.Image;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseButton;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Border;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;

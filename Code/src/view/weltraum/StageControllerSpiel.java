@@ -2,6 +2,7 @@ package view.weltraum;
 
 import java.io.IOException;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.SubScene;
 import javafx.scene.input.KeyCombination;
@@ -20,70 +21,77 @@ import view.weltraum.fxml.SpielUmgebungController;
 public class StageControllerSpiel 
 {
 	/**
-	 * diese Scene wird zur DemoVersion verwendet. 
+	 * die Main Scene ist die wichtigste Scene. Sie beinhaltet eine BoarderPane in dieser befinde
+	 * sich oben eine Menuleiste die immer bestehen bleibt und das im Zentrum befindet sich das Spielgeschehen. Das Zentrum 
+	 * kann jeder zeit ausgetauscht werden 
 	 */
-	private Scene spielSceneDemo;
+	private Scene mainScene;
 	
 	/**
-	 * zum laden der Scene
+	 * das ist der Controller dier mainScene. Dieser wird zum beispiel benoetigt um das Zentrum auszutauschen
 	 */
-	private FXMLLoader loader; 
-	
 	private SpielUmgebungController spielUmgebungController; 
+	
+	/**
+	 * die Stage des Spiels auf der das Spielgeschehn ablaeuft 
+	 */
+	private Stage stage; 
 	
 	public StageControllerSpiel(Stage stage)
 	{	
-		System.out.println("Sind in der Klasse StageControllerSpiel");
 		//--------------------Spiel-Umgebunng-wird-geladen-------------------------------------------//
-		System.out.println("lade fxml Datei: "+"/view/weltraum/fxml/SpielUmgebung.fxml");
-		loader = new FXMLLoader(getClass().getResource("/view/weltraum/fxml/SpielUmgebung.fxml"));
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/weltraum/fxml/SpielUmgebung.fxml"));
 		try{loader.load();}catch (IOException e){e.printStackTrace();}
-		spielSceneDemo = new Scene(loader.getRoot());
+		mainScene = new Scene(loader.getRoot());
 		spielUmgebungController = loader.getController();
-		spielUmgebungController.setScene(spielSceneDemo);
-		System.out.println("der Controller ist = null?:    "+(spielUmgebungController == null));
-		//---------------------Demospiel-wird-erstellt--------------------------------------------------------------------//
+		spielUmgebungController.setScene(mainScene);
 		
+		//---------------------Demospiel-wird-erstellt-TODO-------------------------------------------------------------------//
 		Sektion demoSektion = new Sektion();
-		WeltraumSicht3 demo = new WeltraumSicht3(demoSektion, spielSceneDemo);
+		WeltraumSicht3 demo = new WeltraumSicht3(demoSektion, mainScene);
 		SubScene subScene = demo.getSubScene();
-		System.out.println("Sind wieder im StageControllerSpiel");
-		System.out.println("Sektion = null=? "+(demoSektion==null));
-		System.out.println("ist die SubScene = null?   "+(subScene==null));
-		System.out.println("ist demo = null??   "+(demo==null));
-
-		//-------------------die-groeﬂe-der-SubScene-wird-an-der-groeﬂe-einer-StackPane-gebunden---------------------//
-		subScene.widthProperty().bind(spielUmgebungController.getStackPaneZentrum().widthProperty());
-		subScene.heightProperty().bind(spielUmgebungController.getStackPaneZentrum().heightProperty());
 		
-		//---------------------In-der-Mitte-des-Fensters-wird-die-spielumgebeung-plaziert------------------------------------------------------------------------------//
-		spielUmgebungController.wechsleZentrum(subScene);	
+		//---------------------In-der-Mitte-des-Fensters-wird-die-Spielumgebeung-plaziert------------------------------------------------------------------------------//
+		this.wechselSicht(subScene);
+	
 		//-------------------Stage wird erstellt-----------------------------------------------------//
 		stage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
 		stage.setFullScreenExitHint("");
 		stage.setFullScreen(true);
-		System.out.println("Scene wird gesetzt");
-		stage.setScene(spielSceneDemo);
-		stage.show();
-		
-		subScene.toFront();
-		System.out.println("groﬂe der SubScene(x/y):      "+subScene.getWidth()+"/"+subScene.getHeight()+"  die grˆﬂe muss nicht identisch sein. sie darf aber nicht klein sein also nicht zwischen 0 und 100 liegen   ");
-
+		stage.setScene(mainScene);
+		stage.show();		
+	}
 	
-//		Sektion demoSektion = new Sektion();
-//		
-//		
-//		Group group = new Group(testPane);
-//		Scene scene = new Scene(group);
-//		
-//		WeltraumSicht3 demo = new WeltraumSicht3(demoSektion, scene);
-//
-//		SubScene subScene = demo.getSceneSicht();
-//		testPane.setCenter(subScene);
-//
-//		stage.setScene(scene);
-//		stage.show();
-		
-	//---------------------------------------------------------------------------------------------------//
+	
+	/**
+	 * wechselt die Scene
+	 * @param scene zu der gewechselt werden soll
+	 */
+	public void wechselScene(Scene scene)
+	{
+		this.stage.setScene(scene);
+	}
+	
+	
+	/**
+	 * wechselet die Sicht es Gepielgesehens zu einer neuen Sicht. zuseatzlich wird die groeﬂe der SubScene an die groeﬂe des Zentrums gebunden
+	 * 
+	 * @param subScene wird in das Zentrum gesetzt
+	 */
+	public void wechselSicht(SubScene subScene)
+	{
+		subScene.widthProperty().bind(spielUmgebungController.getStackPaneZentrum().widthProperty());
+		subScene.heightProperty().bind(spielUmgebungController.getStackPaneZentrum().heightProperty());
+		spielUmgebungController.wechsleZentrum(subScene);	
+	}
+	
+	
+	/**
+	 * wechselet die Sicht es Gepielgesehens zu einer neuen Sicht.
+	 * @param node wird in das Zentrum gesetzt
+	 */
+	public void wechselSicht(Node node)
+	{
+		spielUmgebungController.wechsleZentrum(node);	
 	}
 }

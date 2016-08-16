@@ -9,6 +9,7 @@ import javafx.animation.ScaleTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.SubScene;
 import javafx.scene.control.Button;
@@ -204,7 +205,7 @@ public class SpielUmgebungController implements Initializable
 	 * setzt ein neues Zentrum
 	 * @param subScene wird in die mitte des BorderPanes gesetzt. 
 	 */
-	public void wechsleZentrum(SubScene subScene)
+	public void wechsleZentrum(Node subScene)
 	{
 		centerPane.getChildren().clear();
 		centerPane.getChildren().add(subScene);
