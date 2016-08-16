@@ -71,6 +71,11 @@ public abstract class InOrbit extends Himmelskoerper {
 		setLastRefresh(GameTime.timeMillis());	//last Refresh initialisieren
 	}
 	
+	/**
+	 * Zufalls Konstruktor
+	 * @param bezugsKoerper
+	 * @param seed
+	 */
 	public InOrbit(Orbitable bezugsKoerper, int seed) {
 		super(seed);
 		

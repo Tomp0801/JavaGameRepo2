@@ -16,4 +16,16 @@ public interface Betretbar {
 	 * TODO return type
 	 */
 	public Karte getKarte();
+	
+	/**
+	 * 
+	 * @return die Oberflächen Temperatur
+	 */
+	public float getOberflaechenTemperatur();
+	
+	/**
+	 * 
+	 * @return die Breite, die die zugehörige Karte haben soll
+	 */
+	public int getKartenBreite();
 }
