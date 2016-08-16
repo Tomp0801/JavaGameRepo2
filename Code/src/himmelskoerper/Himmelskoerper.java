@@ -39,6 +39,7 @@ public abstract class Himmelskoerper
 	
 	/**
 	 * Position der aktuellen Sektion (Sonnensystem) in Polarkoordinaten
+	 * (radius, winkelVonX0 = [0, 2pi) (=azimutWinkel), winkelVonZ0 = [0, pi]) (=PolarWinkel)
 	 */
 	private Vector<Double> position;
 	
@@ -55,6 +56,7 @@ public abstract class Himmelskoerper
 
 	/**
 	 * manueller Konstruktor
+	 * 
  	 * @param masse sets Masse des Objekts
  	 * @param radius sets radius der Kugel
  	 * @param art sets art des Objekts (fest oder gasförmig)
@@ -82,80 +84,100 @@ public abstract class Himmelskoerper
 	}
 	
 	/**
-	 * @return die masse
+	 * @return die masse der Kugel
 	 */
 	public double getMasse() {
 		return masse;
 	}
 	
 	/**
-	 * @param masse the masse to set
+	 * @param masse setzt die Masse der Kugel
 	 */
 	protected void setMasse(double masse) {
 		this.masse = masse;
 	}
 
 	/**
-	 * @return the radius
+	 * @return den Radius der Kugel, die der Körper des Objekts ist
 	 */
 	public double getRadius() {
 		return radius;
 	}
 
 	/**
-	 * @param radius the radius to set
+	 * @param radius setzt den Radius der Kugel (Körper des Objekts)
 	 */
 	protected void setRadius(double radius) {
 		this.radius = radius;
 	}
 
 	/**
-	 * @return the oberflaechenTemperatur
+	 * @return die Temperatur die an der Objekt oberfläche herrscht
 	 */
 	public float getOberflaechenTemperatur() {
 		return oberflaechenTemperatur;
 	}
 
 	/**
-	 * @param oberflaechenTemperatur the oberflaechenTemperatur to set
+	 * @param setzt die oberflaechenTemperatur
 	 */
 	protected void setOberflaechenTemperatur(float oberflaechenTemperatur) {
 		this.oberflaechenTemperatur = oberflaechenTemperatur;
 	}
 
 	/**
-	 * @return the position
+	 * @return die als Vektor in Polar Koordinaten (radius, azimutWinkel, PolarWinkel)
 	 */
 	public Vector<Double> getPosition() {
 		return position;
 	}
+	
+	/**
+	 * 
+	 * @return die Position als Vektor in kartesischen Koordinaten (x, y, z)
+	 */
+	public Vector<Double> getPositionKartesisch()
+	{
+		Vector<Double> positionKart = new Vector<Double>(3);
+		
+		double x, y, z;
+		
+		x = position.get(0) * Math.sin(position.get(2)) * Math.cos(position.get(1));
+		y = position.get(0) * Math.sin(position.get(2)) * Math.sin(position.get(1));
+		z = position.get(0) * Math.cos(position.get(2));
+		positionKart.addElement(x);
+		positionKart.addElement(y);
+		positionKart.addElement(z);
+		
+		return positionKart;
+	}
 
 	/**
-	 * Position setzen
+	 * Position setzen in Polar Koordinaten
 	 * @param r Länge des Positionsvektors
-	 * @param angleXY Winkel, der in der XY-Ebene liegt
-	 * @param angleYZ Winkel, der in der YZ-Ebene liegt
+	 * @param angleFromX Winkel, Azimutwinkel, der von der x achse aus bis zu 2*pi geht
+	 * @param angleFromZ Winkel, Polarwinkel, der von der z-Achse aus bis zu pi geht
 	 */
-	public void setPosition(double r, double angleXY, double angleYZ) {
+	public void setPosition(double r, double angleFromX, double angleFromZ) {
 		Vector<Double> positionsVektor = new Vector<Double>(3);
 		
 		//beide Winkel in den Bereich von 0 bis 2*pi bringen, falls sie größer oder kleiner sind
-		while (angleXY >= 2 * Math.PI) {
-			angleXY = angleXY - 2 * Math.PI;
+		while (angleFromX >= 2 * Math.PI) {
+			angleFromX = angleFromX - 2 * Math.PI;
 		}
-		while (angleXY < 0) {
-			angleXY = angleXY + 2 * Math.PI;
+		while (angleFromX < 0) {
+			angleFromX = angleFromX + 2 * Math.PI;
 		}
-		while (angleYZ >= 2 * Math.PI) {
-			angleYZ = angleYZ - 2 * Math.PI;
+		while (angleFromZ > Math.PI) {
+			angleFromZ = angleFromZ - 2 * Math.PI;
 		}
-		while (angleYZ < 0) {
-			angleYZ = angleYZ + 2 * Math.PI;
+		while (angleFromZ < 0) {
+			angleFromZ = angleFromZ + 2 * Math.PI;
 		}
 		
 		positionsVektor.add(r);
-		positionsVektor.add(angleXY);
-		positionsVektor.add(angleYZ);
+		positionsVektor.add(angleFromX);
+		positionsVektor.add(angleFromZ);
 		
 		this.position = positionsVektor;
 	}
@@ -170,14 +192,14 @@ public abstract class Himmelskoerper
 	
 	/**
 	 * 
-	 * @return prng
+	 * @return individueller Psuedo-Random-Number-Generator dieses Objekts
 	 */
 	protected Random getPRNG() {
 		return prng;
 	}
 	
 	/**
-	 * @return the art
+	 * @return Agregatzustand des Körpers (Fest, [Flüssig], Gas)
 	 */
 	public Agregat getArt() {
 		return art;
@@ -185,14 +207,14 @@ public abstract class Himmelskoerper
 	
 	/**
 	 * 
-	 * @param art sets the art
+	 * @param art setzt de Agregatzustand 
 	 */
 	protected void setArt(Agregat art) {
 		this.art = art;
 	}
 
 	/**
-	 * @return the lastRefresh
+	 * @return das letzte mal, wo der Körper refreshed wurde
 	 */
 	protected long getLastRefresh() {
 		return lastRefresh;

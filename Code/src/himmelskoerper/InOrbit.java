@@ -90,6 +90,10 @@ public abstract class InOrbit extends Himmelskoerper {
 		setRandomPosition();
 	}
 	
+	/**
+	 * berechnet den Bewegungsvektor-länge anhand der Gravitation und entfernung zum bezugsObjekt
+	 * Richtung wird zufällig generiert 
+	 */
 	private void calcBewegungsVektor() {
 		/*
 		 * Bewegungsgeschwindigkeit v:
@@ -98,15 +102,14 @@ public abstract class InOrbit extends Himmelskoerper {
 		 * Einheit: km pro s
 		 */
 		float v = (float) Math.sqrt(bezugsKoerper.getMasse() * Constants.G / this.getOrbitRadius());
-		//TODO für 3D abändern
-		int random = (int)Math.round(Math.random()) * 2 - 1;	//zufallszahl: +1 oder -1
-		this.setBewegungsVektor(random * v, (float)0); //für 2D nur x-Teil des Vektors einstellen 
+		double random = getPRNG().random(0, 2 * Math.PI);	//zufalls winkel, um den der Vektor gedreht wird
+		//polar koordinaten (v | random) in kartesische umrechnen
+		this.setBewegungsVektor((float)(v * Math.cos(random)), (float)(v * Math.sin(random)));
 	}
 	
 	private void setRandomPosition() {
 		//zufällige Position auf dem Orbit erstellen
-		//TODO für 3D auch angleYZ random
-		setPosition(this.getOrbitRadius(), getPRNG().random(0, 2 * Math.PI), 0);
+		setPosition(this.getOrbitRadius(), getPRNG().random(0, 2 * Math.PI), getPRNG().random(0, Math.PI));
 	}
 	
 	/**
