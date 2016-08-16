@@ -1,5 +1,7 @@
 package map;
 
+import javafx.scene.paint.Color;
+
 /**
  * Ressource, die von Feldern abgebaut werden kann
  * 
@@ -27,8 +29,8 @@ public class BodenMaterial extends Material {
 	 * Konstruktor
 	 * @param abbauMethode legt abbauMethode oder Werkzeug fest
 	 */
-	public BodenMaterial(String name, String abbauWerkzeug, float vorkommensWkeit) {
-		setName(name);
+	public BodenMaterial(String name, Color color, String abbauWerkzeug, float vorkommensWkeit) {
+		super(name, color);
 		this.abbauWerkzeug = abbauWerkzeug;
 		
 		if (vorkommensWkeit < 1 && vorkommensWkeit > 0) {

@@ -1,5 +1,7 @@
 package map;
 
+import javafx.scene.paint.Color;
+
 /**
  * Eine Materialart mit Eigenschaften und Verhalten
  * Hat einen festen Aggregatzustand
@@ -50,6 +52,11 @@ public class Material extends Ressource {
 	 * Das Material, das durch Veredelung dieses Materials entsteht
 	 */
 	private Material veredelErgebnis;
+	
+	public Material(String name, Color color) 
+	{
+		super(name, color);
+	}
 
 	/**
 	 * @return the dichte

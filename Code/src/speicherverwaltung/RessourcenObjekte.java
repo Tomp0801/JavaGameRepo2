@@ -2,6 +2,7 @@ package speicherverwaltung;
 
 import java.util.ArrayList;
 
+import javafx.scene.paint.Color;
 import map.BodenMaterial;
 
 public class RessourcenObjekte {
@@ -31,12 +32,12 @@ public class RessourcenObjekte {
 	 */
 	private void setBodenschaetze() {
 		bodenschaetze = new ArrayList<BodenMaterial>();
-		bodenschaetze.add(new BodenMaterial("Gold", "Spitzhacke", (float)0.05));
-		bodenschaetze.add(new BodenMaterial("Silber", "Spitzhacke", (float)0.08));
-		bodenschaetze.add(new BodenMaterial("Kupfer", "Spitzhacke", (float)0.1));
-		bodenschaetze.add(new BodenMaterial("Kohle", "Spitzhacke", (float)0.4));
-		bodenschaetze.add(new BodenMaterial("Diamant", "Spitzhacke", (float)0.01));
-		bodenschaetze.add(new BodenMaterial("Eisen", "Spitzhacke", (float)0.2));
+		bodenschaetze.add(new BodenMaterial("Gold", Color.GOLD, "Spitzhacke", (float)0.05));
+		bodenschaetze.add(new BodenMaterial("Silber", Color.SILVER,  "Spitzhacke", (float)0.08));
+		bodenschaetze.add(new BodenMaterial("Kupfer", Color.SANDYBROWN, "Spitzhacke", (float)0.1));
+		bodenschaetze.add(new BodenMaterial("Kohle", Color.BLACK, "Spitzhacke", (float)0.4));
+		bodenschaetze.add(new BodenMaterial("Diamant", Color.LIGHTSKYBLUE, "Spitzhacke", (float)0.01));
+		bodenschaetze.add(new BodenMaterial("Eisen", Color.DARKGRAY, "Spitzhacke", (float)0.2));
 	}
 	
 	/**
@@ -45,11 +46,11 @@ public class RessourcenObjekte {
 	 */
 	private void setBodentypen() {
 		bodentypen = new ArrayList<BodenMaterial>();
-		bodentypen.add(new BodenMaterial("Stein", "Spitzhacke", (float)0.3));
-		bodentypen.add(new BodenMaterial("Erde", "Schaufel", (float)0.5));
-		bodentypen.add(new BodenMaterial("Sand", "Schaufel", (float)0.3));
-		bodentypen.add(new BodenMaterial("Kies", "Schaufel", (float)0.1));
-		bodentypen.add(new BodenMaterial("Dreck", "Schaufel", (float)0.2));
+		bodentypen.add(new BodenMaterial("Stein", Color.DIMGRAY, "Spitzhacke", (float)0.6));
+		bodentypen.add(new BodenMaterial("Erde", Color.SADDLEBROWN, "Schaufel", (float)0.8));
+		bodentypen.add(new BodenMaterial("Sand", Color.LIGHTGOLDENRODYELLOW, "Schaufel", (float)0.4));
+		bodentypen.add(new BodenMaterial("Kies", Color.LIGHTSLATEGRAY, "Schaufel", (float)0.1));
+		bodentypen.add(new BodenMaterial("Dreck", Color.ROSYBROWN, "Schaufel", (float)0.2));
 	}
 	
 	/**

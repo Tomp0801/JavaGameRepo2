@@ -1,8 +1,6 @@
 package map;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 
 /**
  * Ein Feld eines gewissen typs, das bebaut werden kann und/oder Objekte enthalten kann
@@ -39,48 +37,36 @@ public class Feld {
 	 * @param bodenschaetze Mögliche bodenschatze
 	 * @param bodentypen Mögliche Bodenarten
 	 */
-	Feld(Bereich bereich, ArrayList<BodenMaterial> bodenschaetze, ArrayList<BodenMaterial> bodentypen) {
+	Feld(Bereich bereich) {
 		this.parentBereich = bereich;
 		
 		bodenschatzVorkommen = new HashMap<BodenMaterial, Float>();
 		
 		//rohstoffe generieren
 		//Alle Bodenschaetze, die dem Feld in der ArrayList übergeben wurden
-		Iterator<BodenMaterial> iterator = bodenschaetze.iterator();
-		BodenMaterial temp;
-		double random;
-		while (iterator.hasNext()) {
-			temp = iterator.next();
-			
-			//Vorkommenswahrscheinlichkeit mit einbringen
-			random = Math.random();
-			if (random <= temp.getVorkommensWkeit()) {
-				setRohstoff(temp, (float)1); //1 entspricht 100%
-				//TODO Menge einstellen
-				/*
-				 * idee:
-				 * Menge doch Vorkommens W-keit
-				 * wenn unter bestimmten schwellenwert, rauslassen. ANsonsten immer vorhanden
-				 * in ermittelter Menge
-				 */
+		double menge;
+		for (BodenMaterial temp : parentBereich.getBodenschaetze().keySet()) {
+			//Vorkommenswahrscheinlichkeit und varietät mit einbringen
+			menge = parentBereich.getParentKarte().getVarierteRandom() * temp.getVorkommensWkeit();
+			if (menge > 0.001) {	//wenn unter bestimmten schwellenwert, rauslassen.
+				setRohstoff(temp, (float)menge); //1 entspricht 100%
 			}
 		}
 		
 		//bodenart generieren; sich für einen Boden entscheiden
 		//für jede Art eine zahl aus zufall und vorkommensWkeit generieren
 		//größte Zahl wird ausgewählt
-		double[] genZahl = new double[bodentypen.size()];
-		for (int i = 0; i < bodentypen.size(); i++) {
-			random = parentBereich.getParentKarte().getPrng().random();
-			genZahl[i] = bodentypen.get(i).getVorkommensWkeit() * random;
-		}
-		int largest = 0;
-		for (int i = 0; i < genZahl.length; i++) {
-			if (genZahl[largest] < genZahl[i]) {
-				largest = i;
+		BodenMaterial chosen = null;
+		double largest = 0;
+		double random;
+		for (BodenMaterial temp : parentBereich.getBodenarten().keySet()) {
+			random = temp.getVorkommensWkeit() * parentBereich.getParentKarte().getVarierteRandom(); 
+			if (random > largest) {
+				random = largest;
+				chosen = temp;
 			}
 		}
-		bodentyp = bodentypen.get(largest);
+		bodentyp = chosen;
 	}
 	
 	/**

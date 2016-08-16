@@ -50,6 +50,17 @@ public class Karte {
 	private ArrayList<BodenMaterial> bodenarten;
 	
 	/**
+	 * zahl zwischen 0 und 1, die darstellt, wie sehr verschiedene Gegenden auf dem Planeten
+	 * variieren oder genau gleich sind
+	 */
+	private double varietaet;
+	
+	/**
+	 * gibt an, ob die Karte schon initialisiert wurde oder noch nicht
+	 */
+	private boolean bereicheInit;
+	
+	/**
 	 * Manueller Konstruktor
 	 * 
 	 * @param parentObject das Objekt, auf dem diese Karte sich befindet
@@ -63,6 +74,7 @@ public class Karte {
 			this.breite = breite;
 			this.hoehe = hoehe;
 			this.bodenschaetze = bodenschaetze;
+			this.bereicheInit = false;
 			
 			bereiche = new Bereich[breite][hoehe];
 		}
@@ -81,6 +93,7 @@ public class Karte {
 			this.parentObject = parentObject;
 			this.breite = breite;
 			this.hoehe = hoehe;
+			this.bereicheInit = false;
 			
 			prng = new Random(seed);
 			
@@ -93,6 +106,9 @@ public class Karte {
 	 * TODO optionen zum generieren überdenken
 	 */
 	private void generate() {
+		
+		//varietät festlegen
+		this.varietaet = prng.random(0.0, 1.0);
 
 		//mögliche Bodenschätze generieren
 		bodenschaetze = new ArrayList<>();
@@ -106,24 +122,31 @@ public class Karte {
 		//TODO random generated zufalls bodenschätze hinzufügen
 
 		//mögliche Boden Arten generieren
-		//TODO es muss mindestens ein Bodentyp festgelegt werden
 		bodenarten = new ArrayList<>();
-		for (int i = 0; i < Deserializer.getBodentypen().size(); i++) {
-			//entscheiden ob der Bodenschatz vorkommen soll oder nicht
-			//TODO 50/50 chance beibehalten?
-			if (prng.randomBoolean()) {
-				bodenschaetze.add(Deserializer.getBodentypen().get(i));
+		while (bodenarten.size() == 0) {	//es muss mindestens eine bodenart existieren
+			for (int i = 0; i < Deserializer.getBodentypen().size(); i++) {
+				//entscheiden ob der Bodenschatz vorkommen soll oder nicht
+				//TODO 50/50 chance beibehalten?
+				if (prng.randomBoolean()) {
+					bodenarten.add(Deserializer.getBodentypen().get(i));
+				}
 			}
 		}
-		//TODO random generated zufalls bodentypen hinzufügen
 		
-		//bereiche generieren
+		//TODO random generated zufalls bodentypen hinzufügen
+	}
+	
+	/**
+	 * initialisiert die Bereiche
+	 */
+	private void initBereiche() {
 		bereiche = new Bereich[breite][hoehe];
 		for (int x = 0; x < breite; x++) {
 			for (int y = 0; y < hoehe; y++) {
 				bereiche[x][y] = new Bereich(this);
 			}
 		}
+		this.bereicheInit = true;
 	}
 
 	/**
@@ -141,11 +164,10 @@ public class Karte {
 	 * @return der Bereich an der Stelle der angegebenen Koordinaten
 	 */
 	public Bereich getBereich(int x, int y) {
+		if (!bereicheInit) {	//wenn bereiche noch nicht initialisiert, dies jetzt tun
+			initBereiche();
+		}
 		if (x >= 0 && x < breite && y >= 0 && y < hoehe) {	//nur wenn die Koordinaten gültig sind
-			//Wenn bereich noch nicht aufgerufen wurde, jetzt die Felder generieren
-			if (!bereiche[x][y].isInit()) {
-				bereiche[x][y].initFelder();
-			}
 			return bereiche[x][y];
 		} else {
 			return null;
@@ -185,5 +207,17 @@ public class Karte {
 	 */
 	public ArrayList<BodenMaterial> getBodenarten() {
 		return bodenarten;
+	}
+
+	/**
+	 * w-keit = vorkommensw-keit * (random * varietät + 1.0)
+	 * random : zahl um 0
+	 * obere/ untere grenze der zahl : +-varietät
+	 * +1 : zahl um 1
+	 * @return eine varierte zufallsZahl, dessen Zahlenbereich zw. 0 und 2 liegt und 
+	 * durch die varietaet eingeschränkt ist
+	 */
+	public double getVarierteRandom() {
+		return (prng.random(-1.0, 1.0) * varietaet + 1.0);
 	}
 }

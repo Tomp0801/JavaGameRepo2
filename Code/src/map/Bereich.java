@@ -1,5 +1,7 @@
 package map;
 
+import java.util.HashMap;
+
 /**
  * Ein Bereich von Feldern, auf denen z.B. eine Stadt errichtet werden kann
  * 
@@ -19,11 +21,6 @@ public class Bereich {
 	public final int HOEHE = 10;
 	
 	/**
-	 * kennzeichnet, ob dieser Bereich bereits initialisiert wurde, oder noch nicht
-	 */
-	private boolean init;
-	
-	/**
 	 * Die Karte zu der dieser Bereich gehört
 	 */
 	private Karte parentKarte;
@@ -33,22 +30,60 @@ public class Bereich {
 	 */
 	private Feld[][] felder;
 	
+	/**
+	 * speicher für eine abgewandelte vorkommenswahrscheinlichkeit der versch. bodenschaetze
+	 */
+	private HashMap<BodenMaterial, Float> bodenschaetze;
+	
+	/**
+	 * speichert abgeandelte vorkommenswahrscheinlichkeit für die versch. bodenarten
+	 */
+	private HashMap<BodenMaterial, Float> bodenarten;
+	
 	Bereich(Karte parentKarte) {
 		this.parentKarte = parentKarte;
 		felder = new Feld[BREITE][HOEHE];
 		
-		init = false;
+		generateVariationen();	//bodenschaetze und bodenarten variieren
+		
+		initFelder();	//Felder generieren
 	}
 	
-	public void initFelder() {
+	/**
+	 * variiert die vorkommen von bodenarten und bodenschaetzen für diesen Bereich
+	 */
+	private void generateVariationen() 
+	{
+		
+		float wahrscheinlichkeit;
+		
+		//bodenschaetze
+		for (int i = 0; i < parentKarte.getBodenschaetze().size(); i++) 
+		{	
+			wahrscheinlichkeit = parentKarte.getBodenschaetze().get(i).getVorkommensWkeit() * (float)parentKarte.getVarierteRandom();
+			this.bodenschaetze.put(parentKarte.getBodenschaetze().get(i), wahrscheinlichkeit);
+		}
+		//bodenarten
+		for (int i = 0; i < parentKarte.getBodenarten().size(); i++) 
+		{	
+			wahrscheinlichkeit = parentKarte.getBodenarten().get(i).getVorkommensWkeit() * (float)(parentKarte.getVarierteRandom());
+			this.bodenarten.put(parentKarte.getBodenarten().get(i), wahrscheinlichkeit);
+		}
+	}
+	
+	/**
+	 * initialisiert die felder
+	 */
+	private void initFelder() 
+	{
 		//Felder initialisieren/erstellen
-		for (int y = 0; y < HOEHE; y++) {
-			for (int x = 0; x < BREITE; x++) {
-				felder[x][y] = new Feld(this, parentKarte.getBodenschaetze(), parentKarte.getBodenarten());
+		for (int y = 0; y < HOEHE; y++) 
+		{
+			for (int x = 0; x < BREITE; x++) 
+			{
+				felder[x][y] = new Feld(this);
 			}
 		}
-		
-		init = true;
 	}
 	
 	/**
@@ -65,18 +100,25 @@ public class Bereich {
 			return null;
 		}
 	}
-	
-	/**
-	 * @return the init
-	 */
-	public boolean isInit() {
-		return init;
-	}
 
 	/**
 	 * @return the parentKarte
 	 */
 	public Karte getParentKarte() {
 		return parentKarte;
+	}
+
+	/**
+	 * @return the bodenschaetze
+	 */
+	public HashMap<BodenMaterial, Float> getBodenschaetze() {
+		return bodenschaetze;
+	}
+
+	/**
+	 * @return the bodenarten
+	 */
+	public HashMap<BodenMaterial, Float> getBodenarten() {
+		return bodenarten;
 	}
 }
