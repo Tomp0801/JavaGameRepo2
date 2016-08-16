@@ -12,19 +12,36 @@ import map.Karte;
  */
 public class Mond extends InOrbit implements Betretbar
 {
+	/**
+	 * Die Karte der Oberfläche des Mondes
+	 */
 	private Karte karte;
 
+	/**
+	 * Manueller Konstruktor
+	 * 
+	 * @param bezugsKoerper
+	 * @param distanz
+	 * @param masse
+	 * @param radius
+	 */
 	public Mond(Planet bezugsKoerper, double distanz, double masse, double radius) {
 		super(bezugsKoerper, distanz, masse, radius, Agregat.FEST);
-		// TODO Auto-generated constructor stub
+		
 		
 		//TODO Karte erstellen
 	}
 	
+	/**
+	 * Zufalls Konstruktor
+	 * 
+	 * @param bezugsKoerper
+	 * @param seed
+	 */
 	public Mond(Planet bezugsKoerper, int seed) {
 		super(bezugsKoerper, seed);
-		
-		//TODO Karte erstellen
+		int breite = getKartenBreite();
+		karte = new Karte(this, breite, breite, getPRNG().randomInt());
 	}
 
 	@Override
@@ -68,6 +85,16 @@ public class Mond extends InOrbit implements Betretbar
 	@Override
 	public Karte getKarte() {
 		return karte;
+	}
+
+	@Override
+	public int getKartenBreite() {
+		int breite;
+		//Größe der Karte aus dem Radius ermitteln
+		//breite = Umfang; Karte quadratisch (der einfachheit halber)
+		//ein planet so groß wie die erde soll in etwa eine Karte von 10 * 10 haben, deswegen '/ 4000'
+		breite = (int) Math.round(2 * Math.PI * this.getRadius() / 4000);
+		return breite;
 	}
 
 }

@@ -1,8 +1,17 @@
 package map;
 
+import java.io.Serializable;
+import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import global.Random;
+import himmelskoerper.FestPlanet;
+import himmelskoerper.SchwarzesLoch;
+import himmelskoerper.Stern;
+import speicherverwaltung.Deserializer;
+import speicherverwaltung.RessourcenObjekte;
+import speicherverwaltung.Serializer;
 
 /**
  * Main Klasse für reine Testzwecke
@@ -10,32 +19,28 @@ import global.Random;
  *
  */
 public class Main {
-	static final Standards standards = new Standards();
 
 	public static void main(String[] args) {		
-		Karte testKarte = new Karte(10, 10, standards.getBodenschaetze());
+		SchwarzesLoch SL = new SchwarzesLoch(342);
 		
-		Bereich testBereich = testKarte.getBereich(0, 0);
-		Feld testFeld;
-		HashMap<Bodenschatz, Float> bodenschaetze;
-		int count = 0;
+		Stern sonne = (Stern)SL.getChild(0);
+		int i = 0;
+		while (!sonne.getChild(i).getClass().equals(FestPlanet.class)) {
+			i++;
+		}
+		FestPlanet planet = (FestPlanet) sonne.getChild(i);
 		
-		for (int x = 0; x < testBereich.BREITE; x++) {
-			for (int y = 0; y < testBereich.HOEHE; y++) {
-				testFeld = testBereich.getFeld(x, y);
-				bodenschaetze = testFeld.getRohstoffe();
-				for (Bodenschatz b : bodenschaetze.keySet()) {
-					System.out.println(count + ": " + b.getName());
-					count++;
-				}
-			}
+		
+		for (int j = 0; j < planet.getKarte().getBodenschaetze().size(); j++) {
+			System.out.println(planet.getKarte().getBodenschaetze().get(j).getName());
 		}
 		
-		Random PRNG = new Random(2);
+		for (BodenMaterial b : planet.getKarte().getBereich(0, 0).getFeld(3, 3).getRohstoffe().keySet()) {
+			System.out.println(b.getName() + ": " + planet.getKarte().getBereich(0, 0).getFeld(3, 3).getRohstoffe().get(b));
+		}
 		
 		//Programmschleife
 		while (true) {
-			System.out.println(PRNG.random());
 			
 			try {
 				Thread.sleep(1000);
