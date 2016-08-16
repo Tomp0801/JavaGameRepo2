@@ -1,6 +1,6 @@
 package map;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -35,26 +35,59 @@ public class Bereich {
 	private Feld[][] felder;
 	
 	/**
-	 * Typ des Bereichs (wüste, wiese, wald...)
+	 * speicher für eine abgewandelte vorkommenswahrscheinlichkeit der versch. bodenschaetze
 	 */
-	private GelaendeArt typ;
+	private HashMap<BodenMaterial, Float> bodenschaetze;
 	
-	Bereich(Karte parentKarte, GelaendeArt typ, ArrayList<Bodenschatz> bodenschaetze) {
-		felder = new Feld[BREITE][HOEHE];	
-		this.typ = typ;
+	/**
+	 * speichert abgeandelte vorkommenswahrscheinlichkeit für die versch. bodenarten
+	 */
+	private HashMap<BodenMaterial, Float> bodenarten;
+	
+	Bereich(Karte parentKarte) {
+		this.parentKarte = parentKarte;
+		felder = new Feld[BREITE][HOEHE];
 		
-		for (int y = 0; y < HOEHE; y++) {
-			for (int x = 0; x < BREITE; x++) {
-				felder[x][y] = new Feld(this, bodenschaetze);
-			}
+		generateVariationen();	//bodenschaetze und bodenarten variieren
+		
+		initFelder();	//Felder generieren
+	}
+	
+	/**
+	 * variiert die vorkommen von bodenarten und bodenschaetzen für diesen Bereich
+	 */
+	private void generateVariationen() 
+	{
+		
+		float wahrscheinlichkeit;
+		
+		//bodenschaetze
+		for (int i = 0; i < parentKarte.getBodenschaetze().size(); i++) 
+		{	
+			wahrscheinlichkeit = parentKarte.getBodenschaetze().get(i).getVorkommensWkeit() * (float)parentKarte.getVarierteRandom();
+			this.bodenschaetze.put(parentKarte.getBodenschaetze().get(i), wahrscheinlichkeit);
+		}
+		//bodenarten
+		for (int i = 0; i < parentKarte.getBodenarten().size(); i++) 
+		{	
+			wahrscheinlichkeit = parentKarte.getBodenarten().get(i).getVorkommensWkeit() * (float)(parentKarte.getVarierteRandom());
+			this.bodenarten.put(parentKarte.getBodenarten().get(i), wahrscheinlichkeit);
 		}
 	}
-
+	
 	/**
-	 * @return the parentKarte
+	 * initialisiert die felder
 	 */
-	public Karte getParentKarte() {
-		return parentKarte;
+	private void initFelder() 
+	{
+		//Felder initialisieren/erstellen
+		for (int y = 0; y < HOEHE; y++) 
+		{
+			for (int x = 0; x < BREITE; x++) 
+			{
+				felder[x][y] = new Feld(this);
+			}
+		}
 	}
 	
 	/**
@@ -73,10 +106,10 @@ public class Bereich {
 	}
 
 	/**
-	 * @return the typ
+	 * @return the parentKarte
 	 */
-	public GelaendeArt getTyp() {
-		return typ;
+	public Karte getParentKarte() {
+		return parentKarte;
 	}
 
 	
@@ -97,5 +130,19 @@ public class Bereich {
 		grafik.fillRect(0, 0, 400, 400);
 				
 		return new Canvas(); 
+	}
+	
+	/**
+	 * @return the bodenschaetze
+	 */
+	public HashMap<BodenMaterial, Float> getBodenschaetze() {
+		return bodenschaetze;
+	}
+
+	/**
+	 * @return the bodenarten
+	 */
+	public HashMap<BodenMaterial, Float> getBodenarten() {
+		return bodenarten;
 	}
 }
