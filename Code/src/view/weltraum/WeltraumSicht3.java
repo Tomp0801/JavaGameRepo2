@@ -2,6 +2,9 @@ package view.weltraum;
 
 import java.awt.MouseInfo;
 import java.awt.Point;
+
+import himmelskoerper.Planet;
+import himmelskoerper.Stern;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.SubScene;
@@ -79,12 +82,44 @@ public class WeltraumSicht3 extends StackPane
         //hier werden die Elemente der Sektion eine Position zugeordnet TODO
 //        for (int i = 0 ..i. )
 //        spielWelt.getChildren().addAll( erdkugel);
-
+        
+        	for(int i = 0; sektion.getStern().size() > i ; i++)
+        	{
+        		Stern stern = sektion.getStern().get(i);
+        		Sphere sonne = new Sphere();
+        		sonne.setRadius(stern.getRadius());
+        		//Hier wird die Position der Sonne bestimmt. TODO ist das so richtig mit dem Vektor???? 
+        		sonne.setTranslateX(stern.getPosition().get(0));
+        		sonne.setTranslateY(stern.getPosition().get(1));
+        		sonne.setTranslateZ(stern.getPosition().get(2));
+        		//TODO Bild 
+        		//TODO Leuchteffekt 
+        		//TOO anklickbar. 
+        		//fuegt die Sonne dem Spielfeld hinzu
+        		spielWelt.getChildren().addAll(sonne);
+        		
+        	 	for (int j = 0; sektion.getStern().get(i).getChildren().size() > j ; j++)
+        	 	{
+        	 		Sphere planet = new Sphere();
+        	 		
+        	 		//TODO unterscheidung von den Obejkten die um die Sonne kreisen mit einer switch case abfrage
+        	 		//Eventell in einem Himelskoerper einen Enum mit einem Typ speichern, dieser zeigt dann an was es fuer ein Typ ist
+        	 		// mit einer Getter methode kann dies dann abgefragt werden
+        	   		//TODO Bild 
+            		//TODO Leuchteffekt 
+            		//TOO anklickbar.
+//        	 		Planet planet = sektion.getStern().get(i).getChildren().get(j);
+        	 	}
+        	}
+        	
+        	//TODO Objekte wie raumschiffe und aehnliches muessen hier erstellt werden
+        	
+       
         
         
         
 
-		//---------------------ein Demo Planet zum Testen---------------------------------
+		//---------------------ein Demo Planet zum Testen----------TODO-----------------------
         Image image = new Image("view/hauptmenu/Erde.jpg"); 
         System.out.println("Bild der Erde = null?    "+(image == null));
         PhongMaterial material1 = new PhongMaterial();
@@ -103,7 +138,7 @@ public class WeltraumSicht3 extends StackPane
 	
 	/**
 	 * 
-	 * @return gibt die Kamerea dieser Sicht
+	 * @return gibt die Kamerea der Spielwelt zurueck 
 	 */
 	public Kamera getKamera()
 	{

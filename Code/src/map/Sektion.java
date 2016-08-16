@@ -3,6 +3,7 @@ package map;
 import java.util.ArrayList;
 
 import himmelskoerper.Himmelskoerper;
+import himmelskoerper.Stern;
 import javafx.geometry.Point3D;
 
 /**
@@ -22,11 +23,15 @@ public class Sektion
 	 */
 	private final int size = 5000;
 	
-	/**
-	 * eine Liste mit den Himmelskoerpern die sich in dier Sektion befinden
-	 */
-	private ArrayList<Himmelskoerper> himmelskoerper = new ArrayList<Himmelskoerper>();
+//	/**
+//	 * eine Liste mit den Himmelskoerpern die sich in dier Sektion befinden
+//	 */
+//	private ArrayList<Himmelskoerper> himmelskoerper = new ArrayList<Himmelskoerper>();
 	
+	/**
+	 * Sterne die sich in dieser Sektion befinden
+	 */
+	private ArrayList<Stern> stern = new ArrayList<Stern>(); 
 	
 	/**
 	 * erstellt eine neue Sektion
@@ -47,13 +52,22 @@ public class Sektion
 	}
 	
 	
+//	/**
+//	 * 
+//	 * @return
+//	 */
+//	public ArrayList<Himmelskoerper> getHimmelskoerper()
+//	{
+//		return himmelskoerper;
+//	}
+	
 	/**
-	 * 
+	 * gibt einen Stern zurueck
 	 * @return
 	 */
-	public ArrayList<Himmelskoerper> getHimmelskoerper()
+	public ArrayList<Stern> getStern()
 	{
-		return himmelskoerper;
+		return this.stern; 
 	}
 	
 }
