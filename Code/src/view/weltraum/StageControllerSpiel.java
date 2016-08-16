@@ -37,6 +37,7 @@ public class StageControllerSpiel
 	 */
 	private Stage stage; 
 	
+
 	public StageControllerSpiel(Stage stage)
 	{	
 		//--------------------Spiel-Umgebunng-wird-geladen-------------------------------------------//
@@ -48,7 +49,7 @@ public class StageControllerSpiel
 		
 		//---------------------Demospiel-wird-erstellt-TODO-------------------------------------------------------------------//
 		Sektion demoSektion = new Sektion();
-		WeltraumSicht3 demo = new WeltraumSicht3(demoSektion, mainScene);
+		WeltraumSicht demo = new WeltraumSicht(demoSektion, mainScene);
 		SubScene subScene = demo.getSubScene();
 		
 		//---------------------In-der-Mitte-des-Fensters-wird-die-Spielumgebeung-plaziert------------------------------------------------------------------------------//
