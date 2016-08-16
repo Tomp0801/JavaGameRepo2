@@ -21,14 +21,25 @@ public class Feld {
 	 */
 	private HashMap<BodenMaterial, Float> bodenschatzVorkommen;
 	
-		/**
+	/**
+	 * Material aus dem der Boden hier ist
+	 */
+	private BodenMaterial bodentyp;
+	
+	/**
 	 * Platz, an dem ein Gebäude o.ä. errichtet werden kann
 	 * Kann auch durch natürliche Objekte eingenommen werden
 	 */
 	private Platzierbar bauplatz;
 
-	
-	Feld(Bereich bereich, ArrayList<BodenMaterial> bodenschaetze) {
+	/**
+	 * Zufalls Konstruktor
+	 * 
+	 * @param bereich Bereich, zu dem das Feld gehört
+	 * @param bodenschaetze Mögliche bodenschatze
+	 * @param bodentypen Mögliche Bodenarten
+	 */
+	Feld(Bereich bereich, ArrayList<BodenMaterial> bodenschaetze, ArrayList<BodenMaterial> bodentypen) {
 		this.parentBereich = bereich;
 		
 		bodenschatzVorkommen = new HashMap<BodenMaterial, Float>();
@@ -54,6 +65,22 @@ public class Feld {
 				 */
 			}
 		}
+		
+		//bodenart generieren; sich für einen Boden entscheiden
+		//für jede Art eine zahl aus zufall und vorkommensWkeit generieren
+		//größte Zahl wird ausgewählt
+		double[] genZahl = new double[bodentypen.size()];
+		for (int i = 0; i < bodentypen.size(); i++) {
+			random = parentBereich.getParentKarte().getPrng().random();
+			genZahl[i] = bodentypen.get(i).getVorkommensWkeit() * random;
+		}
+		int largest = 0;
+		for (int i = 0; i < genZahl.length; i++) {
+			if (genZahl[largest] < genZahl[i]) {
+				largest = i;
+			}
+		}
+		bodentyp = bodentypen.get(largest);
 	}
 	
 	/**
@@ -82,6 +109,21 @@ public class Feld {
 	}
 
 	/**
+	 * 
+	 * @return the bodenschatzVorkommen
+	 */
+	public HashMap<BodenMaterial, Float> getBodenschatzVorkommen() {
+		return bodenschatzVorkommen;
+	}
+
+	/**
+	 * @return the bodentyp
+	 */
+	public BodenMaterial getBodentyp() {
+		return bodentyp;
+	}
+
+	/**
 	 * @return the bauplatz
 	 */
 	public Platzierbar getBauplatz() {
@@ -90,7 +132,7 @@ public class Feld {
 
 	/**
 	 * @param bauplatz the bauplatz to set
-	 * TODO beingungen für den Bau eines Objekts
+	 * TODO bedingungen für den Bau eines Objekts
 	 */
 	public void setBauplatz(Platzierbar bauplatz) {
 		this.bauplatz = bauplatz;

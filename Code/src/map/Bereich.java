@@ -44,7 +44,7 @@ public class Bereich {
 		//Felder initialisieren/erstellen
 		for (int y = 0; y < HOEHE; y++) {
 			for (int x = 0; x < BREITE; x++) {
-				felder[x][y] = new Feld(this, parentKarte.getBodenschaetze());
+				felder[x][y] = new Feld(this, parentKarte.getBodenschaetze(), parentKarte.getBodenarten());
 			}
 		}
 		

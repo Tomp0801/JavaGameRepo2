@@ -45,6 +45,11 @@ public class Karte {
 	private ArrayList<BodenMaterial> bodenschaetze;
 	
 	/**
+	 * Liste der Arten, aus denen der Boden bestehen kann
+	 */
+	private ArrayList<BodenMaterial> bodenarten;
+	
+	/**
 	 * Manueller Konstruktor
 	 * 
 	 * @param parentObject das Objekt, auf dem diese Karte sich befindet
@@ -77,7 +82,6 @@ public class Karte {
 			this.breite = breite;
 			this.hoehe = hoehe;
 			
-			bereiche = new Bereich[breite][hoehe];
 			prng = new Random(seed);
 			
 			generate();
@@ -99,10 +103,24 @@ public class Karte {
 				bodenschaetze.add(Deserializer.getBodenschaetze().get(i));
 			}
 		}
+		//TODO random generated zufalls bodenschätze hinzufügen
+
+		//mögliche Boden Arten generieren
+		//TODO es muss mindestens ein Bodentyp festgelegt werden
+		bodenarten = new ArrayList<>();
+		for (int i = 0; i < Deserializer.getBodentypen().size(); i++) {
+			//entscheiden ob der Bodenschatz vorkommen soll oder nicht
+			//TODO 50/50 chance beibehalten?
+			if (prng.randomBoolean()) {
+				bodenschaetze.add(Deserializer.getBodentypen().get(i));
+			}
+		}
+		//TODO random generated zufalls bodentypen hinzufügen
 		
+		//bereiche generieren
+		bereiche = new Bereich[breite][hoehe];
 		for (int x = 0; x < breite; x++) {
 			for (int y = 0; y < hoehe; y++) {
-				//bereiche generieren
 				bereiche[x][y] = new Bereich(this);
 			}
 		}
@@ -160,5 +178,12 @@ public class Karte {
 	 */
 	public ArrayList<BodenMaterial> getBodenschaetze() {
 		return bodenschaetze;
+	}
+
+	/**
+	 * @return the bodenarten
+	 */
+	public ArrayList<BodenMaterial> getBodenarten() {
+		return bodenarten;
 	}
 }
