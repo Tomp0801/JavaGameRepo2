@@ -1,6 +1,9 @@
 package view.weltraum;
 
 import java.io.IOException;
+import java.util.Vector;
+
+import himmelskoerper.SchwarzesLoch;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -49,7 +52,12 @@ public class StageControllerSpiel
 		
 		//---------------------Demospiel-wird-erstellt-TODO-------------------------------------------------------------------//
 		Sektion demoSektion = new Sektion();
-		WeltraumSicht demo = new WeltraumSicht(demoSektion, mainScene);
+		
+		Vector<Double> position = new Vector<Double>();
+		position.add(0.0);
+		position.add(0.0);
+		position.add(-200.0);
+		WeltraumSicht demo = new WeltraumSicht(new SchwarzesLoch(4925), mainScene, position);
 		SubScene subScene = demo.getSubScene();
 		
 		//---------------------In-der-Mitte-des-Fensters-wird-die-Spielumgebeung-plaziert------------------------------------------------------------------------------//
