@@ -57,7 +57,7 @@ public class StageControllerSpiel
 		position.add(0.0);
 		position.add(0.0);
 		position.add(-200.0);
-		WeltraumSicht demo = new WeltraumSicht(new SchwarzesLoch(4925), mainScene, position);
+		WeltraumSicht demo = new WeltraumSicht(new SchwarzesLoch(925), mainScene, position);
 		SubScene subScene = demo.getSubScene();
 		
 		//---------------------In-der-Mitte-des-Fensters-wird-die-Spielumgebeung-plaziert------------------------------------------------------------------------------//

@@ -3,11 +3,15 @@ package view.weltraum;
 import java.util.ArrayList;
 import java.util.Vector;
 
+import javax.security.auth.login.ConfigurationSpi;
+
 import com.sun.javafx.geom.Vec3d;
 import com.sun.org.apache.xalan.internal.utils.XMLSecurityPropertyManager.Property;
 import global.Constants;
+import global.VectorKart;
 import himmelskoerper.Himmelskoerper;
 import himmelskoerper.InOrbit;
+import himmelskoerper.Orbitable;
 import himmelskoerper.Planet;
 import himmelskoerper.SchwarzesLoch;
 import himmelskoerper.Stern;
@@ -83,50 +87,56 @@ public class WeltraumSicht extends StackPane
         //Hier werden die Sterne der Galaxie erstellt
         
 //      Stern stern = (Stern) zentrumGalaxis.getChild(0);
+      
+        Stern sonne = (Stern) zentrumGalaxis.getChild(0);
+        zeichenSystem((Orbitable) sonne.getChild(0));
+        Himmelskoerper demo = (Himmelskoerper) sonne.getChild(0);
+	    kamera.ausrichtenNach(demo.getAbsolutePosition());
         
-       	for(int i = 0; zentrumGalaxis.getChildren().size() > i ; i++)
-       	{
-       		InOrbit objectInGalaxis = zentrumGalaxis.getChild(i);
-       		
-       		// ist die Sonne wirklich eine Sonne
-       		if (objectInGalaxis.getClass() == Stern.class)
-       		{
-       			Stern stern = (Stern) objectInGalaxis;
-       			
-	       		Sphere sonne = new Sphere();
-	       		//Radius der Sonne
-	       		sonne.setRadius(objectInGalaxis.getRadius()/Constants.VERKLEINERUNGSFAKTOR);
-	       		//Hier wird die Position der Sonne bestimmt.
-	       		sonne.setTranslateX(stern.getPosition().get(0)/Constants.VERKLEINERUNGSFAKTOR);
-	       		sonne.setTranslateY(stern.getPosition().get(1)/Constants.VERKLEINERUNGSFAKTOR);
-	       		sonne.setTranslateZ(stern.getPosition().get(2)/Constants.VERKLEINERUNGSFAKTOR);
-	       		//TODO Bild 
-	       		//TODO Leuchteffekt 
-	       		//TODO anklickbar. 
-	       		//fuegt die Sonne dem Spielfeld hinzu
-	       		spielWelt.getChildren().addAll(sonne);
-	       		
-	       		//befindet sich dieses Element im Sichtfeld der kamera dann
-	       		if(isImSichtfeld(stern));
-	       		{       
-		       	 	zeichenPlanetenVomStern(stern);
-	       		}
-       	}	
-        	//TODO Objekte wie raumschiffe und aehnliches muessen hier erstellt werden
-
-		//---------------------ein Demo Planet zum Testen----------TODO-----------------------
-//        Image image = new Image("view/hauptmenu/Erde.jpg"); 
-//        System.out.println("Bild der Erde = null?    "+(image == null));
-//        PhongMaterial material1 = new PhongMaterial();
-//        material1.setDiffuseMap(image);
-//        erdkugel.setMaterial(material1);
-//        erdkugel.setRadius(100);
-//        erdkugel.setLayoutX(50);
-//        erdkugel.setLayoutY(60);
-//        erdkugel.setTranslateZ(200);
-//        erdkugel.toFront();
-//        spielWelt.getChildren().addAll( erdkugel);     
-       	}
+//       	for(int i = 0; zentrumGalaxis.getChildren().size() > i ; i++)
+//       	{
+//       		
+//       		InOrbit objectInGalaxis = zentrumGalaxis.getChild(i);
+//       		
+//       		// ist die Sonne wirklich eine Sonne
+//       		if (objectInGalaxis.getClass() == Stern.class)
+//       		{
+//       			Stern stern = (Stern) objectInGalaxis;
+//       			Sphere sonne = new Sphere();
+//	       		//Radius der Sonne
+//	       		sonne.setRadius(objectInGalaxis.getRadius()*Constants.VERKLEINERUNGSFAKTOR);
+//	       		VectorKart posi = stern.getAbsolutePosition().resize(Constants.VERKLEINERUNGSFAKTOR);
+//	       		//Hier wird die Position der Sonne bestimmt.
+//	       		sonne.setTranslateX(posi.get(0));
+//	       		sonne.setTranslateY(posi.get(1));
+//	       		sonne.setTranslateZ(posi.get(2));
+//	       		//TODO Bild 
+//	       		//TODO Leuchteffekt 
+//	       		//TODO anklickbar. 
+//	       		//fuegt die Sonne dem Spielfeld hinzu
+//	       		spielWelt.getChildren().addAll(sonne);
+//	       		
+//	       		//befindet sich dieses Element im Sichtfeld der kamera dann
+//	       		if(isImSichtfeld(stern));
+//	       		{       
+//		       	 	zeichenPlanetenVomStern(stern);
+//	       		}
+//       		}	
+//        	//TODO Objekte wie raumschiffe und aehnliches muessen hier erstellt werden
+//
+//		//---------------------ein Demo Planet zum Testen----------TODO-----------------------
+////        Image image = new Image("view/hauptmenu/Erde.jpg"); 
+////        System.out.println("Bild der Erde = null?    "+(image == null));
+////        PhongMaterial material1 = new PhongMaterial();
+////        material1.setDiffuseMap(image);
+////        erdkugel.setMaterial(material1);
+////        erdkugel.setRadius(100);
+////        erdkugel.setLayoutX(50);
+////        erdkugel.setLayoutY(60);
+////        erdkugel.setTranslateZ(200);
+////        erdkugel.toFront();
+////        spielWelt.getChildren().addAll( erdkugel);     
+//       	}
        }
 	
 	
@@ -159,7 +169,7 @@ public class WeltraumSicht extends StackPane
 	{
 		//berechned die enternung vom Object zur Kamera 
 		Point3D point1 = new Point3D(kamera.getPosition().get(0), kamera.getPosition().get(1) , kamera.getPosition().get(2));
-		Point3D point2 = new Point3D(orbitObject.getPosition().get(0) ,orbitObject.getPosition().get(1) ,orbitObject.getPosition().get(2));
+		Point3D point2 = new Point3D(orbitObject.getAbsolutePosition().get(0) ,orbitObject.getPosition().get(1) ,orbitObject.getPosition().get(2));
 		
 		double entfernung = point1.distance(point2);
 
@@ -173,21 +183,30 @@ public class WeltraumSicht extends StackPane
 		}
 	}
 	
-	protected void zeichenPlanetenVomStern(Stern stern)
+	
+	protected void zeichenSystem(Orbitable zentrum)
 	{
-		for (int j = 0; stern.getChildren().size() > j ; j++)
+		for (int j = 0; zentrum.getChildren().size() > j ; j++)
 		{
    	 		//fuege die Planeten des Sternes hinzu
    	 		Sphere planet = new Sphere();
    	 		
-   	 		planet.setRadius(stern.getChild(j).getRadius()/1000);
-   	 		planet.setTranslateX(stern.getChild(j).getPosition().get(0)/1000);
-   	 		planet.setTranslateY(stern.getChild(j).getPosition().get(1)/1000);
-   	 		planet.setTranslateZ(stern.getChild(j).getPosition().get(2)/1000);
+   	 		planet.setRadius(zentrum.getChild(j).getRadius()*Constants.VERKLEINERUNGSFAKTOR);
    	 		
+   	 		VectorKart posi = zentrum.getChild(j).getAbsolutePosition().resize(Constants.VERKLEINERUNGSFAKTOR);
+   	 		planet.setTranslateX(posi.get(0));
+   	 		planet.setTranslateY(posi.get(1));
+   	 		planet.setTranslateZ(posi.get(2));
    	 		
-   	 		spielWelt.getChildren().addAll(planet);
-   	 		//TODO unterscheidung von den Obejkten die um die Sonne kreisen mit einer switch case abfrage
+   	 		spielWelt.getChildren().add(planet);
+   	 		
+   	 		System.out.println(planet.getTranslateX());
+   	        kamera.setPosition(zentrum.getChild(j).getAbsolutePosition().resize(Constants.VERKLEINERUNGSFAKTOR));
+   	        System.out.println("Position Kamera:   "+ kamera.getPosition().get(0)+"   "+kamera.getPosition().get(1)+"   "+kamera.getPosition().get(2)   );
+   	        System.out.println(planet.getRadius());
+   	        planet.setRadius(planet.getRadius()*10000);
+   	        
+   	        //TODO unterscheidung von den Obejkten die um die Sonne kreisen mit einer switch case abfrage
    	 		//Eventell in einem Himelskoerper einen Enum mit einem Typ speichern, dieser zeigt dann an was es fuer ein Typ ist
    	 		// mit einer Getter methode kann dies dann abgefragt werden
    	   		//TODO Bild 
