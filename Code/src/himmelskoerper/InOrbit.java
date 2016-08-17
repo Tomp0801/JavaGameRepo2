@@ -7,7 +7,7 @@ import java.util.Vector;
 import global.Agregat;
 import global.Constants;
 import global.GameTime;
-import global.VectorKart;
+import javafx.geometry.Point3D;
 
 /**
  * Eine abstrakte Klasse für Objekte, die sich im Orbit um ein anderes Objekt befinden
@@ -119,10 +119,10 @@ public abstract class InOrbit extends Himmelskoerper {
 	}
 	
 	@Override
-	public VectorKart getAbsolutePosition() 
+	public Point3D getAbsolutePosition() 
 	{
 		Himmelskoerper bezugsObjekt = (Himmelskoerper) this.getBezugsKoerper();	
-		return this.getPositionKartesisch().plus(bezugsObjekt.getAbsolutePosition());
+		return this.getPositionKartesisch().add(bezugsObjekt.getAbsolutePosition());
 	}
 	
 	/**
