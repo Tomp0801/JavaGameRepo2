@@ -6,5 +6,6 @@
 			<accessrule kind="accessible" pattern="javafx/**"/>
 		</accessrules>
 	</classpathentry>
+	<classpathentry kind="lib" path="C:/Program Files/eclipse/Neon IDE for JDevelopers/userLibs/jscience.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
