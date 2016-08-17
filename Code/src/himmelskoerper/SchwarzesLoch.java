@@ -5,6 +5,7 @@ import java.util.LinkedList;
 
 import global.Agregat;
 import global.Constants;
+import global.VectorKart;
 
 public class SchwarzesLoch extends Himmelskoerper implements Orbitable {
 	/**
@@ -97,6 +98,11 @@ public class SchwarzesLoch extends Himmelskoerper implements Orbitable {
 		} else {
 			return null;
 		}
+	}
+
+	@Override
+	public VectorKart getAbsolutePosition() {
+		return this.getPositionKartesisch();	//Absolute Position ist gleich der relativen Position
 	}
 
 }

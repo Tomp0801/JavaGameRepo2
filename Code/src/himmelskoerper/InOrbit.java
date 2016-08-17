@@ -1,10 +1,13 @@
 package himmelskoerper;
 
+
+
 import java.util.Vector;
 
 import global.Agregat;
 import global.Constants;
 import global.GameTime;
+import global.VectorKart;
 
 /**
  * Eine abstrakte Klasse für Objekte, die sich im Orbit um ein anderes Objekt befinden
@@ -107,9 +110,19 @@ public abstract class InOrbit extends Himmelskoerper {
 		this.setBewegungsVektor((float)(v * Math.cos(random)), (float)(v * Math.sin(random)));
 	}
 	
+	/**
+	 * setzt eine zufällige Position auf der Umlaufbahn
+	 */
 	private void setRandomPosition() {
 		//zufällige Position auf dem Orbit erstellen
 		setPosition(this.getOrbitRadius(), getPRNG().random(0, 2 * Math.PI), getPRNG().random(0, Math.PI));
+	}
+	
+	@Override
+	public VectorKart getAbsolutePosition() 
+	{
+		Himmelskoerper bezugsObjekt = (Himmelskoerper) this.getBezugsKoerper();	
+		return this.getPositionKartesisch().plus(bezugsObjekt.getAbsolutePosition());
 	}
 	
 	/**
