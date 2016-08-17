@@ -122,6 +122,9 @@ public class Bereich {
 		Canvas oberflaeche = new Canvas();
 		GraphicsContext grafik = oberflaeche.getGraphicsContext2D();
 		
+		oberflaeche.prefHeight(this.HOEHE);
+		oberflaeche.prefWidth(this.BREITE);
+		
 		//TODO
 //		if (typ.getBodenReichtum() = )
 //		Color farbe = new Color(red, green, blue, 0);

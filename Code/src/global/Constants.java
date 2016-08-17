@@ -28,4 +28,9 @@ public final class Constants {
 	 * Entfernung der Erde zur Sonne
 	 */
 	public static final double AE = 149597870.7;
+	
+	/**
+	 * Das Spielfeld wird um diesen Faktor von Realistischen groﬂen verkleinert
+	 */
+	public static final int VERKLEINERUNGSFAKTOR = 1000;
 }

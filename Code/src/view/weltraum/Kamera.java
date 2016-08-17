@@ -2,6 +2,10 @@ package view.weltraum;
 
 import java.awt.MouseInfo;
 import java.awt.Point;
+import java.util.Vector;
+
+import himmelskoerper.Himmelskoerper;
+import javafx.animation.Transition;
 import javafx.event.EventHandler;
 import javafx.geometry.Point3D;
 import javafx.scene.PerspectiveCamera;
@@ -23,7 +27,7 @@ public class Kamera extends PerspectiveCamera
 	/**
 	 * Position der Kamera
 	 */
-	private Point3D position;
+	private Vector<Double> position;
 	
 	/**
 	 * wenn sich die Kamera in Rotation befindet, ist isRotation = true
@@ -42,25 +46,27 @@ public class Kamera extends PerspectiveCamera
 	
 	/**
 	 * erstellt eine Kamera
+	 * @param scene auf der KeyEvents behandelt werden um die Kamera zubewegen
+	 * @param position die Position der Kamera
 	 */
-	public Kamera(Scene scene)
+	public Kamera(Scene scene , Vector<Double> position)
 	{
 		super(true);
-	
 		//setzt die Position auf 0
-		position = new Point3D(0, 0, 0);
-		
+		this.position = position;	
 		//legt die Sichtweite fest
 		this.setFarClip(10000);
 		//maximale naehe
 		this.setNearClip(10000);
 		this.getTransforms().addAll(rotationX , rotationY);
-		
 		initEventScene(scene);
 	}
 	
 	
-	
+	/**
+	 * behandelt Eents zur bewegung der Kamera
+	 * @param scene
+	 */
 	private void initEventScene(Scene scene)
 	{
 		Point positionMaus = new Point(0,0);
@@ -149,18 +155,29 @@ public class Kamera extends PerspectiveCamera
 	    this.setTranslateX(positionX);
 	    this.setTranslateY(positionY);
 		this.setTranslateZ(positionZ);
-		
-		this.position = this.position.add(positionX, positionY, positionZ);
+		this.position.clear();
+		this.position.add(positionX);
+		this.position.add(positionY);
+		this.position.add(positionZ);
 	}
 	
 	
 	/**
-	 * setzt die Position der Kamera
-	 * @param positon
+	 * setzt eine neue Position der Kamera
+	 * @param positon der Kamera
 	 */
 	public void setPosition(Point3D position) 
 	{
 		this.setPosition(position.getX(), position.getY(), position.getZ());
+	}
+	
+	/**
+	 * gibt die Position der Kamera zuruek
+	 * @return
+	 */
+	public Vector<Double> getPosition()
+	{
+		return position;
 	}
 	
 	
@@ -238,5 +255,15 @@ public class Kamera extends PerspectiveCamera
 	public void setRotaion(Boolean isRotation)
 	{
 		this.isRotation = isRotation;
+	}
+	
+	
+	/**
+	 * bewegt die Kamera zu einer neuen Position mit einer Tr
+	 * @param newPosition die Position zu der sich die Kamera bewegen soll
+	 */
+	public void geheZumPunkt(Vector<Double> newPosition)
+	{
+		//TODO Taransition hinzufuegen
 	}
 }

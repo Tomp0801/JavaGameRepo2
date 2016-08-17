@@ -2,6 +2,8 @@ package himmelskoerper;
 
 import java.util.Vector;
 
+import com.sun.org.apache.xalan.internal.utils.XMLSecurityPropertyManager.Property;
+
 import global.Agregat;
 import global.GameTime;
 import global.Random;
@@ -139,7 +141,7 @@ public abstract class Himmelskoerper
 	public Vector<Double> getPositionKartesisch()
 	{
 		Vector<Double> positionKart = new Vector<Double>(3);
-		
+
 		double x, y, z;
 		
 		x = position.get(0) * Math.sin(position.get(2)) * Math.cos(position.get(1));
