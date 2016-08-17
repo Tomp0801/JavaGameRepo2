@@ -5,7 +5,7 @@ import java.util.LinkedList;
 
 import global.Agregat;
 import global.Constants;
-import global.VectorKart;
+import javafx.geometry.Point3D;
 
 public class SchwarzesLoch extends Himmelskoerper implements Orbitable {
 	/**
@@ -101,7 +101,7 @@ public class SchwarzesLoch extends Himmelskoerper implements Orbitable {
 	}
 
 	@Override
-	public VectorKart getAbsolutePosition() {
+	public Point3D getAbsolutePosition() {
 		return this.getPositionKartesisch();	//Absolute Position ist gleich der relativen Position
 	}
 

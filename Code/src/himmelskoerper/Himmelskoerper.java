@@ -2,12 +2,10 @@ package himmelskoerper;
 
 import java.util.Vector;
 
-import com.sun.org.apache.xalan.internal.utils.XMLSecurityPropertyManager.Property;
-
 import global.Agregat;
 import global.GameTime;
 import global.Random;
-import global.VectorKart;
+import javafx.geometry.Point3D;
 
 /**
  * Ein kugelförmiges Objekt mit Masse und einer Position im Raum;
@@ -139,28 +137,22 @@ public abstract class Himmelskoerper
 	 * 
 	 * @return die Position als Vektor in kartesischen Koordinaten (x, y, z)
 	 */
-	public VectorKart getPositionKartesisch()
+	public Point3D getPositionKartesisch()
 	{
-
-		VectorKart positionKart = new VectorKart(3);
-
 		double x, y, z;
 		
 		x = position.get(0) * Math.sin(position.get(2)) * Math.cos(position.get(1));
 		y = position.get(0) * Math.sin(position.get(2)) * Math.sin(position.get(1));
 		z = position.get(0) * Math.cos(position.get(2));
-		positionKart.set(0, x);
-		positionKart.set(1, y);
-		positionKart.set(2, z);
 		
-		return positionKart;
+		return new Point3D(x, y, z);
 	}
 	
 	/**
 	 * die absolute Position (relativ zu dem Mittelpunkt des kompletten systems)
 	 * @return Vektor mit kartesischen Koordinaten
 	 */
-	public abstract VectorKart getAbsolutePosition();
+	public abstract Point3D getAbsolutePosition();
 
 	/**
 	 * Position setzen in Polar Koordinaten
@@ -245,7 +237,7 @@ public abstract class Himmelskoerper
 		System.out.println("| Seed: " + getPRNG().getSeed());
 		System.out.println("| Art: " + this.art);
 		System.out.println("| Position: " + pos.get(0) + " " + pos.get(1) + " " + pos.get(2));
-		System.out.println("| Absolute Position (kart): " + getAbsolutePosition().get(0) + " " + getAbsolutePosition().get(1) + " " + getAbsolutePosition().get(2));
+		System.out.println("| Absolute Position (kart): " + getAbsolutePosition().getX() + " " + getAbsolutePosition().getY() + " " + getAbsolutePosition().getZ());
 		System.out.println("| Radius: " + this.radius);
 		System.out.println("| Masse: "+ this.masse);
 		System.out.println("| Temperatur: "+ this.oberflaechenTemperatur);
