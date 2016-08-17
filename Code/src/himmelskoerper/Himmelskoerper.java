@@ -5,6 +5,7 @@ import java.util.Vector;
 import global.Agregat;
 import global.GameTime;
 import global.Random;
+import global.VectorKart;
 
 /**
  * Ein kugelförmiges Objekt mit Masse und einer Position im Raum;
@@ -136,21 +137,27 @@ public abstract class Himmelskoerper
 	 * 
 	 * @return die Position als Vektor in kartesischen Koordinaten (x, y, z)
 	 */
-	public Vector<Double> getPositionKartesisch()
+	public VectorKart getPositionKartesisch()
 	{
-		Vector<Double> positionKart = new Vector<Double>(3);
+		VectorKart positionKart = new VectorKart(3);
 		
 		double x, y, z;
 		
 		x = position.get(0) * Math.sin(position.get(2)) * Math.cos(position.get(1));
 		y = position.get(0) * Math.sin(position.get(2)) * Math.sin(position.get(1));
 		z = position.get(0) * Math.cos(position.get(2));
-		positionKart.addElement(x);
-		positionKart.addElement(y);
-		positionKart.addElement(z);
+		positionKart.set(0, x);
+		positionKart.set(1, y);
+		positionKart.set(2, z);
 		
 		return positionKart;
 	}
+	
+	/**
+	 * die absolute Position (relativ zu dem Mittelpunkt des kompletten systems)
+	 * @return Vektor mit kartesischen Koordinaten
+	 */
+	public abstract VectorKart getAbsolutePosition();
 
 	/**
 	 * Position setzen in Polar Koordinaten
@@ -181,8 +188,6 @@ public abstract class Himmelskoerper
 		
 		this.position = positionsVektor;
 	}
-	
-	
 	
 	/**
 	 * Eine Methode zum zufälligen generieren der Eigenschaften des Himmelskörpers
@@ -237,6 +242,7 @@ public abstract class Himmelskoerper
 		System.out.println("| Seed: " + getPRNG().getSeed());
 		System.out.println("| Art: " + this.art);
 		System.out.println("| Position: " + pos.get(0) + " " + pos.get(1) + " " + pos.get(2));
+		System.out.println("| Absolute Position (kart): " + getAbsolutePosition().get(0) + " " + getAbsolutePosition().get(1) + " " + getAbsolutePosition().get(2));
 		System.out.println("| Radius: " + this.radius);
 		System.out.println("| Masse: "+ this.masse);
 		System.out.println("| Temperatur: "+ this.oberflaechenTemperatur);
