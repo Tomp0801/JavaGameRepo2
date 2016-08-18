@@ -71,7 +71,7 @@ public abstract class InOrbit extends Himmelskoerper {
 			this.setBewegungsVektor((float)0, (float)0);
 		}
 	
-		setLastRefresh(GameTime.timeMillis());	//last Refresh initialisieren
+		setLastRefresh(controller.Main.time.timeMillis());	//last Refresh initialisieren
 	}
 	
 	/**
@@ -185,7 +185,7 @@ public abstract class InOrbit extends Himmelskoerper {
 	public void bewegen() {
 		long passedTime;
 		long prevRefresh = getLastRefresh();
-		setLastRefresh(GameTime.timeMillis());
+		setLastRefresh(controller.Main.time.timeMillis());
 		double angleX, angleY;
 		double wegX, wegY;
 		Vector<Double> position = this.getPosition(); 

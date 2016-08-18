@@ -10,14 +10,15 @@ import java.util.Iterator;
  * @author Thomas
  *
  */
-public class Main {
+public class Tester {
 	
-	public static void main(String[] args) {
 
-		int seed = 5;
-		
-		SchwarzesLoch SL = new SchwarzesLoch(seed);
+	int seed = 5;
+	
+	SchwarzesLoch SL = new SchwarzesLoch(seed);
 
+	public Tester()
+	{
 		System.out.println("Anzahl Sterne: " + SL.getChildren().size());
 		int planeten = 0;
 		Stern currentStern;
@@ -69,7 +70,7 @@ public class Main {
 			currentMond.printStatus();
 			
 			System.out.println("Alle bewegungen berechnet in: " + (System.currentTimeMillis() - time) + " Millisekunden");
-			
+			System.out.println(controller.Main.time.timeMillis());
 			System.out.println("___________________________________________________________");
 			
 			try {
@@ -80,4 +81,5 @@ public class Main {
 			}
 		}
 	}
+	
 }

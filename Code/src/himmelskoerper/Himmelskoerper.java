@@ -71,7 +71,7 @@ public abstract class Himmelskoerper
 		prng = new Random((int) Math.round(Math.random() * 2147483647));
 		
 		setPosition(0, 0, 0); 	//Position initialisieren mit 0
-		this.lastRefresh = GameTime.timeMillis();		//lastRefresh initialisieren
+		this.lastRefresh = controller.Main.time.timeMillis();		//lastRefresh initialisieren
 	}
 	
 	/**
@@ -82,7 +82,7 @@ public abstract class Himmelskoerper
 		prng = new Random(seed);	//PRNG erstellen
 		
 		setPosition(0, 0, 0); 	//Position initialisieren mit 0
-		this.lastRefresh = GameTime.timeMillis();		//lastRefresh initialisieren
+		this.lastRefresh = controller.Main.time.timeMillis();		//lastRefresh initialisieren
 	}
 	
 	/**
@@ -250,7 +250,7 @@ public abstract class Himmelskoerper
 		System.out.println("| Radius: " + this.radius);
 		System.out.println("| Masse: "+ this.masse);
 		System.out.println("| Temperatur: "+ this.oberflaechenTemperatur);
-		System.out.println("| Tick: " + getLastRefresh()/1000 + ": ");
+		System.out.println("| Tick: " + getLastRefresh()/1000);
 		System.out.println(" _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _");
 	}
 }
