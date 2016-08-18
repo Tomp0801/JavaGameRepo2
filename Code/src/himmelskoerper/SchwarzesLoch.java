@@ -6,6 +6,7 @@ import java.util.LinkedList;
 import global.Agregat;
 import global.Constants;
 import javafx.geometry.Point3D;
+import javafx.scene.paint.PhongMaterial;
 
 public class SchwarzesLoch extends Himmelskoerper implements Orbitable {
 	/**
@@ -103,6 +104,12 @@ public class SchwarzesLoch extends Himmelskoerper implements Orbitable {
 	@Override
 	public Point3D getAbsolutePosition() {
 		return this.getPositionKartesisch();	//Absolute Position ist gleich der relativen Position
+	}
+
+	@Override
+	public PhongMaterial getAussehn() {
+		// TODO 
+		return null;
 	}
 
 }

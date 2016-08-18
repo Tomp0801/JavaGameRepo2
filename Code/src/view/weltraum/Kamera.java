@@ -3,8 +3,6 @@ package view.weltraum;
 import java.awt.MouseInfo;
 import java.awt.Point;
 import java.util.Vector;
-
-import global.VectorKart;
 import himmelskoerper.Himmelskoerper;
 import javafx.animation.RotateTransition;
 import javafx.animation.Transition;
@@ -32,7 +30,7 @@ public class Kamera extends PerspectiveCamera
 	 */
 	private Vector<Double> position;
 	
-	private double speed = 10; 
+	private double speed = 9999999; 
 	
 	/**
 	 * wenn sich die Kamera in Rotation befindet, ist isRotation = true
@@ -60,9 +58,9 @@ public class Kamera extends PerspectiveCamera
 		//setzt die Position auf 0
 		this.position = position;	
 		//legt die Sichtweite fest
-		this.setFarClip(1000000000);
+		this.setFarClip(100);
 		//maximale naehe
-		this.setNearClip(10000);
+		this.setNearClip(100);
 		this.getTransforms().addAll(rotationY , rotationX);
 		initEventScene(scene);
 	}
@@ -176,11 +174,6 @@ public class Kamera extends PerspectiveCamera
 		this.setPosition(position.getX(), position.getY(), position.getZ());
 	}
 	
-	public void setPosition(VectorKart position) 
-	{
-		this.setPosition(position.get(0), position.get(1), position.get(2));
-	}
-	
 	/**
 	 * gibt die Position der Kamera zuruek
 	 * @return
@@ -253,8 +246,8 @@ public class Kamera extends PerspectiveCamera
 
 		if(this.isRotation)
 		{	
-			this.rotationX.setAngle(rotationX.getAngle() - mouseDeltaX/7);
-			this.rotationY.setAngle(rotationY.getAngle() + mouseDeltaY/7);
+			this.rotationX.setAngle(rotationX.getAngle() - mouseDeltaX/1);
+			this.rotationY.setAngle(rotationY.getAngle() + mouseDeltaY/1);
 		}
 	}
 	
@@ -283,17 +276,17 @@ public class Kamera extends PerspectiveCamera
 	 * @param vector
 	 */
 	public void ausrichtenNach(Point3D point)
-	{
-		Point3D positionKamera = new Point3D(position.get(0) , position.get(1) , position.get(2));
+	{	
+		double x  = Math.sin(Math.toRadians(rotationX.getAngle()))*Math.cos(Math.toRadians(rotationY.getAngle()));
+		double y = Math.sin(Math.toRadians(rotationX.getAngle()))*Math.sin(Math.toRadians(rotationY.getAngle()));
+		double z = Math.cos(Math.toRadians(rotationX.getAngle()));	
 		
-		Point3D richtungsVektor = positionKamera.add(point);
-		double winkelA  = Math.toDegrees(Math.atan(richtungsVektor.getY()/richtungsVektor.getZ()));
-		double winkelB =  Math.toDegrees(Math.atan(richtungsVektor.getX()/richtungsVektor.getZ()));
+		Point3D ausrichtungKamera = new Point3D(x ,y , z);
+		Point3D richtungsVektor = point.subtract(ausrichtungKamera);
 		
-		this.rotationX.setAngle(winkelA);
-		this.rotationY.setAngle(winkelB);
-		
-//		RotateTransition rotation = new RotateTransition(Duration.seconds(1), this);
-//		rotation.
+		RotateTransition rotation = new RotateTransition(Duration.seconds(3), this);
+		rotation.setAxis(ausrichtungKamera.crossProduct(richtungsVektor));
+		rotation.setByAngle(ausrichtungKamera.angle(richtungsVektor));
+		rotation.play();
 	}
 }

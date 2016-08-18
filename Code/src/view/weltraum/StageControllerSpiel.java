@@ -5,6 +5,7 @@ import java.util.Vector;
 
 import himmelskoerper.SchwarzesLoch;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.SubScene;
@@ -45,19 +46,19 @@ public class StageControllerSpiel
 	{	
 		//--------------------Spiel-Umgebunng-wird-geladen-------------------------------------------//
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/weltraum/fxml/SpielUmgebung.fxml"));
-		try{loader.load();}catch (IOException e){e.printStackTrace();}
-		mainScene = new Scene(loader.getRoot());
+		try{loader.load();}catch (IOException e){e.printStackTrace();}	
+		mainScene = new Scene(loader.getRoot() , 800 , 800 , true);
+		
 		spielUmgebungController = loader.getController();
-		spielUmgebungController.setScene(mainScene);
+//		spielUmgebungController.setScene(mainScene);
 		
 		//---------------------Demospiel-wird-erstellt-TODO-------------------------------------------------------------------//
-		Sektion demoSektion = new Sektion();
-		
+			
 		Vector<Double> position = new Vector<Double>();
 		position.add(0.0);
 		position.add(0.0);
 		position.add(-200.0);
-		WeltraumSicht demo = new WeltraumSicht(new SchwarzesLoch(925), mainScene, position);
+		WeltraumSicht demo = new WeltraumSicht(new SchwarzesLoch(587), mainScene, position);
 		SubScene subScene = demo.getSubScene();
 		
 		//---------------------In-der-Mitte-des-Fensters-wird-die-Spielumgebeung-plaziert------------------------------------------------------------------------------//

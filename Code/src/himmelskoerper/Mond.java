@@ -1,6 +1,7 @@
 package himmelskoerper;
 
 import global.Agregat;
+import javafx.scene.paint.PhongMaterial;
 import map.Karte;
 
 /**
@@ -95,6 +96,12 @@ public class Mond extends InOrbit implements Betretbar
 		//ein planet so groﬂ wie die erde soll in etwa eine Karte von 10 * 10 haben, deswegen '/ 4000'
 		breite = (int) Math.round(2 * Math.PI * this.getRadius() / 4000);
 		return breite;
+	}
+
+	@Override
+	public PhongMaterial getAussehn() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

@@ -212,14 +212,14 @@ public class SpielUmgebungController implements Initializable
 	}
 	
 	
-	/**
-	 * setzt eine Scene von der KeyEvents abgefangen werden
-	 */
-	public void setScene(Scene scene)
-	{
-		System.out.println("Die Scene wurde der Spielumgebung übergeben");
-		this.scene = scene;
-	}
+//	/**
+//	 * setzt eine Scene von der KeyEvents abgefangen werden
+//	 */
+//	public void setScene(Scene scene)
+//	{
+//		System.out.println("Die Scene wurde der Spielumgebung übergeben");
+//		this.scene = scene;
+//	}
 	
 	
 	/**

@@ -1,4 +1,4 @@
-package view.planet;
+package view.karte;
 
 import himmelskoerper.Betretbar;
 import javafx.event.EventHandler;

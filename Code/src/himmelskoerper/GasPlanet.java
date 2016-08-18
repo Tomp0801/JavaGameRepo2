@@ -1,6 +1,7 @@
 package himmelskoerper;
 
 import global.Agregat;
+import javafx.scene.paint.PhongMaterial;
 
 /**
  * Ein Planet aus Gas, nicht betretbar
@@ -72,6 +73,12 @@ public class GasPlanet extends Planet {
 			new Mond(this, getPRNG().randomInt());
 		}
 		
+	}
+
+	@Override
+	public PhongMaterial getAussehn() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

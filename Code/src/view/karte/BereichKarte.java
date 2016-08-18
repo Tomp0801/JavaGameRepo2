@@ -1,4 +1,4 @@
-package view.planet;
+package view.karte;
 
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;

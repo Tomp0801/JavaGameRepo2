@@ -7,5 +7,5 @@ package view.hauptmenu;
  */
 public enum SceneEnum 
 {
-	STARTGAME, NETZWERK;
+	STARTGAME, NETZWERK , WELTRAUMSICHT , KARTENSICHT; 
 }

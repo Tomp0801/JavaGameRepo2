@@ -94,6 +94,11 @@ public class StageController extends Application
 				erstelleNeueScene(scene);
 			newScene = netzwerkFXMLScene;
 			break;
+		case WELTRAUMSICHT:
+			
+			break;
+		case KARTENSICHT:
+			break;
 		}
 		
 		stage.setScene(newScene);

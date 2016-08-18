@@ -44,6 +44,6 @@ public class WeltraumSichtController
 	 */
 	protected void delateObjectFromTheAnimationList(InOrbit inOrbitObect)
 	{
-		
+		//TODO
 	}
 }

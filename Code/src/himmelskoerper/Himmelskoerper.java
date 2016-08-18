@@ -6,6 +6,7 @@ import global.Agregat;
 import global.GameTime;
 import global.Random;
 import javafx.geometry.Point3D;
+import javafx.scene.paint.PhongMaterial;
 
 /**
  * Ein kugelförmiges Objekt mit Masse und einer Position im Raum;
@@ -226,6 +227,14 @@ public abstract class Himmelskoerper
 	protected void setLastRefresh(long lastRefresh) {
 		this.lastRefresh = lastRefresh;
 	}
+	
+	
+	/**
+	 * beschreibt das aussehen des Himmelskoerpers 
+	 * @return gibt ein PhongMaterial zurueck mit dem Aussehen
+	 */
+	public abstract PhongMaterial getAussehn();
+	
 
 	/**********************************************************************************/
 	/**
@@ -244,5 +253,4 @@ public abstract class Himmelskoerper
 		System.out.println("| Tick: " + getLastRefresh()/1000 + ": ");
 		System.out.println(" _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _");
 	}
-	
 }

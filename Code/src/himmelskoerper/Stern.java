@@ -5,6 +5,7 @@ import java.util.LinkedList;
 
 import global.Agregat;
 import global.Constants;
+import javafx.scene.paint.PhongMaterial;
 
 
 /**
@@ -140,6 +141,12 @@ public class Stern extends InOrbit implements Orbitable
 		} else {
 			return null;
 		}
+	}
+
+	@Override
+	public PhongMaterial getAussehn() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
