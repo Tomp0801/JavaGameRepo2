@@ -8,9 +8,9 @@
 
 <BorderPane fx:id="borderPane" depthTest="ENABLE" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="506.0" prefWidth="735.0" style="" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.weltraum.fxml.SpielUmgebungController">
   <center>
-    <StackPane fx:id="testStackPane" style="-fx-background-color: transparent; -fx-border-color: transparent;">
+    <StackPane depthTest="ENABLE" style="-fx-background-color: transparent; -fx-border-color: transparent;">
       <children>
-        <StackPane fx:id="centerPane" prefHeight="150.0" prefWidth="200.0" style="-fx-background-color: transparent; -fx-border-color: transparent;" />
+        <StackPane fx:id="centerPane" depthTest="ENABLE" prefHeight="150.0" prefWidth="200.0" style="-fx-background-color: transparent; -fx-border-color: transparent;" />
         <VBox fx:id="navigationBox" opacity="0.56" prefHeight="200.0" prefWidth="100.0" spacing="5.0" style="-fx-background-color: transparent; -fx-border-color: transparent;" visible="false" />
         <VBox fx:id="spielMenu" alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0" style="-fx-background-color: transparent; -fx-border-color: transparent;" visible="false">
           <children>

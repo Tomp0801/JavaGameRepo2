@@ -1,5 +1,6 @@
 package view.weltraum;
 
+import java.io.IOException;
 import java.util.Vector;
 
 import com.oracle.jrockit.jfr.DataType;
@@ -11,8 +12,10 @@ import himmelskoerper.Orbitable;
 import himmelskoerper.SchwarzesLoch;
 import himmelskoerper.Stern;
 import javafx.event.EventHandler;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Point3D;
 import javafx.scene.DepthTest;
+import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.SceneAntialiasing;
 import javafx.scene.SubScene;
@@ -23,6 +26,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.Sphere;
+import view.weltraum.fxml.SpielUmgebungController;
 
 /**
  * In dieser Sicht, werden die Planeten und die Sonnen einer Sektion ohne ihre Monde angezeigt.
@@ -30,7 +34,7 @@ import javafx.scene.shape.Sphere;
  * 
  * @author Dennis
  */
-public class WeltraumSicht extends StackPane
+public class WeltraumSicht //extends StackPane
 {
 	/**
 	 * eine Kamera, die der Spieler steuern kann um sich auf dem Spielfeld zubewegen 
@@ -41,10 +45,8 @@ public class WeltraumSicht extends StackPane
 	 * Auf dieser AnchoPane befindet sich die Spielwelt. 
 	 * Alle Elemente (Planete,Raumschiffe,Sonnen und weiteres befinden sich auf der spielWelt
 	 */
-	private AnchorPane spielWelt = new AnchorPane(); 
+	//private AnchorPane spielWelt = new AnchorPane(); 
 	
-	private Sphere erdkugel = new Sphere(); //Zum testen
-
 	/**
 	 * dieser SubScene wird eine Kamera zugeordnet. 
 	 */
@@ -55,6 +57,8 @@ public class WeltraumSicht extends StackPane
 	 */
 	private WeltraumSichtController controller = new WeltraumSichtController(); 
 	
+	private Group subSceneRoot = new Group();
+	private Scene scene ; 
 	
 	/**
 	 * Erstellt eine Objekt von Weltrumsicht
@@ -64,23 +68,39 @@ public class WeltraumSicht extends StackPane
 	 * zur steuerung der Kamera verwendet
 	 * @param positionKamera uebergibt die Position der Kamera in einem Vector<Double> index 0 => position in X Richtung index 1 => position in Y Richtung, index 2 => position in Z Richtung
 	 */
-	public WeltraumSicht(SchwarzesLoch zentrumGalaxis, Scene scene, Vector<Double> positionKamera )
+	public WeltraumSicht(SchwarzesLoch zentrumGalaxis, Point3D positionKamera )
 	{   	
+		initScene();
 		kamera = new Kamera(scene, positionKamera);
 		
-		//-------------erstellt-die-SubScene-fuer-die-Kammera--------------------------------------------------//
-		subScene = new SubScene(this , 500 , 500, true, SceneAntialiasing.BALANCED);
-		subScene.setDepthTest(DepthTest.ENABLE);
-		subScene.setFill(Color.BLACK); 
 		subScene.setCamera(kamera);	
+		
 		//-------------erstellt-die-Spielumgebung-auf-dieser-befinden-sich-alle-Elemente-die-um-ein-groﬂes-Schwarzesloch-kreisen-----//
-        spielWelt.setStyle("-fx-background-color: BLACK; -fx-box-border: transparent;");   
-        this.getChildren().add(spielWelt);
+//        spielWelt.setStyle("-fx-background-color: BLACK; -fx-box-border: transparent;");   
+//        this.getChildren().add(spielWelt);
            
         //---------Hier----werden-----die----Sterne----der----Galaxie----geladen---------------------------    
         zeichenSystem(zentrumGalaxis); 
      }
 
+	
+	private void initScene()
+	{
+		//-------------erstellt-die-SubScene-fuer-die-Kammera--------------------------------------------------//
+		
+		subScene = new SubScene(subSceneRoot , 500 , 500, true, SceneAntialiasing.BALANCED);
+		subScene.setFill(Color.BLACK); 
+		subScene.setDepthTest(DepthTest.ENABLE);
+		
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/weltraum/fxml/SpielUmgebung.fxml"));
+		try{loader.load();}catch (IOException e){e.printStackTrace();}	
+		SpielUmgebungController controller = loader.getController();
+		scene = new Scene(loader.getRoot() , 800 , 800 , true, SceneAntialiasing.BALANCED);
+		controller.wechsleZentrum(subScene);
+		System.out.println(scene.getRoot().getDepthTest());
+		System.out.println(subSceneRoot.getDepthTest());
+
+	}
 	
 	/**
 	 * 
@@ -100,6 +120,14 @@ public class WeltraumSicht extends StackPane
 		return subScene;
 	}
 	
+	/**
+	 * Gibt die Weltraumsicht szene wieder
+	 * @return scene
+	 */
+	public Scene getScene()
+	{
+		return scene;
+	}
 	
 	/**
 	 * ueberprueft ob ein Object sich im Sichtfeld der Kamera befindet, also in dem Bereich in dem die Objekte geladen werden die sich im Orbit aufhalten,
@@ -109,7 +137,7 @@ public class WeltraumSicht extends StackPane
 	protected Boolean isImSichtfeld(InOrbit orbitObject)
 	{
 		//berechned die enternung vom Object zur Kamera 
-		Point3D point1 = new Point3D(kamera.getPosition().get(0), kamera.getPosition().get(1) , kamera.getPosition().get(2));
+		Point3D point1 = new Point3D(kamera.getPosition().getX(), kamera.getPosition().getY() , kamera.getPosition().getZ());
 		Point3D point2 = new Point3D(orbitObject.getAbsolutePosition().getX() ,orbitObject.getAbsolutePosition().getY() ,orbitObject.getAbsolutePosition().getZ());
 		
 		double entfernung = point1.distance(point2);
@@ -139,7 +167,7 @@ public class WeltraumSicht extends StackPane
    	 		
    	        himmelskoerper.setRadius(himmelskoerper.getRadius()*1000);
    	       
-   	 		spielWelt.getChildren().add(himmelskoerper);
+   	 		subSceneRoot.getChildren().add(himmelskoerper);
    	 		
    	 		//setzt das aussehen der Kugel
 	        himmelskoerper.setMaterial(zentrum.getChild(j).getAussehn());

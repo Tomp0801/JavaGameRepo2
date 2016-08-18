@@ -28,7 +28,7 @@ public class Kamera extends PerspectiveCamera
 	/**
 	 * Position der Kamera
 	 */
-	private Vector<Double> position;
+	private Point3D position;
 	
 	private double speed = 9999999; 
 	
@@ -52,9 +52,9 @@ public class Kamera extends PerspectiveCamera
 	 * @param scene auf der KeyEvents behandelt werden um die Kamera zubewegen
 	 * @param position die Position der Kamera
 	 */
-	public Kamera(Scene scene , Vector<Double> position)
+	public Kamera(Scene scene , Point3D position)
 	{
-		super(true);
+		super(false);
 		//setzt die Position auf 0
 		this.position = position;	
 		//legt die Sichtweite fest
@@ -158,10 +158,7 @@ public class Kamera extends PerspectiveCamera
 	    this.setTranslateX(positionX);
 	    this.setTranslateY(positionY);
 		this.setTranslateZ(positionZ);
-		this.position.clear();
-		this.position.add(positionX);
-		this.position.add(positionY);
-		this.position.add(positionZ);
+		this.position = new Point3D(positionX, positionY, positionZ);
 	}
 	
 	
@@ -178,7 +175,7 @@ public class Kamera extends PerspectiveCamera
 	 * gibt die Position der Kamera zuruek
 	 * @return
 	 */
-	public Vector<Double> getPosition()
+	public Point3D getPosition()
 	{
 		return position;
 	}

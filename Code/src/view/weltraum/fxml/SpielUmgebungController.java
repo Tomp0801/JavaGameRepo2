@@ -205,8 +205,10 @@ public class SpielUmgebungController implements Initializable
 	 * setzt ein neues Zentrum
 	 * @param subScene wird in die mitte des BorderPanes gesetzt. 
 	 */
-	public void wechsleZentrum(Node subScene)
+	public void wechsleZentrum(SubScene subScene)
 	{
+		subScene.widthProperty().bind(getStackPaneZentrum().widthProperty());
+		subScene.heightProperty().bind(getStackPaneZentrum().heightProperty());
 		centerPane.getChildren().clear();
 		centerPane.getChildren().add(subScene);
 	}

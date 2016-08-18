@@ -5,6 +5,7 @@ import java.util.Vector;
 
 import himmelskoerper.SchwarzesLoch;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Point3D;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -48,17 +49,13 @@ public class StageControllerSpiel
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/weltraum/fxml/SpielUmgebung.fxml"));
 		try{loader.load();}catch (IOException e){e.printStackTrace();}	
 		mainScene = new Scene(loader.getRoot() , 800 , 800 , true);
-		
 		spielUmgebungController = loader.getController();
 //		spielUmgebungController.setScene(mainScene);
 		
 		//---------------------Demospiel-wird-erstellt-TODO-------------------------------------------------------------------//
 			
-		Vector<Double> position = new Vector<Double>();
-		position.add(0.0);
-		position.add(0.0);
-		position.add(-200.0);
-		WeltraumSicht demo = new WeltraumSicht(new SchwarzesLoch(587), mainScene, position);
+		Point3D position = new Point3D(0 ,0 ,-200);
+		WeltraumSicht demo = new WeltraumSicht(new SchwarzesLoch(587), position );
 		SubScene subScene = demo.getSubScene();
 		
 		//---------------------In-der-Mitte-des-Fensters-wird-die-Spielumgebeung-plaziert------------------------------------------------------------------------------//
@@ -90,8 +87,6 @@ public class StageControllerSpiel
 	 */
 	public void wechselSicht(SubScene subScene)
 	{
-		subScene.widthProperty().bind(spielUmgebungController.getStackPaneZentrum().widthProperty());
-		subScene.heightProperty().bind(spielUmgebungController.getStackPaneZentrum().heightProperty());
 		spielUmgebungController.wechsleZentrum(subScene);	
 	}
 	
@@ -100,8 +95,8 @@ public class StageControllerSpiel
 	 * wechselet die Sicht es Gepielgesehens zu einer neuen Sicht.
 	 * @param node wird in das Zentrum gesetzt
 	 */
-	public void wechselSicht(Node node)
-	{
-		spielUmgebungController.wechsleZentrum(node);	
-	}
+//	public void wechselSicht(Node node)
+//	{
+//		spielUmgebungController.wechsleZentrum(node);	
+//	}
 }

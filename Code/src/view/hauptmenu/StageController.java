@@ -1,14 +1,18 @@
 package view.hauptmenu;
 
 import java.io.IOException;
+
+import himmelskoerper.SchwarzesLoch;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Point3D;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Sphere;
 import javafx.stage.Stage;
 import view.weltraum.StageControllerSpiel;
+import view.weltraum.WeltraumSicht;
 
 //diese Methode ist vergleichbar mit der Mainmethode. Funktioniert quasie genau so
 /**
@@ -36,6 +40,8 @@ public class StageController extends Application
 	 */
 	private Scene netzwerkFXMLScene;
 	
+	private WeltraumSicht weltraumSicht;
+	
 	
 	/**
 	 * Die Mainklasse 
@@ -55,9 +61,9 @@ public class StageController extends Application
 	{    
 		System.out.println("Spiel wird gestartet");
 //		//zum laden eines DemoSpiels
-		StageControllerSpiel demoSpiel = new StageControllerSpiel(primaryStage);
+//		StageControllerSpiel demoSpiel = new StageControllerSpiel(primaryStage);
 //		
-//
+
 		instance = this; 
 		this.stage = primaryStage;
 		//Damit man nicht mit ESCAP den FullScreen schließen kann
@@ -65,6 +71,8 @@ public class StageController extends Application
 		//Damit keine Nachricht erscheint nach dem eröffnen des FullScreens
 		primaryStage.setFullScreenExitHint("");
 		primaryStage.setFullScreen(true);
+		primaryStage.show();
+		this.wechselScene(SceneEnum.WELTRAUMSICHT);
 		
 
 //		
@@ -95,7 +103,11 @@ public class StageController extends Application
 			newScene = netzwerkFXMLScene;
 			break;
 		case WELTRAUMSICHT:
-			
+			if (weltraumSicht == null)
+			{
+				weltraumSicht = new WeltraumSicht(new SchwarzesLoch(235), new Point3D(0, 0, -200));
+			}
+			newScene = weltraumSicht.getScene();
 			break;
 		case KARTENSICHT:
 			break;
@@ -104,7 +116,7 @@ public class StageController extends Application
 		stage.setScene(newScene);
 		stage.setFullScreen(true);
 	}
-	
+
 	
 	/**
 	 * erstellt einen Controller des Typs der uebergeben wird und speichert dieser als eine Objektvariable ab
