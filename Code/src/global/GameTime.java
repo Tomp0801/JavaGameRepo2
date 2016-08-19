@@ -28,17 +28,28 @@ public final class GameTime {
 	 */
 	private boolean paused;
 	
+	private static GameTime instance;
 	/**
 	 * Konstruktor
 	 */
-	public GameTime()
+	private GameTime()
 	{
+		instance = this;
 		time = 0;
 		lastUpdate = System.currentTimeMillis();
 		paused = false;
 		zeitFaktor = (float) 1.0;
 	}
 	
+	
+	public static GameTime getInstance()
+	{
+		if (instance == null)
+		{
+			new GameTime();
+		}
+		return instance;
+	}
 	/**
 	 * Gibt die SpielZeit in MilliSekunden wieder
 	 * @return long zeit in milliSekunden

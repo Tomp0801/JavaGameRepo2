@@ -6,6 +6,7 @@ import java.util.Vector;
 
 import global.Agregat;
 import global.Constants;
+import global.GameTime;
 
 /**
  * Eine abstrakte Klasse für Objekte, die sich im Orbit um ein anderes Objekt befinden
@@ -69,7 +70,7 @@ public abstract class InOrbit extends Himmelskoerper {
 			this.setBewegungsVektor((float)0, (float)0);
 		}
 	
-		setLastRefresh(controller.Main.time.timeMillis());	//last Refresh initialisieren
+		setLastRefresh(GameTime.getInstance().timeMillis());	//last Refresh initialisieren
 	}
 	
 	/**
@@ -174,7 +175,6 @@ public abstract class InOrbit extends Himmelskoerper {
 	public void refresh()
 	{
 		bewegen();
-		calcPositionAbsolute();
 	}
 	
 	@Override
@@ -191,7 +191,7 @@ public abstract class InOrbit extends Himmelskoerper {
 	public void bewegen() {
 		long passedTime;
 		long prevRefresh = getLastRefresh();
-		setLastRefresh(controller.Main.time.timeMillis());
+		setLastRefresh(GameTime.getInstance().timeMillis());
 		double angleX, angleY;
 		double wegX, wegY;
 		Vector<Double> position = this.getPositionPolar(); 

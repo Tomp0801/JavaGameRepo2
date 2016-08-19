@@ -2,6 +2,8 @@ package himmelskoerper;
 
 import java.util.Iterator;
 
+import global.GameTime;
+
 /**
  * Klasse für reine Testzwecke
  * 
@@ -70,7 +72,7 @@ public class Tester {
 			currentMond.printStatus();
 			
 			System.out.println("Alle bewegungen berechnet in: " + (System.currentTimeMillis() - time) + " Millisekunden");
-			System.out.println(controller.Main.time.timeMillis());
+			System.out.println(GameTime.getInstance().timeMillis());
 			System.out.println("___________________________________________________________");
 			
 			try {

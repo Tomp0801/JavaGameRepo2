@@ -5,12 +5,15 @@ import java.util.Vector;
 
 import com.oracle.jrockit.jfr.DataType;
 
+import controller.GameManager;
 import global.Constants;
+import global.GameTime;
 import himmelskoerper.Himmelskoerper;
 import himmelskoerper.InOrbit;
 import himmelskoerper.Orbitable;
 import himmelskoerper.SchwarzesLoch;
 import himmelskoerper.Stern;
+import javafx.beans.property.DoubleProperty;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Point3D;
@@ -89,6 +92,7 @@ public class WeltraumSicht //extends StackPane
 		SpielUmgebungController controller = loader.getController();
 		scene = new Scene(loader.getRoot() , 800 , 800 , true, SceneAntialiasing.BALANCED);
 		controller.wechsleZentrum(subScene);
+		
 	}
 	
 	/**
@@ -123,25 +127,29 @@ public class WeltraumSicht //extends StackPane
 	 * @param orbitObject
 	 * @return true wenn sich das Object im Sichtfeld der Kamera befindet
 	 */
-	protected Boolean isImSichtfeld(InOrbit orbitObject)
-	{
-		//berechned die enternung vom Object zur Kamera 
-		Point3D point1 = new Point3D(kamera.getPosition().getX(), kamera.getPosition().getY() , kamera.getPosition().getZ());
-		Point3D point2 = new Point3D(orbitObject.getAbsolutePosition().getX() ,orbitObject.getAbsolutePosition().getY() ,orbitObject.getAbsolutePosition().getZ());
-		
-		double entfernung = point1.distance(point2);
-
-		if (entfernung <= orbitObject.getOrbitRadius()*2)
-		{
-			return true;
-		}
-		else
-		{
-			return false;
-		}
-	}
+//	protected Boolean isImSichtfeld(InOrbit orbitObject)
+//	{
+//		//berechned die enternung vom Object zur Kamera 
+//		Point3D point1 = new Point3D(kamera.getPosition().getX(), kamera.getPosition().getY() , kamera.getPosition().getZ());
+////		Point3D point2 = orbitObject.getAbsolutePosition().getAbsolutePosition().getY() ,orbitObject.getAbsolutePosition().getZ());
+//		
+////		double entfernung = point1.distance(point2);
+//
+//		if (entfernung <= orbitObject.getOrbitRadius()*2)
+//		{
+//			return true;
+//		}
+//		else
+//		{
+//			return false;
+//		}
+//	}
 	
 	
+	/**
+	 * zeichnet alle Elemente die sich in einem Orbitable Objekt befinden
+	 * @param zentrum
+	 */
 	protected void zeichenSystem(Orbitable zentrum)
 	{
 		for (int j = 0; zentrum.getChildren().size() > j ; j++)
@@ -149,6 +157,7 @@ public class WeltraumSicht //extends StackPane
    	 		//erstelle einen Himmerlskoerper
    	 		Sphere himmelskoerper = new Sphere();
    	 		himmelskoerper.setRadius(zentrum.getChild(j).getRadius()*Constants.VERKLEINERUNGSFAKTOR);
+   	 		
    	 		Point3D posi = zentrum.getChild(j).getPositionKartesisch().multiply(Constants.VERKLEINERUNGSFAKTOR);
    	 		himmelskoerper.setTranslateX(posi.getX());
    	 		himmelskoerper.setTranslateY(posi.getY());
@@ -156,7 +165,16 @@ public class WeltraumSicht //extends StackPane
    	        himmelskoerper.setRadius(himmelskoerper.getRadius()*1000);
    	        subSceneRoot.getChildren().add(himmelskoerper);
    	 		
-   	 		//setzt das aussehen der Kugel
+   	        GameManager.getInstance().addInOrbitObjectToPositionsRechner(zentrum.getChild(j));
+   	        
+   	        himmelskoerper.translateXProperty().bind(zentrum.getChild(j).getPositionAbsoluteProperty()[0]);
+   	        himmelskoerper.translateYProperty().bind(zentrum.getChild(j).getPositionAbsoluteProperty()[1]);
+   	        himmelskoerper.translateZProperty().bind(zentrum.getChild(j).getPositionAbsoluteProperty()[2]);
+   	        
+   	        System.out.println("Position X    "+ himmelskoerper.getTranslateX()+ " Y    "+ himmelskoerper.getTranslateY()+"   Z "+himmelskoerper.getTranslateZ());
+   	 		
+   	        
+   	        //setzt das aussehen der Kugel
 	        himmelskoerper.setMaterial(zentrum.getChild(j).getAussehn());
 	      
 	        //macht den Himelskoerper anklickbar

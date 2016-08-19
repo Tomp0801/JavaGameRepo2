@@ -10,9 +10,7 @@ import view.hauptmenu.StageController;
  *
  */
 public class Main
-{	
-	public static GameTime time = new GameTime();
-	
+{		
 	public static void main (String[]args)
 	{	
 		Tester himmelskoerperTest = new Tester();

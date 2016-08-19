@@ -3,6 +3,8 @@ package himmelskoerper;
 import java.util.Vector;
 
 import global.Agregat;
+import global.Constants;
+import global.GameTime;
 import global.Random;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
@@ -49,12 +51,12 @@ public abstract class Himmelskoerper
 	/**
 	 * aktuelle Position, relativ zum Bezugskoerper
 	 */
-	private DoubleProperty[] position;
+	private SimpleDoubleProperty[] position;
 	
 	/**
 	 * aktuelle position relativ zum zentrum des Systems
 	 */
-	private DoubleProperty[] positionAbsolute;
+	private SimpleDoubleProperty[] positionAbsolute;
 	
 	/**
 	 * Art des Objekts : Gas oder Fest 
@@ -80,16 +82,15 @@ public abstract class Himmelskoerper
 		//prng mit zufälliger Zahl initialisieren
 		prng = new Random((int) Math.round(Math.random() * 2147483647));
 		
-		setPosition(0, 0, 0); 	//Position initialisieren mit 0
-		this.lastRefresh = controller.Main.time.timeMillis();		//lastRefresh initialisieren
-		
-		position = new DoubleProperty[3];
-		positionAbsolute = new DoubleProperty[3];
+		position = new SimpleDoubleProperty[3];
+		positionAbsolute = new SimpleDoubleProperty[3];
 		for (int i = 0; i < 3; i++)
 		{
 			position[i] = new SimpleDoubleProperty(0);
 			positionAbsolute[i] = new SimpleDoubleProperty(0);
-		}
+		}			
+		setPosition(0, 0, 0); 	//Position initialisieren mit 0
+		this.lastRefresh = GameTime.getInstance().timeMillis();		//lastRefresh initialisieren
 	}
 	
 	/**
@@ -99,8 +100,16 @@ public abstract class Himmelskoerper
 	public Himmelskoerper(int seed) {
 		prng = new Random(seed);	//PRNG erstellen
 		
-		setPosition(0, 0, 0); 	//Position initialisieren mit 0
-		this.lastRefresh = controller.Main.time.timeMillis();		//lastRefresh initialisieren
+		position = new SimpleDoubleProperty[3];
+		positionAbsolute = new SimpleDoubleProperty[3];
+		for (int i = 0; i < 3; i++)
+		{
+			position[i] = new SimpleDoubleProperty(0);
+			positionAbsolute[i] = new SimpleDoubleProperty(0);
+		}	
+		
+//		setPosition(0, 0, 0); 	//Position initialisieren mit 0
+		this.lastRefresh = GameTime.getInstance().timeMillis();		//lastRefresh initialisieren
 		
 	}
 	
@@ -205,9 +214,9 @@ public abstract class Himmelskoerper
 		y = positionPolar.get(0) * Math.sin(positionPolar.get(2)) * Math.sin(positionPolar.get(1));
 		z = positionPolar.get(0) * Math.cos(positionPolar.get(2));
 		
-		position[0].set(x);
-		position[1].set(y);
-		position[2].set(z);
+		position[0].set(x*Constants.VERKLEINERUNGSFAKTOR);
+		position[1].set(y*Constants.VERKLEINERUNGSFAKTOR);
+		position[2].set(z*Constants.VERKLEINERUNGSFAKTOR);
 	}
 	
 	/**
@@ -244,6 +253,8 @@ public abstract class Himmelskoerper
 		positionsVektor.add(angleFromZ);
 		
 		this.positionPolar = positionsVektor;
+		calcPositionKartesisch();
+		calcPositionAbsolute();
 	}
 	
 	/**
