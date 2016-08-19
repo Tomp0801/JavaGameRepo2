@@ -3,7 +3,6 @@ package controller;
 import java.util.ArrayList;
 
 import global.GameTime;
-import himmelskoerper.Himmelskoerper;
 import himmelskoerper.InOrbit;
 import himmelskoerper.SchwarzesLoch;
 import view.hauptmenu.SceneEnum;
@@ -35,14 +34,14 @@ public final class GameManager
 	/**
 	 * is true wenn das Spiel gestartet ist
 	 */
-	private static Boolean gameStart;
+	private static Boolean gameStart = false;
 
 	/**
 	 * erstllt einen GameManager. ein Object dieser Klasse wird nur durch die Methode getInstance erstellt
 	 */
 	private GameManager()
 	{
-		this.instance = this; 
+		instance = this; 
 	}
 	
 	
@@ -65,15 +64,15 @@ public final class GameManager
 	 * @param seed ist eine Zahl die eine Karte zufaellig generrieren laesst 
 	 */
 	public void starteSpiel(int seed)
-	{
-//		if (gameStart)
-//		{throw new RuntimeException();}
-		
-		schwarzezLoch = new SchwarzesLoch(seed);
-		StageController.getInstance().wechselScene(SceneEnum.WELTRAUMSICHT);
-		positionsRechner();
-		//TODO
-		GameTime.getInstance().setZeitFaktor(10000);
+	{	
+		if (gameStart == false)
+		{	
+			schwarzezLoch = new SchwarzesLoch(seed);
+			StageController.getInstance().wechselScene(SceneEnum.WELTRAUMSICHT);
+			GameTime.getInstance().setZeitFaktor(10000);
+			gameStart = true;
+			positionsRechner();
+		}
 	}
 	
 	
@@ -120,7 +119,7 @@ public final class GameManager
 			public void run() 
 			{
 				while(true)
-				{
+				{	
 					for (int i = 0; positionsRechnerListe.size() > i ; i++)
 					{
 						positionsRechnerListe.get(i).refresh();

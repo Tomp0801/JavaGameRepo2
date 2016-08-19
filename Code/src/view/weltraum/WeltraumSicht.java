@@ -169,10 +169,7 @@ public class WeltraumSicht //extends StackPane
    	        
    	        himmelskoerper.translateXProperty().bind(zentrum.getChild(j).getPositionAbsoluteProperty()[0]);
    	        himmelskoerper.translateYProperty().bind(zentrum.getChild(j).getPositionAbsoluteProperty()[1]);
-   	        himmelskoerper.translateZProperty().bind(zentrum.getChild(j).getPositionAbsoluteProperty()[2]);
-   	        
-   	        System.out.println("Position X    "+ himmelskoerper.getTranslateX()+ " Y    "+ himmelskoerper.getTranslateY()+"   Z "+himmelskoerper.getTranslateZ());
-   	 		
+   	        himmelskoerper.translateZProperty().bind(zentrum.getChild(j).getPositionAbsoluteProperty()[2]);	
    	        
    	        //setzt das aussehen der Kugel
 	        himmelskoerper.setMaterial(zentrum.getChild(j).getAussehn());
