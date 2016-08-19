@@ -4,7 +4,7 @@ import java.util.Vector;
 
 import global.Agregat;
 import global.Random;
-import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.DoubleProperty;
 import javafx.geometry.Point3D;
 import javafx.scene.paint.PhongMaterial;
 
@@ -48,12 +48,12 @@ public abstract class Himmelskoerper
 	/**
 	 * aktuelle Position, relativ zum Bezugskoerper
 	 */
-	private SimpleObjectProperty<Point3D> position;
+	private DoubleProperty[] position;
 	
 	/**
 	 * aktuelle position relativ zum zentrum des Systems
 	 */
-	private SimpleObjectProperty<Point3D> positionAbsolute;
+	private DoubleProperty[] positionAbsolute;
 	
 	/**
 	 * Art des Objekts : Gas oder Fest 
@@ -148,14 +148,14 @@ public abstract class Himmelskoerper
 	/**
 	 * @return the position Property (kartesisch)
 	 */
-	public SimpleObjectProperty<Point3D> getPositionProperty() {
+	public DoubleProperty[] getPositionProperty() {
 		return position;
 	}
 
 	/**
 	 * @return the positionAbsolute Property (kartesisch)
 	 */
-	public SimpleObjectProperty<Point3D> getPositionAbsoluteProperty() {
+	public DoubleProperty[] getPositionAbsoluteProperty() {
 		return positionAbsolute;
 	}
 	
@@ -164,7 +164,7 @@ public abstract class Himmelskoerper
 	 */
 	public Point3D getPositionKartesisch()
 	{
-		return position.get();
+		return new Point3D(position[0].get(), position[1].get(), position[2].get());
 	}
 	
 	/**
@@ -172,7 +172,7 @@ public abstract class Himmelskoerper
 	 */
 	public Point3D getPositionAbsolute()
 	{
-		return positionAbsolute.get();
+		return new Point3D(positionAbsolute[0].get(), positionAbsolute[1].get(), positionAbsolute[2].get());
 	}
 	
 	/**
@@ -181,7 +181,9 @@ public abstract class Himmelskoerper
 	 */
 	protected void setPositionAbsolute(Point3D position)
 	{
-		positionAbsolute.set(position);
+		positionAbsolute[0].set(position.getX());
+		positionAbsolute[1].set(position.getY());
+		positionAbsolute[2].set(position.getZ());
 	}
 
 	/**
@@ -195,7 +197,9 @@ public abstract class Himmelskoerper
 		y = positionPolar.get(0) * Math.sin(positionPolar.get(2)) * Math.sin(positionPolar.get(1));
 		z = positionPolar.get(0) * Math.cos(positionPolar.get(2));
 		
-		position.set(new Point3D(x, y, z));
+		position[0].set(x);
+		position[1].set(y);
+		position[2].set(z);
 	}
 	
 	/**
