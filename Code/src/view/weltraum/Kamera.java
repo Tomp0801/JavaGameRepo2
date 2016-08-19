@@ -58,9 +58,10 @@ public class Kamera extends PerspectiveCamera
 		//setzt die Position auf 0
 		this.position = position;	
 		//legt die Sichtweite fest
-		this.setFarClip(100);
+		this.setFarClip(10000000);
 		//maximale naehe
-		this.setNearClip(100);
+		this.setNearClip(0.1);
+		this.setFieldOfView(35);
 		this.getTransforms().addAll(rotationY , rotationX);
 		initEventScene(scene);
 	}

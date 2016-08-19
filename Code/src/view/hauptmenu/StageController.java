@@ -2,6 +2,7 @@ package view.hauptmenu;
 
 import java.io.IOException;
 
+import controller.GameManager;
 import himmelskoerper.SchwarzesLoch;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -41,8 +42,7 @@ public class StageController extends Application
 	private Scene netzwerkFXMLScene;
 	
 	private WeltraumSicht weltraumSicht;
-	
-	
+		
 	/**
 	 * Die Mainklasse 
 	 * @param args
@@ -61,8 +61,7 @@ public class StageController extends Application
 	{    
 		System.out.println("Spiel wird gestartet");
 //		//zum laden eines DemoSpiels
-//		StageControllerSpiel demoSpiel = new StageControllerSpiel(primaryStage);
-//		
+//		StageControllerSpiel demoSpiel = new StageControllerSpiel(primaryStage);	
 
 		instance = this; 
 		this.stage = primaryStage;
@@ -72,13 +71,10 @@ public class StageController extends Application
 		primaryStage.setFullScreenExitHint("");
 		primaryStage.setFullScreen(true);
 		primaryStage.show();
-		this.wechselScene(SceneEnum.WELTRAUMSICHT);
-		
-
-//		
-//		wechselScene(SceneEnum.STARTGAME);
-		//nicht loeschen
+//		this.wechselScene(SceneEnum.WELTRAUMSICHT);
 	
+		this.wechselScene(SceneEnum.STARTGAME);
+		//nicht loeschen
 	}
 	
 	
@@ -105,7 +101,7 @@ public class StageController extends Application
 		case WELTRAUMSICHT:
 			if (weltraumSicht == null)
 			{
-				weltraumSicht = new WeltraumSicht(new SchwarzesLoch(235), new Point3D(0, 0, -200));
+				weltraumSicht = new WeltraumSicht(GameManager.getInstance().getSchwarzelochSystem(), new Point3D(0, 0, -200));
 			}
 			newScene = weltraumSicht.getScene();
 			break;
@@ -130,11 +126,11 @@ public class StageController extends Application
 		switch (scene) 
 		{
 		case STARTGAME:		
-			loader = ladeFXMLDatei("StartGameFXML.fxml"); 
+			loader = ladeFXMLDatei("fxml/Hauptmenu.fxml"); 
 			startGameScene = new Scene(loader.getRoot()); 
 			break;
 		case NETZWERK:
-			loader = ladeFXMLDatei("NetzwerkFXML.fxml"); 
+			loader = ladeFXMLDatei("fxml/NetzwerkspielEingangsraum.fxml"); 
 			netzwerkFXMLScene = new Scene(loader.getRoot()); 
 			break;		
 		}
@@ -154,7 +150,8 @@ public class StageController extends Application
 		{
 			loader.load();
 			return loader;
-		} catch (IOException e)
+		} 
+		catch (IOException e)
 		{
 			e.printStackTrace();
 			return null;

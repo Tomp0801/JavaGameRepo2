@@ -71,14 +71,8 @@ public class WeltraumSicht //extends StackPane
 	public WeltraumSicht(SchwarzesLoch zentrumGalaxis, Point3D positionKamera )
 	{   	
 		initScene();
-		kamera = new Kamera(scene, positionKamera);
-		
-		subScene.setCamera(kamera);	
-		
-		//-------------erstellt-die-Spielumgebung-auf-dieser-befinden-sich-alle-Elemente-die-um-ein-groﬂes-Schwarzesloch-kreisen-----//
-//        spielWelt.setStyle("-fx-background-color: BLACK; -fx-box-border: transparent;");   
-//        this.getChildren().add(spielWelt);
-           
+		kamera = new Kamera(scene, positionKamera);	
+		subScene.setCamera(kamera);	         
         //---------Hier----werden-----die----Sterne----der----Galaxie----geladen---------------------------    
         zeichenSystem(zentrumGalaxis); 
      }
@@ -87,19 +81,14 @@ public class WeltraumSicht //extends StackPane
 	private void initScene()
 	{
 		//-------------erstellt-die-SubScene-fuer-die-Kammera--------------------------------------------------//
-		
 		subScene = new SubScene(subSceneRoot , 500 , 500, true, SceneAntialiasing.BALANCED);
 		subScene.setFill(Color.BLACK); 
 		subScene.setDepthTest(DepthTest.ENABLE);
-		
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/weltraum/fxml/SpielUmgebung.fxml"));
 		try{loader.load();}catch (IOException e){e.printStackTrace();}	
 		SpielUmgebungController controller = loader.getController();
 		scene = new Scene(loader.getRoot() , 800 , 800 , true, SceneAntialiasing.BALANCED);
 		controller.wechsleZentrum(subScene);
-		System.out.println(scene.getRoot().getDepthTest());
-		System.out.println(subSceneRoot.getDepthTest());
-
 	}
 	
 	/**
@@ -163,11 +152,9 @@ public class WeltraumSicht //extends StackPane
    	 		Point3D posi = zentrum.getChild(j).getPositionKartesisch().multiply(Constants.VERKLEINERUNGSFAKTOR);
    	 		himmelskoerper.setTranslateX(posi.getX());
    	 		himmelskoerper.setTranslateY(posi.getY());
-   	 		himmelskoerper.setTranslateZ(posi.getZ());
-   	 		
+   	 		himmelskoerper.setTranslateZ(posi.getZ());		
    	        himmelskoerper.setRadius(himmelskoerper.getRadius()*1000);
-   	       
-   	 		subSceneRoot.getChildren().add(himmelskoerper);
+   	        subSceneRoot.getChildren().add(himmelskoerper);
    	 		
    	 		//setzt das aussehen der Kugel
 	        himmelskoerper.setMaterial(zentrum.getChild(j).getAussehn());
@@ -177,8 +164,15 @@ public class WeltraumSicht //extends StackPane
 	        {
 				@Override
 				public void handle(MouseEvent event) 
-				{
-					// TODO lade informationen vom koerper
+				{					
+					if (event.getClickCount() == 2)
+					{
+						//TODO Lade Karte falls es eine gibt
+					}
+					else
+					{
+						// TODO lade informationen vom koerper
+					}
 				}
 	        });     
 	        

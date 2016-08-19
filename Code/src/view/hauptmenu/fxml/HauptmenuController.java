@@ -2,8 +2,10 @@ package view.hauptmenu.fxml;
 
 import java.awt.Toolkit;
 import java.net.URL;
+import java.util.Random;
 import java.util.ResourceBundle;
 import audio.Musikspieler;
+import controller.GameManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -156,7 +158,9 @@ public class HauptmenuController implements Initializable, Runnable
 		if (e.getSource() == einzelspielerButton)
 		{
 			System.out.println("Einzelspielerfunktion noch nicht Vorhanden");
-			StageController.getInstance();
+			System.out.println("Demo spiel wird gestartet");
+			GameManager.getInstance().starteSpiel(new Random().nextInt(5000));
+			StageController.getInstance().wechselScene(SceneEnum.WELTRAUMSICHT);
 		}
 		
 		else if (e.getSource() == mehrspielerButton)

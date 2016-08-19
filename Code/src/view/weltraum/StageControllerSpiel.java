@@ -46,27 +46,27 @@ public class StageControllerSpiel
 	public StageControllerSpiel(Stage stage)
 	{	
 		//--------------------Spiel-Umgebunng-wird-geladen-------------------------------------------//
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/weltraum/fxml/SpielUmgebung.fxml"));
-		try{loader.load();}catch (IOException e){e.printStackTrace();}	
-		mainScene = new Scene(loader.getRoot() , 800 , 800 , true);
-		spielUmgebungController = loader.getController();
+//		FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/weltraum/fxml/SpielUmgebung.fxml"));
+//		try{loader.load();}catch (IOException e){e.printStackTrace();}	
+//		mainScene = new Scene(loader.getRoot() , 800 , 800 , true);
+//		spielUmgebungController = loader.getController();
 //		spielUmgebungController.setScene(mainScene);
 		
 		//---------------------Demospiel-wird-erstellt-TODO-------------------------------------------------------------------//
 			
-		Point3D position = new Point3D(0 ,0 ,-200);
-		WeltraumSicht demo = new WeltraumSicht(new SchwarzesLoch(587), position );
-		SubScene subScene = demo.getSubScene();
+//		Point3D position = new Point3D(0 ,0 ,-200);
+//		WeltraumSicht demo = new WeltraumSicht(new SchwarzesLoch(587), position );
+//		SubScene subScene = demo.getSubScene();
 		
 		//---------------------In-der-Mitte-des-Fensters-wird-die-Spielumgebeung-plaziert------------------------------------------------------------------------------//
-		this.wechselSicht(subScene);
+//		this.wechselSicht(subScene);
 	
 		//-------------------Stage wird erstellt-----------------------------------------------------//
-		stage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
-		stage.setFullScreenExitHint("");
-		stage.setFullScreen(true);
-		stage.setScene(mainScene);
-		stage.show();		
+//		stage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
+//		stage.setFullScreenExitHint("");
+//		stage.setFullScreen(true);
+//		stage.setScene(mainScene);
+//		stage.show();		
 	}
 	
 	
