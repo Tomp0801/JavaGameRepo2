@@ -6,8 +6,6 @@ import java.util.Vector;
 
 import global.Agregat;
 import global.Constants;
-import global.GameTime;
-import javafx.geometry.Point3D;
 
 /**
  * Eine abstrakte Klasse für Objekte, die sich im Orbit um ein anderes Objekt befinden
@@ -118,13 +116,6 @@ public abstract class InOrbit extends Himmelskoerper {
 		setPosition(this.getOrbitRadius(), getPRNG().random(0, 2 * Math.PI), getPRNG().random(0, Math.PI));
 	}
 	
-	@Override
-	public Point3D getAbsolutePosition() 
-	{
-		Himmelskoerper bezugsObjekt = (Himmelskoerper) this.getBezugsKoerper();	
-		return this.getPositionKartesisch().add(bezugsObjekt.getAbsolutePosition());
-	}
-	
 	/**
 	 * @return the orbitRadius
 	 */
@@ -178,6 +169,21 @@ public abstract class InOrbit extends Himmelskoerper {
 	public float getBewegungsGeschwindigkeit() {
 		return bewegungsGeschwindigkeit;
 	}
+	
+	@Override
+	public void refresh()
+	{
+		bewegen();
+		calcPositionAbsolute();
+	}
+	
+	@Override
+	public void calcPositionAbsolute()
+	{
+		calcPositionKartesisch();
+		Himmelskoerper bezugsObjekt = (Himmelskoerper) this.getBezugsKoerper();	
+		this.setPositionAbsolute(this.getPositionKartesisch().add(bezugsObjekt.getPositionAbsolute()));
+	}
 
 	/**
 	 * bewegt das Objekt zur richtigen aktuellen Position
@@ -188,7 +194,7 @@ public abstract class InOrbit extends Himmelskoerper {
 		setLastRefresh(controller.Main.time.timeMillis());
 		double angleX, angleY;
 		double wegX, wegY;
-		Vector<Double> position = this.getPosition(); 
+		Vector<Double> position = this.getPositionPolar(); 
 		
 		passedTime = getLastRefresh() - prevRefresh;
 		

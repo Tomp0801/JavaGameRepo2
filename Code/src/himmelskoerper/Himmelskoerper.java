@@ -3,8 +3,8 @@ package himmelskoerper;
 import java.util.Vector;
 
 import global.Agregat;
-import global.GameTime;
 import global.Random;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.geometry.Point3D;
 import javafx.scene.paint.PhongMaterial;
 
@@ -43,7 +43,17 @@ public abstract class Himmelskoerper
 	 * Position der aktuellen Sektion (Sonnensystem) in Polarkoordinaten
 	 * (radius, winkelVonX0 = [0, 2pi) (=azimutWinkel), winkelVonZ0 = [0, pi]) (=PolarWinkel)
 	 */
-	private Vector<Double> position;
+	private Vector<Double> positionPolar;
+	
+	/**
+	 * aktuelle Position, relativ zum Bezugskoerper
+	 */
+	private SimpleObjectProperty<Point3D> position;
+	
+	/**
+	 * aktuelle position relativ zum zentrum des Systems
+	 */
+	private SimpleObjectProperty<Point3D> positionAbsolute;
 	
 	/**
 	 * Art des Objekts : Gas oder Fest 
@@ -83,6 +93,7 @@ public abstract class Himmelskoerper
 		
 		setPosition(0, 0, 0); 	//Position initialisieren mit 0
 		this.lastRefresh = controller.Main.time.timeMillis();		//lastRefresh initialisieren
+		
 	}
 	
 	/**
@@ -130,30 +141,68 @@ public abstract class Himmelskoerper
 	/**
 	 * @return die als Vektor in Polar Koordinaten (radius, azimutWinkel, PolarWinkel)
 	 */
-	public Vector<Double> getPosition() {
-		return position;
+	public Vector<Double> getPositionPolar() {
+		return positionPolar;
 	}
 	
 	/**
-	 * 
-	 * @return die Position als Vektor in kartesischen Koordinaten (x, y, z)
+	 * @return the position Property (kartesisch)
+	 */
+	public SimpleObjectProperty<Point3D> getPositionProperty() {
+		return position;
+	}
+
+	/**
+	 * @return the positionAbsolute Property (kartesisch)
+	 */
+	public SimpleObjectProperty<Point3D> getPositionAbsoluteProperty() {
+		return positionAbsolute;
+	}
+	
+	/**
+	 * @return die kartesische Position relativ zum bezugskörper
 	 */
 	public Point3D getPositionKartesisch()
 	{
+		return position.get();
+	}
+	
+	/**
+	 * @return die absolute Position(zum System mittelpunkt) in kartesischen Koordinaten
+	 */
+	public Point3D getPositionAbsolute()
+	{
+		return positionAbsolute.get();
+	}
+	
+	/**
+	 * setzt die absolute position
+	 * @param position
+	 */
+	protected void setPositionAbsolute(Point3D position)
+	{
+		positionAbsolute.set(position);
+	}
+
+	/**
+	 * rechnet die polar position in kartesischen Koordinaten (x, y, z) um
+	 */
+	protected void calcPositionKartesisch()
+	{
 		double x, y, z;
 		
-		x = position.get(0) * Math.sin(position.get(2)) * Math.cos(position.get(1));
-		y = position.get(0) * Math.sin(position.get(2)) * Math.sin(position.get(1));
-		z = position.get(0) * Math.cos(position.get(2));
+		x = positionPolar.get(0) * Math.sin(positionPolar.get(2)) * Math.cos(positionPolar.get(1));
+		y = positionPolar.get(0) * Math.sin(positionPolar.get(2)) * Math.sin(positionPolar.get(1));
+		z = positionPolar.get(0) * Math.cos(positionPolar.get(2));
 		
-		return new Point3D(x, y, z);
+		position.set(new Point3D(x, y, z));
 	}
 	
 	/**
 	 * die absolute Position (relativ zu dem Mittelpunkt des kompletten systems)
 	 * @return Vektor mit kartesischen Koordinaten
 	 */
-	public abstract Point3D getAbsolutePosition();
+	protected abstract void calcPositionAbsolute();
 
 	/**
 	 * Position setzen in Polar Koordinaten
@@ -182,7 +231,7 @@ public abstract class Himmelskoerper
 		positionsVektor.add(angleFromX);
 		positionsVektor.add(angleFromZ);
 		
-		this.position = positionsVektor;
+		this.positionPolar = positionsVektor;
 	}
 	
 	/**
@@ -215,6 +264,11 @@ public abstract class Himmelskoerper
 	}
 
 	/**
+	 * Methode zum aktualisieren des zustands des Himmelskörpers
+	 */
+	public abstract void refresh();
+	
+	/**
 	 * @return das letzte mal, wo der Körper refreshed wurde
 	 */
 	protected long getLastRefresh() {
@@ -241,12 +295,12 @@ public abstract class Himmelskoerper
 	 * Methode für Testzwecke
 	 */
 	public void printStatus() {
-		Vector<Double> pos = getPosition();
+		Vector<Double> pos = getPositionPolar();
 		System.out.println(" _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _");
 		System.out.println("| Seed: " + getPRNG().getSeed());
 		System.out.println("| Art: " + this.art);
 		System.out.println("| Position: " + pos.get(0) + " " + pos.get(1) + " " + pos.get(2));
-		System.out.println("| Absolute Position (kart): " + getAbsolutePosition().getX() + " " + getAbsolutePosition().getY() + " " + getAbsolutePosition().getZ());
+		System.out.println("| Absolute Position (kart): " + getPositionAbsolute().getX() + " " + getPositionAbsolute().getY() + " " + getPositionAbsolute().getZ());
 		System.out.println("| Radius: " + this.radius);
 		System.out.println("| Masse: "+ this.masse);
 		System.out.println("| Temperatur: "+ this.oberflaechenTemperatur);
