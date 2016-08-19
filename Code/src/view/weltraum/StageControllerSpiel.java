@@ -5,6 +5,7 @@ import java.util.Vector;
 
 import himmelskoerper.SchwarzesLoch;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Point3D;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -45,31 +46,27 @@ public class StageControllerSpiel
 	public StageControllerSpiel(Stage stage)
 	{	
 		//--------------------Spiel-Umgebunng-wird-geladen-------------------------------------------//
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/weltraum/fxml/SpielUmgebung.fxml"));
-		try{loader.load();}catch (IOException e){e.printStackTrace();}	
-		mainScene = new Scene(loader.getRoot() , 800 , 800 , true);
-		
-		spielUmgebungController = loader.getController();
+//		FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/weltraum/fxml/SpielUmgebung.fxml"));
+//		try{loader.load();}catch (IOException e){e.printStackTrace();}	
+//		mainScene = new Scene(loader.getRoot() , 800 , 800 , true);
+//		spielUmgebungController = loader.getController();
 //		spielUmgebungController.setScene(mainScene);
 		
 		//---------------------Demospiel-wird-erstellt-TODO-------------------------------------------------------------------//
 			
-		Vector<Double> position = new Vector<Double>();
-		position.add(0.0);
-		position.add(0.0);
-		position.add(-200.0);
-		WeltraumSicht demo = new WeltraumSicht(new SchwarzesLoch(587), mainScene, position);
-		SubScene subScene = demo.getSubScene();
+//		Point3D position = new Point3D(0 ,0 ,-200);
+//		WeltraumSicht demo = new WeltraumSicht(new SchwarzesLoch(587), position );
+//		SubScene subScene = demo.getSubScene();
 		
 		//---------------------In-der-Mitte-des-Fensters-wird-die-Spielumgebeung-plaziert------------------------------------------------------------------------------//
-		this.wechselSicht(subScene);
+//		this.wechselSicht(subScene);
 	
 		//-------------------Stage wird erstellt-----------------------------------------------------//
-		stage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
-		stage.setFullScreenExitHint("");
-		stage.setFullScreen(true);
-		stage.setScene(mainScene);
-		stage.show();		
+//		stage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
+//		stage.setFullScreenExitHint("");
+//		stage.setFullScreen(true);
+//		stage.setScene(mainScene);
+//		stage.show();		
 	}
 	
 	
@@ -90,8 +87,6 @@ public class StageControllerSpiel
 	 */
 	public void wechselSicht(SubScene subScene)
 	{
-		subScene.widthProperty().bind(spielUmgebungController.getStackPaneZentrum().widthProperty());
-		subScene.heightProperty().bind(spielUmgebungController.getStackPaneZentrum().heightProperty());
 		spielUmgebungController.wechsleZentrum(subScene);	
 	}
 	
@@ -100,8 +95,8 @@ public class StageControllerSpiel
 	 * wechselet die Sicht es Gepielgesehens zu einer neuen Sicht.
 	 * @param node wird in das Zentrum gesetzt
 	 */
-	public void wechselSicht(Node node)
-	{
-		spielUmgebungController.wechsleZentrum(node);	
-	}
+//	public void wechselSicht(Node node)
+//	{
+//		spielUmgebungController.wechsleZentrum(node);	
+//	}
 }

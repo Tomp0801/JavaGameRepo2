@@ -5,6 +5,11 @@ import java.util.LinkedList;
 
 import global.Agregat;
 import global.Constants;
+import javafx.scene.SnapshotParameters;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.image.Image;
+import javafx.scene.image.PixelReader;
+import javafx.scene.image.WritableImage;
 import javafx.scene.paint.PhongMaterial;
 
 
@@ -144,8 +149,14 @@ public class Stern extends InOrbit implements Orbitable
 	}
 
 	@Override
-	public PhongMaterial getAussehn() {
-		// TODO Auto-generated method stub
+	public PhongMaterial getAussehn() 
+	{
+//		WritableImage demo = new WritableImage(200, 200);
+//		Canvas canvas = new Canvas();
+//		canvas.snapshot(new SnapshotParameters(), demo);
+//		
+//		PhongMaterial material = new PhongMaterial();
+//		material.set
 		return null;
 	}
 
