@@ -5,6 +5,7 @@ import java.util.Vector;
 import global.Agregat;
 import global.Random;
 import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.geometry.Point3D;
 import javafx.scene.paint.PhongMaterial;
 
@@ -62,7 +63,6 @@ public abstract class Himmelskoerper
 	
 	/**
 	 * Zeitpunkt der Letzten Positions- und Zustandsberechnung
-	 * TODO soll Zeit nicht vom System sondern von einem Zeitsimulator holen
 	 */
 	private long lastRefresh;
 
@@ -82,6 +82,14 @@ public abstract class Himmelskoerper
 		
 		setPosition(0, 0, 0); 	//Position initialisieren mit 0
 		this.lastRefresh = controller.Main.time.timeMillis();		//lastRefresh initialisieren
+		
+		position = new DoubleProperty[3];
+		positionAbsolute = new DoubleProperty[3];
+		for (int i = 0; i < 3; i++)
+		{
+			position[i] = new SimpleDoubleProperty(0);
+			positionAbsolute[i] = new SimpleDoubleProperty(0);
+		}
 	}
 	
 	/**
