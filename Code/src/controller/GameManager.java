@@ -69,7 +69,7 @@ public final class GameManager
 		{	
 			schwarzezLoch = new SchwarzesLoch(seed);
 			StageController.getInstance().wechselScene(SceneEnum.WELTRAUMSICHT);
-			GameTime.getInstance().setZeitFaktor(10000);
+			GameTime.getInstance().setZeitFaktor(100000);
 			gameStart = true;
 			positionsRechner();
 		}

@@ -10,6 +10,7 @@ import global.Constants;
 import global.GameTime;
 import himmelskoerper.Himmelskoerper;
 import himmelskoerper.InOrbit;
+import himmelskoerper.Mond;
 import himmelskoerper.Orbitable;
 import himmelskoerper.SchwarzesLoch;
 import himmelskoerper.Stern;
@@ -156,13 +157,13 @@ public class WeltraumSicht //extends StackPane
 		{
    	 		//erstelle einen Himmerlskoerper
    	 		Sphere himmelskoerper = new Sphere();
-   	 		himmelskoerper.setRadius(zentrum.getChild(j).getRadius()*Constants.VERKLEINERUNGSFAKTOR);
+   	 		himmelskoerper.setRadius(zentrum.getChild(j).getRadius()*Constants.VERKLEINERUNGSFAKTOR*Constants.VERGROßERUNGSFAKTORRADIUS);
    	 		
-   	 		Point3D posi = zentrum.getChild(j).getPositionKartesisch().multiply(Constants.VERKLEINERUNGSFAKTOR);
-   	 		himmelskoerper.setTranslateX(posi.getX());
-   	 		himmelskoerper.setTranslateY(posi.getY());
-   	 		himmelskoerper.setTranslateZ(posi.getZ());		
-   	        himmelskoerper.setRadius(himmelskoerper.getRadius()*1000);
+//   	 	Point3D posi = zentrum.getChild(j).getPositionKartesisch().multiply(Constants.VERKLEINERUNGSFAKTOR);
+//   	 	himmelskoerper.setTranslateX(posi.getX());
+//   	 	himmelskoerper.setTranslateY(posi.getY());
+//   	 	himmelskoerper.setTranslateZ(posi.getZ());		
+//   	    himmelskoerper.setRadius(himmelskoerper.getRadius()*2000);
    	        subSceneRoot.getChildren().add(himmelskoerper);
    	 		
    	        GameManager.getInstance().addInOrbitObjectToPositionsRechner(zentrum.getChild(j));
@@ -171,9 +172,11 @@ public class WeltraumSicht //extends StackPane
    	        himmelskoerper.translateYProperty().bind(zentrum.getChild(j).getPositionAbsoluteProperty()[1]);
    	        himmelskoerper.translateZProperty().bind(zentrum.getChild(j).getPositionAbsoluteProperty()[2]);	
    	        
+   	        System.out.println("Postion des Körpers:   X: "+himmelskoerper.getTranslateX()+"   Y: "+himmelskoerper.getTranslateY()+"   Z: "+himmelskoerper.getTranslateZ()+"    Radius: "+himmelskoerper.getRadius());
+   	        
    	        //setzt das aussehen der Kugel
 	        himmelskoerper.setMaterial(zentrum.getChild(j).getAussehn());
-	      
+	        
 	        //macht den Himelskoerper anklickbar
 	        himmelskoerper.setOnMouseClicked(new EventHandler<MouseEvent>()
 	        {
@@ -192,11 +195,15 @@ public class WeltraumSicht //extends StackPane
 	        });     
 	        
 	        //TODO Demo zum zeichnen aller Planeten und Monde
-	        Orbitable demoK = (Orbitable) zentrum.getChild(j);
-	        if (demoK.getChildren().size() < 0)
-	        {
-	        	zeichenSystem(demoK);
-	        }
+//	        if (zentrum.getChild(j).getClass() != Mond.class)
+//		    {	
+//	        	System.out.println(zentrum.getChild(j).getClass().toString());
+//		        Orbitable demoK = (Orbitable) zentrum.getChild(j);
+//		        if (demoK.getChildren().size() > 0)
+//		        {
+//		        	zeichenSystem(demoK);
+//		        }
+//	        }
    	 	}
 	}
 }

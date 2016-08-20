@@ -32,5 +32,8 @@ public final class Constants {
 	/**
 	 * Das Spielfeld wird um diesen Faktor von Realistischen groﬂen verkleinert
 	 */
-	public static final double VERKLEINERUNGSFAKTOR = 1.0/1000.0;
+	public static final double VERKLEINERUNGSFAKTOR = 1.0/10000.0;
+	
+	public static final double VERGROﬂERUNGSFAKTORRADIUS = 100;
+	
 }

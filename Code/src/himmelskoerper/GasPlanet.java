@@ -1,6 +1,7 @@
 package himmelskoerper;
 
 import global.Agregat;
+import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
 
 /**
@@ -77,8 +78,10 @@ public class GasPlanet extends Planet {
 
 	@Override
 	public PhongMaterial getAussehn() {
-		// TODO Auto-generated method stub
-		return null;
+		 PhongMaterial material = new PhongMaterial();
+		    material.setDiffuseColor(Color.BLUE);
+		    material.setSpecularColor(Color.ORANGE);
+			return material;
 	}
 
 }

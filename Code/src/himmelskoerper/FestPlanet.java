@@ -1,6 +1,7 @@
 package himmelskoerper;
 
 import global.Agregat;
+import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
 import map.Karte;
 
@@ -106,8 +107,11 @@ public class FestPlanet extends Planet implements Betretbar {
 	}
 
 	@Override
-	public PhongMaterial getAussehn() {
-		// TODO Auto-generated method stub
-		return null;
+	public PhongMaterial getAussehn() 
+	{
+		 PhongMaterial material = new PhongMaterial();
+		    material.setDiffuseColor(Color.BLUE);
+		    material.setSpecularColor(Color.GREEN);
+			return material;
 	}
 }

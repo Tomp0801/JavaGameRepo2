@@ -1,6 +1,7 @@
 package himmelskoerper;
 
 import global.Agregat;
+import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
 import map.Karte;
 
@@ -100,8 +101,10 @@ public class Mond extends InOrbit implements Betretbar
 
 	@Override
 	public PhongMaterial getAussehn() {
-		// TODO Auto-generated method stub
-		return null;
+		 PhongMaterial material = new PhongMaterial();
+		    material.setDiffuseColor(Color.GREY);
+		    material.setSpecularColor(Color.GREY);
+			return material;
 	}
 
 }
