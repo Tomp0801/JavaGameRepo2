@@ -16,7 +16,7 @@ import map.Material;
  * @author Thomas
  *
  */
-public class Mine implements Platzierbar {
+public class Mine extends Erzeuger implements Platzierbar {
 	/**
 	 * der Bodenschatz, den diese Mine abbauen kann
 	 */
@@ -57,25 +57,6 @@ public class Mine implements Platzierbar {
 		}
 		
 		lastRefresh = GameTime.getInstance().timeMillis();
-	}
-	
-	/**
-	 * Platziert die Mine auf einem Feld, wenn dieses frei ist
-	 * @param feld Feld, auf dem die Mine platziert werden soll
-	 * @return erfolg der Platzierung. false wenn Feld besetzt ist
-	 */
-	public boolean platziere(Feld feld)
-	{
-		if (feld.isFree())
-		{
-			this.feld = feld;
-			feld.setBauplatz(this);
-			return true;
-		}
-		else
-		{
-			return false;
-		}
 	}
 	
 	/**
