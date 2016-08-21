@@ -3,6 +3,8 @@ package view.weltraum;
 import java.awt.MouseInfo;
 import java.awt.Point;
 import java.util.Vector;
+
+import global.Constants;
 import himmelskoerper.Himmelskoerper;
 import javafx.animation.RotateTransition;
 import javafx.animation.Transition;
@@ -30,7 +32,7 @@ public class Kamera extends PerspectiveCamera
 	 */
 	private Point3D position;
 	
-	private double speed = 100000; 
+	private double speed = Constants.SPEEDKAMERA; 
 	
 	/**
 	 * wenn sich die Kamera in Rotation befindet, ist isRotation = true

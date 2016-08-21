@@ -32,8 +32,14 @@ public final class Constants {
 	/**
 	 * Das Spielfeld wird um diesen Faktor von Realistischen groﬂen verkleinert
 	 */
-	public static final double VERKLEINERUNGSFAKTOR = 1.0/10000.0;
+	public static final double VERKLEINERUNGSFAKTOR = 1.0/100000.0;
 	
-	public static final double VERGROﬂERUNGSFAKTORRADIUS = 100;
+	public static final double VERGROﬂERUNGSFAKTORRADIUSSONNE = 1000;
+	
+	public static final double VERGROﬂERUNGSFAKTORRADIUSPLANET = 10000;
+	
+	public static final double VERGROﬂERUNGSFAKTORRADIUSMOND = 10000;
+	
+	public static final double SPEEDKAMERA = 50000;
 	
 }

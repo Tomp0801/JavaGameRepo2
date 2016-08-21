@@ -8,10 +8,13 @@ import com.oracle.jrockit.jfr.DataType;
 import controller.GameManager;
 import global.Constants;
 import global.GameTime;
+import himmelskoerper.FestPlanet;
+import himmelskoerper.GasPlanet;
 import himmelskoerper.Himmelskoerper;
 import himmelskoerper.InOrbit;
 import himmelskoerper.Mond;
 import himmelskoerper.Orbitable;
+import himmelskoerper.Planet;
 import himmelskoerper.SchwarzesLoch;
 import himmelskoerper.Stern;
 import javafx.beans.property.DoubleProperty;
@@ -148,42 +151,45 @@ public class WeltraumSicht //extends StackPane
 //	}
 	
 	
+	//TODO
+	int Z = 0;
 	/**
 	 * zeichnet alle Elemente die sich in einem Orbitable Objekt befinden
 	 * @param zentrum
 	 */
 	protected void zeichenSystem(Orbitable zentrum)
 	{
+		double vergroßerungRadius = 1;
 		for (int j = 0; zentrum.getChildren().size() > j ; j++)
 		{
+			//Passt die groeßer der Planeten an
+			if (zentrum.getChild(j).getClass() == Stern.class)
+			{
+				System.out.println("Sonnne"+Constants.VERGROßERUNGSFAKTORRADIUSSONNE);
+				vergroßerungRadius = Constants.VERGROßERUNGSFAKTORRADIUSSONNE;
+			}
+			else if (zentrum.getChild(j).getClass() == Mond.class)
+			{
+				System.out.println("Mond"+Constants.VERGROßERUNGSFAKTORRADIUSMOND);
+				vergroßerungRadius = Constants.VERGROßERUNGSFAKTORRADIUSMOND;
+			}
+			else if (zentrum.getChild(j).getClass() == FestPlanet.class || zentrum.getChild(j).getClass() == GasPlanet.class)
+			{
+				System.out.println("Planet"+Constants.VERGROßERUNGSFAKTORRADIUSPLANET);
+				vergroßerungRadius = Constants.VERGROßERUNGSFAKTORRADIUSPLANET;
+			}
+						
    	 		//erstelle einen Himmerlskoerper
    	 		Sphere himmelskoerper = new Sphere();
-   	 		himmelskoerper.setRadius(zentrum.getChild(j).getRadius()*Constants.VERKLEINERUNGSFAKTOR*Constants.VERGROßERUNGSFAKTORRADIUS);
-   	 		
-//   	 	Point3D posi = zentrum.getChild(j).getPositionKartesisch().multiply(Constants.VERKLEINERUNGSFAKTOR);
-//   	 	himmelskoerper.setTranslateX(posi.getX());
-//   	 	himmelskoerper.setTranslateY(posi.getY());
-//   	 	himmelskoerper.setTranslateZ(posi.getZ());		
-//   	    himmelskoerper.setRadius(himmelskoerper.getRadius()*2000);
-   	        subSceneRoot.getChildren().add(himmelskoerper);
-   	 		
-   	        GameManager.getInstance().addInOrbitObjectToPositionsRechner(zentrum.getChild(j));
-   	        
+   	 		himmelskoerper.setRadius(zentrum.getChild(j).getRadius()*Constants.VERKLEINERUNGSFAKTOR*vergroßerungRadius);
+   	        subSceneRoot.getChildren().add(himmelskoerper);	
+   	        GameManager.getInstance().addInOrbitObjectToPositionsRechner(zentrum.getChild(j));  	        
    	        himmelskoerper.translateXProperty().bind(zentrum.getChild(j).getPositionAbsoluteProperty()[0]);
    	        himmelskoerper.translateYProperty().bind(zentrum.getChild(j).getPositionAbsoluteProperty()[1]);
    	        himmelskoerper.translateZProperty().bind(zentrum.getChild(j).getPositionAbsoluteProperty()[2]);	
-   	        
-   	        //TODO zum testen ob es leuchtet
-//   	        if (zentrum.getChild(j).getClass() == Stern.class)
-//   	        {
-//   	        	AmbientLight demoLicht = new AmbientLight(Color.WHITE);
-//   	        	demoLicht.translateXProperty().bind(zentrum.getChild(j).getPositionAbsoluteProperty()[0]);
-//   	        	demoLicht.translateYProperty().bind(zentrum.getChild(j).getPositionAbsoluteProperty()[1]);
-//   	        	demoLicht.translateZProperty().bind(zentrum.getChild(j).getPositionAbsoluteProperty()[2]);	
-//   	        	subSceneRoot.getChildren().add(demoLicht);
-//   	        }
-   	        
-   	        System.out.println("Postion des Körpers:   X: "+himmelskoerper.getTranslateX()+"   Y: "+himmelskoerper.getTranslateY()+"   Z: "+himmelskoerper.getTranslateZ()+"    Radius: "+himmelskoerper.getRadius());
+
+   	        Z++;
+   	        System.out.println(Z+          "Postion des Körpers:   X: "+himmelskoerper.getTranslateX()+"   Y: "+himmelskoerper.getTranslateY()+"   Z: "+himmelskoerper.getTranslateZ()+"    Radius: "+himmelskoerper.getRadius());
    	        
    	        //setzt das aussehen der Kugel
 	        himmelskoerper.setMaterial(zentrum.getChild(j).getAussehn());
@@ -206,15 +212,26 @@ public class WeltraumSicht //extends StackPane
 	        });     
 	        
 	        //TODO Demo zum zeichnen aller Planeten und Monde
-//	        if (zentrum.getChild(j).getClass() != Mond.class)
-//		    {	
-//	        	System.out.println(zentrum.getChild(j).getClass().toString());
-//		        Orbitable demoK = (Orbitable) zentrum.getChild(j);
-//		        if (demoK.getChildren().size() > 0)
-//		        {
-//		        	zeichenSystem(demoK);
-//		        }
-//	        }
+	        if (zentrum.getChild(j).getClass() != Mond.class)
+		    {	
+		        Orbitable demoK = (Orbitable) zentrum.getChild(j);
+		        if (demoK.getChildren().size() > 0)
+		        {
+		        	zeichenSystem(demoK);
+		        }
+	        }	    
+	        
+	        //TODO eine kleine Begrenzung
+	        if (Z > 200)
+		    {
+	        	break;
+		    }
    	 	}
+	}
+	
+	
+	public void zeichneInOrbitSystem()
+	{
+		//TODO
 	}
 }
