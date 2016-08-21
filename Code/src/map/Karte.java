@@ -108,7 +108,7 @@ public class Karte {
 	private void generate() {
 		
 		//varietät festlegen
-		this.varietaet = prng.random(0.0, 1.0);
+		this.varietaet = prng.random();
 
 		//mögliche Bodenschätze generieren
 		bodenschaetze = new ArrayList<>();

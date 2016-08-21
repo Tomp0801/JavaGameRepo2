@@ -6,7 +6,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 
 /**
- * Ein Feld eines gewissen typs, das bebaut werden kann und/oder Objekte enthalten kann
+ * Ein Feld, das Objekte enthalten kann, eine Bodenart und abbaubare Materialien in der Erde hat
  * 
  * @author Thomas
  *
