@@ -1,7 +1,9 @@
-package map;
+package map.objekte;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import map.Material;
 
 /**
  * Interface für Objekte, die auf einem Feld platzierbar sein sollen
@@ -22,5 +24,11 @@ public interface Platzierbar {
 	 * gibt zurück, welche Materialien hier gewonnen werden
 	 * @return eine ArrayList von Materialien
 	 */
-	public ArrayList<Material> getProducts();
+	public ArrayList<Material> getOutputs();
+	
+	/**
+	 * gibt zurück, welche Materialien bei der Produktion verbraucht werden
+	 * @return
+	 */
+	public ArrayList<Material> getInputs();
 }

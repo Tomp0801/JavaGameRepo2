@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import map.objekte.Platzierbar;
 
 /**
  * Ein Feld, das Objekte enthalten kann, eine Bodenart und abbaubare Materialien in der Erde hat
@@ -83,6 +84,27 @@ public class Feld {
 		bodenschatzVorkommen.put(rohstoff, menge);
 	}
 
+	public float mineRohstoff(BodenMaterial rohstoff, float requestMenge)
+	{
+		float mineMenge = 0;
+		if (bodenschatzVorkommen.containsKey(rohstoff))
+		{
+			float aktuelleMenge = bodenschatzVorkommen.get(rohstoff);
+			if (aktuelleMenge <= requestMenge)	//Vorkommen wird aufgebraucht, da nicht mehr so viel vorhanden 
+			{
+				mineMenge = aktuelleMenge;
+				bodenschatzVorkommen.remove(rohstoff);	//vorkommen entfernen
+			}
+			else	//genug menge vorhanden, kann abgegeben werden
+			{
+				mineMenge = requestMenge;
+				bodenschatzVorkommen.put(rohstoff, aktuelleMenge - requestMenge);	//geminte menge von bestand abziehen
+			}
+		}
+		
+		return mineMenge;
+	}
+
 	/**
 	 * @return the rohstoffe
 	 */
@@ -125,6 +147,15 @@ public class Feld {
 	 */
 	public void setBauplatz(Platzierbar bauplatz) {
 		this.bauplatz = bauplatz;
+	}
+	
+	/**
+	 * gibt an, ob ein Objekt auf dem Feld ist oder nicht
+	 * @return true, wenn Feld frei ist, false, wenn besetzt durch Objekt
+	 */
+	public boolean isFree()
+	{
+		return (bauplatz == null);
 	}
 	
 	/**
