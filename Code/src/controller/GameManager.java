@@ -120,6 +120,12 @@ public final class GameManager
 			{
 				while(true)
 				{	
+					try {
+						Thread.sleep(50);
+					} catch (InterruptedException e)
+					{
+						e.printStackTrace();
+					}
 					for (int i = 0; positionsRechnerListe.size() > i ; i++)
 					{
 						positionsRechnerListe.get(i).refresh();

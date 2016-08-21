@@ -30,7 +30,7 @@ public class Kamera extends PerspectiveCamera
 	 */
 	private Point3D position;
 	
-	private double speed = 9999999; 
+	private double speed = 100000; 
 	
 	/**
 	 * wenn sich die Kamera in Rotation befindet, ist isRotation = true

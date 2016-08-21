@@ -18,6 +18,7 @@ import javafx.beans.property.DoubleProperty;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Point3D;
+import javafx.scene.AmbientLight;
 import javafx.scene.DepthTest;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -171,6 +172,16 @@ public class WeltraumSicht //extends StackPane
    	        himmelskoerper.translateXProperty().bind(zentrum.getChild(j).getPositionAbsoluteProperty()[0]);
    	        himmelskoerper.translateYProperty().bind(zentrum.getChild(j).getPositionAbsoluteProperty()[1]);
    	        himmelskoerper.translateZProperty().bind(zentrum.getChild(j).getPositionAbsoluteProperty()[2]);	
+   	        
+   	        //TODO zum testen ob es leuchtet
+//   	        if (zentrum.getChild(j).getClass() == Stern.class)
+//   	        {
+//   	        	AmbientLight demoLicht = new AmbientLight(Color.WHITE);
+//   	        	demoLicht.translateXProperty().bind(zentrum.getChild(j).getPositionAbsoluteProperty()[0]);
+//   	        	demoLicht.translateYProperty().bind(zentrum.getChild(j).getPositionAbsoluteProperty()[1]);
+//   	        	demoLicht.translateZProperty().bind(zentrum.getChild(j).getPositionAbsoluteProperty()[2]);	
+//   	        	subSceneRoot.getChildren().add(demoLicht);
+//   	        }
    	        
    	        System.out.println("Postion des Körpers:   X: "+himmelskoerper.getTranslateX()+"   Y: "+himmelskoerper.getTranslateY()+"   Z: "+himmelskoerper.getTranslateZ()+"    Radius: "+himmelskoerper.getRadius());
    	        

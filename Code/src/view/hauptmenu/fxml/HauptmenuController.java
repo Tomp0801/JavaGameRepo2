@@ -77,7 +77,7 @@ public class HauptmenuController implements Initializable, Runnable
 	@FXML
 	private Button endeButton;
 	
-	
+	private Thread thread;
 	/**
 	 * initialisiert den Controller
 	 */
@@ -101,7 +101,7 @@ public class HauptmenuController implements Initializable, Runnable
 		graphic.setFill(Color.BLACK);
 		graphic.fillRect(0, 0, hintergrund.getWidth(), hintergrund.getHeight());	
 		
-		Thread thread = new Thread(this);
+		thread = new Thread(this);
 		thread.setDaemon(true);
 		thread.start();
 	}
@@ -159,6 +159,8 @@ public class HauptmenuController implements Initializable, Runnable
 		{
 			System.out.println("Einzelspielerfunktion noch nicht Vorhanden");
 			System.out.println("Demo spiel wird gestartet");
+			//der Thread mit der sich die Erdkugel dreht wird hier beendet solte beachtet werden..
+			this.thread.interrupt();
 			GameManager.getInstance().starteSpiel(new Random().nextInt(5000));
 			StageController.getInstance().wechselScene(SceneEnum.WELTRAUMSICHT);
 		}
