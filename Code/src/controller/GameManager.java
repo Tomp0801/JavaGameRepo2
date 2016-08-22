@@ -23,7 +23,7 @@ public final class GameManager
 	/**
 	 * um dieses SchwarzeLoch drehen sich die Sonnen
 	 */
-	private static SchwarzesLoch schwarzezLoch; 
+	private static SchwarzesLoch schwarzesLoch; 
 	
 	/**
 	 * in diesr Liste befinden sich alle InOrbit Objecte dessen Position in einer while(true) Schleife 
@@ -67,7 +67,7 @@ public final class GameManager
 	{	
 		if (gameStart == false)
 		{	
-			schwarzezLoch = new SchwarzesLoch(seed);
+			schwarzesLoch = new SchwarzesLoch(seed);
 			StageController.getInstance().wechselScene(SceneEnum.WELTRAUMSICHT);
 			GameTime.getInstance().setZeitFaktor(1000);
 			gameStart = true;
@@ -79,9 +79,9 @@ public final class GameManager
 	/**
 	 * @return gibt das Schwarzeloch zurueck um dennen sich alle sterne bewegen.
 	 */
-	public SchwarzesLoch getSchwarzelochSystem()
+	public SchwarzesLoch getSchwarzesLochSystem()
 	{
-		return schwarzezLoch;
+		return schwarzesLoch;
 	}
 	
 	

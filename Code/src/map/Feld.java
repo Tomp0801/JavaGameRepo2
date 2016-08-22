@@ -52,7 +52,7 @@ public class Feld {
 		for (BodenMaterial temp : parentBereich.getBodenschaetze().keySet()) {
 			//Vorkommenswahrscheinlichkeit und varietät mit einbringen
 			menge = parentBereich.getParentKarte().getVarierteRandom() * temp.getVorkommensWkeit();
-			if (menge > 0.001) {	//wenn unter bestimmten schwellenwert, rauslassen.
+			if (menge > 0.005) {	//wenn unter bestimmten schwellenwert, rauslassen.
 				setRohstoff(temp, (float)menge); //1 entspricht 100%
 			}
 		}
@@ -168,10 +168,9 @@ public class Feld {
 		GraphicsContext grafik = oberflaeche.getGraphicsContext2D();
 		
 		//TODO
-//		if (typ.getBodenReichtum() = )
-//		Color farbe = new Color(red, green, blue, 0);
-//		
-//		grafik.setFill(farbe);
+		//gebäude, pflanzen, rohstoffe markieren
+		
+		grafik.setFill(this.bodentyp.getColor());
 		grafik.fillRect(0, 0, 400, 400);
 				
 		return new Canvas(); 

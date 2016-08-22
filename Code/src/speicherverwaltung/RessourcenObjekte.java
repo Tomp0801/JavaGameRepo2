@@ -46,11 +46,11 @@ public class RessourcenObjekte {
 	 */
 	private void setBodentypen() {
 		bodentypen = new ArrayList<BodenMaterial>();
-		bodentypen.add(new BodenMaterial("Stein", Color.DIMGRAY, "Spitzhacke", (float)0.6));
+		bodentypen.add(new BodenMaterial("Stein", Color.DIMGRAY, "Spitzhacke", (float)0.95));
 		bodentypen.add(new BodenMaterial("Erde", Color.SADDLEBROWN, "Schaufel", (float)0.8));
-		bodentypen.add(new BodenMaterial("Sand", Color.LIGHTGOLDENRODYELLOW, "Schaufel", (float)0.4));
-		bodentypen.add(new BodenMaterial("Kies", Color.LIGHTSLATEGRAY, "Schaufel", (float)0.1));
-		bodentypen.add(new BodenMaterial("Dreck", Color.ROSYBROWN, "Schaufel", (float)0.2));
+		bodentypen.add(new BodenMaterial("Sand", Color.LIGHTGOLDENRODYELLOW, "Schaufel", (float)0.75));
+		bodentypen.add(new BodenMaterial("Kies", Color.LIGHTSLATEGRAY, "Schaufel", (float)0.5));
+		bodentypen.add(new BodenMaterial("Dreck", Color.ROSYBROWN, "Schaufel", (float)0.8));
 	}
 	
 	/**

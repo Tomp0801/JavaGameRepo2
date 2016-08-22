@@ -1,18 +1,8 @@
 package view.weltraum;
 
-import java.io.IOException;
-import java.util.Vector;
-
-import himmelskoerper.SchwarzesLoch;
-import javafx.fxml.FXMLLoader;
-import javafx.geometry.Point3D;
-import javafx.scene.Group;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.SubScene;
-import javafx.scene.input.KeyCombination;
 import javafx.stage.Stage;
-import map.Sektion;
 import view.weltraum.fxml.SpielUmgebungController;
 
 /**
@@ -26,7 +16,7 @@ import view.weltraum.fxml.SpielUmgebungController;
 public class StageControllerSpiel 
 {
 	/**
-	 * die Main Scene ist die wichtigste Scene. Sie beinhaltet eine BoarderPane in dieser befinde
+	 * die Tester Scene ist die wichtigste Scene. Sie beinhaltet eine BoarderPane in dieser befinde
 	 * sich oben eine Menuleiste die immer bestehen bleibt und das im Zentrum befindet sich das Spielgeschehen. Das Zentrum 
 	 * kann jeder zeit ausgetauscht werden 
 	 */

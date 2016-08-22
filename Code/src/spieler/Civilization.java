@@ -2,8 +2,6 @@ package spieler;
 
 import java.util.ArrayList;
 
-import map.Sektion;
-
 /**
  * Eine Civilization ist ein Reich das von einem oder mehrere Spieler gesteuert werden kann.
  * Hier befinden sich alle wichtigen Daten ueber einen Civilisation.
@@ -20,8 +18,9 @@ public class Civilization
 	
 	/**
 	 * eine Liste der Sektionen die den Spieler beansrpucht hat. 
+	 * TODO was ist eine Sektion?
 	 */
-	private ArrayList<Sektion> sektionsListeDerCivilisation = new ArrayList<Sektion>();
+//	private ArrayList<Sektion> sektionsListeDerCivilisation = new ArrayList<Sektion>();
 	
 	/**
 	 * Liste aller Civilisationen die endeckt wurden

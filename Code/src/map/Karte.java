@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import global.Random;
 import himmelskoerper.Betretbar;
-import speicherverwaltung.Deserializer;
+import speicherverwaltung.IOHandler;
 
 /**
  * Eine 2D-Karte, zum Beispiel eines Planeten
@@ -111,24 +111,26 @@ public class Karte {
 		this.varietaet = prng.random();
 
 		//mögliche Bodenschätze generieren
+		ArrayList<BodenMaterial> standards = IOHandler.getInstance().readArrayList("bodenschaetze"); 
 		bodenschaetze = new ArrayList<>();
-		for (int i = 0; i < Deserializer.getBodenschaetze().size(); i++) {
+		for (int i = 0; i < standards.size(); i++) {
 			//entscheiden ob der Bodenschatz vorkommen soll oder nicht
-			//TODO 50/50 chance beibehalten?
-			if (prng.randomBoolean()) {
-				bodenschaetze.add(Deserializer.getBodenschaetze().get(i));
+			//für standards relativ Hohe Wahrscheinlichkeit (90%)
+			if (prng.random() < 0.9) {
+				bodenschaetze.add(standards.get(i));
 			}
 		}
 		//TODO random generated zufalls bodenschätze hinzufügen
 
 		//mögliche Boden Arten generieren
+		standards = IOHandler.getInstance().readArrayList("bodentypen");
 		bodenarten = new ArrayList<>();
 		while (bodenarten.size() == 0) {	//es muss mindestens eine bodenart existieren
-			for (int i = 0; i < Deserializer.getBodentypen().size(); i++) {
+			for (int i = 0; i < standards.size(); i++) {
 				//entscheiden ob der Bodenschatz vorkommen soll oder nicht
-				//TODO 50/50 chance beibehalten?
-				if (prng.randomBoolean()) {
-					bodenarten.add(Deserializer.getBodentypen().get(i));
+				//für Standards ihre vorkommensWahrscheinlichkeit benutzen
+				if (prng.random() < standards.get(i).getVorkommensWkeit()) {
+					bodenarten.add(standards.get(i));
 				}
 			}
 		}
@@ -207,6 +209,15 @@ public class Karte {
 	 */
 	public ArrayList<BodenMaterial> getBodenarten() {
 		return bodenarten;
+	}
+	
+	/**
+	 * 
+	 * @return den varietaetsfaktor (zahl zwischen 0 und 1)
+	 */
+	public double getVarietaet()
+	{
+		return varietaet;
 	}
 
 	/**
