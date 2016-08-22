@@ -101,7 +101,7 @@ public class StageController extends Application
 		case WELTRAUMSICHT:
 			if (weltraumSicht == null)
 			{
-				weltraumSicht = new WeltraumSicht(GameManager.getInstance().getSchwarzelochSystem(), new Point3D(0, 0, -200));
+				weltraumSicht = new WeltraumSicht(GameManager.getInstance().getSchwarzesLochSystem(), new Point3D(0, 0, -200));
 			}
 			newScene = weltraumSicht.getScene();
 			break;

@@ -1,111 +1,77 @@
 package speicherverwaltung;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.ObjectOutput;
-import java.io.ObjectOutputStream;
-import java.io.OutputStreamWriter;
-import java.nio.file.FileSystem;
-import java.nio.file.FileSystems;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 
-import javafx.scene.image.Image;
-
 public class IOHandler 
-{
+{	
+	/**
+	 * zum speichern in Dateien
+	 */
+	private Serializer serializer;
+	
+	/**
+	 * zum auslesen von Dateien
+	 */
+	private Deserializer deserializer;
 
+	/**
+	 * Pfad zu allen Dateien
+	 */
+	private String defaultPath; 
+	
+	private static IOHandler instance;
 	
 	/**
-	 * Speichert eine Liste in einer Datei
-	 * 
-	 * @param liste wird in einer Datei gespeichert
-	 * @param path weg der Datei in der Die Liste hineingeschrieben wird. Ist keine Datei vorhanden, wird eine neue erstellt
+	 * privater Konstruktor
 	 */
-//	public static void speichereListeInEineNeueDatei(ArrayList<Object> liste , Path path ) 
-//	{
-//		File file = new File(path.toUri()); 
-//		if (file.exists())
-//		{
-//			
-//		}
-//		else
-//		{
-//			
-//		}
-//	}
-	
-	/**
-	 * diese Methode ist zum ueben. Sie soll einen String in eine Datei schreiben
-	 * @param text
-	 * @return
-	 */
-	public static void schreibeEinenString(String text)
+	private IOHandler()
 	{
-		String pathUserHome = System.getProperty("user.home");
-		File file = new File(pathUserHome+"/Test_Java_IOHandler.txt"); 
-		try
-		{
-			file.createNewFile();
-		} 
-		catch (IOException e) 
-		{
-			System.out.println("Die Datei "+file.getAbsolutePath()+" konnte nicht erstellt werde");
-			e.printStackTrace();
-		} 
-			Image image = new Image("speicherverwaltung/Erde.jpg"); 
-			
-		try {
-			FileOutputStream schreiben = new FileOutputStream(file);
-			try {
-				ObjectOutput output = new ObjectOutputStream(schreiben);
-				output.writeObject(new Integer(2994));
-				output.close();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
-			OutputStreamWriter writer = new OutputStreamWriter(schreiben); 
-			
-//			try {
-//				
-//				schreiben.write("Hellor Word".getBytes());
-//			} catch (IOException e1) {
-//				e1.printStackTrace();
-//			}
-			
-//			try {
-//				writer.write("Hello Word");
-//				writer.close();
-//			} catch (IOException e) {
-
-//				e.printStackTrace();
-//			}
-			
-		} catch (FileNotFoundException e) 
-		{
-			System.out.println("Error: Fehler beim schreben in"+file.getAbsolutePath());
-			e.printStackTrace();
-		} 
+		instance = this;
 		
-//			try 
-//			{
-//				FileWriter schreiben = new FileWriter(file);
-//				schreiben.write("Hello Word");
-//				schreiben.close();
-//			} catch (IOException e) 
-//			{
-//				System.out.println("Error: Fehler beim schreben in"+file.getAbsolutePath());
-//				e.printStackTrace();
-//			}
+		serializer = new Serializer();
+		deserializer = new Deserializer();
+		this.defaultPath = "src/speicherverwaltung/";
 	}
-
+	
+	/**
+	 * Speichert eine ArrayList von Objekten in einer Datei ab
+	 * @param filename Name der Datei, die zum speichern verwendet werden soll
+	 * @param list ArrayList der Objekte, die abgespeichert werden sollen
+	 */
+	public <T> void saveArrayList(String filename, ArrayList<T> list)
+	{
+		serializer.serializeArray(defaultPath + filename, list);
+	}
+	
+	/**
+	 * List eine Datei aus und gibt die Objekte in einer ArrayList zurück
+	 * @param filename Name der Datei, die ausgelesen werden soll 
+	 * @return eine ArrayList mit den Objekten, die in der Datei gespeichert sind
+	 */
+	public <T> ArrayList<T> readArrayList(String filename)
+	{
+		return deserializer.deserializeArrayList(defaultPath + filename);
+	}
+	
+	/**
+	 * gibt den Standard Pfad zurück
+	 * @return den Pfad, in dem Dateien gespeichert und gesucht werden
+	 */
+	public String getDefaultPath()
+	{
+		return defaultPath;
+	}
+	
+	/**
+	 * gibt einen statischen IOHandler zurück
+	 * @return eine Instanz auf einen IOHandler
+	 */
+	public static IOHandler getInstance()
+	{
+		if (instance == null)
+		{
+			new IOHandler();
+		}
+		return instance;
+	}
 }

@@ -1,8 +1,7 @@
 package map;
 
+import java.awt.Color;
 import java.io.Serializable;
-
-import javafx.scene.paint.Color;
 
 /**
  * Grundklasse für alle Stoffe Materialen, etc.
@@ -30,6 +29,11 @@ public abstract class Ressource implements Serializable {
 	private Color color;
 	
 	/**
+	 * die durchsichtigkeit der Farbe des Materials. 0 = durchsichtig, 1 = undurchsichtig
+	 */
+	private double opacity;
+	
+	/**
 	 * Energie, die das Material beinhaltet und die, z.B. durch Verbrennung umgesetzt werden kann
 	 * TODO einheit
 	 */
@@ -41,16 +45,29 @@ public abstract class Ressource implements Serializable {
 	 */
 	private Material verbrennErgebnis;
 	
+//	/**
+//	 * Kosntruktor
+//	 * 
+//	 * @param name
+//	 * @param color
+//	 */
+//	public Ressource(String name, Color color) 
+//	{
+//		this.name = name;
+//		this.color = color;
+//	}
+	
 	/**
-	 * Kosntruktor
+	 * Kosntruktor mit javafx Color, sollte eher benutzt werden, da diese die opacity mit enthält
 	 * 
-	 * @param name
-	 * @param color
+	 * @param name des Materials
+	 * @param color (javafx.scene.paint)
 	 */
-	public Ressource(String name, Color color) 
+	public Ressource(String name, javafx.scene.paint.Color color) 
 	{
 		this.name = name;
-		this.color = color;
+		this.color = new Color((float)color.getRed(), (float)color.getGreen(), (float)color.getBlue());
+		this.opacity = color.getOpacity();
 	}
 	
 	/**
@@ -70,8 +87,8 @@ public abstract class Ressource implements Serializable {
 	/**
 	 * @return the color
 	 */
-	public Color getColor() {
-		return color;
+	public javafx.scene.paint.Color getColor() {
+		return new javafx.scene.paint.Color((double)color.getRed(), (double)color.getGreen(), (double)color.getBlue(), opacity);
 	}
 
 	/**
@@ -79,6 +96,20 @@ public abstract class Ressource implements Serializable {
 	 */
 	public void setColor(Color color) {
 		this.color = color;
+	}
+
+	/**
+	 * @return the opacity
+	 */
+	public double getOpacity() {
+		return opacity;
+	}
+
+	/**
+	 * @param opacity the opacity to set
+	 */
+	public void setOpacity(double opacity) {
+		this.opacity = opacity;
 	}
 
 	/**

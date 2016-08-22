@@ -13,7 +13,6 @@ import map.Karte;
 public interface Betretbar {
 	/**
 	 * @return map des Objekts, die begehbar und bebaubar ist
-	 * TODO return type
 	 */
 	public Karte getKarte();
 	

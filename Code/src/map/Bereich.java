@@ -4,7 +4,6 @@ import java.util.HashMap;
 
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.paint.Color;
 
 /**
  * Ein Bereich von Feldern, auf denen z.B. eine Stadt errichtet werden kann
@@ -60,6 +59,8 @@ public class Bereich {
 	{
 		
 		float wahrscheinlichkeit;
+		bodenschaetze = new HashMap<BodenMaterial, Float>();
+		bodenarten = new HashMap<BodenMaterial, Float>();
 		
 		//bodenschaetze
 		for (int i = 0; i < parentKarte.getBodenschaetze().size(); i++) 
