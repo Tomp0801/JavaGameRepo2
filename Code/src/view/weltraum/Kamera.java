@@ -49,6 +49,10 @@ public class Kamera extends PerspectiveCamera
 	 */
 	private Rotate rotationX = new Rotate(0, Rotate.X_AXIS);
 	
+	
+	//TODO 
+	Kamera(){}
+	
 	/**
 	 * erstellt eine Kamera
 	 * @param scene auf der KeyEvents behandelt werden um die Kamera zubewegen
@@ -243,7 +247,6 @@ public class Kamera extends PerspectiveCamera
 	 */
 	public void rotation(double mouseDeltaY , double mouseDeltaX)
 	{	
-
 		if(this.isRotation)
 		{	
 			this.rotationX.setAngle(rotationX.getAngle() - mouseDeltaX/1);

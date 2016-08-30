@@ -2,6 +2,7 @@ package controller;
 
 import java.util.ArrayList;
 
+import global.Constants;
 import global.GameTime;
 import himmelskoerper.InOrbit;
 import himmelskoerper.SchwarzesLoch;
@@ -24,13 +25,7 @@ public final class GameManager
 	 * um dieses SchwarzeLoch drehen sich die Sonnen
 	 */
 	private static SchwarzesLoch schwarzezLoch; 
-	
-	/**
-	 * in diesr Liste befinden sich alle InOrbit Objecte dessen Position in einer while(true) Schleife 
-	 * staendig erneuert werden solll 
-	 */
-	private ArrayList<InOrbit> positionsRechnerListe = new ArrayList<InOrbit>();
-	
+		
 	/**
 	 * is true wenn das Spiel gestartet ist
 	 */
@@ -69,9 +64,8 @@ public final class GameManager
 		{	
 			schwarzezLoch = new SchwarzesLoch(seed);
 			StageController.getInstance().wechselScene(SceneEnum.WELTRAUMSICHT);
-			GameTime.getInstance().setZeitFaktor(1000);
+			GameTime.getInstance().setZeitFaktor(Constants.ZEITFAKTOR);
 			gameStart = true;
-			positionsRechner();
 		}
 	}
 	
@@ -85,57 +79,7 @@ public final class GameManager
 	}
 	
 	
-	/**
-	 * fuegt in InOrbit Objekt in den piritionsrechnerListe hinzu. Dann wird die Position
-	 * von diesem Object in einer dauerschleife neu berechnet..
-	 * @param inOrbit das Objekt was hinzugefuegt werden soll.
-	 */
-	public void addInOrbitObjectToPositionsRechner(InOrbit inOrbit)
-	{
-		this.positionsRechnerListe.add(inOrbit);
-	}
 	
-	
-	/**
-	 * loescht in InOrbit objekt von der positionsRechnerListe.
-	 * Die position des Objektes wird nun nicht weiter berechnet
-	 * @param koerper
-	 */
-	public void delateFromPositionsRechner(InOrbit koerper)
-	{
-		positionsRechnerListe.remove(koerper);
-	}
-	
-	
-	/**
-	 * diese Methode rechnet in einer Dauerschleife alle Positionen von InOrbit Objekten durch die sich
-	 * in der ArrayList positionsRechnerListe befinden
-	 */
-	private void positionsRechner()
-	{
-		Thread rechner = new Thread(new Runnable() 
-		{	
-			@Override
-			public void run() 
-			{
-				while(true)
-				{	
-					try {
-						Thread.sleep(50);
-					} catch (InterruptedException e)
-					{
-						e.printStackTrace();
-					}
-					for (int i = 0; positionsRechnerListe.size() > i ; i++)
-					{
-						positionsRechnerListe.get(i).refresh();
-					}
-				}	
-			}
-		});		
-		rechner.setDaemon(true);
-		rechner.start();
-	}
 	
 	
 	/**

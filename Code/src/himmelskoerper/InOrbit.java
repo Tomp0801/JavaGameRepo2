@@ -45,6 +45,7 @@ public abstract class InOrbit extends Himmelskoerper {
 	 */
 	private float bewegungsGeschwindigkeit;
 
+	
 	/**
 	 * Standardkonstruktor für inOrbit Objekt
 	 * 

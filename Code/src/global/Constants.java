@@ -34,12 +34,14 @@ public final class Constants {
 	 */
 	public static final double VERKLEINERUNGSFAKTOR = 1.0/100000.0;
 	
-	public static final double VERGROßERUNGSFAKTORRADIUSSONNE = 1000;
+	public static final double VERGROßERUNGSFAKTORRADIUSSONNE = 10000;
 	
-	public static final double VERGROßERUNGSFAKTORRADIUSPLANET = 10000;
+	public static final double VERGROßERUNGSFAKTORRADIUSPLANET = 1000;
 	
 	public static final double VERGROßERUNGSFAKTORRADIUSMOND = 10000;
 	
 	public static final double SPEEDKAMERA = 50000;
+	
+	public static final float ZEITFAKTOR = 100000;
 	
 }
