@@ -1,4 +1,4 @@
-package map;
+package ressource;
 
 import java.awt.Color;
 import java.io.Serializable;
@@ -12,7 +12,7 @@ import java.io.Serializable;
  * @author Thomas
  *
  */
-public abstract class Ressource implements Serializable {
+public class Ressource implements Serializable {
 	/**
 	 * 
 	 */
@@ -25,6 +25,7 @@ public abstract class Ressource implements Serializable {
 	
 	/**
 	 * Farbe der Ressource
+	 * Kann nicht javafx Color nehmen, da diese nicht serializeable ist
 	 */
 	private Color color;
 	
@@ -34,31 +35,13 @@ public abstract class Ressource implements Serializable {
 	private double opacity;
 	
 	/**
-	 * Energie, die das Material beinhaltet und die, z.B. durch Verbrennung umgesetzt werden kann
-	 * TODO einheit
+	 * das Gewicht der Ressource pro Einheit
+	 * relevant für den Transport
 	 */
-	private float innereEnergie;
+	private float gewicht;
 	
 	/**
-	 * Das Material, das durch Verbrennung dieses Materials entsteht
-	 * TODO nötig hier?
-	 */
-	private Material verbrennErgebnis;
-	
-//	/**
-//	 * Kosntruktor
-//	 * 
-//	 * @param name
-//	 * @param color
-//	 */
-//	public Ressource(String name, Color color) 
-//	{
-//		this.name = name;
-//		this.color = color;
-//	}
-	
-	/**
-	 * Kosntruktor mit javafx Color, sollte eher benutzt werden, da diese die opacity mit enthält
+	 * Kosntruktor mit javafx Color, da diese die opacity mit enthält
 	 * 
 	 * @param name des Materials
 	 * @param color (javafx.scene.paint)
@@ -80,12 +63,12 @@ public abstract class Ressource implements Serializable {
 	/**
 	 * @param name the name to set
 	 */
-	public void setName(String name) {
+	protected void setName(String name) {
 		this.name = name;
 	}
 	
 	/**
-	 * @return the color
+	 * @return die Farbe als jafafx Color
 	 */
 	public javafx.scene.paint.Color getColor() {
 		return new javafx.scene.paint.Color((double)color.getRed(), (double)color.getGreen(), (double)color.getBlue(), opacity);
@@ -94,12 +77,12 @@ public abstract class Ressource implements Serializable {
 	/**
 	 * @param color the color to set
 	 */
-	public void setColor(Color color) {
+	protected void setColor(Color color) {
 		this.color = color;
 	}
 
 	/**
-	 * @return the opacity
+	 * @return the opacity der Farbe
 	 */
 	public double getOpacity() {
 		return opacity;
@@ -113,17 +96,17 @@ public abstract class Ressource implements Serializable {
 	}
 
 	/**
-	 * @return the innereEnergie
+	 * relevant für den Transport von Ressourcen
+	 * @return das Gewicht der Ressource pro Einheit
 	 */
-	public float getInnereEnergie() {
-		return innereEnergie;
+	public float getGewicht() {
+		return gewicht;
 	}
 
 	/**
-	 * @param innereEnergie the innereEnergie to set
+	 * @param gewicht the gewicht to set
 	 */
-	protected void setInnereEnergie(float innereEnergie) {
-		this.innereEnergie = innereEnergie;
+	protected void setGewicht(float gewicht) {
+		this.gewicht = gewicht;
 	}
-
 }

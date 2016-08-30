@@ -5,6 +5,7 @@ import java.util.HashMap;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import map.objekte.Platzierbar;
+import ressource.BodenMaterial;
 
 /**
  * Ein Feld, das Objekte enthalten kann, eine Bodenart und abbaubare Materialien in der Erde hat

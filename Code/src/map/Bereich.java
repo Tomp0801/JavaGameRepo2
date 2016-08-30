@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import ressource.BodenMaterial;
 
 /**
  * Ein Bereich von Feldern, auf denen z.B. eine Stadt errichtet werden kann
