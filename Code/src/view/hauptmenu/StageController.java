@@ -122,6 +122,8 @@ public class StageController extends Application
 	{
 		stage.setScene(scene);
 		stage.setFullScreen(true);
+		stage.setX(0);
+		stage.setY(0);
 	}
 	
 	

@@ -104,7 +104,7 @@ public class Bewegungsmanager
 			{
 				while(true)
 				{	
-					try {Thread.sleep(100);} catch (InterruptedException e){e.printStackTrace();}
+					try {Thread.sleep(50);} catch (InterruptedException e){e.printStackTrace();}
 					
 					for (int i = 0; positionsRechnerListe.size() > i ; i++)
 					{
@@ -172,7 +172,7 @@ public class Bewegungsmanager
 			
 			x = radius * Math.sin(positionsVector.get(2)) * Math.cos(positionsVector.get(1));
 			y = radius * Math.sin(positionsVector.get(2)) * Math.sin(positionsVector.get(1));
-			z = radius * Math.cos(positionsVector.get(2));
+			z = radius * Math.cos(positionsVector.get(2));			
 			
 			posiX.set(x);
 			posiY.set(y);

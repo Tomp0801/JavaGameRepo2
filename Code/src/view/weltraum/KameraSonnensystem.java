@@ -58,11 +58,10 @@ public class KameraSonnensystem extends Kamera2
 		initEventHandler();
 		
 		kamera.setTranslateZ(-100);
-		kamera.setTranslateX(-this.scene.getWidth()/2);
-		kamera.setTranslateY(-this.scene.getHeight()/2);
-		
-//		kamera.setTranslateX(-300);
-//		kamera.setTranslateY(-300);
+		kamera.setTranslateX(-Toolkit.getDefaultToolkit().getScreenSize().getWidth()/2);
+		kamera.setTranslateY(-Toolkit.getDefaultToolkit().getScreenSize().getHeight()/2);
+		System.out.println("position Kamera X : "+kamera.getTranslateX());
+		System.out.println("position Kamera Y : "+kamera.getTranslateY());
 		
 		kamera.setFarClip(10000000);
 		//maximale naehe
@@ -243,7 +242,9 @@ public class KameraSonnensystem extends Kamera2
 	 */
 	private void doZoomen(double zoome)
 	{
-		this.kamera.setTranslateZ(this.kamera.getTranslateZ()+zoome);
-		System.out.println("Kamera Zoom   "+kamera.getTranslateZ());
+		if (kamera.getTranslateZ() <5000)
+		{
+			this.kamera.setTranslateZ(this.kamera.getTranslateZ()+zoome);
+		}
 	}
 }
