@@ -14,8 +14,6 @@ import javafx.scene.paint.PhongMaterial;
 /**
  * Ein kugelförmiges Objekt mit Masse und einer Position im Raum;
  *  natürlichen Ursprungs oder auch nicht
- *  
- *  TODO zusammenhang zwischen art, masse, radius und material
  * 
  * @author Thomas
  * @version 1.0

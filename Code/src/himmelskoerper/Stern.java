@@ -4,7 +4,6 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import global.Agregat;
 import global.Constants;
-import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
 

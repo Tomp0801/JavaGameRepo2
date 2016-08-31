@@ -6,8 +6,10 @@ import global.Constants;
 import global.GameTime;
 import himmelskoerper.InOrbit;
 import himmelskoerper.SchwarzesLoch;
+import himmelskoerper.Stern;
 import view.hauptmenu.SceneEnum;
 import view.hauptmenu.StageController;
+import view.weltraum.Sonnensystem;
 
 /**
  * Im GameManager wird der spielfluss kontrolliert
@@ -24,8 +26,15 @@ public final class GameManager
 	/**
 	 * um dieses SchwarzeLoch drehen sich die Sonnen
 	 */
-	private static SchwarzesLoch schwarzezLoch; 
-		
+
+	private static SchwarzesLoch schwarzesLoch; 
+	
+	/**
+	 * in diesr Liste befinden sich alle InOrbit Objecte dessen Position in einer while(true) Schleife 
+	 * staendig erneuert werden solll 
+	 */
+	private ArrayList<InOrbit> positionsRechnerListe = new ArrayList<InOrbit>();
+	
 	/**
 	 * is true wenn das Spiel gestartet ist
 	 */
@@ -62,9 +71,14 @@ public final class GameManager
 	{	
 		if (gameStart == false)
 		{	
-			schwarzezLoch = new SchwarzesLoch(seed);
-			StageController.getInstance().wechselScene(SceneEnum.WELTRAUMSICHT);
+			schwarzesLoch = new SchwarzesLoch(seed);
+//			StageController.getInstance().wechselScene(SceneEnum.WELTRAUMSICHT);
 			GameTime.getInstance().setZeitFaktor(Constants.ZEITFAKTOR);
+			
+			Sonnensystem system = new Sonnensystem((Stern) schwarzesLoch.getChild(0));
+			StageController.getInstance().setScene(system.getScene());
+			
+			
 			gameStart = true;
 		}
 	}
@@ -73,9 +87,9 @@ public final class GameManager
 	/**
 	 * @return gibt das Schwarzeloch zurueck um dennen sich alle sterne bewegen.
 	 */
-	public SchwarzesLoch getSchwarzelochSystem()
+	public SchwarzesLoch getSchwarzesLochSystem()
 	{
-		return schwarzezLoch;
+		return schwarzesLoch;
 	}
 	
 	

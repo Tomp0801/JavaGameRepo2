@@ -6,6 +6,8 @@ import java.util.Random;
 import java.util.ResourceBundle;
 import audio.Musikspieler;
 import controller.GameManager;
+import himmelskoerper.SchwarzesLoch;
+import himmelskoerper.Stern;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -20,6 +22,7 @@ import javafx.scene.shape.Sphere;
 import javafx.scene.transform.Rotate;
 import view.hauptmenu.SceneEnum;
 import view.hauptmenu.StageController;
+import view.weltraum.Sonnensystem;
 
 /**
  * Das Startmenu. Dies ist das erste was der Spiele zusehen bekommt.
@@ -138,7 +141,7 @@ public class HauptmenuController implements Initializable, Runnable
 				
 			} catch (InterruptedException e) 
 			{
-				e.printStackTrace();
+				
 			}
 			
 			if (radius >= 200)
@@ -162,7 +165,8 @@ public class HauptmenuController implements Initializable, Runnable
 			//der Thread mit der sich die Erdkugel dreht wird hier beendet solte beachtet werden..
 			this.thread.interrupt();
 			GameManager.getInstance().starteSpiel(new Random().nextInt(5000));
-			StageController.getInstance().wechselScene(SceneEnum.WELTRAUMSICHT);
+//			StageController.getInstance().wechselScene(SceneEnum.WELTRAUMSICHT);
+
 		}
 		
 		else if (e.getSource() == mehrspielerButton)

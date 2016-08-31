@@ -30,8 +30,8 @@ public class Mond extends InOrbit implements Betretbar
 	public Mond(Planet bezugsKoerper, double distanz, double masse, double radius) {
 		super(bezugsKoerper, distanz, masse, radius, Agregat.FEST);
 		
-		
-		//TODO Karte erstellen
+		int breite = getKartenBreite();		
+		karte = new Karte(this, breite, breite, getPRNG().randomInt());
 	}
 	
 	/**

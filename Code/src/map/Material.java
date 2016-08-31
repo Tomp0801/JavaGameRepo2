@@ -53,6 +53,11 @@ public class Material extends Ressource {
 	 */
 	private Material veredelErgebnis;
 	
+	/**
+	 * Konstruktor
+	 * @param name setzt den Namen
+	 * @param color setzt die Farbe des Materials
+	 */
 	public Material(String name, Color color) 
 	{
 		super(name, color);

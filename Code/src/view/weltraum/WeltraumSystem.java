@@ -69,7 +69,7 @@ public abstract class WeltraumSystem
 	 * gibt die Scene zurueck
 	 * @return Scene 
 	 */
-	protected Scene getScene()
+	public Scene getScene()
 	{
 		return this.scene;
 	}

@@ -1,13 +1,16 @@
 package view.weltraum;
 
 import java.awt.MouseInfo;
+import java.awt.Toolkit;
 import java.util.ArrayList;
 
 import javafx.animation.FadeTransition;
 import javafx.event.EventHandler;
 import javafx.geometry.Point3D;
 import javafx.scene.Node;
-import javafx.scene.ParallelCamera;
+import javafx.scene.PerspectiveCamera;
+import javafx.scene.Scene;
+import javafx.scene.SubScene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -25,14 +28,10 @@ import javafx.util.Duration;
 public class KameraSonnensystem extends Kamera2
 {
 	/**
-	 * eine Liste mit den Nodes die sich rotiert
+	 * eine Liste mit den Nodes die sich bei benutzung der linken Maustaste rotiert
 	 */
 	private ArrayList<Node> nodeList = new ArrayList<Node>();
 	
-	/**
-	 * auf dieser Node werden MausEvents behandelt
-	 */
-	private Node eventNode; 
 
 	/**
 	 * zur rotation der Node um die X Achse
@@ -45,16 +44,30 @@ public class KameraSonnensystem extends Kamera2
 	private Rotate rotationY = new Rotate(0 , 0, 0, 0 , Rotate.Y_AXIS);
 	
 	/**
-	 * die Kamera wird zum sumen verwendte. 
+	 * die Kamera wird zum zoomen verwendte. 
 	 */
-	private ParallelCamera kamera = new ParallelCamera();
-			
+	private PerspectiveCamera kamera = new PerspectiveCamera();
+		
+	private Scene scene;
 	/**
 	 * ertellt ein Objekt von NodeRotationkamera
 	 */
-	public KameraSonnensystem()
+	public KameraSonnensystem(Scene scene)
 	{
-		kamera.setTranslateZ(-4000);
+		this.scene = scene;
+		initEventHandler();
+		
+		kamera.setTranslateZ(-100);
+		kamera.setTranslateX(-this.scene.getWidth()/2);
+		kamera.setTranslateY(-this.scene.getHeight()/2);
+		
+//		kamera.setTranslateX(-300);
+//		kamera.setTranslateY(-300);
+		
+		kamera.setFarClip(10000000);
+		//maximale naehe
+		kamera.setNearClip(0.1);
+		kamera.setFieldOfView(100);
 	}
 	
 	/**
@@ -64,7 +77,6 @@ public class KameraSonnensystem extends Kamera2
 	public KameraSonnensystem(Node node)
 	{
 		this.addNode(node);
-		setEventHandlerNode(node);
 	}
 	
 	
@@ -75,7 +87,6 @@ public class KameraSonnensystem extends Kamera2
 	public KameraSonnensystem(ArrayList<Node> nodeList)
 	{
 		this.addNode(nodeList); 
-		setEventHandlerNode(nodeList.get(0));
 	}
 	
 	
@@ -102,33 +113,31 @@ public class KameraSonnensystem extends Kamera2
 	
 	
 	/**
-	 * setzt oder ersetzt das Element auf den die Mousevents zur
-	 * Rotation des Nods behandelt werden sollen
 	 * 
 	 * @param eventNode
 	 */
-	public void setEventHandlerNode(Node eventNode)
+	public void initEventHandler()
 	{   	
-		this.eventNode = eventNode; 
+
 		
-		this.eventNode.setOnKeyPressed(new EventHandler<KeyEvent>()
+		this.scene.setOnKeyPressed(new EventHandler<KeyEvent>()
 		{
 
 			@Override
 			public void handle(KeyEvent e)
 			{
-				if (e.getSource() == KeyCode.W)
+				if (e.getCode() == KeyCode.W)
 				{
-					doZoomen(-1);
+					doZoomen(100);
 				}
-				else if (e.getSource() == KeyCode.S)
+				else if (e.getCode() == KeyCode.S)
 				{
-					doZoomen(1);
+					doZoomen(-100);
 				}
 			}
 		});
 		
-		this.eventNode.setOnMouseDragged(new EventHandler<MouseEvent>() 
+		this.scene.setOnMouseDragged(new EventHandler<MouseEvent>() 
 	    {
 	      	double mouseOldX = 0; 
 	       	double mouseOldY = 0;
@@ -173,8 +182,9 @@ public class KameraSonnensystem extends Kamera2
 	{	
 		for (int i = 0 ; nodeList.size() > i ; i++)
 		{
-			this.rotationX.setAngle(rotationX.getAngle() - mouseDeltaX/1);
-			this.rotationY.setAngle(rotationY.getAngle() + mouseDeltaY/1);
+			System.out.println("Rotation  "+(rotationX.getAngle() - mouseDeltaX*2));
+			this.rotationX.setAngle(rotationX.getAngle() - mouseDeltaX*2);
+			this.rotationY.setAngle(rotationY.getAngle() + mouseDeltaY*2);
 		}
 	}
 	
@@ -221,7 +231,7 @@ public class KameraSonnensystem extends Kamera2
 	 * gibt die Kamera wieder, die ran und weg sumt
 	 * @return
 	 */
-	protected ParallelCamera getKamera()
+	protected PerspectiveCamera getKamera()
 	{
 		return this.kamera;
 	}
@@ -234,5 +244,6 @@ public class KameraSonnensystem extends Kamera2
 	private void doZoomen(double zoome)
 	{
 		this.kamera.setTranslateZ(this.kamera.getTranslateZ()+zoome);
+		System.out.println("Kamera Zoom   "+kamera.getTranslateZ());
 	}
 }

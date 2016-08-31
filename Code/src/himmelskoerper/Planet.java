@@ -11,8 +11,6 @@ import global.Agregat;
  * 
  * Gibt auch Planeten ohne Sonne : Planemos
  * 
- * TODO rotation klären
- * 
  * @author Thomas
  * @version 1.0
  */
@@ -41,15 +39,6 @@ public abstract class Planet extends InOrbit implements Orbitable
 		
 		monde = new LinkedList<InOrbit>();
 		generateChildren();
-	}
-
-	/**
-	 * berechnet die aktuelle Position und Ausrichtung des Planeten neu
-	 */
-	public void refresh()
-	{
-		this.bewegen();  //position aktualisieren
-		//TODO Rotation
 	}
 
 	/**

@@ -101,7 +101,7 @@ public class StageController extends Application
 		case WELTRAUMSICHT:
 			if (weltraumSicht == null)
 			{
-				weltraumSicht = new WeltraumSicht(GameManager.getInstance().getSchwarzelochSystem(), new Point3D(0, 0, -200));
+				weltraumSicht = new WeltraumSicht(GameManager.getInstance().getSchwarzesLochSystem(), new Point3D(0, 0, -200));
 			}
 			newScene = weltraumSicht.getScene();
 			break;
@@ -109,10 +109,22 @@ public class StageController extends Application
 			break;
 		}
 		
-		stage.setScene(newScene);
-		stage.setFullScreen(true);
+		setScene(newScene);
 	}
 
+	
+	
+	/**
+	 * setzt eine neue Scene
+	 * @param scene
+	 */
+	public void setScene(Scene scene)
+	{
+		stage.setScene(scene);
+		stage.setFullScreen(true);
+	}
+	
+	
 	
 	/**
 	 * erstellt einen Controller des Typs der uebergeben wird und speichert dieser als eine Objektvariable ab

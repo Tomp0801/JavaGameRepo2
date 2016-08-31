@@ -4,9 +4,10 @@ import java.util.HashMap;
 
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import map.objekte.Platzierbar;
 
 /**
- * Ein Feld eines gewissen typs, das bebaut werden kann und/oder Objekte enthalten kann
+ * Ein Feld, das Objekte enthalten kann, eine Bodenart und abbaubare Materialien in der Erde hat
  * 
  * @author Thomas
  *
@@ -51,7 +52,7 @@ public class Feld {
 		for (BodenMaterial temp : parentBereich.getBodenschaetze().keySet()) {
 			//Vorkommenswahrscheinlichkeit und varietät mit einbringen
 			menge = parentBereich.getParentKarte().getVarierteRandom() * temp.getVorkommensWkeit();
-			if (menge > 0.001) {	//wenn unter bestimmten schwellenwert, rauslassen.
+			if (menge > 0.005) {	//wenn unter bestimmten schwellenwert, rauslassen.
 				setRohstoff(temp, (float)menge); //1 entspricht 100%
 			}
 		}
@@ -81,6 +82,27 @@ public class Feld {
 	 */
 	public void setRohstoff(BodenMaterial rohstoff, Float menge) {
 		bodenschatzVorkommen.put(rohstoff, menge);
+	}
+
+	public float mineRohstoff(BodenMaterial rohstoff, float requestMenge)
+	{
+		float mineMenge = 0;
+		if (bodenschatzVorkommen.containsKey(rohstoff))
+		{
+			float aktuelleMenge = bodenschatzVorkommen.get(rohstoff);
+			if (aktuelleMenge <= requestMenge)	//Vorkommen wird aufgebraucht, da nicht mehr so viel vorhanden 
+			{
+				mineMenge = aktuelleMenge;
+				bodenschatzVorkommen.remove(rohstoff);	//vorkommen entfernen
+			}
+			else	//genug menge vorhanden, kann abgegeben werden
+			{
+				mineMenge = requestMenge;
+				bodenschatzVorkommen.put(rohstoff, aktuelleMenge - requestMenge);	//geminte menge von bestand abziehen
+			}
+		}
+		
+		return mineMenge;
 	}
 
 	/**
@@ -128,6 +150,15 @@ public class Feld {
 	}
 	
 	/**
+	 * gibt an, ob ein Objekt auf dem Feld ist oder nicht
+	 * @return true, wenn Feld frei ist, false, wenn besetzt durch Objekt
+	 */
+	public boolean isFree()
+	{
+		return (bauplatz == null);
+	}
+	
+	/**
 	 * 
 	 * @return gibt ein Canvas mit einem zum Feld passendem Aussehen zurueck
 	 */
@@ -137,10 +168,9 @@ public class Feld {
 		GraphicsContext grafik = oberflaeche.getGraphicsContext2D();
 		
 		//TODO
-//		if (typ.getBodenReichtum() = )
-//		Color farbe = new Color(red, green, blue, 0);
-//		
-//		grafik.setFill(farbe);
+		//gebäude, pflanzen, rohstoffe markieren
+		
+		grafik.setFill(this.bodentyp.getColor());
 		grafik.fillRect(0, 0, 400, 400);
 				
 		return new Canvas(); 

@@ -12,19 +12,18 @@ import java.util.ArrayList;
  *
  */
 public class Serializer {
-	public static void main(String[] args) {
+	public Serializer () {
 		
-		RessourcenObjekte ressourcen = new RessourcenObjekte();
-		
-		serializeArray("src/speicherverwaltung/bodenschaetze", ressourcen.getBodenschaetze());
-		serializeArray("src/speicherverwaltung/bodentypen", ressourcen.getBodentypen());
+//		RessourcenObjekte ressourcen = new RessourcenObjekte();
+//		
+//		serializeArray("src/speicherverwaltung/bodenschaetze", ressourcen.getBodenschaetze());
+//		serializeArray("src/speicherverwaltung/bodentypen", ressourcen.getBodentypen());
 
 	}
 
-	private static <T> void serializeArray(String path, ArrayList<T> objects) {
+	public <T> void serializeArray(String path, ArrayList<T> objects) {
 		FileOutputStream fstream;
 		ObjectOutputStream ostream;
-		
 		try {
 			fstream = new FileOutputStream(path);
 			ostream = new ObjectOutputStream(fstream);

@@ -1,8 +1,8 @@
 package view.weltraum;
 
 import controller.Bewegungsmanager;
-import controller.GameManager;
 import himmelskoerper.InOrbit;
+import himmelskoerper.Planet;
 import himmelskoerper.Stern;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.event.EventHandler;
@@ -21,35 +21,41 @@ public class Sonnensystem extends WeltraumSystem
 	/**
 	 * Kamera zur navigation 
 	 */
-	private KameraSonnensystem kamera = new KameraSonnensystem();
+	private KameraSonnensystem kamera = new KameraSonnensystem(this.getScene());
 	
+	
+	/**
+	 * erstellt ein Object vom Sonnensystem
+	 * @param stern 
+	 */
 	public Sonnensystem(Stern stern)
 	{
 		zeichneSonnensystem(stern);
 		this.getSubScene().setCamera(kamera.getKamera());
+		kamera.addNode(this.getSubSceneRoot());
 	}
 	
 	
 	/**
 	 * zeichnet ein Sonnensystem
 	 * 
-	 * @param stern
+	 * @param stern desssen Planeten gezeichnet werden sollen
 	 */
 	public void zeichneSonnensystem(Stern stern)
 	{
-		//dies entspricht 100% 
-		double orbitRadius = stern.getOrbitRadius();
-		//Der OrbitRadius wird auf 4000 beschrenkt. 
+		//dies entspricht 100% des maximalen OrbitRadius des Sternes
+		double orbitRadius = 0;
+		//Der OrbitRadius wird auf 4000 beschrenkt. Dies sind die 100% des Orbitradius. die Groﬂe des originals wird angepasst 
 		double maxOrbitRadius = 4000; 
 		//Der Groeﬂte Plante ist 100 und der das minimum liegt bei 10 //TODO das verhaehltnis muss noch angepasst werden
 		double groeﬂterPlanet = 0;
 		//Die maximale Groeﬂe eines Planeten
 		double maxGroeﬂe = 50; 
+		
 		//zeichnet die Sonne
-		
-		
 		this.zeichneSonne(stern, maxGroeﬂe);
-		//sucht den groeﬂten Planet und speichert die Groﬂe in die Variable. Dies entspricht dann 100% 
+		
+		//sucht den groeﬂten Planet und speichert die Groﬂe in die Variable groeﬂter Planet. Dies entspricht dann 100% 
 		for (int i = 0; stern.getChildren().size() > i ; i++)
 		{
 			if (stern.getChild(i).getRadius() > groeﬂterPlanet)
@@ -57,32 +63,47 @@ public class Sonnensystem extends WeltraumSystem
 				groeﬂterPlanet = stern.getChild(i).getRadius();
 			}
 		}
+		//sucht den entferntesten Planeten und speichert diese in die Variable orbitRadius. Dies entspricht dann 100% 
+				for (int i = 0; stern.getChildren().size() > i ; i++)
+				{
+					Point3D entfernung = new Point3D (  stern.getChild(i).getPositionPolar().get(0) ,stern.getChild(i).getPositionPolar().get(1) ,stern.getChild(i).getPositionPolar().get(2)  );
+					
+					if (entfernung.distance(0 ,0 ,0) > orbitRadius)
+					{
+						orbitRadius = entfernung.distance(0 ,0 ,0);
+					}
+				}
 
+		//nun wird das System gezeichnet
 		for (int j = 0; stern.getChildren().size() > j; j++)
 		{		
 			//hier wird die Groeﬂe der Kugel berechnet, die den Planeten darstellen soll. 
-			double radius = (groeﬂterPlanet/stern.getChild(j).getRadius()) * maxGroeﬂe;
-			
+			double radius = (stern.getChild(j).getRadius())/groeﬂterPlanet* maxGroeﬂe;
+			//hier wird die Position des Planeten aktualiesiert
 			stern.getChild(j).refresh();
-			double t = stern.getChild(j).getPositionPolar() //TODO
-			double orbitRadiusPlanet = (orbitRadius/stern.getChild(j).refresh();)
-			
-   	 		//erstelle einen Planeten
+			//Die aktulle position wird in dieser Variable gepeichert (Polarefrom)
+			Point3D point = new Point3D (  stern.getChild(j).getPositionPolar().get(0) ,stern.getChild(j).getPositionPolar().get(1) ,stern.getChild(j).getPositionPolar().get(2)  );
+			//hier wird die entfernung zur Sonne angepasst
+			double orbitRadiusPlanet = (point.distance(0 , 0 , 0) / orbitRadius)*maxOrbitRadius;
+			System.out.println("Der Orbitradius: ergibt sich aus der Dechnug: point.distance(0 , 0 , 0): "+point.distance(0 , 0 , 0)+ " durch orbitRadius: "+orbitRadius+"* maxOrbitRadius: "+maxOrbitRadius+" = "+orbitRadiusPlanet);
+   	 		//erstelle nun den Planeten
    	 		Sphere himmelskoerper = new Sphere();
+   	 		//setzt den radius
    	 		himmelskoerper.setRadius(radius);
-   	       
-   	 		this.getSubSceneRoot().getChildren().add(himmelskoerper);	
-   	        SimpleDoubleProperty[] posi = Bewegungsmanager.getInstance().addPlanetToPositionsRechnerWithAdapta(orbitRadius, orbitRadiusPlanet);  	        
-   	        himmelskoerper.translateXProperty().bind(stern.getChild(j).getPositionProperty()[0]);
-   	        himmelskoerper.translateYProperty().bind(stern.getChild(j).getPositionProperty()[1]);
-   	        himmelskoerper.translateZProperty().bind(stern.getChild(j).getPositionProperty()[2]);	
-
-   	        //TODO
-//   	    this.zeichneUmlaufbahn( , stern.getChild(j));
+   	 	
+   	 		//bindet die Position ein einen Wert	
+   	        SimpleDoubleProperty[] posi = Bewegungsmanager.getInstance().addPlanetToPositionsRechnerWithAdapta(orbitRadiusPlanet , (Planet) stern.getChild(j));  	        
+   	        himmelskoerper.translateXProperty().bind(posi[0]);
+   	        himmelskoerper.translateYProperty().bind(posi[1]);
+   	        himmelskoerper.translateZProperty().bind(posi[2]);	
+   	        //setzt den Planeten ins Universum
+   	        this.getSubSceneRoot().getChildren().add(himmelskoerper);
+   	        //sagt das die positions staendig aktualliesiert werden soll
+   	        Bewegungsmanager.getInstance().addInOrbitObjectToPositionsRechner(stern.getChild(j));
    	        
    	        System.out.println( "Postion des Kˆrpers:   X: "+himmelskoerper.getTranslateX()+"   Y: "+himmelskoerper.getTranslateY()+"   Z: "+himmelskoerper.getTranslateZ()+"    Radius: "+himmelskoerper.getRadius());
    	        
-   	        //setzt das aussehen der Kugel
+   	        //gibt den Planeten sein Aussehen
 	        himmelskoerper.setMaterial(stern.getChild(j).getAussehn());
 	        
 	        //macht den Himelskoerper anklickbar
@@ -115,14 +136,16 @@ public class Sonnensystem extends WeltraumSystem
 	{
    	 	//erstelle einen Sonne
    	 	Sphere sonne = new Sphere();
+   	 	//uebergibt den Radius. dies hat die Doppelte groﬂe des groeﬂten Planeten
    	 	sonne.setRadius(maxGroeﬂe*2);
-   	       
-   	 	this.getSubSceneRoot().getChildren().add(sonne);	  
+   	    //fuegt die Sonne dem Universum hinzu 
+   	 	this.getSubSceneRoot().getChildren().add(sonne);	
+   	 	//positioniert die Sonne in der Mitte 
    	    sonne.setTranslateX(0);
    	    sonne.setTranslateY(0);
    	    sonne.setTranslateZ(0); 	     
    	        
-   	    //setzt das aussehen der Kugel
+   	    //gibt der Sonne eine Aussehen
    	    sonne.setMaterial(stern.getAussehn());
 	        
 	    //macht den Himelskoerper anklickbar
@@ -152,6 +175,6 @@ public class Sonnensystem extends WeltraumSystem
 	 */
 	private void zeichneUmlaufbahn(double entfernungZurSonne, InOrbit planet)
 	{
-		//TODO 
+		//TODO hier soll die Umlaufbahn einzelner Planeten gezechnet werden
 	}
 }

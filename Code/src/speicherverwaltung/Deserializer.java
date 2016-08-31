@@ -5,8 +5,6 @@ import java.io.FileInputStream;
 import java.io.ObjectInputStream;
 import java.util.ArrayList;
 
-import map.BodenMaterial;
-
 /**
  * Klasse zum lesen gespeicherter Dateien aus einer Datei
  * 
@@ -14,12 +12,12 @@ import map.BodenMaterial;
  *
  */
 public class Deserializer {
-	private static ArrayList<BodenMaterial> bodenschaetze;
-	private static ArrayList<BodenMaterial> bodentypen;
+//	private static ArrayList<BodenMaterial> bodenschaetze;
+//	private static ArrayList<BodenMaterial> bodentypen;
 	
-	private static void init() {
-		bodenschaetze = deserializeArrayList("src/speicherverwaltung/bodenschaetze");
-		bodentypen = deserializeArrayList("src/speicherverwaltung/bodentypen");
+	public Deserializer() {
+//		bodenschaetze = deserializeArrayList("src/speicherverwaltung/bodenschaetze");
+//		bodentypen = deserializeArrayList("src/speicherverwaltung/bodentypen");
 	}
 	
 	/**
@@ -30,7 +28,7 @@ public class Deserializer {
 	 * @return Liste der BodenMaterialen die inder Datei gefunden wurden 
 	 */
 	@SuppressWarnings("unchecked")
-	private static <T> ArrayList<T> deserializeArrayList(String path) {
+	public <T> ArrayList<T> deserializeArrayList(String path) {
 		FileInputStream fstream;
 		ObjectInputStream ostream;
 		ArrayList<T> list = new ArrayList<T>();
@@ -60,20 +58,20 @@ public class Deserializer {
 	/**
 	 * @return the bodenschaetze
 	 */
-	public static ArrayList<BodenMaterial> getBodenschaetze() {
-		if (bodenschaetze == null) {	//initialisieren, falls noch nicht geschehen
-			init();
-		}
-		return bodenschaetze;
-	}
-
-	/**
-	 * @return the bodentypen
-	 */
-	public static ArrayList<BodenMaterial> getBodentypen() {
-		if (bodentypen == null) {		//initialisieren, falls noch nicht geschehen
-			init();
-		}
-		return bodentypen;
-	}
+//	public ArrayList<BodenMaterial> getBodenschaetze() {
+//		if (bodenschaetze == null) {	//initialisieren, falls noch nicht geschehen
+//			init();
+//		}
+//		return bodenschaetze;
+//	}
+//
+//	/**
+//	 * @return the bodentypen
+//	 */
+//	public ArrayList<BodenMaterial> getBodentypen() {
+//		if (bodentypen == null) {		//initialisieren, falls noch nicht geschehen
+//			init();
+//		}
+//		return bodentypen;
+//	}
 }

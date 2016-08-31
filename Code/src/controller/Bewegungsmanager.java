@@ -1,6 +1,7 @@
 package controller;
 
 import java.util.ArrayList;
+import java.util.Vector;
 
 import himmelskoerper.InOrbit;
 import himmelskoerper.Planet;
@@ -83,9 +84,10 @@ public class Bewegungsmanager
 	 * @param radius
 	 * @return
 	 */
-	public SimpleDoubleProperty[] addPlanetToPositionsRechnerWithAdapta(double maxRadius , double radius)
+	public SimpleDoubleProperty[] addPlanetToPositionsRechnerWithAdapta(double radius, Planet planet)
 	{
-		adaptaSonnensystemRechner.add(new Bewegungsadapta(radius , maxRadius));
+		adaptaSonnensystemRechner.add(new Bewegungsadapta(radius , planet));
+		adaptaSonnensystemRechner.get(adaptaSonnensystemRechner.size()-1).refresh();
 		return new SimpleDoubleProperty[] {adaptaSonnensystemRechner.get(adaptaSonnensystemRechner.size()-1).posiX , adaptaSonnensystemRechner.get(adaptaSonnensystemRechner.size()-1).posiY , adaptaSonnensystemRechner.get(adaptaSonnensystemRechner.size()-1).posiZ}; 
 	}
 	
@@ -102,12 +104,8 @@ public class Bewegungsmanager
 			{
 				while(true)
 				{	
-					try {
-						Thread.sleep(50);
-					} catch (InterruptedException e)
-					{
-						e.printStackTrace();
-					}
+					try {Thread.sleep(100);} catch (InterruptedException e){e.printStackTrace();}
+					
 					for (int i = 0; positionsRechnerListe.size() > i ; i++)
 					{
 						positionsRechnerListe.get(i).refresh();
@@ -139,14 +137,14 @@ public class Bewegungsmanager
 		
 		private SimpleDoubleProperty posiZ = new SimpleDoubleProperty();
 		
-		private double radius; 
+		private double radius;
 		
-		private double maxRadius;
+		private Planet planet; 
 		
-		Bewegungsadapta(double radius, double maxRadius)
+		Bewegungsadapta(double radius, Planet planet)
 		{
+			this.planet = planet;
 			this.radius = radius;
-			this.maxRadius = maxRadius; 
 		}
 		
 		public synchronized DoubleProperty getPosiX() 
@@ -164,10 +162,21 @@ public class Bewegungsmanager
 			return posiZ;
 		}
 		
-		public void refresh()
+		public synchronized void refresh()
 		{
+			double x = 0; 
+			double y = 0; 
+			double z = 0; 
 			
-			posiX.set(newValue);
+			Vector<Double> positionsVector = this.planet.getPositionPolar();
+			
+			x = radius * Math.sin(positionsVector.get(2)) * Math.cos(positionsVector.get(1));
+			y = radius * Math.sin(positionsVector.get(2)) * Math.sin(positionsVector.get(1));
+			z = radius * Math.cos(positionsVector.get(2));
+			
+			posiX.set(x);
+			posiY.set(y);
+			posiZ.set(z);
 		}
 	}
 
