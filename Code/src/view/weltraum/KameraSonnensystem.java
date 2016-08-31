@@ -5,6 +5,7 @@ import java.awt.Toolkit;
 import java.util.ArrayList;
 
 import javafx.animation.FadeTransition;
+import javafx.animation.PathTransition;
 import javafx.event.EventHandler;
 import javafx.geometry.Point3D;
 import javafx.scene.Node;
@@ -14,6 +15,8 @@ import javafx.scene.SubScene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.shape.MoveTo;
+import javafx.scene.shape.Path;
 import javafx.scene.transform.Rotate;
 import javafx.util.Duration;
 
@@ -202,11 +205,13 @@ public class KameraSonnensystem extends Kamera2
 		rotationY.setPivotY(drehpunkt.getY());
 		rotationY.setPivotZ(drehpunkt.getZ());
 		
-		ArrayList<FadeTransition> newPosi = new ArrayList<FadeTransition>();
+		ArrayList<PathTransition> newPosi = new ArrayList<PathTransition>();
 		
 		for (int i = 0; nodeList.size() > i ; i++)
 		{
-			newPosi.add(new FadeTransition(Duration.millis(1000), nodeList.get(i)));
+			Path path = new Path();
+			path.getElements().add(new MoveTo(drehpunkt.getX()-Toolkit.getDefaultToolkit().getScreenSize().getWidth()/2 ,drehpunkt.getY()-Toolkit.getDefaultToolkit().getScreenSize().getHeight()/2));
+			newPosi.add(new PathTransition(Duration.millis(2000), path , kamera));		
 		}	
 		
 		for (int i = 0; newPosi.size() > i ; i++)
