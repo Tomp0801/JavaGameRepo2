@@ -20,6 +20,8 @@ import javafx.scene.paint.PhongMaterial;
  */
 public abstract class Himmelskoerper 
 {
+	private String name = "default";
+	
 	/**
 	 * Pseudo-Random Number Generator für dieses Objekt
 	 */
@@ -327,5 +329,15 @@ public abstract class Himmelskoerper
 		System.out.println("| Temperatur: "+ this.oberflaechenTemperatur);
 		System.out.println("| Tick: " + getLastRefresh()/1000);
 		System.out.println(" _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _");
+	}
+	
+	
+	
+	public synchronized String getName() {
+		return name;
+	}
+
+	public synchronized void setName(String name) {
+		this.name = name;
 	}
 }

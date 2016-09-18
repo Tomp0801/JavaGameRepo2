@@ -3,15 +3,12 @@ package view.weltraum;
 import java.awt.MouseInfo;
 import java.awt.Toolkit;
 import java.util.ArrayList;
-
-import javafx.animation.FadeTransition;
 import javafx.animation.PathTransition;
 import javafx.event.EventHandler;
 import javafx.geometry.Point3D;
 import javafx.scene.Node;
 import javafx.scene.PerspectiveCamera;
 import javafx.scene.Scene;
-import javafx.scene.SubScene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -34,7 +31,6 @@ public class KameraSonnensystem extends Kamera2
 	 * eine Liste mit den Nodes die sich bei benutzung der linken Maustaste rotiert
 	 */
 	private ArrayList<Node> nodeList = new ArrayList<Node>();
-	
 
 	/**
 	 * zur rotation der Node um die X Achse
@@ -51,34 +47,24 @@ public class KameraSonnensystem extends Kamera2
 	 */
 	private PerspectiveCamera kamera = new PerspectiveCamera();
 		
+	/**
+	 * die Scene die verwendte wird. Hier werden die Events zur Rotation der Sicht abgefangen
+	 */
 	private Scene scene;
+	
 	/**
 	 * ertellt ein Objekt von NodeRotationkamera
 	 */
 	public KameraSonnensystem(Scene scene)
 	{
 		this.scene = scene;
-		initEventHandler();
-		
 		kamera.setTranslateZ(-100);
 		kamera.setTranslateX(-Toolkit.getDefaultToolkit().getScreenSize().getWidth()/2);
 		kamera.setTranslateY(-Toolkit.getDefaultToolkit().getScreenSize().getHeight()/2);
-		System.out.println("position Kamera X : "+kamera.getTranslateX());
-		System.out.println("position Kamera Y : "+kamera.getTranslateY());
-		
 		kamera.setFarClip(10000000);
-		//maximale naehe
 		kamera.setNearClip(0.1);
-		kamera.setFieldOfView(100);
-	}
-	
-	/**
-	 * erstellt ein Objekt von NodeRotationkamera 
-	 * @param die Node rotiert sich und es werden MausEvents abgefangen mit der eine Rotation durchgefuehrt wird.
-	 */
-	public KameraSonnensystem(Node node)
-	{
-		this.addNode(node);
+		kamera.setFieldOfView(35);
+		initEventHandler();
 	}
 	
 	
@@ -120,8 +106,6 @@ public class KameraSonnensystem extends Kamera2
 	 */
 	public void initEventHandler()
 	{   	
-
-		
 		this.scene.setOnKeyPressed(new EventHandler<KeyEvent>()
 		{
 
@@ -184,7 +168,6 @@ public class KameraSonnensystem extends Kamera2
 	{	
 		for (int i = 0 ; nodeList.size() > i ; i++)
 		{
-			System.out.println("Rotation  "+(rotationX.getAngle() - mouseDeltaX*2));
 			this.rotationX.setAngle(rotationX.getAngle() - mouseDeltaX*2);
 			this.rotationY.setAngle(rotationY.getAngle() + mouseDeltaY*2);
 		}

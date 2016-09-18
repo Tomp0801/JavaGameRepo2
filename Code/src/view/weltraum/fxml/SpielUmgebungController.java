@@ -48,6 +48,8 @@ public class SpielUmgebungController implements Initializable
 	@FXML 
 	private VBox spielMenu;
 	
+	@FXML
+	private VBox informationsBox;
 	
 	//---------------------------Oberre-MenuLeiste--------------------------------------------------//
 	/**
@@ -210,7 +212,7 @@ public class SpielUmgebungController implements Initializable
 		subScene.widthProperty().bind(getStackPaneZentrum().widthProperty());
 		subScene.heightProperty().bind(getStackPaneZentrum().heightProperty());
 		centerPane.getChildren().clear();
-		centerPane.getChildren().add(subScene);
+		centerPane.getChildren().addAll(subScene);
 	}
 	
 	
@@ -291,5 +293,24 @@ public class SpielUmgebungController implements Initializable
 				
 			}	
 		};
+	}
+	
+	
+	/**
+	 * fuegt informationen einer VBox hinzu, die der Spieler sehen soll
+	 * @param node
+	 */
+	public void setzeInformationen(Node node)
+	{
+		informationsBox.getChildren().add(node);
+	}
+	
+	
+	/**
+	 * loescht die Informationen aus derVBox
+	 */
+	public void clearInformationen()
+	{
+		informationsBox.getChildren().clear();
 	}
 }

@@ -54,14 +54,15 @@ public abstract class WeltraumSystem
 	private void initScene()
 	{
 		//-------------erstellt-die-SubScene-fuer-die-Kammera--------------------------------------------------//
-		subScene = new SubScene(subSceneRoot , 500 , 500, true, SceneAntialiasing.BALANCED);
-		subScene.setFill(Color.BLACK); 
-		subScene.setDepthTest(DepthTest.ENABLE);
+		this.subScene = new SubScene(subSceneRoot , 1000 , 1000, true, SceneAntialiasing.BALANCED);
+		this.subScene.setFill(Color.BLACK); 
+		this.subScene.setDepthTest(DepthTest.ENABLE);
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/weltraum/fxml/SpielUmgebung.fxml"));
 		try{loader.load();}catch (IOException e){e.printStackTrace();}	
-		SpielUmgebungController controller = loader.getController();
-		scene = new Scene(loader.getRoot() , 800 , 800 , true, SceneAntialiasing.BALANCED);
-		controller.wechsleZentrum(subScene);
+		this.controller = loader.getController();
+
+		this.controller.wechsleZentrum(subScene);
+		this.scene = new Scene(loader.getRoot() , 1000 , 1400 , true, SceneAntialiasing.BALANCED);	
 	}
 	
 	

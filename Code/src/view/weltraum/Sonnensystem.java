@@ -1,12 +1,16 @@
 package view.weltraum;
 
 import controller.Bewegungsmanager;
+import himmelskoerper.Himmelskoerper;
 import himmelskoerper.InOrbit;
 import himmelskoerper.Planet;
 import himmelskoerper.Stern;
 import javafx.beans.property.SimpleDoubleProperty;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Point3D;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Sphere;
 
@@ -77,53 +81,117 @@ public class Sonnensystem extends WeltraumSystem
 		//nun wird das System gezeichnet
 		for (int j = 0; stern.getChildren().size() > j; j++)
 		{		
-			//hier wird die Groeﬂe der Kugel berechnet, die den Planeten darstellen soll. 
-			double radius = (stern.getChild(j).getRadius())/groeﬂterPlanet* maxGroeﬂe;
-			//hier wird die Position des Planeten aktualiesiert
-			stern.getChild(j).refresh();
-			//Die aktulle position wird in dieser Variable gepeichert (Polarefrom)
-			Point3D point = new Point3D (  stern.getChild(j).getPositionPolar().get(0) ,stern.getChild(j).getPositionPolar().get(1) ,stern.getChild(j).getPositionPolar().get(2)  );
-			//hier wird die entfernung zur Sonne angepasst
-			double orbitRadiusPlanet = (point.distance(0 , 0 , 0) / orbitRadius)*maxOrbitRadius;
-			System.out.println("Der Orbitradius: ergibt sich aus der Dechnug: point.distance(0 , 0 , 0): "+point.distance(0 , 0 , 0)+ " durch orbitRadius: "+orbitRadius+"* maxOrbitRadius: "+maxOrbitRadius+" = "+orbitRadiusPlanet);
-   	 		//erstelle nun den Planeten
-   	 		Sphere himmelskoerper = new Sphere();
-   	 		//setzt den radius
-   	 		himmelskoerper.setRadius(radius);
-   	 	
-   	 		//bindet die Position ein einen Wert	
-   	        SimpleDoubleProperty[] posi = Bewegungsmanager.getInstance().addPlanetToPositionsRechnerWithAdapta(orbitRadiusPlanet , (Planet) stern.getChild(j));  	        
-   	        himmelskoerper.translateXProperty().bind(posi[0]);
-   	        himmelskoerper.translateYProperty().bind(posi[1]);
-   	        himmelskoerper.translateZProperty().bind(posi[2]);	
-   	        //setzt den Planeten ins Universum
-   	        this.getSubSceneRoot().getChildren().add(himmelskoerper);
-   	        //sagt das die positions staendig aktualliesiert werden soll
-   	        Bewegungsmanager.getInstance().addInOrbitObjectToPositionsRechner(stern.getChild(j));
-   	        
-   	        System.out.println( "Postion des Kˆrpers:   X: "+himmelskoerper.getTranslateX()+"   Y: "+himmelskoerper.getTranslateY()+"   Z: "+himmelskoerper.getTranslateZ()+"    Radius: "+himmelskoerper.getRadius());
-   	        
-   	        //gibt den Planeten sein Aussehen
-	        himmelskoerper.setMaterial(stern.getChild(j).getAussehn());
-	        
-	        //macht den Himelskoerper anklickbar
-	        himmelskoerper.setOnMouseClicked(new EventHandler<MouseEvent>()
-	        {
+			if (stern.getChild(j) instanceof Himmelskoerper)
+			{
+				//hier wird die Groeﬂe der Kugel berechnet, die den Planeten darstellen soll. 
+				double radius = (stern.getChild(j).getRadius())/groeﬂterPlanet* maxGroeﬂe;
+				//hier wird die Position des Planeten aktualiesiert
+				stern.getChild(j).refresh();
+				//Die aktulle position wird in dieser Variable gepeichert (Polarefrom)
+				Point3D point = new Point3D (  stern.getChild(j).getPositionPolar().get(0) ,stern.getChild(j).getPositionPolar().get(1) ,stern.getChild(j).getPositionPolar().get(2)  );
+				//hier wird die entfernung zur Sonne angepasst
+				double orbitRadiusPlanet = (point.distance(0 , 0 , 0) / orbitRadius)*maxOrbitRadius;
+	
+	   	 		//erstelle nun den Planeten
+	   	 		Sphere himmelskoerper = new Sphere();
+	   	 		//setzt den radius
+	   	 		himmelskoerper.setRadius(radius);
+	   	 	
+	   	 		//bindet die Position ein einen Wert	
+	   	        SimpleDoubleProperty[] posi = Bewegungsmanager.getInstance().addPlanetToPositionsRechnerWithAdapta(orbitRadiusPlanet , (Planet) stern.getChild(j));  	        
+	   	        himmelskoerper.translateXProperty().bind(posi[0]);
+	   	        himmelskoerper.translateYProperty().bind(posi[1]);
+	   	        himmelskoerper.translateZProperty().bind(posi[2]);	
+	   	        //setzt den Planeten ins Universum
+	   	        this.getSubSceneRoot().getChildren().add(himmelskoerper);
+	   	        //sagt das die positions staendig aktualliesiert werden soll
+	   	        Bewegungsmanager.getInstance().addInOrbitObjectToPositionsRechner(stern.getChild(j));
+	   	         
+	   	        //gibt den Planeten sein Aussehen
+		        himmelskoerper.setMaterial(stern.getChild(j).getAussehn());
+		        
+		        Planet planetObjekt = (Planet) stern.getChild(j);
+		        
+		        //macht den Himelskoerper anklickbar
+		        himmelskoerper.setOnMouseClicked(new EventHandler<MouseEvent>()
+		        {
+		        	Planet planet = planetObjekt;
+		        	
+		        	@Override
+					public void handle(MouseEvent event) 
+					{		
+						if (event.getClickCount() == 2)
+						{
+							kamera.setDrehpunkt(new Point3D(himmelskoerper.getTranslateX() , himmelskoerper.getTranslateY() , himmelskoerper.getTranslateZ()));	
+							ladeInformationenPlanet(planet);
+						}
+						else
+						{
+							ladeInformationenPlanet(planet);
+						}
+					}
+		        });  
+		        
+	//	        stern.getChild(j).getBewegungsVektor();
+	   	 	}
+		}
+	}
+	
+	
+	/**
+	 * laed informationen des Planeten
+	 * @param planet
+	 */
+	private void ladeInformationenPlanet(Planet planet)
+	{
+		this.getSpielUmgebungController().clearInformationen();
+		
+		Label name = new Label("Name: "+planet.getName());
+		Label groeﬂe = new Label("Radius: "+planet.getRadius());
+		Label position = new Label("Position X: "+(int) planet.getPositionAbsolute().getX()+" Y: "+(int) planet.getPositionAbsolute().getY()+" Z: "+(int) planet.getPositionAbsolute().getZ());
+		Label temperratur = new Label("Oberfl‰chentemperratur "+planet.getOberflaechenTemperatur());
+		Label masse = new Label("Masse: "+(int) planet.getMasse());
+		Label  monde = new Label("Monde: "+planet.getChildren().size());
+		
+		this.getSpielUmgebungController().setzeInformationen(name);
+		this.getSpielUmgebungController().setzeInformationen(groeﬂe);
+		this.getSpielUmgebungController().setzeInformationen(position);
+		this.getSpielUmgebungController().setzeInformationen(temperratur);
+		this.getSpielUmgebungController().setzeInformationen(masse);
+		this.getSpielUmgebungController().setzeInformationen(monde);
+		
+		for (int i = 0 ; planet.getChildren().size() > i ;i++)
+		{
+			Button button = new Button(planet.getChild(i).getName());
+			
+			button.setOnAction(new EventHandler<ActionEvent>() 
+			{
+
 				@Override
-				public void handle(MouseEvent event) 
-				{					
-					if (event.getClickCount() == 2)
-					{
-						kamera.setDrehpunkt(new Point3D(himmelskoerper.getTranslateX() , himmelskoerper.getTranslateY() , himmelskoerper.getTranslateZ()));	
-					}
-					else
-					{
-						
-						//Lade Informationen
-					}
+				public void handle(ActionEvent event) 
+				{
+					//TODO 		lade Informationen des Mondes
 				}
-	        });     
-   	 	}
+			});
+			
+			this.getSpielUmgebungController().setzeInformationen(button);		
+		}
+		
+		
+		Button oeffneKarte = new Button("zum Planeten");
+		
+		oeffneKarte.setOnAction(new EventHandler<ActionEvent>()
+		{
+
+			@Override
+			public void handle(ActionEvent event) 
+			{
+				// TODO lade die Karte des Planeten	
+			}	
+		});
+		
+		
+		this.getSpielUmgebungController().setzeInformationen(oeffneKarte);		
 	}
 	
 	
@@ -153,7 +221,7 @@ public class Sonnensystem extends WeltraumSystem
 	    {
 			@Override
 			public void handle(MouseEvent event) 
-			{					
+			{		
 				if (event.getClickCount() == 2)
 				{
 					kamera.setDrehpunkt(new Point3D(sonne.getTranslateX() , sonne.getTranslateY() , sonne.getTranslateZ()));

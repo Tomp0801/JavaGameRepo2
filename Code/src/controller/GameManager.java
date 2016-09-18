@@ -75,9 +75,10 @@ public final class GameManager
 //			StageController.getInstance().wechselScene(SceneEnum.WELTRAUMSICHT);
 			GameTime.getInstance().setZeitFaktor(Constants.ZEITFAKTOR);
 			
+			
+			//TODO DEMO darstellung eines Sonnensystems
 			Sonnensystem system = new Sonnensystem((Stern) schwarzesLoch.getChild(0));
 			StageController.getInstance().setScene(system.getScene());
-			
 			
 			gameStart = true;
 		}

@@ -120,10 +120,24 @@ public class StageController extends Application
 	 */
 	public void setScene(Scene scene)
 	{
-		stage.setScene(scene);
-		stage.setFullScreen(true);
-		stage.setX(0);
-		stage.setY(0);
+		try 
+		{
+			Thread.sleep(5);
+			stage.setScene(scene);
+			Thread.sleep(5);
+			stage.setFullScreen(true);
+			Thread.sleep(5);
+			stage.setX(0);
+			stage.setY(0);
+			Thread.sleep(5);
+			stage.show(); 	
+			
+			
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 	
 	
