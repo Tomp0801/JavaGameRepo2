@@ -3,7 +3,8 @@ package map.objekte;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import map.Material;
+import map.Feld;
+import ressource.Material;
 
 /**
  * Interface für Objekte, die auf einem Feld platzierbar sein sollen
@@ -31,4 +32,15 @@ public interface Platzierbar {
 	 * @return
 	 */
 	public ArrayList<Material> getInputs();
+	
+	/**
+	 * @return das Feld, auf dem Das Objekt steht
+	 */
+	public Feld getFeld();
+	
+	/**
+	 * 
+	 * @return den Namen des platzierbaren Objekts
+	 */
+	public String getName();
 }

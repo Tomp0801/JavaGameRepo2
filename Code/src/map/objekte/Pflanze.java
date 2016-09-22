@@ -3,15 +3,23 @@ package map.objekte;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import map.Material;
+import ressource.Material;
+import speicherverwaltung.IOHandler;
 
 /**
- * eine Pflanze, die auf einem Feld stehen kann und Material herstellen kann
+ * eine Pflanze (Busch, Baum, Getreide), die auf einem Feld stehen kann und Material herstellen kann
  * 
  * @author Thomas
  *
  */
-public class Pflanze implements Platzierbar {
+public class Pflanze extends Erzeuger implements Platzierbar {
+	/**
+	 * Konstruktor
+	 */
+	public Pflanze()
+	{
+		
+	}
 
 	@Override
 	public HashMap<Material, Double> run() {
@@ -27,8 +35,8 @@ public class Pflanze implements Platzierbar {
 
 	@Override
 	public ArrayList<Material> getInputs() {
-		// TODO Auto-generated method stub
-		return null;
+		ArrayList<Material> list = new ArrayList<>();
+		list.add((Material)IOHandler.getInstance().readArrayList("verschiedene").get(0));
+		return list;
 	}
-	
 }

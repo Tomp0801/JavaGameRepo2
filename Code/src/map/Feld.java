@@ -1,10 +1,14 @@
 package map;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import map.objekte.Infrastruktur;
+import map.objekte.InfrastrukturEnum;
 import map.objekte.Platzierbar;
+import ressource.BodenMaterial;
 
 /**
  * Ein Feld, das Objekte enthalten kann, eine Bodenart und abbaubare Materialien in der Erde hat
@@ -33,7 +37,9 @@ public class Feld {
 	 * Kann auch durch natürliche Objekte eingenommen werden
 	 */
 	private Platzierbar bauplatz;
-
+	
+	private ArrayList<Infrastruktur> infrastrukturen;
+	
 	/**
 	 * Zufalls Konstruktor
 	 * 
@@ -43,6 +49,8 @@ public class Feld {
 	 */
 	Feld(Bereich bereich) {
 		this.parentBereich = bereich;
+		
+		infrastrukturen = new ArrayList<>();
 		
 		bodenschatzVorkommen = new HashMap<BodenMaterial, Float>();
 		
@@ -84,6 +92,12 @@ public class Feld {
 		bodenschatzVorkommen.put(rohstoff, menge);
 	}
 
+	/**
+	 * Fragt abm, ob eine bestimmte Menge von einem Rohstoff gemint werden kann oder nicht
+	 * @param rohstoff der aus dem Boden geholt werden soll
+	 * @param requestMenge Menge des Rohstoffs
+	 * @return die Menge, die der Boden hergibt. max. die requestMenge
+	 */
 	public float mineRohstoff(BodenMaterial rohstoff, float requestMenge)
 	{
 		float mineMenge = 0;
@@ -156,6 +170,12 @@ public class Feld {
 	public boolean isFree()
 	{
 		return (bauplatz == null);
+	}
+	
+	//TODO
+	public Infrastruktur getInfrastruktur(InfrastrukturEnum art)
+	{
+		return null;
 	}
 	
 	/**

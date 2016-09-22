@@ -3,34 +3,20 @@ package map.objekte;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import global.GameTime;
-import map.BodenMaterial;
-import map.Feld;
-import map.Material;
+import ressource.BodenMaterial;
+import ressource.Material;
 
 /**
  * Ein Platzierbares objekt, das von einem feld bodenSchätze abbauen kann
  * 
- * TODO getter und setter
- * 
  * @author Thomas
  *
  */
-public class Mine extends Erzeuger implements Platzierbar {
+public class Mine extends Erzeuger {
 	/**
 	 * der Bodenschatz, den diese Mine abbauen kann
 	 */
 	private BodenMaterial art;
-	
-	/**
-	 * das Feld, auf dem diese Mine platziert ist
-	 */
-	private Feld feld;
-	
-	/**
-	 * der letzte Zeitpunkt (spielzeit), zu dem das objekt aktualisiert wurde mit run()
-	 */
-	private long lastRefresh;
 	
 	/**
 	 * gibt an, wie schnell/effektiv Rohstoffe abgebaut werden.
@@ -56,7 +42,9 @@ public class Mine extends Erzeuger implements Platzierbar {
 			this.effektivitaet = 0;
 		}
 		
-		lastRefresh = GameTime.getInstance().timeMillis();
+		this.setName(material.getName() + "mine");
+		
+		this.setLastRefresh();
 	}
 	
 	/**
@@ -65,22 +53,16 @@ public class Mine extends Erzeuger implements Platzierbar {
 	 */
 	public boolean isWorking()
 	{
-		if (feld.getBodenschatzVorkommen().containsKey(this.art))
-		{
-			return true;
-		}
-		else
-		{
-			return false;
-		}
+		//TODO überdenken, wie Ressourcen als Key benutzt werden können
+		return false;
 	}
 	
 	@Override
 	public HashMap<Material, Double> run() {
 		long passedTime;
-		long prevRefresh = lastRefresh;
-		lastRefresh = GameTime.getInstance().timeMillis();
-		passedTime = lastRefresh - prevRefresh;
+		long prevRefresh = getLastRefresh();
+		setLastRefresh();
+		passedTime = getLastRefresh() - prevRefresh;
 		
 		//berechnen, wie viel abgebaut werden könnte
 		//TODO material pro sekunde, wie viel wird abgebaut?
@@ -88,7 +70,7 @@ public class Mine extends Erzeuger implements Platzierbar {
 		float materialProStunde = 1;
 		float menge = effektivitaet * (float)passedTime * materialProStunde;
 		
-		menge = feld.mineRohstoff(this.art, menge);
+		menge = getFeld().mineRohstoff(this.art, menge);
 		
 		HashMap<Material, Double> abbau = new HashMap<Material, Double>();
 		abbau.put(this.art, new Double(menge));
@@ -104,8 +86,23 @@ public class Mine extends Erzeuger implements Platzierbar {
 
 	@Override
 	public ArrayList<Material> getInputs() {
-		// TODO wirklich keine Materialien?
+		// TODO beschleunigung durch Energie
 		return null;
+	}
+
+	/**
+	 * @return der Bodenschatz, den diese Mine aus dem Boden holen kann
+	 */
+	public BodenMaterial getArt() {
+		return art;
+	}
+
+	/**
+	 * die Effektivitaet mit der die Mine arbeitet
+	 * @return float zwischen 0 und 1  
+	 */
+	public float getEffektivitaet() {
+		return effektivitaet;
 	}
 
 }

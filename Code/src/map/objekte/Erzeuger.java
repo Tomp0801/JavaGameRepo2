@@ -1,5 +1,6 @@
 package map.objekte;
 
+import global.GameTime;
 import map.Feld;
 
 /**
@@ -10,6 +11,11 @@ import map.Feld;
  */
 public abstract class Erzeuger implements Platzierbar {
 	/**
+	 * Name des Erzeugers, der zb angezeigt wird
+	 */
+	private String name;
+	
+	/**
 	 * das Feld, auf dem dieses Objekt platziert ist
 	 */
 	private Feld feld;
@@ -19,10 +25,7 @@ public abstract class Erzeuger implements Platzierbar {
 	 */
 	private long lastRefresh;
 	
-	
-	/**
-	 * @return das Feld, auf dem dieses Objekt steht
-	 */
+	@Override
 	public Feld getFeld() {
 		return feld;
 	}
@@ -57,7 +60,19 @@ public abstract class Erzeuger implements Platzierbar {
 	/**
 	 * @param lastRefresh the lastRefresh to set
 	 */
-	protected void setLastRefresh(long lastRefresh) {
-		this.lastRefresh = lastRefresh;
+	protected void setLastRefresh() {
+		this.lastRefresh = GameTime.getInstance().timeMillis();
+	}
+
+	@Override
+	public String getName() {
+		return name;
+	}
+
+	/**
+	 * @param name the name to set
+	 */
+	protected void setName(String name) {
+		this.name = name;
 	}
 }

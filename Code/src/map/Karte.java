@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import global.Random;
 import himmelskoerper.Betretbar;
+import ressource.BodenMaterial;
 import speicherverwaltung.IOHandler;
 
 /**

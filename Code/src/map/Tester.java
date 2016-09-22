@@ -1,8 +1,13 @@
 package map;
 
+import java.util.ArrayList;
+
 import himmelskoerper.FestPlanet;
 import himmelskoerper.SchwarzesLoch;
 import himmelskoerper.Stern;
+import map.objekte.Mine;
+import ressource.BodenMaterial;
+import speicherverwaltung.IOHandler;
 
 /**
  * Tester Klasse für reine Testzwecke
@@ -12,36 +17,23 @@ import himmelskoerper.Stern;
 public class Tester {
 
 	public Tester() {		
-		System.out.println("starte Tester");
-		SchwarzesLoch SL = new SchwarzesLoch(81776);
+		System.out.println("starte Tester in map paket");
 		
-		Stern sonne = (Stern)SL.getChild(0);
-		int i = 0;
-		while (!sonne.getChild(i).getClass().equals(FestPlanet.class)) {
-			i++;
+		int seed = 10;
+		Karte karte = new Karte(null, 10, 10, seed);
+		ArrayList<BodenMaterial> buffer = IOHandler.getInstance().readArrayList("bodenschaetze");
+		Mine mine1 = new Mine(buffer.get(0), (float)0.5);
+		mine1.platziere(karte.getBereich(0, 0).getFeld(0, 0));
+		
+		System.out.println(mine1.getName());
+		System.out.println(mine1.getArt().getName());
+		for (BodenMaterial b : mine1.getFeld().getBodenschatzVorkommen().keySet())
+		{
+			System.out.println(b.getName() + ": " + mine1.getFeld().getBodenschatzVorkommen().get(b));
 		}
-		FestPlanet planet = (FestPlanet) sonne.getChild(i);
 		
-		System.out.println("Karte: varietaet: " + planet.getKarte().getVarietaet());
-		for (int j = 0; j < planet.getKarte().getBodenschaetze().size(); j++) {
-			System.out.println(planet.getKarte().getBodenschaetze().get(j).getName());
-		}
-		for (int j = 0; j < planet.getKarte().getBodenarten().size(); j++) {
-			System.out.println(planet.getKarte().getBodenarten().get(j).getName());
-		}
-//		System.out.println("Bereiche: ");
-//		for (int x = 0; x < planet.getKarte().getBreite(); x++)
-//		{
-//			for (int y = 0; y < planet.getKarte().getHoehe(); y++)
-//			{
-//				System.out.println("Bereich " + x  + " / "+ y + ": ");
-//				for (BodenMaterial b : planet.getKarte().getBereich(x, y).getBodenschaetze().keySet()) {
-//					System.out.println(b.getName() + ": " + planet.getKarte().getBereich(x, y).getBodenschaetze().get(b));
-//				}
-//			}
-//		}
-		
-		
+		System.out.println("working: "+mine1.isWorking());
+				
 		//Programmschleife
 		while (true) {
 			
