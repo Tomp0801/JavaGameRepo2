@@ -123,17 +123,21 @@ public class Bereich {
 		Canvas oberflaeche = new Canvas();
 		GraphicsContext grafik = oberflaeche.getGraphicsContext2D();
 		
-		oberflaeche.prefHeight(this.HOEHE);
-		oberflaeche.prefWidth(this.BREITE);
+		oberflaeche.prefHeight(this.HOEHE * 20);
+		oberflaeche.prefWidth(this.BREITE * 20);
 		
-		//TODO
-//		if (typ.getBodenReichtum() = )
-//		Color farbe = new Color(red, green, blue, 0);
-//		
-//		grafik.setFill(farbe);
-		grafik.fillRect(0, 0, 400, 400);
+		for (int x = 0; x < BREITE; x++) 
+		{
+			for (int y = 0; y < HOEHE; y++)
+			{
+				grafik.setFill(felder[x][y].getBodentyp().getColor());
+				grafik.fillRect(0, 0, 20, 20);
+			}
+		}
+		
+		//TODO Bodenschätze, Gebäude??
 				
-		return new Canvas(); 
+		return oberflaeche; 
 	}
 	
 	/**
