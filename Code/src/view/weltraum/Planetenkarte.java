@@ -1,5 +1,6 @@
 package view.weltraum;
 
+import map.Bereich;
 import map.Karte;
 
 public class Planetenkarte extends WeltraumSystem
@@ -17,7 +18,14 @@ public class Planetenkarte extends WeltraumSystem
 
 	private void initKarte(Karte karte)
 	{
-		
+		for(int i = 0 ; karte.getBreite() > i ; i++)
+		{
+			for (int j = 0; karte.getHoehe() > j ; j++ )
+			{
+				Bereich bereich = karte.getBereich(i, j);
+				
+			}
+		}
 		
 	}
 }

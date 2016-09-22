@@ -1,18 +1,12 @@
 package controller;
 
-import java.util.ArrayList;
-
 import global.Constants;
 import global.GameTime;
-import himmelskoerper.InOrbit;
 import himmelskoerper.Planet;
 import himmelskoerper.SchwarzesLoch;
 import himmelskoerper.Stern;
-import view.hauptmenu.SceneEnum;
 import view.hauptmenu.StageController;
-import view.weltraum.Planetensystem;
 import view.weltraum.Sonnensystem;
-import view.weltraum.Sternensystem;
 
 /**
  * Im GameManager wird der spielfluss kontrolliert
@@ -32,11 +26,6 @@ public final class GameManager
 
 	private static SchwarzesLoch schwarzesLoch; 
 	
-	/**
-	 * in diesr Liste befinden sich alle InOrbit Objecte dessen Position in einer while(true) Schleife 
-	 * staendig erneuert werden solll 
-	 */
-	private ArrayList<InOrbit> positionsRechnerListe = new ArrayList<InOrbit>();
 	
 	/**
 	 * is true wenn das Spiel gestartet ist
@@ -74,25 +63,32 @@ public final class GameManager
 	{	
 		if (gameStart == false)
 		{	
-			schwarzesLoch = new SchwarzesLoch(seed);
-//			StageController.getInstance().wechselScene(SceneEnum.WELTRAUMSICHT);
 			GameTime.getInstance().setZeitFaktor(Constants.ZEITFAKTOR);
-			
-			System.out.println("Anzahl der sterne  "+schwarzesLoch.getChildren().size() );
-			//TODO DEMO 
-			Sonnensystem system = new Sonnensystem((Stern) schwarzesLoch.getChild(0));
-			Stern stern = (Stern) schwarzesLoch.getChild(0);
-			Planet planet = (Planet) stern.getChild(0);
-//			
-//			Planetensystem systemPlanet = new Planetensystem(planet);
-			
-//			Sternensystem system = new Sternensystem(schwarzesLoch ,0 ,0 ,0);
-			
-			StageController.getInstance().setScene(system.getScene());
-			
+			startDemoSpiel(seed);
 			gameStart = true;
 		}
 	}
+	
+	
+	/**
+	 * startet ein Spiel. Diese Methode wird nur zum Testen von funktionen verwednet und hat keine bedeutung 
+	 * fuer das speater Spiel
+	 */
+	private void startDemoSpiel(int seed)
+	{
+		schwarzesLoch = new SchwarzesLoch(seed);
+		//TODO DEMO 
+		Sonnensystem system = new Sonnensystem((Stern) schwarzesLoch.getChild(0));
+		Stern stern = (Stern) schwarzesLoch.getChild(0);
+		Planet planet = (Planet) stern.getChild(0);	
+//		Planetensystem systemPlanet = new Planetensystem(planet);
+		
+//		Sternensystem system = new Sternensystem(schwarzesLoch ,0 ,0 ,0);
+		
+		StageController.getInstance().setScene(system.getScene());
+	}
+	
+	
 	
 	
 	/**

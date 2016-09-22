@@ -60,8 +60,6 @@ public class StageController extends Application
 	public void start(Stage primaryStage) throws Exception 
 	{    
 		System.out.println("Spiel wird gestartet");
-//		//zum laden eines DemoSpiels
-//		StageControllerSpiel demoSpiel = new StageControllerSpiel(primaryStage);	
 
 		instance = this; 
 		this.stage = primaryStage;
@@ -120,24 +118,11 @@ public class StageController extends Application
 	 */
 	public void setScene(Scene scene)
 	{
-		try 
-		{
-			Thread.sleep(5);
-			stage.setScene(scene);
-			Thread.sleep(5);
-			stage.setFullScreen(true);
-			Thread.sleep(5);
-			stage.setX(0);
-			stage.setY(0);
-			Thread.sleep(5);
-			stage.show(); 	
-			
-			
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
+		stage.setScene(scene);
+		stage.setFullScreen(true);
+		stage.setX(0);
+		stage.setY(0);		
+		stage.show(); 	
 	}
 	
 	
@@ -160,7 +145,9 @@ public class StageController extends Application
 		case NETZWERK:
 			loader = ladeFXMLDatei("fxml/NetzwerkspielEingangsraum.fxml"); 
 			netzwerkFXMLScene = new Scene(loader.getRoot()); 
-			break;		
+			break;	
+		default:
+			break;
 		}
 	}
 	
