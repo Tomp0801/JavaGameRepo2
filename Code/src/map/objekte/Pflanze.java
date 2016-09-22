@@ -3,7 +3,7 @@ package map.objekte;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import ressource.Ressource;
+import ressource.Material;
 import speicherverwaltung.IOHandler;
 
 /**
@@ -22,21 +22,21 @@ public class Pflanze extends Erzeuger implements Platzierbar {
 	}
 
 	@Override
-	public HashMap<Ressource, Double> run() {
+	public HashMap<Material, Double> run() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public ArrayList<Ressource> getOutputs() {
+	public ArrayList<Material> getOutputs() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public ArrayList<Ressource> getInputs() {
-		ArrayList<Ressource> list = new ArrayList<>();
-		list.add((Ressource)IOHandler.getInstance().readArrayList("verschiedene").get(0));
+	public ArrayList<Material> getInputs() {
+		ArrayList<Material> list = new ArrayList<>();
+		list.add((Material)IOHandler.getInstance().readArrayList("verschiedene").get(0));
 		return list;
 	}
 }

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import ressource.BodenMaterial;
-import ressource.Ressource;
+import ressource.Material;
 
 /**
  * Ein Platzierbares objekt, das von einem feld bodenSchätze abbauen kann
@@ -58,7 +58,7 @@ public class Mine extends Erzeuger {
 	}
 	
 	@Override
-	public HashMap<Ressource, Double> run() {
+	public HashMap<Material, Double> run() {
 		long passedTime;
 		long prevRefresh = getLastRefresh();
 		setLastRefresh();
@@ -72,20 +72,20 @@ public class Mine extends Erzeuger {
 		
 		menge = getFeld().mineRohstoff(this.art, menge);
 		
-		HashMap<Ressource, Double> abbau = new HashMap<Ressource, Double>();
+		HashMap<Material, Double> abbau = new HashMap<Material, Double>();
 		abbau.put(this.art, new Double(menge));
 		return abbau;
 	}
 
 	@Override
-	public ArrayList<Ressource> getOutputs() {
-		ArrayList<Ressource> produkte = new ArrayList<Ressource>();
+	public ArrayList<Material> getOutputs() {
+		ArrayList<Material> produkte = new ArrayList<Material>();
 		produkte.add(this.art);
 		return produkte;
 	}
 
 	@Override
-	public ArrayList<Ressource> getInputs() {
+	public ArrayList<Material> getInputs() {
 		// TODO beschleunigung durch Energie
 		return null;
 	}

@@ -3,12 +3,12 @@ package ressource;
 import javafx.scene.paint.Color;
 
 /**
- * Ressource, die von Feldern abgebaut werden kann
+ * Material, die von Feldern abgebaut werden kann
  * 
  * @author Thomas
  *
  */
-public class BodenMaterial extends Ressource {
+public class BodenMaterial extends Material {
 	/**
 	 * 
 	 */

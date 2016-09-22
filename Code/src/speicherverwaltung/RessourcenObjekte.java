@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import javafx.scene.paint.Color;
 import ressource.BodenMaterial;
-import ressource.Ressource;
+import ressource.Material;
 
 public class RessourcenObjekte {
 	
@@ -21,7 +21,7 @@ public class RessourcenObjekte {
 	/**
 	 * für verschiedene Ressourcen, zb Wasser
 	 */
-	private ArrayList<Ressource> verschiedene;
+	private ArrayList<Material> verschiedene;
 	
 	/**
 	 * Konstruktor
@@ -64,7 +64,7 @@ public class RessourcenObjekte {
 	{
 		verschiedene = new ArrayList<>();
 		Color blauDurchsichtig = new Color(Color.DODGERBLUE.getRed(), Color.DODGERBLUE.getGreen(), Color.DODGERBLUE.getBlue(), 0.8);
-		verschiedene.add(new Ressource("Wasser", blauDurchsichtig));
+		verschiedene.add(new Material("Wasser", blauDurchsichtig));
 	}
 	
 	/**
@@ -85,7 +85,7 @@ public class RessourcenObjekte {
 	/**
 	 * @return the verscheidene
 	 */
-	public ArrayList<Ressource> getVerschiedene() {
+	public ArrayList<Material> getVerschiedene() {
 		return verschiedene;
 	}
 }

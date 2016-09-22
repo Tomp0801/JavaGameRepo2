@@ -12,19 +12,19 @@ import java.io.Serializable;
  * @author Thomas
  *
  */
-public class Ressource implements Serializable {
+public class Material implements Serializable {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 4161272941765820029L;
 
 	/**
-	 * Bezeichnung für die Ressource
+	 * Bezeichnung für das Material
 	 */
 	private String name;
 	
 	/**
-	 * Farbe der Ressource
+	 * Farbe der Material
 	 * Kann nicht javafx Color nehmen, da diese nicht serializeable ist
 	 */
 	private Color color;
@@ -35,7 +35,7 @@ public class Ressource implements Serializable {
 	private double opacity;
 	
 	/**
-	 * das Gewicht der Ressource pro Einheit
+	 * das Gewicht der Material pro Einheit
 	 * relevant für den Transport
 	 */
 	private float gewicht;
@@ -46,7 +46,7 @@ public class Ressource implements Serializable {
 	 * @param name des Materials
 	 * @param color (javafx.scene.paint)
 	 */
-	public Ressource(String name, javafx.scene.paint.Color color) 
+	public Material(String name, javafx.scene.paint.Color color) 
 	{
 		this.name = name;
 		this.color = new Color((float)color.getRed(), (float)color.getGreen(), (float)color.getBlue());
@@ -97,7 +97,7 @@ public class Ressource implements Serializable {
 
 	/**
 	 * relevant für den Transport von Ressourcen
-	 * @return das Gewicht der Ressource pro Einheit
+	 * @return das Gewicht der Material pro Einheit
 	 */
 	public float getGewicht() {
 		return gewicht;
