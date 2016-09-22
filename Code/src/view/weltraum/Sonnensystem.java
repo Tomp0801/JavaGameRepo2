@@ -13,6 +13,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Sphere;
+import view.hauptmenu.StageController;
 
 /**
  * Diese Klasse zeichnet ein Sonnensystem um in diesem zu navigieren. 
@@ -49,12 +50,12 @@ public class Sonnensystem extends WeltraumSystem
 	{
 		//dies entspricht 100% des maximalen OrbitRadius des Sternes
 		double orbitRadius = 0;
-		//Der OrbitRadius wird auf 4000 beschrenkt. Dies sind die 100% des Orbitradius. die Große des originals wird angepasst 
-		double maxOrbitRadius = 4000; 
-		//Der Groeßte Plante ist 100 und der das minimum liegt bei 10 //TODO das verhaehltnis muss noch angepasst werden
+		//Der OrbitRadius wird auf 5000 beschrenkt. Dies sind die 100% des Orbitradius. die Große des originals wird angepasst 
+		double maxOrbitRadius = 5000; 
+		//Der Groeßte Plante ist 100 und der das minimum liegt bei 10
 		double groeßterPlanet = 0;
 		//Die maximale Groeße eines Planeten
-		double maxGroeße = 50; 
+		double maxGroeße = 60; 
 		
 		//zeichnet die Sonne
 		this.zeichneSonne(stern, maxGroeße);
@@ -123,11 +124,11 @@ public class Sonnensystem extends WeltraumSystem
 						if (event.getClickCount() == 2)
 						{
 							kamera.setDrehpunkt(new Point3D(himmelskoerper.getTranslateX() , himmelskoerper.getTranslateY() , himmelskoerper.getTranslateZ()));	
-							ladeInformationenPlanet(planet);
+							ladeInformationen(planet);
 						}
 						else
 						{
-							ladeInformationenPlanet(planet);
+							ladeInformationen(planet);
 						}
 					}
 		        });  
@@ -142,12 +143,12 @@ public class Sonnensystem extends WeltraumSystem
 	 * laed informationen des Planeten
 	 * @param planet
 	 */
-	private void ladeInformationenPlanet(Planet planet)
+	private void ladeInformationen(Planet planet)
 	{
 		this.getSpielUmgebungController().clearInformationen();
 		
 		Label name = new Label("Name: "+planet.getName());
-		Label groeße = new Label("Radius: "+planet.getRadius());
+		Label groeße = new Label("Radius: "+ (int)planet.getRadius());
 		Label position = new Label("Position X: "+(int) planet.getPositionAbsolute().getX()+" Y: "+(int) planet.getPositionAbsolute().getY()+" Z: "+(int) planet.getPositionAbsolute().getZ());
 		Label temperratur = new Label("Oberflächentemperratur "+planet.getOberflaechenTemperatur());
 		Label masse = new Label("Masse: "+(int) planet.getMasse());
@@ -160,38 +161,39 @@ public class Sonnensystem extends WeltraumSystem
 		this.getSpielUmgebungController().setzeInformationen(masse);
 		this.getSpielUmgebungController().setzeInformationen(monde);
 		
-		for (int i = 0 ; planet.getChildren().size() > i ;i++)
-		{
-			Button button = new Button(planet.getChild(i).getName());
-			
-			button.setOnAction(new EventHandler<ActionEvent>() 
-			{
-
-				@Override
-				public void handle(ActionEvent event) 
-				{
-					//TODO 		lade Informationen des Mondes
-				}
-			});
-			
-			this.getSpielUmgebungController().setzeInformationen(button);		
-		}
+//		for (int i = 0 ; planet.getChildren().size() > i ;i++)
+//		{
+//			Button button = new Button(planet.getChild(i).getName());
+//			
+//			button.setOnAction(new EventHandler<ActionEvent>() 
+//			{
+//
+//				@Override
+//				public void handle(ActionEvent event) 
+//				{
+//					//TODO 		lade Informationen des Mondes
+//				}
+//			});
+//			
+//			this.getSpielUmgebungController().setzeInformationen(button);		
+//		}
 		
 		
-		Button oeffneKarte = new Button("zum Planeten");
+		Button oeffnePlanetensystem = new Button("zum Planetensystem");
 		
-		oeffneKarte.setOnAction(new EventHandler<ActionEvent>()
+		oeffnePlanetensystem.setOnAction(new EventHandler<ActionEvent>()
 		{
 
 			@Override
 			public void handle(ActionEvent event) 
 			{
-				// TODO lade die Karte des Planeten	
+				Planetensystem planetsystem = new Planetensystem(planet);
+				StageController.getInstance().setScene(planetsystem.getScene());
 			}	
 		});
 		
 		
-		this.getSpielUmgebungController().setzeInformationen(oeffneKarte);		
+		this.getSpielUmgebungController().setzeInformationen(oeffnePlanetensystem);		
 	}
 	
 	

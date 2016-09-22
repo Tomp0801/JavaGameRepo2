@@ -5,11 +5,14 @@ import java.util.ArrayList;
 import global.Constants;
 import global.GameTime;
 import himmelskoerper.InOrbit;
+import himmelskoerper.Planet;
 import himmelskoerper.SchwarzesLoch;
 import himmelskoerper.Stern;
 import view.hauptmenu.SceneEnum;
 import view.hauptmenu.StageController;
+import view.weltraum.Planetensystem;
 import view.weltraum.Sonnensystem;
+import view.weltraum.Sternensystem;
 
 /**
  * Im GameManager wird der spielfluss kontrolliert
@@ -75,9 +78,16 @@ public final class GameManager
 //			StageController.getInstance().wechselScene(SceneEnum.WELTRAUMSICHT);
 			GameTime.getInstance().setZeitFaktor(Constants.ZEITFAKTOR);
 			
-			
-			//TODO DEMO darstellung eines Sonnensystems
+			System.out.println("Anzahl der sterne  "+schwarzesLoch.getChildren().size() );
+			//TODO DEMO 
 			Sonnensystem system = new Sonnensystem((Stern) schwarzesLoch.getChild(0));
+			Stern stern = (Stern) schwarzesLoch.getChild(0);
+			Planet planet = (Planet) stern.getChild(0);
+//			
+//			Planetensystem systemPlanet = new Planetensystem(planet);
+			
+//			Sternensystem system = new Sternensystem(schwarzesLoch ,0 ,0 ,0);
+			
 			StageController.getInstance().setScene(system.getScene());
 			
 			gameStart = true;

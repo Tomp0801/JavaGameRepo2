@@ -1,7 +1,6 @@
 package view.weltraum;
 
 import controller.Bewegungsmanager;
-import controller.GameManager;
 import himmelskoerper.SchwarzesLoch;
 import javafx.event.EventHandler;
 import javafx.geometry.Point3D;
@@ -13,22 +12,23 @@ import javafx.scene.shape.Sphere;
  */
 public class Sternensystem extends WeltraumSystem
 {
-	private KameraSternensystem kamera = new KameraSternensystem();
+	private KameraSternensystem kamera;
 	
-	public Sternensystem(SchwarzesLoch zentrum)
-	{
+	private SchwarzesLoch zentrum;
+	
+	public Sternensystem(SchwarzesLoch zentrum , int x , int y , int z)
+	{	
+		KameraSternensystem kamera = new KameraSternensystem(this.getScene(), zentrum.getSystemRadius());
+		this.zentrum = zentrum;
+		this.getSubScene().setCamera(kamera.getKamera());
 		zeichneSternsystem(zentrum);
 	}
 	
-	/**
-	 * zeichnet ein Sonnensystem
-	 * 
-	 * @param stern
-	 */
+	
 	public void zeichneSternsystem(SchwarzesLoch zentrum)
 	{
-		//diese groeße entsrpcht 100% der maximalen raduisGroeße
-		double maxRadius = 50; 
+		//diese groeße entspricht 100% der maximalen raduisGroeße
+		double maxRadius = 100; 
 		//die groeßte Sonne entspricht 100%
 		double groeßteSonne = 0;
 		
@@ -50,32 +50,36 @@ public class Sternensystem extends WeltraumSystem
 		for (int j = 0; zentrum.getChildren().size() > j; j++)
 		{		
 			double radius = (groeßteSonne/zentrum.getChild(j).getRadius()) * maxRadius;
+			if (radius > 50 )
+				radius = 50; 
 			
-   	 		//erstelle einen Planeten
-   	 		Sphere himmelskoerper = new Sphere();
-   	 		himmelskoerper.setRadius(radius);
+   	 		//erstelle ein Stern
+   	 		Sphere stern = new Sphere();
+   	 		stern.setRadius(radius);
    	       
-   	 		this.getSubSceneRoot().getChildren().add(himmelskoerper);	
+   	 		this.getSubSceneRoot().getChildren().add(stern);	
+   	 		
+   	 		// TODO zu einen rechner hinzufuegen der nicht so heufig rechnet
    	        Bewegungsmanager.getInstance().addInOrbitObjectToPositionsRechner(zentrum.getChild(j));  	        
    	       
-   	        himmelskoerper.translateXProperty().bind(zentrum.getChild(j).getPositionProperty()[0]);
-   	        himmelskoerper.translateYProperty().bind(zentrum.getChild(j).getPositionProperty()[1]);
-   	        himmelskoerper.translateZProperty().bind(zentrum.getChild(j).getPositionProperty()[2]);	
+   	        stern.translateXProperty().bind(zentrum.getChild(j).getPositionProperty()[0]);
+   	        stern.translateYProperty().bind(zentrum.getChild(j).getPositionProperty()[1]);
+   	        stern.translateZProperty().bind(zentrum.getChild(j).getPositionProperty()[2]);	
 
-   	        System.out.println( "Postion des Körpers:   X: "+himmelskoerper.getTranslateX()+"   Y: "+himmelskoerper.getTranslateY()+"   Z: "+himmelskoerper.getTranslateZ()+"    Radius: "+himmelskoerper.getRadius());
+   	        System.out.println( "Postion des Körpers:   X: "+stern.getTranslateX()+"   Y: "+stern.getTranslateY()+"   Z: "+stern.getTranslateZ()+"    Radius: "+stern.getRadius());
    	        
    	        //setzt das aussehen der Kugel
-	        himmelskoerper.setMaterial(zentrum.getChild(j).getAussehn());
+	        stern.setMaterial(zentrum.getChild(j).getAussehn());
 	        
 	        //macht den Himelskoerper anklickbar
-	        himmelskoerper.setOnMouseClicked(new EventHandler<MouseEvent>()
+	        stern.setOnMouseClicked(new EventHandler<MouseEvent>()
 	        {
 				@Override
 				public void handle(MouseEvent event) 
 				{					
 					if (event.getClickCount() == 2)
 					{
-						kamera.setPosition(new Point3D(himmelskoerper.getTranslateX() , himmelskoerper.getTranslateY() , himmelskoerper.getTranslateZ()));	
+						//TODO lade infos 	
 					}
 					else
 					{

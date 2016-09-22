@@ -2,6 +2,7 @@ package view.weltraum;
 
 import java.io.IOException;
 
+import himmelskoerper.Himmelskoerper;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.DepthTest;
 import javafx.scene.Group;

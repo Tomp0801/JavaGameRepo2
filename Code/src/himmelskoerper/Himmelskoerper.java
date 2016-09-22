@@ -214,9 +214,9 @@ public abstract class Himmelskoerper
 		y = positionPolar.get(0) * Math.sin(positionPolar.get(2)) * Math.sin(positionPolar.get(1));
 		z = positionPolar.get(0) * Math.cos(positionPolar.get(2));
 		
-		position[0].set(x*Constants.VERKLEINERUNGSFAKTOR);
-		position[1].set(y*Constants.VERKLEINERUNGSFAKTOR);
-		position[2].set(z*Constants.VERKLEINERUNGSFAKTOR);
+		position[0].set(x);
+		position[1].set(y);
+		position[2].set(z);
 	}
 	
 	/**

@@ -7,7 +7,6 @@ import javafx.animation.PathTransition;
 import javafx.event.EventHandler;
 import javafx.geometry.Point3D;
 import javafx.scene.Node;
-import javafx.scene.PerspectiveCamera;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -43,11 +42,6 @@ public class KameraSonnensystem extends Kamera2
 	private Rotate rotationY = new Rotate(0 , 0, 0, 0 , Rotate.Y_AXIS);
 	
 	/**
-	 * die Kamera wird zum zoomen verwendte. 
-	 */
-	private PerspectiveCamera kamera = new PerspectiveCamera();
-		
-	/**
 	 * die Scene die verwendte wird. Hier werden die Events zur Rotation der Sicht abgefangen
 	 */
 	private Scene scene;
@@ -58,12 +52,12 @@ public class KameraSonnensystem extends Kamera2
 	public KameraSonnensystem(Scene scene)
 	{
 		this.scene = scene;
-		kamera.setTranslateZ(-100);
-		kamera.setTranslateX(-Toolkit.getDefaultToolkit().getScreenSize().getWidth()/2);
-		kamera.setTranslateY(-Toolkit.getDefaultToolkit().getScreenSize().getHeight()/2);
-		kamera.setFarClip(10000000);
-		kamera.setNearClip(0.1);
-		kamera.setFieldOfView(35);
+		this.getKamera().setTranslateZ(-100);
+		this.getKamera().setTranslateX(-Toolkit.getDefaultToolkit().getScreenSize().getWidth()/2);
+		this.getKamera().setTranslateY(-Toolkit.getDefaultToolkit().getScreenSize().getHeight()/2);
+		this.getKamera().setFarClip(10000000);
+		this.getKamera().setNearClip(0.1);
+		this.getKamera().setFieldOfView(35);
 		initEventHandler();
 	}
 	
@@ -194,7 +188,7 @@ public class KameraSonnensystem extends Kamera2
 		{
 			Path path = new Path();
 			path.getElements().add(new MoveTo(drehpunkt.getX()-Toolkit.getDefaultToolkit().getScreenSize().getWidth()/2 ,drehpunkt.getY()-Toolkit.getDefaultToolkit().getScreenSize().getHeight()/2));
-			newPosi.add(new PathTransition(Duration.millis(2000), path , kamera));		
+			newPosi.add(new PathTransition(Duration.millis(2000), path , this.getKamera()));		
 		}	
 		
 		for (int i = 0; newPosi.size() > i ; i++)
@@ -215,24 +209,14 @@ public class KameraSonnensystem extends Kamera2
 	
 	
 	/**
-	 * gibt die Kamera wieder, die ran und weg sumt
-	 * @return
-	 */
-	protected PerspectiveCamera getKamera()
-	{
-		return this.kamera;
-	}
-	
-	
-	/**
 	 * zoomt naher ran oder weiter weg. kommt gant auf die uebergebenen Werte drauf an
 	 * @param zoome
 	 */
 	private void doZoomen(double zoome)
 	{
-		if (kamera.getTranslateZ() <5000)
+		if (this.getKamera().getTranslateZ() <5000)
 		{
-			this.kamera.setTranslateZ(this.kamera.getTranslateZ()+zoome);
+			this.getKamera().setTranslateZ(this.getKamera().getTranslateZ()+zoome);
 		}
 	}
 }

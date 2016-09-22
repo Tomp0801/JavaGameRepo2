@@ -313,4 +313,19 @@ public class SpielUmgebungController implements Initializable
 	{
 		informationsBox.getChildren().clear();
 	}
+	
+	public void setRightPane(Node node)
+	{
+		this.borderPane.setRight(node);
+	}
+	
+	public void setLeftPane(Node node)
+	{
+		this.borderPane.setLeft(node);
+	}
+	
+	public void setBottomPane(Node node)
+	{
+		 this.borderPane.setBottom(node);
+	}
 }

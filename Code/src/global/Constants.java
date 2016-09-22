@@ -40,8 +40,8 @@ public final class Constants {
 	
 	public static final double VERGROßERUNGSFAKTORRADIUSMOND = 10000;
 	
-	public static final double SPEEDKAMERA = 50000;
+//	public static final double SPEEDKAMERA = 50000;
 	
-	public static final float ZEITFAKTOR = 100000;
+	public static final float ZEITFAKTOR = 100;
 	
 }

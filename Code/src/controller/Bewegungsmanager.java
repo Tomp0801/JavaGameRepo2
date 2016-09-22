@@ -179,5 +179,4 @@ public class Bewegungsmanager
 			posiZ.set(z);
 		}
 	}
-
 }

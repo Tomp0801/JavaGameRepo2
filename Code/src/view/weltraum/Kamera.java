@@ -32,7 +32,7 @@ public class Kamera extends PerspectiveCamera
 	 */
 	private Point3D position;
 	
-	private double speed = Constants.SPEEDKAMERA; 
+	private final double SPEED= 100; 
 	
 	/**
 	 * wenn sich die Kamera in Rotation befindet, ist isRotation = true
@@ -210,9 +210,9 @@ public class Kamera extends PerspectiveCamera
 	 */
 	public void doBewegung(KeyCode key)
 	{
-		double a = speed*Math.cos(Math.toRadians(90-rotationY.getAngle()));
-		double b = speed*Math.sin(Math.toRadians(-rotationX.getAngle()));
-		double c = speed*Math.sin(Math.toRadians(90-rotationY.getAngle()));
+		double a = SPEED*Math.cos(Math.toRadians(90-rotationY.getAngle()));
+		double b = SPEED*Math.sin(Math.toRadians(-rotationX.getAngle()));
+		double c = SPEED*Math.sin(Math.toRadians(90-rotationY.getAngle()));
 		
 		switch (key)
 		{
@@ -229,10 +229,10 @@ public class Kamera extends PerspectiveCamera
 			veraenderePosition(-c, 0, a);
 			break;
 		case E: 
-			veraenderePosition(0 , speed, 0);
+			veraenderePosition(0 , SPEED, 0);
 			break;
 		case Q: 
-			veraenderePosition(0, -speed, 0);
+			veraenderePosition(0, -SPEED, 0);
 			break;
 		default:
 			break;
