@@ -6,6 +6,7 @@ import java.util.Random;
 import java.util.ResourceBundle;
 import audio.Musikspieler;
 import controller.GameManager;
+import global.Options;
 import himmelskoerper.SchwarzesLoch;
 import himmelskoerper.Stern;
 import javafx.event.ActionEvent;
@@ -164,7 +165,7 @@ public class HauptmenuController implements Initializable, Runnable
 			System.out.println("Demo spiel wird gestartet");
 			//der Thread mit der sich die Erdkugel dreht wird hier beendet solte beachtet werden..
 			this.thread.interrupt();
-			GameManager.getInstance().starteSpiel(new Random().nextInt(5000));
+			GameManager.getInstance().starteSpiel(Options.worldSeed);
 //			StageController.getInstance().wechselScene(SceneEnum.WELTRAUMSICHT);
 
 		}
