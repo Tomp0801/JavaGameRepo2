@@ -1,0 +1,7 @@
+Packet: controller
+
+Beschreibung: In diesem Packete befinden sich controller Klassen die fundermentale abläufe Managen.
+Dazu gehort das zum Beispiel das starten des Spiels. 
+
+
+wichtige Infos:

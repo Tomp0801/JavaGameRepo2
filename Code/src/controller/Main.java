@@ -1,7 +1,6 @@
 package controller;
 
 import map.Tester;
-import view.hauptmenu.StageController;
 /**
  * 
  * Die Mainklasse des Spiels 

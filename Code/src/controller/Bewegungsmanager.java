@@ -9,8 +9,11 @@ import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 
 /**
- * der Bewegungsmanager kuemmert sich um die berechnung der Positionen von Himmerlskoerpern.
- * @author Demix
+ * der Bewegungsmanager kuemmert sich um die berechnung der Positionen von Himmerlskoerpern die sich beim
+ * Bewegungsmanager angemeldet haben. 
+ * 
+ * 
+ * @author Dennis 
  *
  */
 public class Bewegungsmanager 
@@ -21,7 +24,7 @@ public class Bewegungsmanager
 	private static Bewegungsmanager instance;
 	
 	/**
-	 * in diesr Liste befinden sich alle InOrbit Objecte dessen Position in einer while(true) Schleife 
+	 * in diesr Liste befinden sich alle InOrbit Objekte dessen Position in einer while(true) Schleife 
 	 * staendig erneuert werden solll 
 	 */
 	private ArrayList<InOrbit> positionsRechnerListe = new ArrayList<InOrbit>();

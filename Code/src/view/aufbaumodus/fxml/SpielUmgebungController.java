@@ -1,4 +1,4 @@
-package view.weltraum.fxml;
+package view.aufbaumodus.fxml;
 
 import java.net.URL;
 import java.util.ResourceBundle;

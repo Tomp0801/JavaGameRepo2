@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
 import ressource.BodenMaterial;
 
 /**
@@ -119,26 +120,29 @@ public class Bereich {
 	 * 
 	 * @return gibt ein Canvas zurueck mit einem zum Bereich passenden Hintergrund zurueck
 	 */
-	public Canvas getAussehen()
+	public void getAussehen(Canvas canvas)
 	{
-		Canvas oberflaeche = new Canvas();
-		GraphicsContext grafik = oberflaeche.getGraphicsContext2D();
+		GraphicsContext grafik = canvas.getGraphicsContext2D();
 		
-		oberflaeche.prefHeight(this.HOEHE * 20);
-		oberflaeche.prefWidth(this.BREITE * 20);
+//		oberflaeche.setHeight(this.HOEHE * 20);
+//		oberflaeche.setWidth(this.BREITE * 20);
 		
 		for (int x = 0; x < BREITE; x++) 
 		{
 			for (int y = 0; y < HOEHE; y++)
 			{
 				grafik.setFill(felder[x][y].getBodentyp().getColor());
-				grafik.fillRect(0, 0, 20, 20);
+				grafik.fillRect((double) (x*canvas.getWidth()/BREITE),  (double) (y*canvas.getWidth()/HOEHE), (double) (canvas.getWidth()/BREITE), (double) (canvas.getWidth()/HOEHE));
 			}
 		}
 		
+//		System.out.println(canvas.getWidth());
+//		grafik.setFill(Color.GREEN);
+//		grafik.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
+		
 		//TODO Bodenschätze, Gebäude??
 				
-		return oberflaeche; 
+//		return oberflaeche; 
 	}
 	
 	/**

@@ -1,4 +1,4 @@
-package view.hauptmenu.fxml;
+package view.hauptmenu;
 
 import java.awt.datatransfer.StringSelection;
 import java.io.BufferedReader;
@@ -13,9 +13,12 @@ import java.net.URL;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+
+import controller.StageController;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -25,10 +28,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import netzwerk.ServerBefehle;
 import netzwerk.StartNetzwerkspielServer;
-import view.hauptmenu.Config;
-import view.hauptmenu.NetzwerkSceneZustand;
-import view.hauptmenu.SceneEnum;
-import view.hauptmenu.StageController;
 
 /**
  * Eine GUI zum starten eines Netzwerkspieles.
@@ -256,7 +255,7 @@ public class NetzwerkspielEingangsraumController implements Initializable
 			switch (zustand) 
 			{
 				case START:
-					StageController.getInstance().wechselScene(SceneEnum.STARTGAME);
+					StageController.getInstance().setScene(new FXMLLoader(getClass().getResource("fxml/Hauptmenu.fxml")));
 				break;
 
 				case IM_WARTERAUM_EINES_SPIELS:

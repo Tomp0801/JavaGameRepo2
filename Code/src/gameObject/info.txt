@@ -1,0 +1,5 @@
+Packet: gameObject
+
+Beschreibung: Objkte die ein Speler besitzten kann
+
+Infos: Hat bis jetzt keine wirkliche wichtige Bedeutung fuer das Programm,

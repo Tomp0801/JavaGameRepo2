@@ -2,11 +2,12 @@ package controller;
 
 import global.Constants;
 import global.GameTime;
+import himmelskoerper.FestPlanet;
 import himmelskoerper.Planet;
 import himmelskoerper.SchwarzesLoch;
 import himmelskoerper.Stern;
-import view.hauptmenu.StageController;
-import view.weltraum.Sonnensystem;
+import view.aufbaumodus.Planetenkarte;
+import view.aufbaumodus.Sonnensystem;
 
 /**
  * Im GameManager wird der spielfluss kontrolliert
@@ -80,12 +81,26 @@ public final class GameManager
 		//TODO DEMO 
 		Sonnensystem system = new Sonnensystem((Stern) schwarzesLoch.getChild(0));
 		Stern stern = (Stern) schwarzesLoch.getChild(0);
+		
 		Planet planet = (Planet) stern.getChild(0);	
-//		Planetensystem systemPlanet = new Planetensystem(planet);
 		
-//		Sternensystem system = new Sternensystem(schwarzesLoch ,0 ,0 ,0);
-		
-		StageController.getInstance().setScene(system.getScene());
+		for (int i = 0 ; stern.getChildren().size() > i ; i++)
+		{
+			if (stern.getChild(i).getClass() == FestPlanet.class)
+			{
+				FestPlanet f = (FestPlanet) stern.getChild(i);
+				
+				Planetenkarte karte = new Planetenkarte(f.getKarte());
+				
+//				Planetensystem systemPlanet = new Planetensystem(planet);
+				
+//				Sternensystem system = new Sternensystem(schwarzesLoch ,0 ,0 ,0);
+				
+				StageController.getInstance().setScene(karte.getScene());
+				
+				break;
+			}
+		}
 	}
 	
 	

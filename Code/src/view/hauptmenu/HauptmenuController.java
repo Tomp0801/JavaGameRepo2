@@ -1,17 +1,18 @@
-package view.hauptmenu.fxml;
+package view.hauptmenu;
 
 import java.awt.Toolkit;
 import java.net.URL;
-import java.util.Random;
 import java.util.ResourceBundle;
 import audio.Musikspieler;
 import controller.GameManager;
+import controller.StageController;
 import global.Options;
-import himmelskoerper.SchwarzesLoch;
-import himmelskoerper.Stern;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
@@ -21,9 +22,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.Sphere;
 import javafx.scene.transform.Rotate;
-import view.hauptmenu.SceneEnum;
-import view.hauptmenu.StageController;
-import view.weltraum.Sonnensystem;
 
 /**
  * Das Startmenu. Dies ist das erste was der Spiele zusehen bekommt.
@@ -173,7 +171,7 @@ public class HauptmenuController implements Initializable, Runnable
 		else if (e.getSource() == mehrspielerButton)
 		{
 			//erstellt eine neue Scene
-			StageController.getInstance().wechselScene(SceneEnum.NETZWERK);
+			StageController.getInstance().setScene(new FXMLLoader(getClass().getResource("fxml/NetzwerkspielEingangsraum.fxml")));
 		}
 		else if (e.getSource() == einstellungenButton)
 		{
@@ -189,4 +187,11 @@ public class HauptmenuController implements Initializable, Runnable
 			System.exit(-1);
 		}
 	}
+	
+//	public static Scene generateScene()
+//	{
+//		Node node =  FXMLLoader.load((getClass().getResource("fxml/Hauptmenu.fxml")));  
+//		
+//		return new Scene(loader.getRoot());
+//	}
 }

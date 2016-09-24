@@ -1,4 +1,4 @@
-package view.hauptmenu.fxml;
+package view.hauptmenu;
 
 import java.io.IOException;
 import java.net.InetAddress;

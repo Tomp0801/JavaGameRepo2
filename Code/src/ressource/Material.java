@@ -71,7 +71,7 @@ public class Material implements Serializable {
 	 * @return die Farbe als jafafx Color
 	 */
 	public javafx.scene.paint.Color getColor() {
-		return new javafx.scene.paint.Color((double)color.getRed(), (double)color.getGreen(), (double)color.getBlue(), opacity);
+		return new javafx.scene.paint.Color((double)color.getRed()/255.0, (double)color.getGreen()/255.0, (double)color.getBlue()/255.0, opacity);
 	}
 
 	/**

@@ -1,9 +1,15 @@
-package view.weltraum;
+package view.aufbaumodus;
 
 import javafx.geometry.Point3D;
 import javafx.scene.PerspectiveCamera;
 
-public abstract class Kamera2 
+/**
+ * Eine Kamera zur Steuerung der Sicht
+ * 
+ * @author Dennis
+ *
+ */
+public abstract class Kamera 
 {
 	/**
 	 * die Kamera
@@ -11,7 +17,7 @@ public abstract class Kamera2
 	private PerspectiveCamera kamera = new PerspectiveCamera();
 	
 	
-	protected Kamera2()
+	protected Kamera()
 	{}
 	
 	/**

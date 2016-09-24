@@ -1,0 +1,6 @@
+Packet: view.Aufbaumodus
+
+Beschreibung: In diesem Packet befinden sich die Scenen des Spiels die zum Aufbaumodus gehoeren. Von Ansichten von Galaxin 
+bin hin zu den Landschaften auf Planeten oder Kometen. 
+
+Infos: 

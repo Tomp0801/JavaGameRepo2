@@ -1,0 +1,7 @@
+Packet audio
+
+Beschreibung;
+in diesem Packet befinden sich alle Klassen die mit Geräuschen im Spiel zu tun haben.
+Zum Beispiel das spielen von Musik oder Geräusche beim klicken
+
+wichtige Infos:

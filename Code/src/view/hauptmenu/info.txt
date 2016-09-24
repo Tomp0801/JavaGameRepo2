@@ -1,0 +1,6 @@
+Packet: view.hauptmenu
+
+Beschreibung: in diesem Packet befindet sich alle Klassen die zum Hauptmenu,
+das beim starten des Spiels zu sehen ist, gehoeren.
+
+Infos: Das Hauptmenu ist nicht nicht ausgereift, es stehen nur wenige Funktionen zu Verfuegung.

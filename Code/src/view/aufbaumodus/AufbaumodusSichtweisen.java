@@ -1,8 +1,7 @@
-package view.weltraum;
+package view.aufbaumodus;
 
 import java.io.IOException;
 
-import himmelskoerper.Himmelskoerper;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.DepthTest;
 import javafx.scene.Group;
@@ -10,14 +9,19 @@ import javafx.scene.Scene;
 import javafx.scene.SceneAntialiasing;
 import javafx.scene.SubScene;
 import javafx.scene.paint.Color;
-import view.weltraum.fxml.SpielUmgebungController;
+import view.aufbaumodus.fxml.SpielUmgebungController;
 
 /**
- * eine Abstracte Klasse zur WeltraumSicht. Diese Klasse behinahltetdas grundgerüst der Sichtweisen. 
- * @author Demix
+ * Diese Klasse erstellt eine Scene auf der die Sichtweise vom Aufbaumodus dargestllt wird. 
+ * Sie besteht auf einem Boarderpane. 
+ * Oben befindet sich eine Menuleiste. Rechts und links lassen sich Nods platzieren.
+ * In der Mitte laesst sicht eine SubScene setzen.
+ * 
+ * 
+ * @author Dennis
  *
  */
-public abstract class WeltraumSystem 
+public abstract class AufbaumodusSichtweisen 
 {
 	/**
 	 * die Scene die zur darstellung verwendet wird
@@ -43,7 +47,7 @@ public abstract class WeltraumSystem
 	/**
 	 * der konstruktor der Klasse
 	 */
-	public WeltraumSystem() 
+	public AufbaumodusSichtweisen() 
 	{
 		initScene();
 	}

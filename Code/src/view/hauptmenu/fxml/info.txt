@@ -1,0 +1,6 @@
+Packet: view.hauptmenu.fxml
+
+Beschreibung: in diesem Packet befinden sich FXML.Datein die zur ausfuehrung benotigt werden
+
+Infos: In allen Packeten dessen Name mit fxml enden gehoren nur die fxmlDateien.
+ Dies ist ein Versuchdie Die Klassen uebersichtlicht zu verwalten.
