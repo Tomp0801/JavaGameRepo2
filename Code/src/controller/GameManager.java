@@ -2,6 +2,7 @@ package controller;
 
 import global.Constants;
 import global.GameTime;
+import himmelskoerper.FestPlanet;
 import himmelskoerper.Planet;
 import himmelskoerper.SchwarzesLoch;
 import himmelskoerper.Stern;
@@ -65,7 +66,7 @@ public final class GameManager
 		{	
 			GameTime.getInstance().setZeitFaktor(Constants.ZEITFAKTOR);
 			startDemoSpiel(seed);
-			gameStart = true;
+			gameStart = true;			
 		}
 	}
 	

@@ -11,11 +11,12 @@ import global.Agregat;
  * 
  * z.B. Erze, Stein, Essen, Holz...
  * 
+ * TODO Forschungssystem erstellen
  * 
  * @author Thomas
  *
  */
-public abstract class Material implements Serializable {
+public class Material implements Serializable {
 	/**
 	 * 
 	 */
@@ -39,7 +40,8 @@ public abstract class Material implements Serializable {
 	private double opacity;
 	
 	/**
-	 * das Gewicht der Material pro Einheit
+	 * das Gewicht des Materials
+	 * Einheit: kg / m³
 	 * relevant für den Transport
 	 */
 	private float gewicht;
@@ -55,8 +57,9 @@ public abstract class Material implements Serializable {
 	private float energie;
 	
 	/**
-	 * Stabilität des Materials
+	 * Stabilität des Materials (im festen zustand)
 	 * relevant für Material als Baustoff
+	 * Richtwert: Granit hat eine stabilität von 1000
 	 */
 	private float stabilitaet;
 	
@@ -221,6 +224,7 @@ public abstract class Material implements Serializable {
 
 	/**
 	 * relevant für den Transport von Ressourcen
+	 * Einheit : kg / m³
 	 * @return das Gewicht der Material pro Einheit
 	 */
 	public float getGewicht() {
@@ -233,4 +237,149 @@ public abstract class Material implements Serializable {
 	protected void setGewicht(float gewicht) {
 		this.gewicht = gewicht;
 	}
+
+	/**
+	 * Hinweis: ob das Material für eine Bevölkerung essbar ist oder nicht, muss in der 
+	 * Bevölkerung gespeichert werden
+	 * @return den naehrwert pro Einheit von diesem Material
+	 */
+	public float getNaehrwert() {
+		return naehrwert;
+	}
+	
+	/**
+	 * 
+	 * @param naehrwert setzt den Naehrwert des Materials
+	 */
+	protected void setNaehrwert(float naehrwert) {
+		this.naehrwert = naehrwert;
+	}
+
+	/**
+	 * @return die energie pro Einheit des Materials
+	 */
+	public float getEnergie() {
+		return energie;
+	}
+	
+	/**
+	 * 
+	 * @param energie setzt die Energie pro einheit des Materials
+	 */
+	protected void setEnergie(float energie) {
+		this.energie = energie;
+	}
+
+	/**
+	 * relevant für Material als Baumaterial
+	 * als Richtwert: Granit hat stabilität von 1000
+	 * @return die stabilitaet (in festem Zustand)
+	 */
+	public float getStabilitaet() {
+		return stabilitaet;
+	}
+	
+	/**
+	 * 
+	 * @param stabilität setzt die Stabilität des Materials
+	 */
+	protected void setStabilitaet(float stabilitaet) {
+		this.stabilitaet = stabilitaet;
+	}
+
+	/**
+	 * Einheit: °C
+	 * @return den schmelzpunkt
+	 */
+	public int getSchmelzpunkt() {
+		return schmelzpunkt;
+	}
+	
+	/**
+	 * 
+	 * @param schmelzpunkt setzt den Schmelzpunkt des Materials in °C
+	 */
+	protected void setSchmelzpunkt(int schmelzpunkt) {
+		this.schmelzpunkt = schmelzpunkt;
+	}
+
+	/**
+	 * Einheit : °C
+	 * @return den siedepunkt
+	 */
+	public int getSiedepunkt() {
+		return siedepunkt;
+	}
+	
+	/**
+	 * 
+	 * @param siedepunkt setzt den Siedepunkt des Materials in °C
+	 */
+	protected void setSiedepunkt(int siedepunkt) {
+		this.siedepunkt = siedepunkt;
+	}
+
+	/**
+	 * Der aktuelle Forschungsfortschritt an diesem Material
+	 * je weiter die Forschung, desto mehr eigenschaften des Materials werden freigeschaltet
+	 * @return die forschung
+	 */
+	public int getForschung() {
+		return forschung;
+	}
+	
+	/**
+	 * Fügt der Forschung den gegebenen Wert hinzu 
+	 * @param fortschritt : zusätzliche Forschung, die hinzugefügt werden
+	 */
+	public void addForschung(int fortschritt) {
+		this.forschung += fortschritt;
+	}
+	
+	//**************************************************************************************************************************//
+												//STANDARD MATERIALIEN
+	
+	//************************************* METALLE ***********************************************//
+	
+	private static HashMap<Prozess, Material> verarbeitungMetalle = new HashMap<Prozess, Material>(); 
+	static {
+		//TODO mögliche Prozesse ausfüllen
+	}
+	
+	/**
+	 * Das Standard Material Gold
+	 * TODO Spezifikationen
+	 */
+	public final static Material GOLD = new Material("Gold", javafx.scene.paint.Color.GOLD, new float[]{(float) 19302, (float) 0, (float) 0, (float) 1500}, new int[]{1064, 2700}, verarbeitungMetalle);
+	
+	/**
+	 * Das Standard Material Silber
+	 */
+	public final static Material SILBER = new Material("Silber", javafx.scene.paint.Color.SILVER, new float[]{(float) 10490, (float) 0, (float) 0, (float) 1600}, new int[]{962, 2162}, verarbeitungMetalle);
+	
+	/**
+	 * Das Standard Material Eisen
+	 */
+	public final static Material EISEN = new Material("Eisen", javafx.scene.paint.Color.LIGHTGRAY, new float[]{(float) 7900, (float) 0, (float) 0, (float) 3000}, new int[]{1538, 2862}, verarbeitungMetalle);
+	
+	/**
+	 * Das Standard Material Kupfer
+	 */
+	public final static Material KUPFER = new Material("Kupfer", javafx.scene.paint.Color.SANDYBROWN, new float[]{(float) 8960, (float) 0, (float) 0, (float) 2000}, new int[]{1085, 2562}, verarbeitungMetalle);
+
+	//*********************************** Bodenmaterialien **************************************//
+	
+	/**
+	 * Das Standard Material Granit
+	 */
+	public final static Material GRANIT = new Material("Granit", javafx.scene.paint.Color.DARKGRAY, new float[]{(float) 2800, (float) 0, (float) 0, (float) 1000}, new int[]{1450, Integer.MAX_VALUE}, verarbeitungMetalle);
+	
+	//******************************************* Flüssigkeiten ********************************************//
+	
+	/**
+	 * Das Standard Material Wasser
+	 */
+	public final static Material WASSER = new Material("Wasser", javafx.scene.paint.Color.SKYBLUE, new float[]{(float) 1000, (float) 0, (float) 0, (float) 150}, new int[]{0, 100}, verarbeitungMetalle);
+
+
 }
