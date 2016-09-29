@@ -3,7 +3,6 @@ package view.aufbaumodus;
 import controller.Bewegungsmanager;
 import controller.StageController;
 import himmelskoerper.Himmelskoerper;
-import himmelskoerper.InOrbit;
 import himmelskoerper.Planet;
 import himmelskoerper.Stern;
 import javafx.beans.property.SimpleDoubleProperty;
@@ -18,13 +17,10 @@ import java.awt.MouseInfo;
 import java.awt.Toolkit;
 import java.util.ArrayList;
 import javafx.animation.PathTransition;
-import javafx.event.EventHandler;
-import javafx.geometry.Point3D;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
 import javafx.scene.transform.Rotate;
@@ -38,7 +34,7 @@ import javafx.util.Duration;
  * @author Demix
  *
  */
-public class Sonnensystem extends AufbaumodusSichtweisen
+public class Sonnensystem extends AufbaumodusSichtweiseWeltraum
 {
 	/**
 	 * Kamera zur navigation 
@@ -108,11 +104,16 @@ public class Sonnensystem extends AufbaumodusSichtweisen
 				//Die aktulle position wird in dieser Variable gepeichert (Polarefrom)
 				Point3D point = new Point3D (  stern.getChild(j).getPositionPolar().get(0) ,stern.getChild(j).getPositionPolar().get(1) ,stern.getChild(j).getPositionPolar().get(2)  );
 				//hier wird die entfernung zur Sonne angepasst
-				double orbitRadiusPlanet = (point.distance(0 , 0 , 0) / orbitRadius)*maxOrbitRadius;
+				double orbitRadiusPlanet = ((point.distance(0 , 0 , 0) / orbitRadius)*maxOrbitRadius)+maxGroeﬂe*2;
 	
 	   	 		//erstelle nun den Planeten
 	   	 		Sphere himmelskoerper = new Sphere();
 	   	 		//setzt den radius
+	   	 		if (radius < 10)
+	   	 		{
+	   	 			radius=10;
+	   	 		}
+	   	 		
 	   	 		himmelskoerper.setRadius(radius);
 	   	 	
 	   	 		//bindet die Position ein einen Wert	
@@ -188,7 +189,7 @@ public class Sonnensystem extends AufbaumodusSichtweisen
 //				@Override
 //				public void handle(ActionEvent event) 
 //				{
-//					//TODO 		lade Informationen des Mondes
+//					//lade Informationen des Mondes
 //				}
 //			});
 //			
@@ -252,19 +253,6 @@ public class Sonnensystem extends AufbaumodusSichtweisen
 			}
 	    });     
 	}
-	
-	
-	/**
-	 * zeichnet die Umlaufbahn eines Planeten
-	 * 
-	 * @param radius
-	 * @param planet
-	 */
-	private void zeichneUmlaufbahn(double entfernungZurSonne, InOrbit planet)
-	{
-		//TODO hier soll die Umlaufbahn einzelner Planeten gezechnet werden
-	}
-	
 	
 
 	

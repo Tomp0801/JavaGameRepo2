@@ -6,7 +6,8 @@ import himmelskoerper.FestPlanet;
 import himmelskoerper.Planet;
 import himmelskoerper.SchwarzesLoch;
 import himmelskoerper.Stern;
-import view.aufbaumodus.Planetenkarte;
+import view.aufbaumodus.PlanetenkarteBereiche;
+import view.aufbaumodus.Planetensystem;
 import view.aufbaumodus.Sonnensystem;
 
 /**
@@ -81,26 +82,31 @@ public final class GameManager
 		//TODO DEMO 
 		Sonnensystem system = new Sonnensystem((Stern) schwarzesLoch.getChild(0));
 		Stern stern = (Stern) schwarzesLoch.getChild(0);
+		StageController.getInstance().setScene(system.getScene());
 		
-		Planet planet = (Planet) stern.getChild(0);	
+//		Planet planet = (Planet) stern.getChild(0);	
 		
-		for (int i = 0 ; stern.getChildren().size() > i ; i++)
-		{
-			if (stern.getChild(i).getClass() == FestPlanet.class)
-			{
-				FestPlanet f = (FestPlanet) stern.getChild(i);
-				
-				Planetenkarte karte = new Planetenkarte(f.getKarte());
-				
-//				Planetensystem systemPlanet = new Planetensystem(planet);
-				
-//				Sternensystem system = new Sternensystem(schwarzesLoch ,0 ,0 ,0);
-				
-				StageController.getInstance().setScene(karte.getScene());
-				
-				break;
-			}
-		}
+//		for (int i = 0 ; stern.getChildren().size() > i ; i++)
+//		{
+//			if (stern.getChild(i).getClass() == FestPlanet.class)
+//			{
+//				
+//				
+//				FestPlanet f = (FestPlanet) stern.getChild(i);
+//				
+//				Planetensystem system2 = new Planetensystem(f);
+//				
+//				PlanetenkarteBereiche karte = new PlanetenkarteBereiche(f.getKarte());
+//				
+////				Planetensystem systemPlanet = new Planetensystem(planet);
+//				
+////				Sternensystem system = new Sternensystem(schwarzesLoch ,0 ,0 ,0);
+//				
+//				StageController.getInstance().setScene(system2.getScene());
+//				
+//				break;
+//			}
+//		}
 	}
 	
 	

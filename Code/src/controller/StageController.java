@@ -1,6 +1,8 @@
 package controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.LinkedList;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -8,7 +10,6 @@ import javafx.scene.Scene;
 import javafx.scene.input.KeyCombination;
 import javafx.stage.Stage;
 
-//TODO erstelle eine Liste mit Scenen die verwendet wurden. Um einfach wieder zurueck zu wechseln
 /**
  * Die Main Klasse. Diese Klasse startet das Programm als eine JavaFX Anwengun und verwaltet zu gleich die Stage.
  * Sie bietet eine Methode an um das wechseln zu einer neuen Scenen zu ermoeglichen.
@@ -22,6 +23,17 @@ public class StageController extends Application
 	 * eigene Instance
 	 */
 	private static StageController instance; 
+	
+	/**
+	 * diese Liste beinhaltet eine Reihe von Verweisungen auf unterschedlichenen Scenen.
+	 * Dies wird verwendet um schnelle und einfacher in die vorherige Scene zu wechseln. 
+	 * Zum Beispiel beim hinein zoomen auf einem Planeten. Hier wird schnell zwischen einzelnen Scenen 
+	 * hin und wieder zurueckgewechselt. 
+	 * 
+	 * in der Liste werden alle Scenen gespeichert die mit der setScene() Methode aufgerufen wurden. 
+	 * wird die openLastScene methode aufgerufen, wird die aktuell verwendete Scene aus der Liste entfernt
+	 */
+	private LinkedList<Scene> scenListe = new LinkedList<Scene>();
 	
 	/**
 	 * die Stage auf der das Spielgeschehen zu sehen ist.
@@ -64,6 +76,19 @@ public class StageController extends Application
 	 */
 	public void setScene(Scene scene)
 	{
+		if (scenListe.size() > 200)
+		{
+			scenListe.removeFirst();
+		}
+		if (scenListe.isEmpty()==false)
+		{
+		if(this.scenListe.getLast() != scene)
+		this.scenListe.add(scene);
+		}
+		else
+		{
+			this.scenListe.add(scene);
+		}
 		primaryStage.setScene(scene);
 		primaryStage.setFullScreen(true);
 		primaryStage.setX(0);
@@ -108,5 +133,18 @@ public class StageController extends Application
 	{
 		loader.load();
 		return new Scene(loader.getRoot());
+	}
+	
+	/**
+	 * oeffnet die scene die sich in der ScenenListe befindet und loescht aus der Liste
+	 *  die aktuell verwendete Scene
+	 */
+	public void openLastScene()
+	{
+		this.scenListe.removeLast();
+		if (scenListe.isEmpty() == false)
+		{
+			this.setScene(this.scenListe.getLast());
+		}
 	}
 }

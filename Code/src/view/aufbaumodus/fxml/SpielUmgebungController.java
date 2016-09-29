@@ -7,12 +7,14 @@ import javafx.animation.Animation.Status;
 import javafx.animation.FadeTransition;
 import javafx.animation.ScaleTransition;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.SubScene;
 import javafx.scene.control.Button;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -129,11 +131,7 @@ public class SpielUmgebungController implements Initializable
 	 */
 	@FXML
 	private VBox navigationBox;
-	
-	/**
-	 * die aktuell verwendete Scene von der KeyEvents abgefangen werden
-	 */
-	private Scene scene;	
+		
 	
 	/**
 	 * initialisiert den Controller

@@ -2,9 +2,6 @@ package map;
 
 import java.util.ArrayList;
 
-import himmelskoerper.FestPlanet;
-import himmelskoerper.SchwarzesLoch;
-import himmelskoerper.Stern;
 import map.objekte.Mine;
 import ressource.BodenMaterial;
 import speicherverwaltung.IOHandler;

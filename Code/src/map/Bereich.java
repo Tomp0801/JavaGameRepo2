@@ -4,7 +4,6 @@ import java.util.HashMap;
 
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.paint.Color;
 import ressource.BodenMaterial;
 
 /**
@@ -124,9 +123,6 @@ public class Bereich {
 	{
 		GraphicsContext grafik = canvas.getGraphicsContext2D();
 		
-//		oberflaeche.setHeight(this.HOEHE * 20);
-//		oberflaeche.setWidth(this.BREITE * 20);
-		
 		for (int x = 0; x < BREITE; x++) 
 		{
 			for (int y = 0; y < HOEHE; y++)
@@ -135,14 +131,6 @@ public class Bereich {
 				grafik.fillRect((double) (x*canvas.getWidth()/BREITE),  (double) (y*canvas.getWidth()/HOEHE), (double) (canvas.getWidth()/BREITE), (double) (canvas.getWidth()/HOEHE));
 			}
 		}
-		
-//		System.out.println(canvas.getWidth());
-//		grafik.setFill(Color.GREEN);
-//		grafik.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
-		
-		//TODO Bodenschätze, Gebäude??
-				
-//		return oberflaeche; 
 	}
 	
 	/**

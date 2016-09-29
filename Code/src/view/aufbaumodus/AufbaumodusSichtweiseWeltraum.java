@@ -21,7 +21,7 @@ import view.aufbaumodus.fxml.SpielUmgebungController;
  * @author Dennis
  *
  */
-public abstract class AufbaumodusSichtweisen 
+public abstract class AufbaumodusSichtweiseWeltraum 
 {
 	/**
 	 * die Scene die zur darstellung verwendet wird
@@ -47,7 +47,7 @@ public abstract class AufbaumodusSichtweisen
 	/**
 	 * der konstruktor der Klasse
 	 */
-	public AufbaumodusSichtweisen() 
+	public AufbaumodusSichtweiseWeltraum() 
 	{
 		initScene();
 	}
@@ -62,7 +62,7 @@ public abstract class AufbaumodusSichtweisen
 		this.subScene = new SubScene(subSceneRoot , 1000 , 1000, true, SceneAntialiasing.BALANCED);
 		this.subScene.setFill(Color.BLACK); 
 		this.subScene.setDepthTest(DepthTest.ENABLE);
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/weltraum/fxml/SpielUmgebung.fxml"));
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/aufbaumodus/fxml/SpielUmgebung.fxml"));
 		try{loader.load();}catch (IOException e){e.printStackTrace();}	
 		this.controller = loader.getController();
 

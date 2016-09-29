@@ -180,19 +180,16 @@ public class Feld {
 	
 	/**
 	 * 
-	 * @return gibt ein Canvas mit einem zum Feld passendem Aussehen zurueck
+	 * 
 	 */
-	public Canvas getAussehen()
+	public void getAussehen(Canvas canvas)
 	{
-		Canvas oberflaeche = new Canvas();
-		GraphicsContext grafik = oberflaeche.getGraphicsContext2D();
+		GraphicsContext grafik = canvas.getGraphicsContext2D();
 		
 		//TODO
 		//gebäude, pflanzen, rohstoffe markieren
 		
 		grafik.setFill(this.bodentyp.getColor());
 		grafik.fillRect(0, 0, 400, 400);
-				
-		return new Canvas(); 
 	}
 }

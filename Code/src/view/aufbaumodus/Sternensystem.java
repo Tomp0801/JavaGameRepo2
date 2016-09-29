@@ -3,20 +3,18 @@ package view.aufbaumodus;
 import controller.Bewegungsmanager;
 import himmelskoerper.SchwarzesLoch;
 import javafx.event.EventHandler;
-import javafx.geometry.Point3D;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Sphere;
 
 
 import java.awt.Toolkit;
-import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyEvent;
 
 /*
  * 
  */
-public class Sternensystem extends AufbaumodusSichtweisen
+public class Sternensystem extends AufbaumodusSichtweiseWeltraum
 {
 	private KameraSternensystem kamera;
 	
