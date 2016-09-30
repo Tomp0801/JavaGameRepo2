@@ -9,6 +9,7 @@ import himmelskoerper.Stern;
 import view.aufbaumodus.PlanetenkarteBereiche;
 import view.aufbaumodus.Planetensystem;
 import view.aufbaumodus.Sonnensystem;
+import view.aufbaumodus.Sternensystem;
 
 /**
  * Im GameManager wird der spielfluss kontrolliert
@@ -80,9 +81,10 @@ public final class GameManager
 	{
 		schwarzesLoch = new SchwarzesLoch(seed);
 		//TODO DEMO 
+		Sternensystem sternsystem = new Sternensystem(schwarzesLoch);
 		Sonnensystem system = new Sonnensystem((Stern) schwarzesLoch.getChild(0));
 		Stern stern = (Stern) schwarzesLoch.getChild(0);
-		StageController.getInstance().setScene(system.getScene());
+		StageController.getInstance().setScene(sternsystem.getScene());
 		
 //		Planet planet = (Planet) stern.getChild(0);	
 		

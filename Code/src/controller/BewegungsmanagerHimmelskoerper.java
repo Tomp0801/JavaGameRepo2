@@ -12,33 +12,32 @@ import javafx.beans.property.SimpleDoubleProperty;
  * der Bewegungsmanager kuemmert sich um die berechnung der Positionen von Himmerlskoerpern die sich beim
  * Bewegungsmanager angemeldet haben. 
  * 
- * 
  * @author Dennis 
  *
  */
-public class Bewegungsmanager 
+public class BewegungsmanagerHimmelskoerper 
 {
 	/**
 	 * instance vom Bewegingsmanager
 	 */
-	private static Bewegungsmanager instance;
+	private static BewegungsmanagerHimmelskoerper instance;
 	
 	/**
 	 * in diesr Liste befinden sich alle InOrbit Objekte dessen Position in einer while(true) Schleife 
 	 * staendig erneuert werden solll 
 	 */
-	private ArrayList<InOrbit> positionsRechnerListe = new ArrayList<InOrbit>();
+	private ArrayList<InOrbit> bewegungsRechnerListe = new ArrayList<InOrbit>();
 	
 	/**
 	 * in dieser Liste befinden sich Paneten eines Sonnensystems dessen position sich ein
 	 */
-	private ArrayList<Bewegungsadapta> adaptaSonnensystemRechner = new ArrayList<Bewegungsadapta>();
+	private ArrayList<BewegungsadaptaSonnensystem> adaptaSonnensystemRechner = new ArrayList<BewegungsadaptaSonnensystem>();
 	
 	
 	/**
 	 * Konsturktor vom Bewegungsmanager
 	 */
-	private Bewegungsmanager()
+	private BewegungsmanagerHimmelskoerper()
 	{
 		instance = this; 	
 		this.reellepositionRechner();
@@ -49,11 +48,11 @@ public class Bewegungsmanager
 	 * gibt die Instance vom Bewegungsmanager zurueck
 	 * @return
 	 */
-	public static Bewegungsmanager getInstance()
+	public static BewegungsmanagerHimmelskoerper getInstance()
 	{
 		if (instance == null)
 		{
-			new Bewegungsmanager();
+			new BewegungsmanagerHimmelskoerper();
 		}
 		return instance;	
 	}
@@ -64,9 +63,9 @@ public class Bewegungsmanager
 	 * von diesem Object in einer dauerschleife neu berechnet..
 	 * @param inOrbit das Objekt was hinzugefuegt werden soll.
 	 */
-	public void addInOrbitObjectToPositionsRechner(InOrbit inOrbit)
+	public void addInOrbitObjectToBewegungsRechner(InOrbit inOrbit)
 	{
-		this.positionsRechnerListe.add(inOrbit);
+		this.bewegungsRechnerListe.add(inOrbit);
 	}
 	
 	
@@ -77,7 +76,7 @@ public class Bewegungsmanager
 	 */
 	public void delateFromPositionsRechner(InOrbit koerper)
 	{
-		positionsRechnerListe.remove(koerper);
+		bewegungsRechnerListe.remove(koerper);
 	}
 	
 
@@ -89,10 +88,11 @@ public class Bewegungsmanager
 	 */
 	public SimpleDoubleProperty[] addPlanetToPositionsRechnerWithAdapta(double radius, Planet planet)
 	{
-		adaptaSonnensystemRechner.add(new Bewegungsadapta(radius , planet));
+		adaptaSonnensystemRechner.add(new BewegungsadaptaSonnensystem(radius , planet));
 		adaptaSonnensystemRechner.get(adaptaSonnensystemRechner.size()-1).refresh();
 		return new SimpleDoubleProperty[] {adaptaSonnensystemRechner.get(adaptaSonnensystemRechner.size()-1).posiX , adaptaSonnensystemRechner.get(adaptaSonnensystemRechner.size()-1).posiY , adaptaSonnensystemRechner.get(adaptaSonnensystemRechner.size()-1).posiZ}; 
 	}
+	
 	
 	/**
 	 * diese Methode rechnet in einer Dauerschleife alle Positionen von InOrbit Objekten durch die sich
@@ -109,9 +109,9 @@ public class Bewegungsmanager
 				{	
 					try {Thread.sleep(50);} catch (InterruptedException e){e.printStackTrace();}
 					
-					for (int i = 0; positionsRechnerListe.size() > i ; i++)
+					for (int i = 0; bewegungsRechnerListe.size() > i ; i++)
 					{
-						positionsRechnerListe.get(i).refresh();
+						bewegungsRechnerListe.get(i).refresh();
 					}
 					for (int i = 0; adaptaSonnensystemRechner.size() > i ; i++)
 					{
@@ -132,39 +132,50 @@ public class Bewegungsmanager
 	 * @author Dennis
 	 *
 	 */
-	public class Bewegungsadapta
+	public class BewegungsadaptaSonnensystem
 	{
+		/**
+		 * X Koardinate das auf die view eines Sonnensystems angepasst ist
+		 */
 		private SimpleDoubleProperty posiX = new SimpleDoubleProperty(); 
 		
+		/**
+		 * Y Koardinate das auf die view eines Sonnensystems angepasst ist
+		 */
 		private SimpleDoubleProperty posiY = new SimpleDoubleProperty();
 		
+		/**
+		 * Z Koardinate das auf die view eines Sonnensystems angepasst ist
+		 */
 		private SimpleDoubleProperty posiZ = new SimpleDoubleProperty();
 		
+		/**
+		 * dieser Radius ist die angepasste entfernung zum Zentrum des Sonnensystems.
+		 * Mit dieser wird eine angepasste position berechnet
+		 */
 		private double radius;
 		
+		/**
+		 * der Planet der sich an die Werte des adapters bindet
+		 */
 		private Planet planet; 
 		
-		Bewegungsadapta(double radius, Planet planet)
+		/**
+		 * erstellt ein Objekt vom BewegungsadaptaSonnensystems
+		 * 
+		 * @param radiusieser Radius ist die angepasste entfernung zum Zentrum des Sonnensystems.Mit dieser wird eine angepasste position berechnet
+		 * @param planet der Planet der sich an die Werte des adapters bindet
+		 */
+		BewegungsadaptaSonnensystem(double radius, Planet planet)
 		{
 			this.planet = planet;
 			this.radius = radius;
 		}
 		
-		public synchronized DoubleProperty getPosiX() 
-		{
-			return posiX;
-		}
-
-		public synchronized DoubleProperty getPosiY() 
-		{
-			return posiY;
-		}
-
-		public synchronized DoubleProperty getPosiZ() 
-		{
-			return posiZ;
-		}
 		
+		/**
+		 * aktuallisiert die Position auf der view
+		 */
 		public synchronized void refresh()
 		{
 			double x = 0; 

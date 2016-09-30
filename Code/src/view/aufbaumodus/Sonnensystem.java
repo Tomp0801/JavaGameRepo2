@@ -1,6 +1,6 @@
 package view.aufbaumodus;
 
-import controller.Bewegungsmanager;
+import controller.BewegungsmanagerHimmelskoerper;
 import controller.StageController;
 import himmelskoerper.Himmelskoerper;
 import himmelskoerper.Planet;
@@ -82,15 +82,15 @@ public class Sonnensystem extends AufbaumodusSichtweiseWeltraum
 			}
 		}
 		//sucht den entferntesten Planeten und speichert diese in die Variable orbitRadius. Dies entspricht dann 100% 
-				for (int i = 0; stern.getChildren().size() > i ; i++)
-				{
-					Point3D entfernung = new Point3D (  stern.getChild(i).getPositionPolar().get(0) ,stern.getChild(i).getPositionPolar().get(1) ,stern.getChild(i).getPositionPolar().get(2)  );
-					
-					if (entfernung.distance(0 ,0 ,0) > orbitRadius)
-					{
-						orbitRadius = entfernung.distance(0 ,0 ,0);
-					}
-				}
+		for (int i = 0; stern.getChildren().size() > i ; i++)
+		{
+			Point3D entfernung = new Point3D (  stern.getChild(i).getPositionPolar().get(0) ,stern.getChild(i).getPositionPolar().get(1) ,stern.getChild(i).getPositionPolar().get(2)  );
+				
+			if (entfernung.distance(0 ,0 ,0) > orbitRadius)
+			{
+				orbitRadius = entfernung.distance(0 ,0 ,0);
+			}
+		}
 
 		//nun wird das System gezeichnet
 		for (int j = 0; stern.getChildren().size() > j; j++)
@@ -102,7 +102,7 @@ public class Sonnensystem extends AufbaumodusSichtweiseWeltraum
 				//hier wird die Position des Planeten aktualiesiert
 				stern.getChild(j).refresh();
 				//Die aktulle position wird in dieser Variable gepeichert (Polarefrom)
-				Point3D point = new Point3D (  stern.getChild(j).getPositionPolar().get(0) ,stern.getChild(j).getPositionPolar().get(1) ,stern.getChild(j).getPositionPolar().get(2)  );
+				Point3D point = new Point3D (  stern.getChild(j).getPositionPolar().get(0) ,stern.getChild(j).getPositionPolar().get(1) ,stern.getChild(j).getPositionPolar().get(2));
 				//hier wird die entfernung zur Sonne angepasst
 				double orbitRadiusPlanet = ((point.distance(0 , 0 , 0) / orbitRadius)*maxOrbitRadius)+maxGroeﬂe*2;
 	
@@ -117,14 +117,14 @@ public class Sonnensystem extends AufbaumodusSichtweiseWeltraum
 	   	 		himmelskoerper.setRadius(radius);
 	   	 	
 	   	 		//bindet die Position ein einen Wert	
-	   	        SimpleDoubleProperty[] posi = Bewegungsmanager.getInstance().addPlanetToPositionsRechnerWithAdapta(orbitRadiusPlanet , (Planet) stern.getChild(j));  	        
+	   	        SimpleDoubleProperty[] posi = BewegungsmanagerHimmelskoerper.getInstance().addPlanetToPositionsRechnerWithAdapta(orbitRadiusPlanet , (Planet) stern.getChild(j));  	        
 	   	        himmelskoerper.translateXProperty().bind(posi[0]);
 	   	        himmelskoerper.translateYProperty().bind(posi[1]);
 	   	        himmelskoerper.translateZProperty().bind(posi[2]);	
 	   	        //setzt den Planeten ins Universum
 	   	        this.getSubSceneRoot().getChildren().add(himmelskoerper);
 	   	        //sagt das die positions staendig aktualliesiert werden soll
-	   	        Bewegungsmanager.getInstance().addInOrbitObjectToPositionsRechner(stern.getChild(j));
+	   	        BewegungsmanagerHimmelskoerper.getInstance().addInOrbitObjectToBewegungsRechner(stern.getChild(j));
 	   	         
 	   	        //gibt den Planeten sein Aussehen
 		        himmelskoerper.setMaterial(stern.getChild(j).getAussehn());
@@ -357,6 +357,10 @@ public class Sonnensystem extends AufbaumodusSichtweiseWeltraum
 					else if (e.getCode() == KeyCode.S)
 					{
 						doZoomen(-100);
+					}
+					else if (e.getCode() == KeyCode.ESCAPE)
+					{
+						StageController.getInstance().openLastScene();
 					}
 				}
 			});

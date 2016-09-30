@@ -1,6 +1,6 @@
 package view.aufbaumodus;
 
-import controller.Bewegungsmanager;
+import controller.BewegungsmanagerHimmelskoerper;
 import controller.StageController;
 import himmelskoerper.Betretbar;
 import himmelskoerper.Himmelskoerper;
@@ -117,7 +117,7 @@ public class Planetensystem extends AufbaumodusSichtweiseWeltraum
 	 	himmelskoerper.setRadius(mond.getRadius());
 	 	
 	 	this.getSubSceneRoot().getChildren().add(himmelskoerper);	
-	    Bewegungsmanager.getInstance().addInOrbitObjectToPositionsRechner(mond);  	        
+	    BewegungsmanagerHimmelskoerper.getInstance().addInOrbitObjectToBewegungsRechner(mond);  	        
 	   
 	    himmelskoerper.translateXProperty().bind(mond.getPositionProperty()[0]);
 	    himmelskoerper.translateYProperty().bind(mond.getPositionProperty()[1]);
