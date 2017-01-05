@@ -18,6 +18,7 @@ import java.awt.MouseInfo;
 import java.awt.Point;
 import java.awt.Toolkit;
 import javafx.geometry.Point3D;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -51,15 +52,16 @@ public class Planetensystem extends AufbaumodusSichtweiseWeltraum
 	 */
 	public Planetensystem(Planet planet)
 	{  
-//		this.getSpielUmgebungController().setBottomPane(navigationBox);
-//		navigationBox.setAlignment(Pos.CENTER);
-//		navigationBox.setSpacing(10);
-
 		kamera = new KameraPlanetensystem(this.getScene(), (int) planet.getRadius());
 		this.planet = planet; 
 		this.getSubScene().setCamera(kamera.getKamera());
 		//zeichenet das Planetensystem mit den Monden und allem was Raumschiffen ect. 
 		zeichnePlanetensystem(this.planet); 
+		
+		this.getSpielUmgebungController().getStackPaneZentrum().getChildren().add(navigationBox);
+		navigationBox.setAlignment(Pos.CENTER);
+		navigationBox.setSpacing(10);
+		navigationBox.setMouseTransparent(true);
     }
 	
 	

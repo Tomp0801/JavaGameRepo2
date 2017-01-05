@@ -1,5 +1,7 @@
 package controller;
 
+import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
+
 import global.Constants;
 import global.GameTime;
 import himmelskoerper.FestPlanet;
@@ -10,6 +12,7 @@ import view.aufbaumodus.PlanetenkarteBereiche;
 import view.aufbaumodus.Planetensystem;
 import view.aufbaumodus.Sonnensystem;
 import view.aufbaumodus.Sternensystem;
+import view.hauptmenu.Ladebildschirm;
 
 /**
  * Im GameManager wird der spielfluss kontrolliert
@@ -79,12 +82,16 @@ public final class GameManager
 	 */
 	private void startDemoSpiel(int seed)
 	{
+		Ladebildschirm.getInstance().oeffneLadebildschrim();
+		
 		schwarzesLoch = new SchwarzesLoch(seed);
 		//TODO DEMO 
 		Sternensystem sternsystem = new Sternensystem(schwarzesLoch);
 		Sonnensystem system = new Sonnensystem((Stern) schwarzesLoch.getChild(0));
 		Stern stern = (Stern) schwarzesLoch.getChild(0);
+		
 		StageController.getInstance().setScene(sternsystem.getScene());
+		Ladebildschirm.getInstance().closeRotationThread();
 		
 //		Planet planet = (Planet) stern.getChild(0);	
 		

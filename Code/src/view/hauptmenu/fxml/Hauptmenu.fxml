@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.shape.*?>
 
-<StackPane fx:id="stackPane" depthTest="ENABLE" maxHeight="4000.0" maxWidth="4000.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.hauptmenu.HauptmenuController">
+<StackPane fx:id="root" depthTest="ENABLE" maxHeight="4000.0" maxWidth="4000.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.hauptmenu.HauptmenuController">
    <children>
       <Canvas fx:id="hintergrund" height="234.0" width="284.0">
          <StackPane.margin>
@@ -21,7 +21,7 @@
             <Cursor fx:constant="DEFAULT" />
          </cursor>
       </Sphere>
-      <VBox fx:id="startMenuBox" alignment="CENTER" fillWidth="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="340.0" minWidth="630.0" scaleZ="10.0" snapToPixel="false" spacing="20.0" StackPane.alignment="CENTER">
+      <VBox fx:id="startMenuBox" alignment="CENTER" fillWidth="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="340.0" minWidth="630.0" scaleZ="10.0" snapToPixel="false" spacing="20.0" translateZ="-10.0" StackPane.alignment="CENTER">
          <effect>
             <Lighting diffuseConstant="1.02" specularConstant="0.0" surfaceScale="1.05">
                <bumpInput>

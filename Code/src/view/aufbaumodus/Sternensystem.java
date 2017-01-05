@@ -7,9 +7,11 @@ import himmelskoerper.Stern;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Sphere;
-
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.input.KeyEvent;
 
 /**
@@ -29,6 +31,15 @@ public class Sternensystem extends AufbaumodusSichtweiseWeltraum
 	 */
 	private final int STERNSIZE = 10;
 	
+	/**
+	 * die Position der Kamera wird mit diesem Label gezeigt
+	 */
+	private Label infoPosition = new Label("Position");
+	
+	/**
+	 * in dieser VBox werden informationen einer Sonne angezeigt
+	 */
+	private VBox infoBox = new VBox();
 	
 	/**
 	 * erstellt ein Objekt vom Sternensystem. In diesem System befinden sich Sterne die um ein schwarzes Loch kreisen
@@ -40,6 +51,13 @@ public class Sternensystem extends AufbaumodusSichtweiseWeltraum
 		kamera = new KameraSternensystem(this.getScene());
 		this.getSubScene().setCamera(kamera.getKamera());
 		zeichneSternsystem(zentrum);
+		
+		infoPosition.setTextFill(Color.WHITE);
+		this.getSpielUmgebungController().getMenuOnTop().getChildren().add(infoPosition);
+		
+		infoBox.setMouseTransparent(true);
+		infoBox.setSpacing(20);
+		this.getSpielUmgebungController().getStackPaneZentrum().getChildren().add(infoBox);		
 	}
 	
 	
@@ -56,10 +74,17 @@ public class Sternensystem extends AufbaumodusSichtweiseWeltraum
 				zentrum.getChild(j).refresh();
 	   	 		//erstelle ein Stern
 	   	 		Sphere stern = new Sphere();
+//	   	 		Sphere sternUmgebung = new Sphere(); 
+//	   	 		sternUmgebung.setOpacity(0.2);
+	   	 		
 	   	 		stern.setRadius(STERNSIZE);
+//	   	 		sternUmgebung.setRadius(STERNSIZE*2);
+	   	 		
 	   	        //setzt das aussehen der Kugel
 		        stern.setMaterial(zentrum.getChild(j).getAussehn());
+//		        sternUmgebung.setMaterial(zentrum.getChild(j).getAussehn());
 	   	 		this.getSubSceneRoot().getChildren().add(stern);	
+//	   	 		this.getSubSceneRoot().getChildren().add(sternUmgebung);
 	   	 		
 	   	 		BewegungsmanagerStern.getInstance().getBewegungsRechnerStern().add(sonne);
 	   	       
@@ -68,14 +93,17 @@ public class Sternensystem extends AufbaumodusSichtweiseWeltraum
 	   	        stern.translateXProperty().bind(propertyPosition[0]);
 	   	        stern.translateYProperty().bind(propertyPosition[1]);
 	   	        stern.translateZProperty().bind(propertyPosition[2]);	
-	   	         
-	   	        System.out.println("Position der sterne: X: "+stern.getTranslateX()+" Y: "+stern.getTranslateY()+" Z "+stern.getTranslateZ());
+//	   	         
+//	   	        sternUmgebung.translateXProperty().bind(propertyPosition[0]);
+//	   	        sternUmgebung.translateYProperty().bind(propertyPosition[1]);
+//	   	        sternUmgebung.translateZProperty().bind(propertyPosition[2]);	
+//	   	        
 		        //macht den Stern anklickbar
 		        stern.setOnMouseClicked(new EventHandler<MouseEvent>()
 		        {
 					@Override
 					public void handle(MouseEvent event) 
-					{					
+					{		
 						if (event.getClickCount() == 2)
 						{
 							Sonnensystem sonnesystem = new Sonnensystem(sonne);
@@ -83,8 +111,7 @@ public class Sternensystem extends AufbaumodusSichtweiseWeltraum
 						}
 						else
 						{
-							
-							//Lade Informationen
+							ladeInformationen(sonne);			
 						}
 					}
 		        });     
@@ -97,7 +124,31 @@ public class Sternensystem extends AufbaumodusSichtweiseWeltraum
 		
 	}
 	
+	/**
+	 * laed informationen ueber einen Stern der angeklickt wurde
+	 */
+	private void ladeInformationen(Stern stern)
+	{	
+		
+		infoBox.getChildren().clear();
+		
+		Label name = new Label(stern.getName());
+		name.setTextFill(Color.BLUE);
+		Label masse = new Label("Masse "+stern.getMasse());
+		masse.setTextFill(Color.BLUE);
+		Label planeten = new Label(stern.getChildren().size()+ " Planeten");
+		planeten.setTextFill(Color.BLUE);
+		Label radius = new Label("Radius "+stern.getRadius());
+		radius.setTextFill(Color.BLUE);
+		Label systemRadius = new Label("Systemradius "+stern.getSystemRadius());
+		systemRadius.setTextFill(Color.BLUE);
+		Label temperatur = new Label("Oberflächentemeratur "+stern.getOberflaechenTemperatur());
+		temperatur.setTextFill(Color.BLUE);
+		
+		infoBox.getChildren().addAll(name, masse ,planeten, radius, systemRadius, temperatur);
 
+		
+	}
 	
 	
 	//´--------------------------------Kamera-dieser-Scene--------------------------------------------------------------------------------------------//
@@ -134,7 +185,7 @@ public class Sternensystem extends AufbaumodusSichtweiseWeltraum
 		
 		public KameraSternensystem(Scene scene)
 		{
-			//legt die Sichtweite fest
+//			legt die Sichtweite fest
 			this.getKamera().setFarClip(10000000);
 			//maximale naehe
 			this.getKamera().setNearClip(0.1);
@@ -198,7 +249,7 @@ public class Sternensystem extends AufbaumodusSichtweiseWeltraum
 //			PathTransition bewegung = new PathTransition(Duration.seconds(2) ,path, this.getKamera());
 	//
 //			bewegung.play();
-			
+			infoPosition.setText("X: "+sektion[0]+" Y: "+sektion[1]+" Z: "+sektion[2]);
 			this.setPosition(sektion[0]*SEKTIONSIZE, sektion[1]*SEKTIONSIZE, sektion[2]*SEKTIONSIZE);
 		}
 	}

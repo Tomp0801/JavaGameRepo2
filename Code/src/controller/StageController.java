@@ -1,13 +1,14 @@
 package controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.LinkedList;
 
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCombination;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 /**
@@ -62,11 +63,10 @@ public class StageController extends Application
 		primaryStage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
 		//Damit keine Nachricht erscheint nach dem eröffnen des FullScreens
 		primaryStage.setFullScreenExitHint("");
-		primaryStage.setFullScreen(true);
+		primaryStage.centerOnScreen();
 		primaryStage.show();
 
 		this.setScene(this.generateScen(new FXMLLoader(getClass().getResource("/view/hauptmenu/fxml/Hauptmenu.fxml"))));
-		//nicht loeschen
 	}
 	
 	
@@ -75,7 +75,7 @@ public class StageController extends Application
 	 * @param scene
 	 */
 	public void setScene(Scene scene)
-	{
+	{		
 		if (scenListe.size() > 200)
 		{
 			scenListe.removeFirst();
@@ -90,10 +90,14 @@ public class StageController extends Application
 			this.scenListe.add(scene);
 		}
 		primaryStage.setScene(scene);
+		primaryStage.centerOnScreen();
 		primaryStage.setFullScreen(true);
 		primaryStage.setX(0);
-		primaryStage.setY(0);		
-		primaryStage.show(); 	
+		primaryStage.setY(0);
+		primaryStage.show();
+		
+		scene.setOnMouseClicked(new EventHandler<MouseEvent>() 
+		{@Override public void handle(MouseEvent event) {System.out.println("SubScene wurd angeklickt Ziel: "+event.getTarget().toString());}});
 	}
 	
 	

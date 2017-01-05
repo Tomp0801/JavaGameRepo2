@@ -7,15 +7,13 @@ import javafx.animation.Animation.Status;
 import javafx.animation.FadeTransition;
 import javafx.animation.ScaleTransition;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.SubScene;
 import javafx.scene.control.Button;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
@@ -28,6 +26,19 @@ import javafx.util.Duration;
  */
 public class SpielUmgebungController implements Initializable
 {
+	
+	@FXML
+	private StackPane oberst;
+	
+	public synchronized StackPane getOberst() {
+		return oberst;
+	}
+
+
+	public synchronized void setOberst(StackPane oberst) {
+		this.oberst = oberst;
+	}
+
 	/**
 	 * die oberste Node. 
 	 * 
@@ -43,6 +54,12 @@ public class SpielUmgebungController implements Initializable
 	 */
 	@FXML 
 	private StackPane centerPane;
+	
+	/**
+	 * Die Obere Menuleiste
+	 */
+	@FXML
+	private HBox menuOnTop;
 	
 	/**
 	 * ein Spiel Menu
@@ -123,8 +140,6 @@ public class SpielUmgebungController implements Initializable
 	private Button back;
 	//-----------------------------------------------------------------------------------------------------//
 	
-	@FXML
-	private StackPane testStackPane;
 	
 	/**
 	 * unterstuetzt das navigieren in einer Sektion. Beinhaltet eine Liste von Planeten
@@ -231,6 +246,17 @@ public class SpielUmgebungController implements Initializable
 	{
 		return centerPane;
 	}
+	
+	
+	/**
+	 * gibt die HBox der Oberen Menuleiste wieder
+	 * @return
+	 */
+	public HBox getMenuOnTop()
+	{
+		return this.menuOnTop;
+	}
+	
 	
 	/**
 	 * offnet das SpielMenu

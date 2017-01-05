@@ -204,7 +204,6 @@ public class BewegungsmanagerStern
 			stern.refresh();
 			Point3D point = new Point3D(stern.getPositionKartesisch().getX(), stern.getPositionKartesisch().getY(), stern.getPositionKartesisch().getZ());
 			entfernungZumZentrum = (point.distance(0 , 0,  0) / VERKLEINERUNGSFAKTOR);
-			System.out.println("Angepasste entfrenung im Sternensystem zum Zentrum:  "+entfernungZumZentrum+" ");
 		}
 		
 		
@@ -222,7 +221,6 @@ public class BewegungsmanagerStern
 			x = entfernungZumZentrum * Math.sin(positionsVector.get(2)) * Math.cos(positionsVector.get(1));
 			y = entfernungZumZentrum * Math.sin(positionsVector.get(2)) * Math.sin(positionsVector.get(1));
 			z = entfernungZumZentrum * Math.cos(positionsVector.get(2));			
-			System.out.println("neue Position: X "+x+" Y "+y+" Z "+z);
 			
 			posiX.set(x);
 			posiY.set(y);

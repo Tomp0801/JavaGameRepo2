@@ -2,12 +2,16 @@ package view.aufbaumodus;
 
 import java.io.IOException;
 
+import javafx.event.EventHandler;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.DepthTest;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.SceneAntialiasing;
 import javafx.scene.SubScene;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import view.aufbaumodus.fxml.SpielUmgebungController;
 
@@ -65,7 +69,7 @@ public abstract class AufbaumodusSichtweiseWeltraum
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/aufbaumodus/fxml/SpielUmgebung.fxml"));
 		try{loader.load();}catch (IOException e){e.printStackTrace();}	
 		this.controller = loader.getController();
-
+		
 		this.controller.wechsleZentrum(subScene);
 		this.scene = new Scene(loader.getRoot() , 1000 , 1400 , true, SceneAntialiasing.BALANCED);	
 	}

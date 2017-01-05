@@ -11,12 +11,11 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
@@ -79,7 +78,12 @@ public class HauptmenuController implements Initializable, Runnable
 	@FXML
 	private Button endeButton;
 	
-	private Thread thread;
+	@FXML
+	private StackPane root;
+	
+	
+	private Thread thread;	
+	
 	/**
 	 * initialisiert den Controller
 	 */
@@ -103,9 +107,10 @@ public class HauptmenuController implements Initializable, Runnable
 		graphic.setFill(Color.BLACK);
 		graphic.fillRect(0, 0, hintergrund.getWidth(), hintergrund.getHeight());	
 		
+		
 		thread = new Thread(this);
 		thread.setDaemon(true);
-		thread.start();
+		thread.start();		
 	}
 
 	
@@ -164,8 +169,6 @@ public class HauptmenuController implements Initializable, Runnable
 			//der Thread mit der sich die Erdkugel dreht wird hier beendet solte beachtet werden..
 			this.thread.interrupt();
 			GameManager.getInstance().starteSpiel(Options.worldSeed);
-//			StageController.getInstance().wechselScene(SceneEnum.WELTRAUMSICHT);
-
 		}
 		
 		else if (e.getSource() == mehrspielerButton)
@@ -187,11 +190,4 @@ public class HauptmenuController implements Initializable, Runnable
 			System.exit(-1);
 		}
 	}
-	
-//	public static Scene generateScene()
-//	{
-//		Node node =  FXMLLoader.load((getClass().getResource("fxml/Hauptmenu.fxml")));  
-//		
-//		return new Scene(loader.getRoot());
-//	}
 }
