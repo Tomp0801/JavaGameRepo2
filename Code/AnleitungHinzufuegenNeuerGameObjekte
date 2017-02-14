@@ -1,0 +1,8 @@
+Die Anleitung beschreibt die Schritte die unternommen werden muessen, wenn ein Neues GameObjekt hinzugefuegt werden soll
+
+1 model
+1.1 muss von GameObjekt erben
+1.2
+- View
+- controller
+- gameMaker

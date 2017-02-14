@@ -1,0 +1,15 @@
+6 #Anzahl an den Texten, die es gibt. 
+/begin0 text beliebger länge end0//begin 2 3 4 5 6 #verweist auf die Antwortmögligkeiten
+/begin1 text beliebger länge end1/
+/begin2 text beliebger länge end2/
+/begin3 text beliebger länge end3/
+/begin4 text beliebger länge end4/
+/begin5 text beliebger länge end5/
+/begin0 antwort end0/
+/begin1 antwort end1/
+/begin2 antwort end2/
+/begin3 antwort end3/
+/begin4 antwort end4/
+/begin5 antwort end5/
+/begin6 antwort end6/
+/begin7 antwort end7/
