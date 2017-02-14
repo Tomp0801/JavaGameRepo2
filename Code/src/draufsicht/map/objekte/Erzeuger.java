@@ -1,7 +1,7 @@
 package draufsicht.map.objekte;
 
-import draufsicht.global.GameTime;
 import draufsicht.map.Feld;
+import obersteEbene.controller.GameTime;
 
 /**
  * Abstrakte Klasse für alle Objekte, die Materialien produzieren sollen

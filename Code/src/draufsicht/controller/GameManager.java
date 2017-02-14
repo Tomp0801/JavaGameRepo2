@@ -2,8 +2,6 @@ package draufsicht.controller;
 
 import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 
-import draufsicht.global.Constants;
-import draufsicht.global.GameTime;
 import draufsicht.himmelskoerper.FestPlanet;
 import draufsicht.himmelskoerper.Planet;
 import draufsicht.himmelskoerper.SchwarzesLoch;
@@ -13,6 +11,8 @@ import draufsicht.view.aufbaumodus.Planetensystem;
 import draufsicht.view.aufbaumodus.Sonnensystem;
 import draufsicht.view.aufbaumodus.Sternensystem;
 import draufsicht.view.hauptmenu.Ladebildschirm;
+import obersteEbene.controller.GameTime;
+import obersteEbene.konstanten.Constants;
 
 /**
  * Im GameManager wird der spielfluss kontrolliert

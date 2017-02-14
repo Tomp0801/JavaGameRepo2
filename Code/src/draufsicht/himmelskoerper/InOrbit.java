@@ -5,8 +5,8 @@ package draufsicht.himmelskoerper;
 import java.util.Vector;
 
 import draufsicht.global.Agregat;
-import draufsicht.global.Constants;
-import draufsicht.global.GameTime;
+import obersteEbene.controller.GameTime;
+import obersteEbene.konstanten.Constants;
 
 /**
  * Eine abstrakte Klasse für Objekte, die sich im Orbit um ein anderes Objekt befinden

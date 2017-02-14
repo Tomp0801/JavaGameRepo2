@@ -4,9 +4,9 @@ import java.util.Iterator;
 import java.util.LinkedList;
 
 import draufsicht.global.Agregat;
-import draufsicht.global.Constants;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
+import obersteEbene.konstanten.Constants;
 
 
 /**
