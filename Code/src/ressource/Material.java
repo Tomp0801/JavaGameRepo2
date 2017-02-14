@@ -5,6 +5,7 @@ import java.io.Serializable;
 import java.util.HashMap;
 
 import global.Agregat;
+import global.StufenEnum;
 
 /**
  * Grundklasse für alle Stoffe Materialen, etc.
@@ -40,11 +41,23 @@ public class Material implements Serializable {
 	private double opacity;
 	
 	/**
-	 * das Gewicht des Materials
+	 * Wahrscheinlichkeit, mit der dieses Material auf einem Objekt vorkommt
+	 * Zahl von 0 bis 1
+	 */
+	private float vorkommensWkeit;
+	
+	/**
+	 * Häufigkeit, wie viel mit der das Material vorkommt
+	 * Zahl von 0 bis 1
+	 */
+	private float vorkommensHaeufigkeit;
+	
+	/**
+	 * die Dichte des Materials
 	 * Einheit: kg / m³
 	 * relevant für den Transport
 	 */
-	private float gewicht;
+	private float dichte;
 	
 	/**
 	 * Nahrungswert pro einheit von diesem Material
@@ -111,7 +124,7 @@ public class Material implements Serializable {
 	 * 
 	 * @param name Name des Materials
 	 * @param color Farbe des Materials
-	 * @param spezifikationen array von floats: 1. gewicht, 2. nährwert, 3. energie, 4. stabilität
+	 * @param spezifikationen array von floats: 1. dichte, 2. nährwert, 3. energie, 4. stabilität
 	 * @param agregatpunkt array von ints: 1. schmelzpunkt, 2. siedepunkt
 	 * @param verarbeitung Liste mit möglichen Prozessen und den Materialien, zu denen sie führen, wenn angewandt
 	 */
@@ -123,14 +136,14 @@ public class Material implements Serializable {
 		this.opacity = color.getOpacity();
 		if (spezifikationen.length == 4)
 		{
-			this.gewicht = spezifikationen[0];
+			this.dichte = spezifikationen[0];
 			this.naehrwert = spezifikationen[1];
 			this.energie = spezifikationen[2];
 			this.stabilitaet = spezifikationen[3];
 		}
 		else
 		{
-			this.gewicht = 0;
+			this.dichte = 0;
 			this.naehrwert = 0;
 			this.energie = 0;
 			this.stabilitaet = 0;
@@ -223,19 +236,68 @@ public class Material implements Serializable {
 	}
 
 	/**
-	 * relevant für den Transport von Ressourcen
-	 * Einheit : kg / m³
-	 * @return das Gewicht der Material pro Einheit
+	 * @return die Wahrscheinlichkeit, mit der dieses Material auf einem Objekt vorkommt
 	 */
-	public float getGewicht() {
-		return gewicht;
+	public float getVorkommensWkeit() {
+		return vorkommensWkeit;
 	}
 
 	/**
-	 * @param gewicht the gewicht to set
+	 * @param vorkommensWkeit setzt die Wahrscheinlichkeit, mit der dieses Material auf einem Objekt vorkommt
 	 */
-	protected void setGewicht(float gewicht) {
-		this.gewicht = gewicht;
+	protected void setVorkommensWkeit(float vorkommensWkeit) {
+		this.vorkommensWkeit = vorkommensWkeit;
+	}
+
+	/**
+	 * @param Einstellung, wie für die Häufigkeit des Materials
+	 * @return die vorkommensHaeufigkeit, mit der das Material vorkommt
+	 */
+	public float getVorkommensHaeufigkeit(StufenEnum einstellung) {
+		float temp = 0;
+		switch (einstellung)
+		{
+		case LOW:	//halbe häufigkeit
+			temp = vorkommensHaeufigkeit / 2f;
+			break;
+		case HIGH:	//höhere Vorkommenshäufigkeit
+			temp = vorkommensHaeufigkeit / 2f + 0.5f;
+			break;
+		default:	 //beinhaltet auch die MID einstellung, normale Häufigkeit
+			temp = vorkommensHaeufigkeit;
+			break;
+		}
+		return temp;
+	}
+	
+	/**
+	 * @return die vorkommensHaeufigkeit, mit der das Material vorkommt
+	 */
+	public float getVorkommensHaeufigkeit() {
+		return vorkommensHaeufigkeit;
+	}
+
+	/**
+	 * @param vorkommensHaeufigkeit setzt die vorkommensHaeufigkeit, mit der das Material vorkommt
+	 */
+	protected void setVorkommensHaeufigkeit(float vorkommensHaeufigkeit) {
+		this.vorkommensHaeufigkeit = vorkommensHaeufigkeit;
+	}
+
+	/**
+	 * relevant für den Transport von Ressourcen
+	 * @return die Dichte des Materials in kg / m³
+	 */
+	public float getDichte() {
+		return dichte;
+	}
+
+	/**
+	 * Dichte: Einheit: kg / m³
+	 * @param dichte setzt die dichte 
+	 */
+	protected void setDichte(float dichte) {
+		this.dichte = dichte;
 	}
 
 	/**
@@ -335,51 +397,4 @@ public class Material implements Serializable {
 	public void addForschung(int fortschritt) {
 		this.forschung += fortschritt;
 	}
-	
-	//**************************************************************************************************************************//
-												//STANDARD MATERIALIEN
-	
-	//************************************* METALLE ***********************************************//
-	
-	private static HashMap<Prozess, Material> verarbeitungMetalle = new HashMap<Prozess, Material>(); 
-	static {
-		//TODO mögliche Prozesse ausfüllen
-	}
-	
-	/**
-	 * Das Standard Material Gold
-	 * TODO Spezifikationen
-	 */
-	public final static Material GOLD = new Material("Gold", javafx.scene.paint.Color.GOLD, new float[]{(float) 19302, (float) 0, (float) 0, (float) 1500}, new int[]{1064, 2700}, verarbeitungMetalle);
-	
-	/**
-	 * Das Standard Material Silber
-	 */
-	public final static Material SILBER = new Material("Silber", javafx.scene.paint.Color.SILVER, new float[]{(float) 10490, (float) 0, (float) 0, (float) 1600}, new int[]{962, 2162}, verarbeitungMetalle);
-	
-	/**
-	 * Das Standard Material Eisen
-	 */
-	public final static Material EISEN = new Material("Eisen", javafx.scene.paint.Color.LIGHTGRAY, new float[]{(float) 7900, (float) 0, (float) 0, (float) 3000}, new int[]{1538, 2862}, verarbeitungMetalle);
-	
-	/**
-	 * Das Standard Material Kupfer
-	 */
-	public final static Material KUPFER = new Material("Kupfer", javafx.scene.paint.Color.SANDYBROWN, new float[]{(float) 8960, (float) 0, (float) 0, (float) 2000}, new int[]{1085, 2562}, verarbeitungMetalle);
-
-	//*********************************** Bodenmaterialien **************************************//
-	
-	/**
-	 * Das Standard Material Granit
-	 */
-	public final static Material GRANIT = new Material("Granit", javafx.scene.paint.Color.DARKGRAY, new float[]{(float) 2800, (float) 0, (float) 0, (float) 1000}, new int[]{1450, Integer.MAX_VALUE}, verarbeitungMetalle);
-	
-	//******************************************* Flüssigkeiten ********************************************//
-	
-	/**
-	 * Das Standard Material Wasser
-	 */
-	public final static Material WASSER = new Material("Wasser", javafx.scene.paint.Color.SKYBLUE, new float[]{(float) 1000, (float) 0, (float) 0, (float) 150}, new int[]{0, 100}, verarbeitungMetalle);
-
-
 }
