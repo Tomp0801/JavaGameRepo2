@@ -1,4 +1,4 @@
-package draufsicht.global;
+package obersteEbene.controller;
 
 /**
  * Stellt eine Zeit zur verfügung, die angehalten, beschleunigt oder verlangsamt werden kann

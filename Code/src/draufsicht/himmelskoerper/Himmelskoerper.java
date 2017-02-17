@@ -3,13 +3,13 @@ package draufsicht.himmelskoerper;
 import java.util.Vector;
 
 import draufsicht.global.Agregat;
-import draufsicht.global.Constants;
-import draufsicht.global.GameTime;
-import draufsicht.global.Random;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.geometry.Point3D;
 import javafx.scene.paint.PhongMaterial;
+import obersteEbene.controller.GameTime;
+import obersteEbene.controller.Random;
+import obersteEbene.konstanten.Constants;
 
 /**
  * Ein kugelförmiges Objekt mit Masse und einer Position im Raum;

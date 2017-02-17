@@ -1,4 +1,4 @@
-package draufsicht.global;
+package obersteEbene.controller;
 
 /**
  * Ein PRNG, der pseudo-zufällige Nummern wiedergibt, abhängig von einem Seed (int)

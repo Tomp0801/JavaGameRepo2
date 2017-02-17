@@ -2,10 +2,10 @@ package draufsicht.map;
 
 import java.util.ArrayList;
 
-import draufsicht.global.Random;
 import draufsicht.himmelskoerper.Betretbar;
 import draufsicht.ressource.BodenMaterial;
 import draufsicht.speicherverwaltung.IOHandler;
+import obersteEbene.controller.Random;
 
 /**
  * Eine 2D-Karte, zum Beispiel eines Planeten

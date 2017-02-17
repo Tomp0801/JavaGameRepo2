@@ -2,7 +2,7 @@ package draufsicht.himmelskoerper;
 
 import java.util.Iterator;
 
-import draufsicht.global.GameTime;
+import obersteEbene.controller.GameTime;
 
 /**
  * Klasse für reine Testzwecke

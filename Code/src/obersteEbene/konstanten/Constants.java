@@ -1,4 +1,4 @@
-package draufsicht.global;
+package obersteEbene.konstanten;
 
 /**
  * Klasse mit physikalischen Konstanten, die für verschiedene Berechnungen benötigt werden 
