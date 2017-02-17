@@ -12,9 +12,14 @@ public class Tuer extends GameObjekt
 {
 	private Region zielRegion;
 	
-	public Tuer(Region region)
+	public Tuer()
 	{
 		super(GameObjektType.Tuer);
+	}
+	
+	public Tuer(Region region)
+	{
+		this();
 		this.zielRegion = region;
 	}
 	

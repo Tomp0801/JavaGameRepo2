@@ -2,26 +2,33 @@ package gameMaker.view;
 
 import java.util.ArrayList;
 
-import gameMaker.view.einstellungGameObjekte.EinstellungBett;
-import gameMaker.view.einstellungGameObjekte.EinstellungGameObjekt;
+import gameMaker.view.einstellungGameObjekte.*;
 import javafx.event.Event;
 import javafx.event.EventHandler;
+import javafx.geometry.Bounds;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TitledPane;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.transform.Rotate;
 import personensicht.model.gameObjekte.Bett;
+import personensicht.model.gameObjekte.GameObjekt;
 import personensicht.model.gameObjekte.GameObjektType;
+import personensicht.model.gameObjekte.Mensch;
+import personensicht.model.gameObjekte.Schrank;
+import personensicht.model.gameObjekte.Tuer;
 import personensicht.model.welt.map.Region;
 
 /**
@@ -36,12 +43,7 @@ public class RegionMakerView
 	 * bei eventuellen neu laden oder Beenden ect. Nach dem Speichern gefragt werden kann. 
 	 */
 	private Boolean durtyBit = false; 
-	
-	/**
-	 * wenn ein GameObjekt gesetzt wird, dann muss dises Boolean auf true gesetzt werden. 
-	 */
-	private Boolean wirdGesetzt = false;
-	
+		
 	/**
 	 * der String enthaelt den namen der Datei, die verwendet wird um die Region zu speichern
 	 */
@@ -52,6 +54,10 @@ public class RegionMakerView
 	 */
 	private Scene scene; 
 	
+	/**
+	 * hier befindet sich die Node, die ausgewaeahlt wurde
+	 */
+	private Node ausgewaehterNode; 
 	
 	private BorderPane root = new BorderPane();
 	
@@ -63,13 +69,13 @@ public class RegionMakerView
 	/**
 	 * hier werden die GameObjekte drin gespeichert, die verwendet werden
 	 */
-	private ArrayList<AusgewaehltesGameObejekt> verwendeteGameObjekte = new ArrayList<AusgewaehltesGameObejekt>(); 
+	private ArrayList<AuswahlEinesGameObejekt> verwendeteGameObjekte = new ArrayList<AuswahlEinesGameObejekt>(); 
 	
 	public RegionMakerView() 
-	{
+	{		
 		//Eine MenuLeiste mit Menues. 
 		MenuBar obereMenuLeiste= new MenuBar();
-		//------------------Datei-------------------------------//
+		//------------------Datei-------------------------------------//
 		Menu datei = new Menu("Datei");
 		MenuItem neu = new MenuItem("neu");
 		neu.setOnAction(e -> erstelleNeueRegion());
@@ -80,18 +86,24 @@ public class RegionMakerView
 		MenuItem speichernAls = new MenuItem("speichern unter");
 		speichernAls.setOnAction(e -> speicherUnterNameRegion());
 		datei.getItems().addAll(neu,laden,speichern,speichernAls);
-		//--------------------------Region-------------------------//
+		//--------------------------Region---------------------------//
 		//Einstellungen zur Region zu ´m Beipiel die Groeße
-		Menu regionEinstellung = new Menu("Region");
+		Menu regionEinstellungMenu = new Menu("Region");
 		MenuItem size = new MenuItem("Größe");
 		size.setOnAction(e -> einstellungRegionGroeße());
-		regionEinstellung.getItems().add(size);
-		obereMenuLeiste.getMenus().addAll(datei,regionEinstellung);
+		regionEinstellungMenu.getItems().add(size);
+		//------------------Hilfe------------------------------------//
+		Menu hilfe = new Menu("Hilfe");
+		MenuItem tutorial = new MenuItem("Tutorial"); //Funktion noch nicht vorhanden
+		hilfe.getItems().addAll(tutorial);
+		obereMenuLeiste.getMenus().addAll(datei,regionEinstellungMenu,hilfe);
+		//-------------Eigenschaftenn-------------------------------------------------
+		RegionEinstellungen regionEinstellungenTitlePane = new RegionEinstellungen();
 		
 		//in dieser Liste sollen sich alle GameObjekte aufhalten, die hinzugefuegt werden koennen
 		VBox linkeGameObjektListe = new VBox();
 		linkeGameObjektListe.setMaxWidth(200);
-		GameObjektListe moebel = new GameObjektListe("Möbel");
+		GameObjektAuswalListeTitledPane moebel = new GameObjektAuswalListeTitledPane("Möbel");
 		moebel.addGameObjekt("Schrank");
 		moebel.addGameObjekt("Tür");
 		moebel.addGameObjekt("Tisch");
@@ -99,22 +111,41 @@ public class RegionMakerView
 		moebel.addGameObjekt("Sessel");
 		moebel.addGameObjekt("Bett");
 		moebel.addGameObjekt("Tischlampe");
-		GameObjektListe lebewesen = new GameObjektListe("Mensch");
+		GameObjektAuswalListeTitledPane lebewesen = new GameObjektAuswalListeTitledPane("Mensch");
 		moebel.addGameObjekt("Hund");
 		moebel.addGameObjekt("Katze");
 		moebel.addGameObjekt("Fisch");
 		moebel.addGameObjekt("Affe");
 		moebel.addGameObjekt("Maus");
-		linkeGameObjektListe.getChildren().addAll(moebel,lebewesen);
+		linkeGameObjektListe.getChildren().addAll(regionEinstellungenTitlePane,moebel,lebewesen);
 		//--------------Zentrum-------------------------------------------------
 		zentrumRegion.setPrefSize(Region.getSizemin(),Region.getSizemin());
-
+		zentrumRegion.setStyle("-fx-background-color: GREY");
+		zentrumRegion.setMinSize(Region.getSizemin(), Region.getSizemin());
+		zentrumRegion.setMaxSize(Region.getSizemin(), Region.getSizemin());
+		StackPane zentrum = new StackPane();
+		zentrum.setPrefSize(Region.getSizemin()+200,Region.getSizemin()+200);
+		zentrum.setStyle("-fx-background-color: BLACK");
+		zentrum.setAlignment(Pos.CENTER);
+		zentrum.getChildren().add(zentrumRegion);
 		
 		root.setTop(obereMenuLeiste);
 		root.setLeft(linkeGameObjektListe);
-		root.setCenter(zentrumRegion);
+		root.setCenter(zentrum);
 		
 		this.scene = new Scene(root);
+		scene.setOnKeyReleased(new EventHandler<KeyEvent>(){			
+			@Override
+			public void handle(KeyEvent event) {
+				if (event.getCode() == KeyCode.DELETE){
+					if (ausgewaehterNode != null){
+						zentrumRegion.getChildren().remove(ausgewaehterNode);
+						ausgewaehterNode = null;
+						root.setRight(null);
+					}
+				}
+			}
+		});
 	}
 	
 	
@@ -135,37 +166,152 @@ public class RegionMakerView
 	 * laesst die Node den zeiger folgen und setzt das wirdGesetzt Boolen auf true
 	 * @param node
 	 */
-	private void setzeGameObjekt(AusgewaehltesGameObejekt objekt)
+	private void setzeGameObjektAufDieRegion(AuswahlEinesGameObejekt objekt)
 	{
+		//makiert die Reion als bearbeitet
+		durtyBit = true; 
+		//setzt Eigenschaften der Node
 		Node node = objekt.getNode();
-		wirdGesetzt = true; 
+		node.setRotationAxis(Rotate.X_AXIS);
+		node.setRotate(20);		
+		
 		zentrumRegion.getChildren().add(node);
-		node.setOnMouseDragged(new EventHandler<MouseEvent>() 
-		{
-			  @Override public void handle(MouseEvent mouseEvent) 
-			  {
-				 node.setLayoutX(mouseEvent.getSceneX()-root.getCenter().getLayoutX());
-				 node.setLayoutY(mouseEvent.getSceneY()-root.getCenter().getLayoutY());
+		node.setOnMouseDragged(new EventHandler<MouseEvent>(){
+			
+			  @Override public void handle(MouseEvent mouseEvent) {
+				  setPositionDesGameObjekt(node , mouseEvent);
 			  }
 		});	
 		
+		node.setOnMouseReleased(new EventHandler<MouseEvent>() 
+		{
+			@Override
+			public void handle(MouseEvent mouseEvent) 
+			{
+				//Ueberprueft ob die Position setzbar ist. 
+				Node nodeBlockerung = ueberpruefeDiePositionAufSetzbarkeit(node);
+	
+				if ( nodeBlockerung != null)  
+				{
+					setzteDiePositionDesNodesNeu(mouseEvent, node ,nodeBlockerung);
+				}
+
+					 if (node.getLayoutX()+node.getBoundsInLocal().getWidth() > zentrumRegion.getPrefWidth())
+					 {
+						 node.setLayoutX(zentrumRegion.getPrefWidth()-node.getBoundsInLocal().getWidth());
+					 }
+					 if (node.getLayoutY()+node.getBoundsInLocal().getHeight() > zentrumRegion.getPrefHeight())
+					 {
+						 node.setLayoutY(zentrumRegion.getPrefHeight()-node.getBoundsInLocal().getHeight());
+					 }
+					 if (node.getLayoutX() < 0)
+					 {
+						 node.setLayoutX(1);
+					 }
+					 if (node.getLayoutY() < 0)
+					 {
+						 node.setLayoutY(1);
+					 }
+				}	
+		});
+		
 		node.setOnMouseClicked(new EventHandler<Event>() 
 		{
-
 			@Override
-			public void handle(Event event) 
-			{
-				root.setRight(objekt.getEinstellungGameObjket());
-				
+			public void handle(Event event) 	{
+				root.setRight(objekt.getEinstellungGameObjket());	
 			}
 		});
 	}
+	
+
+	//setzt die Position einer Node auf die Position des Coursers
+	private void setPositionDesGameObjekt(Node node, MouseEvent mouseEvent){
+		 node.setLayoutX(mouseEvent.getSceneX()-root.getCenter().getLayoutX()-zentrumRegion.getLayoutX());
+		 node.setLayoutY(mouseEvent.getSceneY()-root.getCenter().getLayoutY()-zentrumRegion.getLayoutY());
+		 ausgewaehterNode = node; 
+		 durtyBit = true; 
+	}
+
+	/**
+	 * Ueberprueft ob eine Node setzbar ist.
+	 * @param node
+	 * @return
+	 */
+	private Node ueberpruefeDiePositionAufSetzbarkeit(Node node)
+	{
+		for (int i = 0; this.verwendeteGameObjekte.size() > i ; i++)
+		{
+			if (this.verwendeteGameObjekte.get(i).getNode().intersects(node.getBoundsInLocal())){
+				System.out.println(i);
+//				System.out.println("Node      Positionin X: "+node.getLayoutX()+" Y: "+node.getLayoutY()+"   Bounds: X "+node.getBoundsInLocal().getWidth()+" Y: "+node.getBoundsInLocal().getHeight());
+//				System.out.println("BlockNode Positionin X: "+this.verwendeteGameObjekte.get(i).getNode().getLayoutX()+" Y: "+this.verwendeteGameObjekte.get(i).getNode().getLayoutY()+"   Bounds: X "+this.verwendeteGameObjekte.get(i).getNode().getBoundsInLocal().getWidth()+" Y: "+this.verwendeteGameObjekte.get(i).getNode().getBoundsInLocal().getHeight());
+				return this.verwendeteGameObjekte.get(i).getNode(); 
+			}			
+		}
+		return null;
+	}
+	
+	/**
+	 * falls eine Node nicht gesetzt werden kann, da eine andere Node diese Blockiert, dann wird diese auf eine neue 
+	 * Position umgestzt
+	 * 
+	 * @param node
+	 * @param blockiernderNode
+	 */
+	private Boolean setzteDiePositionDesNodesNeu(MouseEvent mouseEvent, Node node, Node blockiernderNode)
+	{
+		//nach den bestmoeglichen setzbare freien Platz ausschau halten.
+	    Bounds bounds = node.getBoundsInLocal();
+	    
+	    double x =  blockiernderNode.getLayoutX();
+	    double y =  blockiernderNode.getLayoutY();
+	    
+	    int xRichtung = 2; 
+	    int yRichtung = 2; 
+	    Node testNode = null;
+	   for (int r = 0; yRichtung > r ; r++)
+	   {
+		   for (int i = 0; xRichtung > i ; i++)
+		   {
+				node.setLayoutX(x+bounds.getWidth()*i);
+				node.setLayoutY(y+bounds.getWidth()*r);
+				testNode = ueberpruefeDiePositionAufSetzbarkeit(node);
+				if (testNode != null)
+						break;
+				node.setLayoutX(x-bounds.getWidth()*i);
+				node.setLayoutY(y-bounds.getWidth()*r);
+				testNode = ueberpruefeDiePositionAufSetzbarkeit(node);
+				if (testNode != null)
+					break;
+				node.setLayoutX(x+bounds.getWidth()*i);
+				node.setLayoutY(y-bounds.getWidth()*r);
+				testNode = ueberpruefeDiePositionAufSetzbarkeit(node);
+				if (testNode != null)
+					break;
+				node.setLayoutX(x-bounds.getWidth()*i);
+				node.setLayoutY(y+bounds.getWidth()*r);
+				testNode = ueberpruefeDiePositionAufSetzbarkeit(node);
+				if (testNode != null)
+					break;
+				
+			
+		   }
+		   if (testNode != null)
+				break;
+	   } 
+	   if (testNode == null)
+	   {
+		   return false; 
+	   }
+	   return true; 
+	}
+	
 	
 	private void einstellungRegionGroeße()	
 	{
 		//oeffne ein Wizard um die Große einzustellen
 	}
-	
 	
 	/**
 	 * speichert die erstellte Region in die Datei, die vorher verwendet wurde
@@ -207,74 +353,69 @@ public class RegionMakerView
 	public synchronized Scene getScene() {
 		return scene;
 	}
-	
-	
-	/**
-	 * gibt den Typ eines GamObjektes zurueck. 
-	 * @param type
-	 * @return
-	 */
-	private static GameObjektType getTypeOfGameObjekt(String type)
-	{
-		switch (type)
-		{
-		case "Schrank":
-			return GameObjektType.Schrank;
-		case "Bett":
-			return GameObjektType.Bett;
-		default: 
-			System.err.println("Fehler der Typ: "+type+" gib es nicht in Der Klasse RegionMakerView, Methode GameObjekteType");
-			return null;
-		}
-	}
-	
-	
+		
 	
 	/**
 	 * wird verwendet von der RegionMakerView um GameObjekte auszuwaehlen. 
-	 *  
+	 * Diese befinden sich am Linken Bildschirmrand 
 	 * @author Dennis
 	 *
 	 */
-	private class GameObjektListe extends TitledPane
+	private class GameObjektAuswalListeTitledPane extends TitledPane
 	{		
 		/**
 		 * In dieser Liste befinden sich die GameObejkte, die dargestellt werden
 		 */
-		private ListView<String> gameObjekteListe = new ListView<String>();
+		private ListView<String> GameObjektAuswalListeTitledPane = new ListView<String>();
+		private Boolean auswahlGetroffen = false; 	
 		
-		
-		protected GameObjektListe(String nameDerListe)
+		protected GameObjektAuswalListeTitledPane(String nameDerListe)
 		{
 			this.setMaxWidth(200);
 			ScrollPane scrollPane = new ScrollPane();
-			scrollPane.setContent(gameObjekteListe);
+			scrollPane.setContent(GameObjektAuswalListeTitledPane);
 			this.setText(nameDerListe);
 			this.setContent(scrollPane);
-			gameObjekteListe.setOnMousePressed(new EventHandler<Event>() 
-			{
-				@Override
-				public void handle(Event event) 
-				{
-					if (gameObjekteListe.getSelectionModel().getSelectedItem() != null)
-					{
-						//ein GameObjekt des ausgewaehlten typs wird erstellt
-						verwendeteGameObjekte.add(new AusgewaehltesGameObejekt( getTypeOfGameObjekt( gameObjekteListe.getSelectionModel().getSelectedItem() ) ) );
-						setzeGameObjekt(verwendeteGameObjekte.get(verwendeteGameObjekte.size()-1));
-					}
-				}
+				
+			GameObjektAuswalListeTitledPane.setOnMouseDragged(new EventHandler<MouseEvent>(){
+			
+				  @Override public void handle(MouseEvent mouseEvent) {
+					  if (auswahlGetroffen == false)
+					  {
+						  verwendeteGameObjekte.add(new AuswahlEinesGameObejekt( GameObjekt.getTypeOfGameObjekt(GameObjektAuswalListeTitledPane.getSelectionModel().getSelectedItem() ) ) );
+						  setzeGameObjektAufDieRegion(verwendeteGameObjekte.get(verwendeteGameObjekte.size()-1));
+						  setAuswahlGetroffen(true);
+					  }
+						  setPositionDesGameObjekt( verwendeteGameObjekte.get(verwendeteGameObjekte.size()-1).getNode(), mouseEvent);
+				  }
+			});	
+			GameObjektAuswalListeTitledPane.setOnMouseReleased(new EventHandler<MouseEvent>(){
+				
+				  @Override public void handle(MouseEvent mouseEvent) {
+					  setAuswahlGetroffen(false);
+				  }
 			});
+			
 		}
 		
 
-		public void addGameObjekt(String name)
-		{
-			this.gameObjekteListe.getItems().add(name);
+		public void addGameObjekt(String name){
+			this.GameObjektAuswalListeTitledPane.getItems().add(name);
 		}
 		
+		private void setAuswahlGetroffen(Boolean wahl)
+		{
+			auswahlGetroffen= wahl;
+		}
 	}
 	
-	private class AusgewaehltesGameObejekt
+	/**
+	 * Diese Klasse beinhaltet Methoden, die es ermoeglichen sollen, GaameObjekte aus einer ViewList auszuwaehlen 
+	 * und auf der Region zu platzieren.
+	 * 
+	 * @author Dennis
+	 */
+	private class AuswahlEinesGameObejekt
 	{
 		private Node node; 
 		/**
@@ -283,7 +424,7 @@ public class RegionMakerView
 		private EinstellungGameObjekt einstellungGameObjket; 
 		
 		
-		private AusgewaehltesGameObejekt(GameObjektType type) 
+		private AuswahlEinesGameObejekt(GameObjektType type) 
 		{
 			switch (type)
 			{
@@ -294,30 +435,24 @@ public class RegionMakerView
 			case Item:
 				break;
 			case Mensch:
+				Mensch mensch = new Mensch("DefaultName");
+				einstellungGameObjket = new EinstellungMensch(mensch);
 				break;
 			case Schrank:
+				Schrank schrank = new Schrank();
+				einstellungGameObjket = new EinstellungSchrank(schrank);
 				break;
 			case Tuer:
+				Tuer tuer = new Tuer();
+				einstellungGameObjket = new EinstellungTuer(tuer); 
 				break;
 			default:
 				break;
 			}
-			//TODO richtigen einstellungGameObjekt waehlen
-			
 			
 			this.node = einstellungGameObjket.getObjekt().ladeNodeObjekt(); 
 		}
 		
-		/**
-		 * ueberprueft ob die uebergebene Node mit der zugehoerigen Node uebereinstimmt
-		 * @param node 
-		 * @return
-		 */
-		private Boolean isNode(Node node)
-		{
-			return this.node == node; 
-		}
-
 		public synchronized EinstellungGameObjekt getEinstellungGameObjket() 
 		{
 			return einstellungGameObjket;

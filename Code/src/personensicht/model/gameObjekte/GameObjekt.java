@@ -3,7 +3,9 @@ package personensicht.model.gameObjekte;
 import java.util.ArrayList;
 
 import javafx.scene.Node;
+import javafx.scene.shape.Shape3D;
 import personensicht.model.aktionen.Aktion;
+import personensicht.view.gameObjekte.GameObjektV;
 
 
 /**
@@ -18,6 +20,9 @@ public abstract class GameObjekt
 	 */
 	private String name = "default"; 
 
+	/**
+	 * beschreibt den Typ des GameObjektes
+	 */
 	private final GameObjektType TYPE; 
 	
 	/**
@@ -28,7 +33,22 @@ public abstract class GameObjekt
 	/**
 	 * Ein GameObjekt besitzt eine Node, die das Aussehen in der GUI festlegt
 	 */
-	private Node nodeObjekt; 
+	private GameObjektV nodeObjekt; 
+	
+	/**
+	 * leange des Objektes
+	 */
+	private int laenge = 60;
+	
+	/**
+	 * breite des Objektes
+	 */
+	private int breite = 40;
+	
+	/**
+	 * hohe des Objektes
+	 */
+	private int hohe = 20; 
 	
 	public GameObjekt(GameObjektType type) 
 	{
@@ -63,15 +83,68 @@ public abstract class GameObjekt
 	public abstract Node ladeNodeObjekt(int localX, int localY);
 
 	
-	public synchronized void setNodeObjekt(Node nodeObjekt) {
+	public synchronized void setNodeObjekt(GameObjektV nodeObjekt) {
 		this.nodeObjekt = nodeObjekt;
 	}
 
-	public synchronized Node getNodeObjekt() {
+	public synchronized GameObjektV getNodeObjekt() {
 		return nodeObjekt;
 	}
 
 	public synchronized GameObjektType getTyp() {
 		return TYPE;
+	}
+
+	public synchronized int getLaenge() {
+		return laenge;
+	}
+
+	public synchronized void setLaenge(int laenge) {
+		this.laenge = laenge;
+		if (nodeObjekt != null)
+			this.nodeObjekt.setLaenge(laenge);
+	}
+
+	public synchronized int getBreite() {
+		return breite;
+	}
+
+	public synchronized void setBreite(int breite) {
+		this.breite = breite;
+		if (nodeObjekt != null)
+			this.nodeObjekt.setBreite(breite);
+	}
+
+	public synchronized int getHohe() {
+		return hohe;
+	}
+
+	public synchronized void setHohe(int hohe) {
+		this.hohe = hohe;
+		if (nodeObjekt != null)
+			this.nodeObjekt.setHohe(hohe);
 	} 
+	
+	/**
+	 * gibt den Typ eines GamObjektes (z.B. ein Moebelstueck) zurueck, passend zu dem String der Uebergeben wird. 
+	 * @param type Beispiel: fuer dien Type Schrank, muss der String "Schrank" heiﬂen
+	 * @return den Typen
+	 */
+	public static GameObjektType getTypeOfGameObjekt(String type)
+	{
+		switch (type)
+		{
+		case "Schrank":
+			return GameObjektType.Schrank;
+		case "Bett":
+			return GameObjektType.Bett;
+		case "Mensch":
+			return GameObjektType.Mensch;
+		case "Tuer":
+			return GameObjektType.Tuer;
+		default: 
+			System.err.println("Fehler der Typ: "+type+" gib es nicht in Der Klasse RegionMakerView, Methode GameObjekteType");
+			return null;
+		}
+	}
 }

@@ -1,8 +1,17 @@
 Die Anleitung beschreibt die Schritte die unternommen werden muessen, wenn ein Neues GameObjekt hinzugefuegt werden soll
 
-1 model
-1.1 muss von GameObjekt erben
-1.2
-- View
-- controller
-- gameMaker
+1 Im Paket Personensicht
+1.1 model
+1.1.1 muss von GameObjekt erben
+1.2 view
+1.2.1 Paket view.gameObjekt Klasse hinzufuegen mit dem Namen der Modelklasse und einen V da hinter. Diese Klasse soll von 
+	der Klasse GameObjektV erben. Die Klasse beschreibt das aussehen des Objektes. Dies muss definiert werden
+1.2.2 final variablen definieren. MAXIMALE / MINIMALE groeﬂe
+
+2) Im Paket gameMaker
+2.1 Paket view Klasse RegionMakerV
+2.1.1 Die Methode AusgewaehltesGameObejekt() muss angepasst werden. Neuen Typ hinzufuegen
+2.1.2 Die Methode getTypeOfGameObjekt(String type) muss angepasst werden. Der passende String zum typen muss vorkommen
+2.2 Pakte view.einstellungGameObjekt. Eine passende Klasse mus hinzugefuegt werden, die von EinstellungGameObjekt erbt.
+	Diese Klasse muss passende Einstelungsmoeglichkeiten fuer das Objekt beinhaltet. Diese wird auf der rechten Seite angezeigt
+	

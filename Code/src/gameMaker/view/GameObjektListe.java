@@ -22,11 +22,6 @@ public class GameObjektListe extends TitledPane
 	/**
 	 * In dieser Liste befinden sich die GameObejkte, die dargestellt werden
 	 */
-//	private ArrayList<GameObjekt> gameObjekteListe = new ArrayList<GameObjekt>(); 
-	
-	/**
-	 * In dieser Liste befinden sich die GameObejkte, die dargestellt werden
-	 */
 	private ListView<String> gameObjekteListe = new ListView<String>();
 	
 	protected GameObjektListe(String nameDerListe)
@@ -36,14 +31,6 @@ public class GameObjektListe extends TitledPane
 		scrollPane.setContent(gameObjekteListe);
 		this.setText(nameDerListe);
 		this.setContent(scrollPane);
-		this.setOnMousePressed(new EventHandler<Event>() 
-		{
-			@Override
-			public void handle(Event event) 
-			{
-				
-			}
-		});
 	}
 	
 

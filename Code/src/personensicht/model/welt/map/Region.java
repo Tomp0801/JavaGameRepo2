@@ -23,12 +23,12 @@ public class Region
 	/**
 	 * Minimale groﬂe der Region in Pixel. 
 	 */
-	public static final int SIZEMIN = 200;
+	public static final int SIZEMIN = 400;
 	
 	/**
 	 * Maximale groﬂe der Region in Pixel. 
 	 */
-	public static final int SIZEMAX = 5000;
+	public static final int SIZEMAX = 10000;
 
 	/**
 	 * Inhalt der Region. 

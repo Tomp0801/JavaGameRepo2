@@ -2,58 +2,199 @@ package gameMaker.view.einstellungGameObjekte;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
+import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TitledPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import personensicht.model.gameObjekte.Bett;
+import personensicht.view.gameObjekte.BettV;
 
 public class EinstellungBett extends EinstellungGameObjekt
 {
 	private int erholungswert = 10;
 	
-	/**
-	 * die groeße des Bettes. [0]fuert x [1]fuer y
-	 */
-	private int groeßeDesBettes[] = new int[2];
-	
 	public EinstellungBett(Bett bett)
 	{
 		super(bett);
-		this.setName("Bett");
-		this.getRootEigenschaften().getChildren().addAll(
-				generateLabelWithTextFieldZahlenEingabe("Erholung", "10", 1 , 100, erholungswert),
-				generateLabelWithTextFieldZahlenEingabe("Größe in X", "10", 10 , 40, 10),
-				generateLabelWithTextFieldZahlenEingabe("Größe in Y", "10", 10 , 40, 10)			
-				);
+		initEigenschaften(bett);
+		initFarwahl(bett);
 	}
 	
-	private static HBox generateLabelWithTextFieldZahlenEingabe(String bedeutung, String inhalt, int von, int bis, int defultWert)
+	private void initEigenschaften(Bett bett)
 	{
-		HBox hBox = new HBox();
-		hBox.setSpacing(6);
-		hBox.setAlignment(Pos.CENTER);
-		Label bedeutungLabel = new Label(bedeutung);
-		TextField textField = new TextField(inhalt);
-		textField.focusedProperty().addListener(new ChangeListener<Boolean>()
-		{
+	this.setName("Bett");
 
-			@Override
-			public void changed(ObservableValue<? extends Boolean> arg0, Boolean alteEinstellung, Boolean neueEinstllung) 
+	HBox erholungBox = new HBox();
+	erholungBox.setSpacing(6);
+	erholungBox.setAlignment(Pos.CENTER);
+	Label bedeutungLabel = new Label("Erholung");
+	TextField textField = new TextField("  "+erholungswert+"  ");
+	textField.focusedProperty().addListener(new ChangeListener<Boolean>()
+	{	@Override public void changed(ObservableValue<? extends Boolean> arg0, Boolean alteEinstellung, Boolean neueEinstllung) {
+			if (alteEinstellung == true && neueEinstllung == false)		{
+				int i = Integer.valueOf(textField.getText());
+				if (i < 10 || i > 100)	{
+					textField.setText(""+erholungswert);
+				}
+			}	
+		}	
+	});
+	erholungBox.getChildren().addAll(bedeutungLabel, textField);
+
+	HBox laengeXBox = new HBox();
+	laengeXBox.setSpacing(6);
+	laengeXBox.setAlignment(Pos.CENTER);
+	Label bedeutungLabelLaengeX = new Label("Länge");
+	TextField textFieldLaenge = new TextField(50+"");
+	textFieldLaenge.focusedProperty().addListener(new ChangeListener<Boolean>()
+	{	
+		@Override public void changed(ObservableValue<? extends Boolean> arg0, Boolean alteEinstellung, Boolean neueEinstllung) {
+	
+			if (alteEinstellung == true && neueEinstllung == false)		
 			{
-				if (alteEinstellung == true && neueEinstllung == false)
+				int i = 50; 
+				try
 				{
-					int i = Integer.valueOf(textField.getText());
-					if (i < von || i > bis)
-					{
-						System.err.println("Die Eingabe ist ungueltig");
-						textField.setText(""+defultWert);
-					}
+					i = Integer.valueOf(textFieldLaenge.getText().trim());
+				}
+				catch (NumberFormatException e) 
+				{
+					textFieldLaenge.setText("50");
+					i = 50; 
+				}
+				if (i > BettV.MAXSIZE_X)	
+				{
+					textFieldLaenge.setText(""+BettV.MAXSIZE_X);
+					i = BettV.MAXSIZE_X;
+				}
+				else if (i < BettV.MINSIZE_X)
+				{
+					textFieldLaenge.setText(""+BettV.MINSIZE_X);
+					i = BettV.MINSIZE_X;
+				}
+					
+					
+				bett.setLaenge(i);
+		}	
+	}});
+	laengeXBox.getChildren().addAll(bedeutungLabelLaengeX, textFieldLaenge);
+	
+	HBox breiteYBox = new HBox();
+	breiteYBox.setSpacing(6);
+	breiteYBox.setAlignment(Pos.CENTER);
+	Label bedeutungLabelBreiteY = new Label("Breite");
+	TextField textFieldBreiteY = new TextField(""+50);
+	textFieldBreiteY.focusedProperty().addListener(new ChangeListener<Boolean>()
+	{	@Override public void changed(ObservableValue<? extends Boolean> arg0, Boolean alteEinstellung, Boolean neueEinstllung) {
+			if (alteEinstellung == true && neueEinstllung == false)		{
+				int i = 50; 
+				try
+				{
+					i = Integer.valueOf(textFieldBreiteY.getText().trim());
+				}
+				catch (NumberFormatException e) 
+				{
+					textFieldBreiteY.setText("50");
+					i = 50; 
+				}
+				if (i < BettV.MINSIZE_Y)
+				{
+					textFieldBreiteY.setText(""+BettV.MINSIZE_Y);
+					i = BettV.MINSIZE_Y; 
+				}
+				else if (i > BettV.MAXSIZE_Y)
+				{
+					textFieldBreiteY.setText(""+BettV.MAXSIZE_Y);
+					i = BettV.MAXSIZE_Y; 
+				}
+				bett.setBreite(i);
+
+		}}	
+	});
+	breiteYBox.getChildren().addAll(bedeutungLabelBreiteY, textFieldBreiteY);
+	
+	HBox hoheZBox = new HBox();
+	hoheZBox.setSpacing(6);
+	hoheZBox.setAlignment(Pos.CENTER);
+	Label bedeutungLabelHoheZ = new Label("Hohe");
+	TextField textFieldHoheZ = new TextField(20+"");
+	textFieldHoheZ.focusedProperty().addListener(new ChangeListener<Boolean>()
+	{	@Override public void changed(ObservableValue<? extends Boolean> arg0, Boolean alteEinstellung, Boolean neueEinstllung) {
+			if (alteEinstellung == true && neueEinstllung == false)		{
+				int i = 50; 
+				try
+				{
+					i = Integer.valueOf(textFieldHoheZ.getText().trim());
+				}
+				catch (NumberFormatException e) 
+				{
+					textFieldHoheZ.setText("50");
+					i = 50; 
+				}
+				if (i < BettV.MINSIZE_Z)	
+				{
+					textFieldHoheZ.setText(""+BettV.MINSIZE_Z);
+					i = BettV.MINSIZE_Z; 
 				}	
+				else if (i > BettV.MAXSIZE_Z)
+				{
+					textFieldHoheZ.setText(""+BettV.MAXSIZE_Z);
+					i = BettV.MAXSIZE_Z; 
+				}
+				bett.setHohe(i);
+			}	
+		}	
+	});
+	hoheZBox.getChildren().addAll(bedeutungLabelHoheZ, textFieldHoheZ);
+	
+	this.getRootEigenschaften().getChildren().addAll(erholungBox,laengeXBox,breiteYBox,hoheZBox);
+	}
+
+	private void initFarwahl(Bett bett)
+	{
+		TitledPane farbwahl = new TitledPane();
+		farbwahl.setText("Farbe");
+		VBox root = new VBox(); 
+		root.setSpacing(6);
+		root.setAlignment(Pos.TOP_CENTER);
+		farbwahl.setContent(root);
+		
+		Slider blauTon = new Slider();
+		Slider rotTon = new Slider();
+		Slider gruenTon = new Slider();	
+		
+		blauTon.setOnMouseMoved(new EventHandler<Event>() 
+		{
+			@Override
+			public void handle(Event event) 
+			{
+				bett.setColor(new Color(rotTon.getValue()/100, gruenTon.getValue()/100, blauTon.getValue()/100, 1));
 			}
-			
 		});
-		hBox.getChildren().addAll(bedeutungLabel, textField);
-		return hBox;
+		rotTon.setOnMouseMoved(new EventHandler<Event>() 
+		{
+			@Override
+			public void handle(Event event) 
+			{
+				bett.setColor(new Color(rotTon.getValue()/100, gruenTon.getValue()/100, blauTon.getValue()/100, 1));
+			}
+		});
+		gruenTon.setOnMouseMoved(new EventHandler<Event>() 
+		{
+			@Override
+			public void handle(Event event) 
+			{
+				bett.setColor(new Color(rotTon.getValue()/100, gruenTon.getValue()/100, blauTon.getValue()/100, 1));
+			}
+		});
+		
+		root.getChildren().addAll(blauTon, rotTon, gruenTon);
+		this.getChildren().add(farbwahl);	
 	}
 }

@@ -26,7 +26,7 @@ public class RegionV extends AnchorPane
 		for (int i = 0; region.getObjektListe().size() > i; i++)
 		{
 			//wenn der Platz frei ist, dann setze die Node
-			if (isPlaceFree(region.getObjektListe().get(i).getNodeObjekt()))
+			if (isPlaceFree(region.getObjektListe().get(i).getNodeObjekt().getNode()))
 			{
 				this.getChildren().add(region.getObjektListe().get(i).ladeNodeObjekt(region.getPositionDerObjekteInDerListe().get(i)[0] ,region.getPositionDerObjekteInDerListe().get(i)[1] ));
 			}

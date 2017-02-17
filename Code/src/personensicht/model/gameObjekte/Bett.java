@@ -1,12 +1,14 @@
 package personensicht.model.gameObjekte;
 
 import javafx.scene.Node;
+import javafx.scene.paint.Color;
 import personensicht.model.aktionen.AktionSchlafen;
 import personensicht.view.gameObjekte.BettV;
 
 public class Bett extends GameObjekt
-{
+{	
 	private int erholungswert = 10;
+	private Color color;
 	
 	public Bett()
 	{
@@ -33,15 +35,29 @@ public class Bett extends GameObjekt
 		
 	}
 
+	/**
+	 * lead die Node, die ein Bett darstellt
+	 */
 	@Override
 	public Node ladeNodeObjekt()
 	{
-		return new BettV().getNode();
+		this.setNodeObjekt(new BettV(this)); 
+		return this.getNodeObjekt().getNode();
 	}
 
 	@Override
-	public Node ladeNodeObjekt(int localX, int localY) {
-		// TODO Auto-generated method stub
+	public Node ladeNodeObjekt(int localX, int localY) 
+	{
 		return null;
+	}
+
+	public void setColor(Color color) 
+	{
+		this.color = color; 
+		if (this.getNodeObjekt() != null)
+		{
+			BettV bettV = (BettV) this.getNodeObjekt();
+			bettV.setColor(color);
+		}
 	}
 }

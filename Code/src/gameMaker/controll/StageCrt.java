@@ -4,7 +4,6 @@ import gameMaker.view.RegionMakerView;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import personensicht.view.SpielerfigurErstellenScene;
 
 /**
  * setzt die Scene und bietet eine Methode um diese weder zu wechseln

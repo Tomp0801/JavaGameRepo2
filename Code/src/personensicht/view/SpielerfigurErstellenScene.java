@@ -109,7 +109,6 @@ public class SpielerfigurErstellenScene
 				try 
 				{
 					double i = Double.valueOf(wert);
-					System.out.println(i);
 					if (i > 2.5 || i < 0.5)
 						i = 1.8;
 					großeAnzeige.setText(""+i);
