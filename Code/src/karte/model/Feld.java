@@ -1,7 +1,8 @@
 package karte.model;
 
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
+import javafx.event.EventHandler;
+import javafx.scene.input.MouseEvent;
+import karte.view.FeldNode;
 
 /**
  * Ein Feld einer Karte
@@ -9,10 +10,8 @@ import javafx.scene.shape.Rectangle;
  * @author Thomas
  *
  */
-public class Feld extends Rectangle {
-	static final int WIDTH = 30;
-	static final int HEIGHT = 30;
-	
+public class Feld implements EventHandler<MouseEvent>{
+
 	/**
 	 * Objekt, das auf diesem Feld steht
 	 */
@@ -24,20 +23,29 @@ public class Feld extends Rectangle {
 	private Map karte;
 	
 	/**
+	 * x-Koordinate dieses Feldes auf der parent Karte
+	 */
+	private int x;
+	
+	/**
+	 * y-Koordinate dieses Feldes auf der parent Karte
+	 */
+	private int y;
+	
+	private FeldNode node;
+		
+	/**
 	 * Erstellt ein Feld, das zu der angegebenen Karte gehört
 	 * @param parent
 	 * @param x x-Position des Felds
 	 * @param y y-Position des Felds
 	 */
-	public Feld(Map parent) {
-		super(WIDTH, HEIGHT);
+	public Feld(Map parent, int x, int y) {
 		this.karte = parent;
+		this.x = x;
+		this.y = y;
 		
-		if (Math.round(Math.random()) == 0) {
-			this.setFill(Color.RED); 
-		} else {
-			this.setFill(Color.BLUE);
-		}
+		node = new FeldNode(this);
 	}
 	
 	/**
@@ -65,4 +73,38 @@ public class Feld extends Rectangle {
 	public Map getKarte() {
 		return karte;
 	}
+	
+	/**
+	 * gibt die x-Koordinate dieses Feldes auf der parent Karte zurück
+	 * @return die x-Koordinate dieses Feldes auf der parent Karte
+	 */
+	public int getX() {
+		return x;
+	}
+	
+	/**
+	 * gibt die y-Koordinate dieses Feldes auf der parent Karte zurück
+	 * @return die y-Koordinate dieses Feldes auf der parent Karte
+	 */
+	public int getY() {
+		return y;
+	}
+	
+	/**
+	 * Gibt den Node zurück, der in einer Scene gezeichnet werden kann
+	 * @return Node (Rectangle Objekt)
+	 */
+	public FeldNode getNode() {
+		return node;
+	}
+	
+
+
+	@Override
+	public void handle(MouseEvent event) {
+		//TODO set this Feld als Scene
+		System.out.println("Feld " + x + "|" + y + " angeklickt.");
+	}
+	
+
 }

@@ -15,6 +15,7 @@ public class Test extends Application {
 		Map map = new Map(30, 30);
 		
 		primaryStage.setScene(MapScene.makeScene(map));
+		primaryStage.setFullScreen(true);
 		primaryStage.show();
 		
 	}

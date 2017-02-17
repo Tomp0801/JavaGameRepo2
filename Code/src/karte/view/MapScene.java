@@ -1,9 +1,9 @@
 package karte.view;
 
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
-import javafx.scene.shape.Rectangle;
 import karte.model.*;
 
 public class MapScene {
@@ -14,10 +14,10 @@ public class MapScene {
 		GridPane mapPaint = new GridPane();		
 		
 		//fields zeichnen
-		Rectangle feld;
+		Node feld;
 		for (int x = 0; x < map.getWidth(); x++) {
 			for (int y = 0; y < map.getHeight(); y++) {
-				feld = map.getFeld(x, y);
+				feld = map.getFeld(x, y).getNode();
 				mapPaint.add(feld, x, y);
 			}
 		}

@@ -43,7 +43,7 @@ public class Map {
 	private void init() {
 		for (int x = 0; x < width; x++) {
 			for (int y = 0; y < height; y++) {
-				felder[x][y] = new Feld(this);
+				felder[x][y] = new Feld(this, x, y);
 			}
 		}
 	}
