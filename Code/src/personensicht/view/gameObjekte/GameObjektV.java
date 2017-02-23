@@ -1,5 +1,6 @@
 package personensicht.view.gameObjekte;
 
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Shape3D;
 
 public abstract class GameObjektV
@@ -16,9 +17,15 @@ public abstract class GameObjektV
 		this.node = node;
 	}
 	
-	public abstract void setHohe(int hohe);
+	public abstract void setX(double hohe);
 	
-	public abstract void setBreite(int hohe);
+	public abstract void setY(double hohe);
 	
-	public abstract void setLaenge(int hohe);
+	public abstract void setZ(double hohe);
+	
+	/**
+	 * setzt eine Farbe
+	 * @param color
+	 */
+	public abstract void setColor(Color color);
 }

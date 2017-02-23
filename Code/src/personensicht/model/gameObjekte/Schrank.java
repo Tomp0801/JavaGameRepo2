@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import javafx.scene.Node;
 import personensicht.model.aktionen.AktionInventarOeffnen;
 import personensicht.model.inventar.items.Item;
+import personensicht.view.gameObjekte.BettV;
+import personensicht.view.gameObjekte.SchrankV;
 
 /**
  * definiert einen Schrank
@@ -59,29 +61,29 @@ public class Schrank extends GameObjekt implements Inventataeger
 		this.inventar = inventar;
 	}
 
-	public synchronized int getLaenge() {
-		return laenge;
-	}
-
-	public synchronized void setLaenge(int laenge) {
-		this.laenge = laenge;
-	}
-
-	public synchronized int getBreite() {
-		return breite;
-	}
-
-	public synchronized void setBreite(int breite) {
-		this.breite = breite;
-	}
-
-	public synchronized int getHohe() {
-		return hohe;
-	}
-
-	public synchronized void setHohe(int hohe) {
-		this.hohe = hohe;
-	}
+//	public synchronized int getLaenge() {
+//		return laenge;
+//	}
+//
+//	public synchronized void setLaenge(int laenge) {
+//		this.laenge = laenge;
+//	}
+//
+//	public synchronized int getBreite() {
+//		return breite;
+//	}
+//
+//	public synchronized void setBreite(int breite) {
+//		this.breite = breite;
+//	}
+//
+//	public synchronized int getHohe() {
+//		return hohe;
+//	}
+//
+//	public synchronized void setHohe(int hohe) {
+//		this.hohe = hohe;
+//	}
 
 	@Override
 	public void refleshAktionsListe() {
@@ -89,11 +91,14 @@ public class Schrank extends GameObjekt implements Inventataeger
 		
 	}
 
+	/**
+	 * lead die Node, die ein Schrank darstellt
+	 */
 	@Override
 	public Node ladeNodeObjekt()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		this.setNodeObjekt(new SchrankV(this)); 
+		return this.getNodeObjekt().getNode();
 	}
 
 	@Override

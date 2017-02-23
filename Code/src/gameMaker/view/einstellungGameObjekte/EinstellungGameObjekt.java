@@ -49,7 +49,7 @@ public abstract class EinstellungGameObjekt extends VBox
 	}
 
 
-	public synchronized GameObjekt getObjekt() {
+	public synchronized GameObjekt getGameObjekt() {
 		return objekt;
 	}
 }

@@ -20,25 +20,25 @@ public class BettV extends GameObjektV
 	public BettV(Bett bettModel)
 	{
 		this.setNode(bett);
-		this.bett.setHeight(bettModel.getHohe());
-		this.bett.setWidth(bettModel.getBreite());
-		this.bett.setDepth(bettModel.getLaenge());
+		this.bett.setHeight(bettModel.getY());
+		this.bett.setWidth(bettModel.getX());
+		this.bett.setDepth(bettModel.getZ());
 	}
 
 	@Override
-	public void setHohe(int hohe)
+	public void setZ(double hohe)
 	{
 		this.bett.setDepth(hohe);
 	}
 
 	@Override
-	public void setBreite(int breite) 
+	public void setY(double breite) 
 	{
 		this.bett.setHeight(breite);
 	}
 
 	@Override
-	public void setLaenge(int laenge) 
+	public void setX(double laenge) 
 	{
 		this.bett.setWidth(laenge);
 	}
@@ -49,6 +49,6 @@ public class BettV extends GameObjektV
 	 */
 	public void setColor(Color color)
 	{
-		Shape3DZusatzMethoden.hintergundFarbeSetzen(bett, color);
+		Shape3DZusatzMethoden.hintergundFarbeSetzen(this.bett, color);
 	}
 }

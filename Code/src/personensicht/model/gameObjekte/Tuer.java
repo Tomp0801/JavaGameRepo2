@@ -2,6 +2,8 @@ package personensicht.model.gameObjekte;
 
 import javafx.scene.Node;
 import javafx.scene.layout.Region;
+import personensicht.view.gameObjekte.TischV;
+import personensicht.view.gameObjekte.TuerV;
 
 /**
  * eine Tuer verweist auf eine andere Region
@@ -32,7 +34,8 @@ public class Tuer extends GameObjekt
 	@Override
 	public Node ladeNodeObjekt() 
 	{
-		return null;
+		this.setNodeObjekt(new TuerV(this)); 
+		return this.getNodeObjekt().getNode();
 	}
 
 	public synchronized Region getZielRegion() {

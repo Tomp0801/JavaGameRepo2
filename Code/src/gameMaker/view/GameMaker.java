@@ -6,14 +6,11 @@ public class GameMaker
 {
 	private Scene scene; 
 	
-	public GameMaker()
-	{
-		
+	public GameMaker(){		
 		
 	}
 	
-	public Scene getScene()
-	{
+	public Scene getScene(){
 		return scene;
 	}
 }

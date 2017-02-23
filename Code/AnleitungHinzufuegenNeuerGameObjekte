@@ -1,17 +1,29 @@
 Die Anleitung beschreibt die Schritte die unternommen werden muessen, wenn ein Neues GameObjekt hinzugefuegt werden soll
 
 1 Im Paket Personensicht
-1.1 model
-1.1.1 muss von GameObjekt erben
-1.2 view
-1.2.1 Paket view.gameObjekt Klasse hinzufuegen mit dem Namen der Modelklasse und einen V da hinter. Diese Klasse soll von 
-	der Klasse GameObjektV erben. Die Klasse beschreibt das aussehen des Objektes. Dies muss definiert werden
-1.2.2 final variablen definieren. MAXIMALE / MINIMALE groeﬂe
+	1.1 model
+		1.1.1 muss von GameObjekt erben
+		1.1.2 Klasse GameObjekt: Methode getTypeOfGameObjekt(String type) muss angepasst werden. 
+			  Der passende String zum typen muss vorkommen
+	1.2 view
+		1.2.1 Paket view.gameObjekt Klasse hinzufuegen mit dem Namen der Modelklasse und einen V anhaehgen. 
+		1.2.2 erbet von GameObgejktV. 
+		1.2.3 Konstruktor sollte Modelklasse erwarten (Bett bett) 
+		1.2.4 beinhaltete ein 3DShape zum Beispiel eine Box. 
+		1.2.5 Im Konstrukur die vorher erstellte Shape3D an mit this.setNode(this.schrank); an die Superklasse uebergeben.
+		1.2.6 final variablen definieren. MAXIMALE / MINIMALE groeﬂe
+	anschlieﬂend:
+	model:
+		Methode public Node ladeNodeObjekt() ausfuellen
+			this.setNodeObjekt(new SchrankV(this));  
+			return this.getNodeObjekt().getNode();
+
+
 
 2) Im Paket gameMaker
 2.1 Paket view Klasse RegionMakerV
-2.1.1 Die Methode AusgewaehltesGameObejekt() muss angepasst werden. Neuen Typ hinzufuegen
-2.1.2 Die Methode getTypeOfGameObjekt(String type) muss angepasst werden. Der passende String zum typen muss vorkommen
-2.2 Pakte view.einstellungGameObjekt. Eine passende Klasse mus hinzugefuegt werden, die von EinstellungGameObjekt erbt.
+	2.1.1 Die Methode AusgewaehltesGameObejekt() muss angepasst werden. Neuen Typ hinzufuegen
+	2.2 Pakte view.einstellungGameObjekt. Eine passende Klasse mus hinzugefuegt werden, die von EinstellungGameObjekt erbt.
 	Diese Klasse muss passende Einstelungsmoeglichkeiten fuer das Objekt beinhaltet. Diese wird auf der rechten Seite angezeigt
+
 	

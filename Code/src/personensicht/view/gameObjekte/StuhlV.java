@@ -2,49 +2,51 @@ package personensicht.view.gameObjekte;
 
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Box;
-import personensicht.model.gameObjekte.Tuer;
+import personensicht.model.gameObjekte.Stuhl;
 import personensicht.view.Shape3DZusatzMethoden;
 
-public class TuerV extends GameObjektV
+public class StuhlV extends GameObjektV
 {
-
-	public final static int MAXSIZE_X = 100; 
-	public final static int MAXSIZE_Y = 100; 
+	
+	public final static int MAXSIZE_X = 200; 
+	public final static int MAXSIZE_Y = 200; 
 	public final static int MAXSIZE_Z = 50; 
 	public final static int MINSIZE_X = 20; 
 	public final static int MINSIZE_Y = 20; 
 	public final static int MINSIZE_Z = 20; 
 	
-	private Box tuer = new Box();
+	Box stuhl = new Box(); 
 	
-	public TuerV(Tuer tuer)
+	public StuhlV(Stuhl stuhl)
 	{
-		this.setNode(this.tuer);
-		this.tuer.setHeight(tuer.getY());
-		this.tuer.setWidth(tuer.getX());
-		this.tuer.setDepth(tuer.getZ());
+		this.setNode(this.stuhl);
+		this.stuhl.setHeight(stuhl.getY());
+		this.stuhl.setWidth(stuhl.getX());
+		this.stuhl.setDepth(stuhl.getZ());
 	}
-	
+
 	@Override
 	public void setY(double hohe) {
-		this.tuer.setHeight(hohe);
+		this.stuhl.setHeight(hohe);
 		
 	}
 
 	@Override
 	public void setX(double hohe) {
-		this.tuer.setWidth(hohe);
+		this.stuhl.setWidth(hohe);
 		
 	}
 
 	@Override
 	public void setZ(double hohe) {
-		this.tuer.setDepth(hohe);
+		this.stuhl.setDepth(hohe);
 		
 	}
 
 	@Override
 	public void setColor(Color color) {
-		Shape3DZusatzMethoden.hintergundFarbeSetzen(this.tuer, color);	
+		Shape3DZusatzMethoden.hintergundFarbeSetzen(this.stuhl, color);
+		
 	}
+
 }

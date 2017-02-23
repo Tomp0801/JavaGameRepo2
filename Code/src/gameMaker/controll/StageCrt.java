@@ -33,7 +33,7 @@ public class StageCrt extends Application
 	{
 		StageCrt.stageController = this;
 		this.stage = primaryStage; 
-		this.setScene(new RegionMakerView().getScene());
+		this.setScene(RegionMakerView.getInstance().getScene());
 		primaryStage.show();
 	}
 	
