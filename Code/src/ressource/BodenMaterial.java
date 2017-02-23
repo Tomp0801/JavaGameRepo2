@@ -1,4 +1,4 @@
-package draufsicht.ressource;
+package ressource;
 
 import javafx.scene.paint.Color;
 

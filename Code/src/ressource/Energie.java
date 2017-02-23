@@ -1,6 +1,6 @@
-package draufsicht.ressource;
+package ressource;
 
-import draufsicht.map.objekte.Platzierbar;
+//import draufsicht.map.objekte.Platzierbar;
 
 /**
  * Interface für alle Ressourcen, die zur Gewinnung von Energie verwendet werden können
@@ -26,6 +26,6 @@ public interface Energie {
 	 * TODO nicht Platzierbar Objekt
 	 * @return die Art Gebäude, die zur Energie Gewinnung mit diesem Material benötigt wird
 	 */
-	public Platzierbar getGebaeude();
+	//public Platzierbar getGebaeude();
 }
 

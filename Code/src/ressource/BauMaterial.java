@@ -1,4 +1,4 @@
-package draufsicht.ressource;
+package ressource;
 
 /**
  * Interface für alle Materialien, die zumm Bau von Gebäuden, Raumschiffen o.Ä. 

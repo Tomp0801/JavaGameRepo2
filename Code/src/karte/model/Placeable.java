@@ -49,12 +49,15 @@ public interface Placeable {
 	}
 	
 	/**
+	 * TODO eine Area?
+	 * 
 	 * Gibt den Platz des Objekts wieder, den es auf der Karte ein einnimmt
 	 * @return ein Shape-Objekt, dass die Maße des Objekts wiedergibt
 	 */
 	public Shape getBody();
 	
 	/**
+	 * TODO eigentlich ein Feld
 	 * Gibt die Karte zurück, auf der das Objekt platziert ist
 	 * @return die Karte, auf der das Objekt platziert ist
 	 */

@@ -1,4 +1,4 @@
-package draufsicht.ressource;
+package ressource;
 
 /**
  * Interface für Materialien, die essbar sein sollen.

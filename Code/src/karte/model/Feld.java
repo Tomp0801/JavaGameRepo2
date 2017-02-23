@@ -3,6 +3,7 @@ package karte.model;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 import karte.view.FeldNode;
+import ressource.Material;
 
 /**
  * Ein Feld einer Karte
@@ -32,7 +33,15 @@ public class Feld implements EventHandler<MouseEvent>{
 	 */
 	private int y;
 	
+	/**
+	 * Die Grafik des Feldes
+	 */
 	private FeldNode node;
+	
+	/**
+	 * Das BodenMaterial des Feldes
+	 */
+	private Material boden;
 		
 	/**
 	 * Erstellt ein Feld, das zu der angegebenen Karte gehört
@@ -98,7 +107,13 @@ public class Feld implements EventHandler<MouseEvent>{
 		return node;
 	}
 	
-
+	/**
+	 * Gibt zurück, aus welchem Material der Boden auf diesem Feld besteht
+	 * @return Das Bodenmaterial des Feldes
+	 */
+	public Material getBodenMaterial() {
+		return boden;
+	}
 
 	@Override
 	public void handle(MouseEvent event) {

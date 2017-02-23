@@ -1,4 +1,4 @@
-package draufsicht.ressource;
+package ressource;
 
 import java.awt.Color;
 import java.io.Serializable;
