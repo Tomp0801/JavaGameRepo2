@@ -3,13 +3,16 @@ package karte.model;
 import java.util.Iterator;
 
 import javafx.geometry.Point2D;
+import javafx.scene.Group;
+import karte.view.MineGrafics;
 /**
  * Ein Gebäude, das Rohstoffe aus Feldern einer Karte abbauen kann
  * @author Thomas
  *
  */
 public class Mine extends Building {
-
+	private MineGrafics grafics;
+	
 	/**
 	 * die Felder der Karte, auf die diese Mine zugreifen kann
 	 */
@@ -20,8 +23,8 @@ public class Mine extends Building {
 	 * @param width Breite der Mine
 	 * @param height Höhe der Mine
 	 */
-	public Mine(int width, int height) {
-		super (width, height);
+	public Mine() {
+		grafics = new MineGrafics(this);
 	}
 	
 	@Override
@@ -44,7 +47,16 @@ public class Mine extends Building {
 	@Override
 	public void place(Map parent, Point2D position) {
 		super.place(parent, position);
-		sources = new Area(parent, position, body);
+	}
+
+	@Override
+	public Group getGrafics() {
+		return grafics;
+	}
+
+	@Override
+	public String getName() {
+		return "Mine";
 	}
 
 }

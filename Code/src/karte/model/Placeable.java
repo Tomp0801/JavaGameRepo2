@@ -1,7 +1,7 @@
 package karte.model;
 
 import javafx.geometry.Point2D;
-import javafx.scene.shape.Shape;
+import javafx.scene.Group;
 
 /**
  * Interface für ein Objekt, dass auf einem Map-Objekt plaziert werden kann
@@ -54,7 +54,7 @@ public interface Placeable {
 	 * Gibt den Platz des Objekts wieder, den es auf der Karte ein einnimmt
 	 * @return ein Shape-Objekt, dass die Maße des Objekts wiedergibt
 	 */
-	public Shape getBody();
+	public Group getGrafics();
 	
 	/**
 	 * TODO eigentlich ein Feld
@@ -62,4 +62,6 @@ public interface Placeable {
 	 * @return die Karte, auf der das Objekt platziert ist
 	 */
 	public Map getParent();
+	
+	public String getName();
 }

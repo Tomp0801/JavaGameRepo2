@@ -1,6 +1,5 @@
 package karte.view;
 
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import karte.model.Feld;
 
@@ -33,17 +32,6 @@ public class FeldNode extends Rectangle {
 		
 		this.parent = parent;
 		
-		initNode();
 	}
-	
-	
-	private void initNode() {
-		//TODO richtige Farbe generieren
-		if (Math.round(Math.random()) == 0) {
-			this.setFill(Color.RED); 
-		} else {
-			this.setFill(Color.BLUE);
-		}
-		this.setOnMouseClicked(parent);
-	}
+
 }

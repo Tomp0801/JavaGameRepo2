@@ -24,7 +24,7 @@ public class Material implements Serializable {
 	private String name;
 	
 	/**
-	 * Farbe der Material
+	 * Farbe des Materials
 	 * Kann nicht javafx Color nehmen, da diese nicht serializeable ist
 	 */
 	private Color color;
@@ -109,4 +109,10 @@ public class Material implements Serializable {
 	protected void setGewicht(float gewicht) {
 		this.gewicht = gewicht;
 	}
+	
+	
+	
+	public static Material WASSER = new Material("Wasser", javafx.scene.paint.Color.BLUE);
+	public static Material ERDE = new Material("Erde", javafx.scene.paint.Color.PERU);
+	public static Material STEIN = new Material("Stein", javafx.scene.paint.Color.DARKGRAY);
 }

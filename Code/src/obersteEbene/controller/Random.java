@@ -14,9 +14,28 @@ public class Random {
 	private int currentSeed;
 	private int seed;
 	
+	/**
+	 * Erstellt einen pseudo-random number generator mit dem gegebenen Seed
+	 * ein PRNG mit diesem Seed gibt immer die gleichen nummern
+	 * @param seed Int wert, der als Seed des prng verwendet wird
+	 */
 	public Random(int seed) {
 		this.seed = seed;
 		currentSeed = seed;
+		//die ersten paar randoms weglassen, da eventuell vorhersehbar
+		random();
+		random();
+		random();
+	}
+	
+	/**
+	 * Erstellt einen pseudo-random number generator mit dem gegebenen Seed
+	 * ein PRNG mit diesem Seed gibt immer die gleichen nummern
+	 * @param seed String Wert, wird in int-Wert umgewandelt und als Seed verwendet
+	 */
+	public Random(String seed) {
+		this.seed = seed.hashCode();
+		currentSeed = this.seed;
 		//die ersten paar randoms weglassen, da eventuell vorhersehbar
 		random();
 		random();
@@ -52,10 +71,36 @@ public class Random {
 		return (from + random() * (to - from)); 
 	}
 	
-	public int randomInt() {
-		return random(0, 2147483647);
+	/**
+	 * Erstellt die nächste zufallszahl und gibt sie als float in einem bestimmten Zahlenbereich wieder
+	 * @param from Anfang des Intervalls
+	 * @param to Ende des Intervalls
+	 * @return zufällige Zahl aus dem festgelegten Intervall
+	 */
+	public float random(float from, float to) {
+		return (from + (float)random() * (to - from)); 
 	}
 	
+	/**
+	 * Gibt einen zufälligen Integer Wert zurück
+	 * @return int-Wert zwischen -2^31 und 2^31-1
+	 */
+	public int randomInt() {
+		return random(Integer.MIN_VALUE, Integer.MAX_VALUE);
+	}
+	
+	/**
+	 * Gibt einen zufälligen positiven Integer Wert zurück
+	 * @return int Wert zwischen 0 und 2^31-1
+	 */
+	public int randomPositiveInt() {
+		return random(0, Integer.MAX_VALUE);
+	}
+	
+	/**
+	 * Gibt einen zufälligen bool-Wert zurück
+	 * @return true oder false
+	 */
 	public boolean randomBoolean() {
 		int random = random(0, 1);
 		if (random==1) {

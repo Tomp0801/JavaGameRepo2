@@ -2,7 +2,8 @@ package karte.model;
 
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
-import karte.view.FeldNode;
+import javafx.scene.paint.Color;
+import karte.view.FeldGroup;
 import ressource.Material;
 
 /**
@@ -36,7 +37,7 @@ public class Feld implements EventHandler<MouseEvent>{
 	/**
 	 * Die Grafik des Feldes
 	 */
-	private FeldNode node;
+	private FeldGroup group;
 	
 	/**
 	 * Das BodenMaterial des Feldes
@@ -54,7 +55,8 @@ public class Feld implements EventHandler<MouseEvent>{
 		this.x = x;
 		this.y = y;
 		
-		node = new FeldNode(this);
+		group = new FeldGroup(this);
+
 	}
 	
 	/**
@@ -73,6 +75,7 @@ public class Feld implements EventHandler<MouseEvent>{
 	public void place(Placeable object) throws IllegalStateException {
 		if (this.object != null) throw new IllegalStateException("Es steht bereits ein Objekt auf dem Feld.");
 		this.object = object;
+		this.group.getChildren().add(object.getGrafics());
 	}
 	
 	/**
@@ -103,8 +106,8 @@ public class Feld implements EventHandler<MouseEvent>{
 	 * Gibt den Node zurück, der in einer Scene gezeichnet werden kann
 	 * @return Node (Rectangle Objekt)
 	 */
-	public FeldNode getNode() {
-		return node;
+	public FeldGroup getGroup() {
+		return group;
 	}
 	
 	/**
@@ -115,10 +118,23 @@ public class Feld implements EventHandler<MouseEvent>{
 		return boden;
 	}
 
+	public void setBodenMaterial(Material boden) {
+		this.boden = boden;
+		if (boden == null) {
+			group.getBoden().setFill(Color.BLACK);
+		} else {
+			group.getBoden().setFill(boden.getColor());
+		}
+	}
+	
 	@Override
 	public void handle(MouseEvent event) {
 		//TODO set this Feld als Scene
 		System.out.println("Feld " + x + "|" + y + " angeklickt.");
+		System.out.println("Bodenart: " + boden.getName());
+		if (this.object != null) {
+			System.out.println("Hier steht: " + object.getName());
+		}
 	}
 	
 

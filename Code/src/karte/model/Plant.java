@@ -1,6 +1,7 @@
 package karte.model;
 
 import javafx.geometry.Point2D;
+import javafx.scene.Group;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Shape;
 
@@ -32,11 +33,6 @@ public class Plant extends RunningObject implements Placeable  {
 	}
 
 	@Override
-	public Shape getBody() {
-		return body;
-	}
-
-	@Override
 	public Map getParent() {
 		return map;
 	}
@@ -52,6 +48,18 @@ public class Plant extends RunningObject implements Placeable  {
 	@Override
 	public void setPosition(Point2D point) {
 		position = point;
+	}
+
+	@Override
+	public Group getGrafics() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String getName() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

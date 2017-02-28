@@ -17,7 +17,7 @@ public class MapScene {
 		Node feld;
 		for (int x = 0; x < map.getWidth(); x++) {
 			for (int y = 0; y < map.getHeight(); y++) {
-				feld = map.getFeld(x, y).getNode();
+				feld = map.getFeld(x, y).getGroup();
 				mapPaint.add(feld, x, y);
 			}
 		}
