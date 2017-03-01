@@ -22,7 +22,7 @@ public class Test extends Application {
 		Generator gen = new Generator(prng, Material.ERDE);
 		gen.addMaterial(Material.WASSER, 32);
 		gen.addMaterial(Material.STEIN, 15);
-		Map map = gen.generateMap(60, 40);
+		Map map = gen.generateMap(40, 40);
 		
 		map = gen.smoothMap();
 		
@@ -35,6 +35,7 @@ public class Test extends Application {
 		mine2.place(map, new Point2D(3, 9));
 		Mine mine3 = new Mine();
 		mine3.place(map, new Point2D(32, 20));
+		
 	}
 	
 	

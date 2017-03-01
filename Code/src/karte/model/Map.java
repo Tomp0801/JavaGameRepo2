@@ -1,6 +1,7 @@
 package karte.model;
 
 import javafx.geometry.Point2D;
+import karte.view.*;
 
 /**
  * Eine 2 Dimensionale Karte, bestehend aus einzelnen Feldern
@@ -23,6 +24,8 @@ public class Map {
 	 * Höhe der Karte
 	 */
 	private int height;
+	
+	private MapGrafics grafics;
 		
 	/**
 	 * Erstellt eine Karte mit angegebener Breite und Höhe
@@ -92,5 +95,13 @@ public class Map {
 	 */
 	public int getHeight() {
 		return height;
+	}
+	
+	public MapGrafics getGrafics() {
+		return grafics;
+	}
+	
+	public void setGrafics(MapGrafics mapGrafics) {
+		grafics = mapGrafics;
 	}
 }

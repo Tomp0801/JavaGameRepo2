@@ -3,7 +3,7 @@ package karte.model;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
-import karte.view.FeldGroup;
+import karte.view.FeldGrafics;
 import ressource.Material;
 
 /**
@@ -37,7 +37,7 @@ public class Feld implements EventHandler<MouseEvent>{
 	/**
 	 * Die Grafik des Feldes
 	 */
-	private FeldGroup group;
+	private FeldGrafics group;
 	
 	/**
 	 * Das BodenMaterial des Feldes
@@ -55,7 +55,7 @@ public class Feld implements EventHandler<MouseEvent>{
 		this.x = x;
 		this.y = y;
 		
-		group = new FeldGroup(this);
+		group = new FeldGrafics(this);
 
 	}
 	
@@ -106,7 +106,7 @@ public class Feld implements EventHandler<MouseEvent>{
 	 * Gibt den Node zurück, der in einer Scene gezeichnet werden kann
 	 * @return Node (Rectangle Objekt)
 	 */
-	public FeldGroup getGroup() {
+	public FeldGrafics getGroup() {
 		return group;
 	}
 	
