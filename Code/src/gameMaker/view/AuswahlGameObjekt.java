@@ -12,11 +12,11 @@ import javafx.scene.Node;
 import personensicht.model.gameObjekte.Bett;
 import personensicht.model.gameObjekte.GameObjektType;
 import personensicht.model.gameObjekte.Mauer;
-import personensicht.model.gameObjekte.Mensch;
 import personensicht.model.gameObjekte.Schrank;
 import personensicht.model.gameObjekte.Stuhl;
 import personensicht.model.gameObjekte.Tisch;
 import personensicht.model.gameObjekte.Tuer;
+import personensicht.model.gameObjekte.lebewesen.Mensch;
 
 /**
  * Ermoeglicht das Auswaehlen von GameObjekten. Diese Funktion wird im GameMaker auf der linken Seite gezeigt

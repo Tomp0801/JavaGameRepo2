@@ -8,12 +8,12 @@ import personensicht.view.Shape3DZusatzMethoden;
 public class TuerV extends GameObjektV
 {
 
-	public final static int MAXSIZE_X = 100; 
-	public final static int MAXSIZE_Y = 100; 
-	public final static int MAXSIZE_Z = 50; 
-	public final static int MINSIZE_X = 20; 
+	public final static int MAXSIZE_X = 1000; 
+	public final static int MAXSIZE_Y = 1000; 
+	public final static int MAXSIZE_Z = 1000; 
+	public final static int MINSIZE_X = 100; 
 	public final static int MINSIZE_Y = 20; 
-	public final static int MINSIZE_Z = 20; 
+	public final static int MINSIZE_Z = 400; 
 	
 	private Box tuer = new Box();
 	

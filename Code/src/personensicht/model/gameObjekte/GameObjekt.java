@@ -13,7 +13,7 @@ import personensicht.view.gameObjekte.GameObjektV;
  * @author Demix
  *
  */
-public abstract class GameObjekt
+public abstract class GameObjekt 
 {
 	/**
 	 * Name des GameObjektes.
@@ -53,6 +53,15 @@ public abstract class GameObjekt
 	public GameObjekt(GameObjektType type) 
 	{
 		this.TYPE = type;
+	}
+	
+	public GameObjekt(GameObjektType type, int x, int y, int z) 
+	{
+		this.TYPE = type;
+		laenge= x;
+		breite = y;
+		hohe = z;
+		
 	}
 	
 	public synchronized ArrayList<Aktion> getAktionen() {

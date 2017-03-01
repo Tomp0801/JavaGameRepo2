@@ -1,10 +1,29 @@
-package personensicht.model.gameObjekte;
+package personensicht.model.gameObjekte.lebewesen;
 
 import javafx.scene.Node;
-import personensicht.model.gameObjekte.lebewesen.GespraechAktion;
+import personensicht.model.gameObjekte.GameObjekt;
+import personensicht.model.gameObjekte.GameObjektType;
+import personensicht.view.gameObjekte.lebewesen.MenschV;
 
 public class Mensch extends GameObjekt
 {	
+	/**
+	 * size der Arme. (links, rechts) (x,y,z)
+	 */
+	private int[][] sizeArme = new int[2][3];
+	
+	/**
+	 * size der Beine. (links, rechts) (x,y,z)
+	 */
+	private int[][] sizeBeine = new int[2][3];
+	
+	/**
+	 * groﬂe des Koerpers (x,y,z)
+	 */
+	private int[] sizeKoerper = new int[3];
+	
+	private int radiusKopf = 40; 
+	
 	public Mensch(String name)
 	{
 		super(GameObjektType.Mensch);
@@ -36,13 +55,15 @@ public class Mensch extends GameObjekt
 
 	@Override
 	public Node ladeNodeObjekt() {
-		// TODO Auto-generated method stub
-		return null;
+		MenschV menschV = new MenschV();
+		return menschV.getRoot();
 	}
 
 	@Override
 	public Node ladeNodeObjekt(int localX, int localY) {
-		// TODO Auto-generated method stub
 		return null;
 	}
+
+
+
 }

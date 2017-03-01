@@ -16,7 +16,7 @@ public class Tuer extends GameObjekt
 	
 	public Tuer()
 	{
-		super(GameObjektType.Tuer);
+		super(GameObjektType.Tuer, 150, 40, 1000);
 	}
 	
 	public Tuer(Region region)

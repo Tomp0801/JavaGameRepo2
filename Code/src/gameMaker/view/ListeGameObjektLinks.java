@@ -54,7 +54,7 @@ public class ListeGameObjektLinks extends VBox{
 			
 			GameObjektAuswalListeTitledPane.setOnMouseDragged(new EventHandler<MouseEvent>(){
 			
-				RegionMakerView instance = RegionMakerView.getInstance();
+				RegionMakerV instance = RegionMakerV.getInstance();
 				  @Override public void handle(MouseEvent mouseEvent) {
 					  if (auswahlGetroffen == false)
 					  {
@@ -73,7 +73,7 @@ public class ListeGameObjektLinks extends VBox{
 				  }
 			});	
 			GameObjektAuswalListeTitledPane.setOnMouseReleased(new EventHandler<MouseEvent>(){
-				RegionMakerView instance = RegionMakerView.getInstance();
+				RegionMakerV instance = RegionMakerV.getInstance();
 				  @Override public void handle(MouseEvent mouseEvent) {
 					  if (instance.gameObjekteOnRegion.size() > 0)
 					  { 

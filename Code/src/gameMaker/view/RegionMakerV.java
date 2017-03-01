@@ -1,18 +1,22 @@
 package gameMaker.view;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.geometry.Bounds;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.PerspectiveCamera;
 import javafx.scene.Scene;
-import javafx.scene.control.ListView;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TitledPane;
+import javafx.scene.SceneAntialiasing;
+import javafx.scene.SubScene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
@@ -20,9 +24,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
 import javafx.scene.shape.Box;
-import javafx.scene.shape.Shape3D;
 import javafx.scene.transform.Rotate;
 import personensicht.model.gameObjekte.GameObjekt;
 import personensicht.model.welt.map.Region;
@@ -32,7 +34,7 @@ import personensicht.model.welt.map.Region;
  * @author Dennis
  *
  */
-public class RegionMakerView
+public class RegionMakerV
 {
 	/**
 	 * falls aenderungen an der Region vorgenommen wurde, muss das durtyBit auf true gesetzt werden, um 
@@ -60,7 +62,7 @@ public class RegionMakerView
 	/**
 	 * Die Region, auf dem Objekte Platziert werden koennen
 	 */
-	private AnchorPane zentrumRegion = new AnchorPane();
+	private AnchorPaneRegion zentrumRegion = new AnchorPaneRegion();
 	
 	/**
 	 * hier werden die GameObjekte drin gespeichert, die sich auf der Region befinden
@@ -76,9 +78,13 @@ public class RegionMakerView
 	 */
 	private double layoutY = 0;  
 	
-	private static RegionMakerView instance ;
+	private SubScene subScene;
+	
+	private StackPane zentrumBoarderPane = new StackPane();
+	
+	private static RegionMakerV instance ;
 	//--------------------------------------------Konsturktor----------------------------------------------------------------------//
-	private RegionMakerView() 
+	private RegionMakerV() 
 	{		
 		instance = this; 
 		MenuGameMaker obereMenuLeiste = new MenuGameMaker();
@@ -90,17 +96,12 @@ public class RegionMakerView
 		zentrumRegion.setStyle("-fx-background-color: GREY");
 		zentrumRegion.setMinSize(Region.getSizemin(), Region.getSizemin());
 		zentrumRegion.setMaxSize(Region.getSizemin(), Region.getSizemin());
-		StackPane zentrum = new StackPane();
-		zentrum.setPrefSize(Region.getSizemin()+200,Region.getSizemin()+200);
-		zentrum.setStyle("-fx-background-color: BLACK");
-		zentrum.setAlignment(Pos.CENTER);
-		zentrum.getChildren().add(zentrumRegion);
-		
+		addRegionZentrum();
 		root.setTop(obereMenuLeiste);
 		root.setLeft(objektListe);
-		root.setCenter(zentrum);
 		
 		this.scene = new Scene(root);
+		
 		scene.setOnKeyReleased(new EventHandler<KeyEvent>(){			
 			@Override
 			public void handle(KeyEvent event) {
@@ -113,7 +114,26 @@ public class RegionMakerView
 				}
 			}
 		});
+		zentrumRegion.setPickOnBounds(false);
 	}
+	
+	private void addRegionZentrum()
+	{
+		zentrumBoarderPane.setPrefSize(Region.getSizemin()+200,Region.getSizemin()+200);
+		zentrumBoarderPane.setStyle("-fx-background-color: BLACK");
+		zentrumBoarderPane.setAlignment(Pos.CENTER);
+		subScene = new SubScene(zentrumRegion,zentrumBoarderPane.getPrefWidth(), zentrumBoarderPane.getPrefHeight(), true, SceneAntialiasing.BALANCED );
+		PerspectiveCamera kamera = new PerspectiveCamera();
+		kamera.setTranslateZ(-300); 
+		kamera.setNearClip(0.01);
+		kamera.setFieldOfView(45);
+		kamera.setRotationAxis(Rotate.X_AXIS);
+		kamera.setRotate(30);
+		subScene.setCamera(kamera);
+		zentrumBoarderPane.getChildren().add(subScene); 
+		root.setCenter(zentrumBoarderPane);
+	}
+	
 	
 	/**
 	 * loescht eine Node von der Region
@@ -130,12 +150,15 @@ public class RegionMakerView
 	 * @param sizeX
 	 * @param sizeY
 	 */
-	public RegionMakerView(int sizeX, int sizeY)
+	public RegionMakerV(int sizeX, int sizeY)
 	{
 		this();
 		if (sizeX >= Region.getSizemin() && sizeY >= Region.getSizemin())
-			if (sizeX < Region.getSizemax() && sizeY < Region.getSizemax())
+			if (sizeX < Region.getSizemax() && sizeY < Region.getSizemax()){
 				zentrumRegion.setPrefSize(sizeX, sizeY);
+				subScene.setWidth(sizeY);
+				subScene.setHeight(sizeX);
+			}
 			else
 				System.err.println("Die eingestellte Größe ist zu Groß");
 		else
@@ -147,8 +170,7 @@ public class RegionMakerView
 	/**
 	 * platzierzt eine Mauer
 	 */
-	void platzierungMauer(AuswahlGameObjekt objekt)
-	{
+	void platzierungMauer(AuswahlGameObjekt objekt){
 		Node node = objekt.getNode();
 		setNodeOnRegion(node);
 		MauerSetzHandler mouseHandler = new MauerSetzHandler(objekt.getEinstellungGameObjket().getGameObjekt());
@@ -161,7 +183,6 @@ public class RegionMakerView
 				mouseHandler.setStartZustand();
 			}
 		});	
-		//TODO
 	}
 	
 	/**
@@ -170,9 +191,6 @@ public class RegionMakerView
 	private void setNodeOnRegion(Node node){
 		//makiert die Region als bearbeitet
 		durtyBit = true; 
-		//setzt Eigenschaften der Node
-		node.setRotationAxis(Rotate.X_AXIS);
-//		node.setRotate(20);	 vorerst	
 		// setzt die Node auf die Region
 		zentrumRegion.getChildren().add(node);
 	}
@@ -183,12 +201,9 @@ public class RegionMakerView
 	 * Rotiert die Node, um diese in 3D zu sehen
 	 * @param node
 	 */
-	void setzeGameObjektAufDieRegion(AuswahlGameObjekt objekt)
-	{
+	void setzeGameObjektAufDieRegion(AuswahlGameObjekt objekt){
 		Node node = objekt.getNode();
-		setNodeOnRegion(node);
-
-		
+		setNodeOnRegion(node);	
 		//erstellt EventHandler. Um das Umsetzen einer Node zu ermoeglichen
 		node.setOnMouseDragged(new EventHandler<MouseEvent>(){
 			
@@ -197,7 +212,6 @@ public class RegionMakerView
 				  setPositionDesGameObjekt(node , mouseEvent);
 			  }
 		});	
-		
 		//Dieses Event, beschreibt was passiert wenn die ein Node gesetzt wird. Dazu wird ueberprueft ob diese Position
 		//schon von einer andern Node besetzt ist.
 		node.setOnMouseReleased(new EventHandler<MouseEvent>() {
@@ -220,16 +234,14 @@ public class RegionMakerView
 					randNodeSetztTest(node);
 				}	
 		});
-		node.setOnMousePressed(new EventHandler<Event>() 
-		{
+		node.setOnMousePressed(new EventHandler<Event>() {
 			@Override
 			public void handle(Event event) {
 				changPositionVonNode(node.getLayoutX(), node.getLayoutY());	
 			}
 		});
 		
-		node.setOnMouseClicked(new EventHandler<Event>() 
-		{
+		node.setOnMouseClicked(new EventHandler<Event>() {
 			@Override
 			public void handle(Event event) 	{
 				root.setRight(objekt.getEinstellungGameObjket());	
@@ -254,30 +266,31 @@ public class RegionMakerView
 	 */
 	void randNodeSetztTest(Node node)
 	{
-		 if (node.getLayoutX()+node.getBoundsInLocal().getWidth() > zentrumRegion.getPrefWidth())
+		
+		 if (node.getLayoutX()+node.getBoundsInLocal().getWidth()/2 > subScene.getWidth())
 		 {
-			 node.setLayoutX(zentrumRegion.getPrefWidth()-node.getBoundsInLocal().getWidth());
+			 node.setLayoutX(subScene.getWidth()-node.getBoundsInLocal().getWidth()/2);
 		 }
-		 if (node.getLayoutY()+node.getBoundsInLocal().getHeight() > zentrumRegion.getPrefHeight())
+		 if (node.getLayoutY()+node.getBoundsInLocal().getHeight()/2 > subScene.getHeight())
 		 {
-			 node.setLayoutY(zentrumRegion.getPrefHeight()-node.getBoundsInLocal().getHeight());
+			 node.setLayoutY(subScene.getHeight()-node.getBoundsInLocal().getHeight()/2);
 		 }
-		 if (node.getLayoutX() < 0)
+		 if (node.getLayoutX()-node.getBoundsInLocal().getWidth()/2 < 0)
 		 {
-			 node.setLayoutX(1);
+			 node.setLayoutX(0+node.getBoundsInLocal().getWidth()/2);
 		 }
-		 if (node.getLayoutY() < 0)
+		 if (node.getLayoutY()-node.getBoundsInLocal().getHeight()/2 < 0)
 		 {
-			 node.setLayoutY(1);
+			 node.setLayoutY(node.getBoundsInLocal().getHeight()/2);
 		 }
 	}
 
 	//setzt die Position einer Node auf die Position des Coursers
-	void setPositionDesGameObjekt(Node node, MouseEvent mouseEvent){
-		 node.setLayoutX(mouseEvent.getSceneX()-root.getCenter().getLayoutX()-zentrumRegion.getLayoutX());
-		 node.setLayoutY(mouseEvent.getSceneY()-root.getCenter().getLayoutY()-zentrumRegion.getLayoutY());
-		 ausgewaehterNode = node; 
-		 durtyBit = true; 
+	void setPositionDesGameObjekt(Node node, MouseEvent mouseEvent){ 
+		 node.setLayoutX(mouseEvent.getSceneX()-root.getCenter().getLayoutX()-subScene.getLayoutX());
+		 node.setLayoutY(mouseEvent.getSceneY()-root.getCenter().getLayoutY()-subScene.getLayoutY());
+		 ausgewaehterNode = node;
+		 durtyBit = true;
 	}
 
 	/**
@@ -387,17 +400,16 @@ public class RegionMakerView
 		//oeffne ein Wizard um die Große einzustellen
 	}
 	
-	public static synchronized RegionMakerView getInstance() {
+	public static synchronized RegionMakerV getInstance() {
 		if (instance== null)
-			new RegionMakerView(); 
+			new RegionMakerV(); 
 		return instance;
 	}
 
 	/**
 	 * speichert die erstellte Region in die Datei, die vorher verwendet wurde
 	 */
-	void speicherRegion()
-	{
+	void speicherRegion(){
 		//nur moeglich wenn was geandert wurde. Sonst ausgegraut oder nicht anklickbar
 		//speichert unter den verwendeten namen
 	}
@@ -405,26 +417,69 @@ public class RegionMakerView
 	/**
 	 * speichert die erstellte Region
 	 */
-	void speicherUnterNameRegion()
-	{
+	void speicherUnterNameRegion(){ //TODO hier dran wird nun gearbeitet
 		//suche eine Datei unter der gespeichert werden soll
 		//endung hinzufuegen
+	
+		FileOutputStream fos = null;
+		
+		try 
+		{
+			fos = new FileOutputStream ("demo.edit");
+		} 
+		catch (FileNotFoundException e) 
+		{
+			e.printStackTrace();
+		}
+	    ObjectOutputStream oos = null;
+		
+	    try 
+		{
+			oos = new ObjectOutputStream (fos);
+			oos.writeObject(zentrumRegion);
+		} 
+	    catch (IOException e) 
+	    {
+			e.printStackTrace();
+		}	
 	}
 	
 	/**
 	 * lead eine andere Region
 	 */
-	void ladeAndereRegion()
-	{
+	void ladeAndereRegion(){
 		//Oeffne ein Ordner in dennen Regionen gespeichert sind
 		//nach dem auswahlen einer Datei, nach speichern fragen, falls was geaendert wurde
+		
+		FileInputStream fis = null;
+		try {
+			fis = new FileInputStream ("demo.edit");
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+	    ObjectInputStream ois = null;
+		try {
+			ois = new ObjectInputStream (fis);
+		} catch (IOException e) {
+			e.printStackTrace();
+		} 
+	   try {
+		zentrumRegion = (AnchorPaneRegion) ois.readObject ();
+		addRegionZentrum();
+	} catch (ClassNotFoundException e) {
+		e.printStackTrace();
+	} catch (IOException e) {
+		e.printStackTrace();
+	}
+	   
+	
+	   
 	}
 	
 	/**
 	 * erstellt eine Neue Region
 	 */
-	void erstelleNeueRegion()
-	{
+	void erstelleNeueRegion(){
 		//nach dem Speichern fragen, falls was geaendert wurde
 		//oeffne eine Wizard um dort die Einsstellungen fuer die neue Region fest zu legen
 	}
@@ -435,8 +490,7 @@ public class RegionMakerView
 	}			
 	
 
-	private class MauerSetzHandler implements EventHandler<MouseEvent>
-	{		
+	private class MauerSetzHandler implements EventHandler<MouseEvent>{		
 		private GameObjekt objekt;
 		/**
 		 * zeigt an ob die Breite oder die hohe veraenderet werden soll. 
@@ -445,9 +499,7 @@ public class RegionMakerView
 		private Boolean richtungUnten = true; 
 		private Boolean beendeDrucken = true; 
 		private double startPositionCourserX;
-		private double startPositionCourserY;
-		private double startPositionCourserXDelta = 0; 
-		private double startPositionCourserYDelta = 0; 
+		private double startPositionCourserY; 
 		private double startSizeX;
 		private double startSizeY;
 		private double startLayoutX;
@@ -472,8 +524,6 @@ public class RegionMakerView
 				startPositionCourserY = mouseEvent.getSceneY();
 				startSizeX = box.getWidth();
 				startSizeY = box.getHeight();
-				startPositionCourserXDelta = 0; 
-				startPositionCourserYDelta = 0; 
 				startLayoutX = box.getLayoutX();
 				startLayoutY = box.getLayoutY();
 				//wenn die Maus ehr weiter rechts gedruckt wurde, dann ...
@@ -493,7 +543,6 @@ public class RegionMakerView
 				}
 				beendeDrucken = false; 
 			}
-			//TODO
 			if (mouseEvent.getButton() == MouseButton.PRIMARY)
 			{	
 				double sizeChange = mouseEvent.getSceneX()-startPositionCourserX;
@@ -561,14 +610,6 @@ public class RegionMakerView
 				objekt.setY(zentrumRegion.getHeight()-box.getBoundsInParent().getMinY());	
 				box.setLayoutY(zentrumRegion.getHeight()-box.getHeight()/2);		
 			}
-		}
-
-		public synchronized void setStartPositionCourserX(double startPositionCourserX) {
-			this.startPositionCourserX = startPositionCourserX;
-		}
-
-		public synchronized void setStartPositionCourserY(double startPositionCourserY) {
-			this.startPositionCourserY = startPositionCourserY;
 		}
 	}
 }

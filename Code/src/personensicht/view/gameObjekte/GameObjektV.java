@@ -1,18 +1,19 @@
 package personensicht.view.gameObjekte;
 
+import javafx.scene.Node;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Shape3D;
 
 public abstract class GameObjektV
 {
-	private Shape3D node;
+	private Node node;
 
-	public synchronized Shape3D getNode() 
+	public synchronized Node getNode() 
 	{
 		return node;
 	}
 
-	public synchronized void setNode(Shape3D node) 
+	public synchronized void setNode(Node node) 
 	{
 		this.node = node;
 	}

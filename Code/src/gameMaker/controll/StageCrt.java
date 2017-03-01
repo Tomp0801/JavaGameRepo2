@@ -1,7 +1,9 @@
 package gameMaker.controll;
 
-import gameMaker.view.RegionMakerView;
+
+import gameMaker.view.RegionMakerV;
 import javafx.application.Application;
+import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
@@ -33,7 +35,7 @@ public class StageCrt extends Application
 	{
 		StageCrt.stageController = this;
 		this.stage = primaryStage; 
-		this.setScene(RegionMakerView.getInstance().getScene());
+		this.setScene(RegionMakerV.getInstance().getScene());
 		primaryStage.show();
 	}
 	

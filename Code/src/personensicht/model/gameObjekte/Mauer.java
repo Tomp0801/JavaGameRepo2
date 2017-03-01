@@ -8,7 +8,7 @@ public class Mauer extends GameObjekt
 
 	public Mauer() 
 	{
-		super(GameObjektType.Mauer);
+		super(GameObjektType.Mauer,50,50,200);
 	}
 
 	@Override

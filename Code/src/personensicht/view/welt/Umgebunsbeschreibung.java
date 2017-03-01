@@ -9,7 +9,7 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import personensicht.crt.spielablauf.AktionsCrt;
-import personensicht.model.gameObjekte.Mensch;
+import personensicht.model.gameObjekte.lebewesen.Mensch;
 import personensicht.model.welt.map.Region;
 
 public class Umgebunsbeschreibung extends VBox

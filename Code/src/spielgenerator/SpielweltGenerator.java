@@ -4,8 +4,8 @@ import java.util.ArrayList;
 
 import personensicht.model.gameObjekte.Bett;
 import personensicht.model.gameObjekte.GameObjekt;
-import personensicht.model.gameObjekte.Mensch;
 import personensicht.model.gameObjekte.Schrank;
+import personensicht.model.gameObjekte.lebewesen.Mensch;
 import personensicht.model.inventar.items.Essen;
 import personensicht.model.inventar.items.Item;
 import personensicht.model.inventar.items.Trinken;
