@@ -33,11 +33,6 @@ public class Tisch extends GameObjekt
 		return this.getNodeObjekt().getNode();
 	}
 
-	@Override
-	public Node ladeNodeObjekt(int localX, int localY) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	public synchronized int[] getTischBeineSize() {
 		return tischBeineSize;

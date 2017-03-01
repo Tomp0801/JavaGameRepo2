@@ -1,11 +1,14 @@
 package personensicht.model.gameObjekte;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.Node;
 import javafx.scene.shape.Shape3D;
 import personensicht.model.aktionen.Aktion;
 import personensicht.view.gameObjekte.GameObjektV;
+import sun.java2d.pipe.SpanShapeRenderer.Simple;
 
 
 /**
@@ -13,7 +16,7 @@ import personensicht.view.gameObjekte.GameObjektV;
  * @author Demix
  *
  */
-public abstract class GameObjekt 
+public abstract class GameObjekt implements Serializable
 {
 	/**
 	 * Name des GameObjektes.
@@ -33,35 +36,51 @@ public abstract class GameObjekt
 	/**
 	 * Ein GameObjekt besitzt eine Node, die das Aussehen in der GUI festlegt
 	 */
-	private GameObjektV nodeObjekt; 
+	private transient GameObjektV nodeObjekt; 
 	
 	/**
-	 * leange des Objektes
+	 * x size der root Node.
 	 */
-	private double laenge = 60;
+	private SimpleDoubleProperty width = new SimpleDoubleProperty(60);
 	
 	/**
-	 * breite des Objektes
+	 * y size der root Node.
 	 */
-	private double breite = 40;
+	private SimpleDoubleProperty height = new SimpleDoubleProperty(40);
 	
 	/**
-	 * hohe des Objektes
+	 * z size der root Node.
 	 */
-	private double hohe = 20; 
+	private SimpleDoubleProperty depth = new SimpleDoubleProperty(20); 
+	
+	/**
+	 * gibt die Position X an, auf der sich die Node befindet
+	 */
+	private SimpleDoubleProperty layoutX = new SimpleDoubleProperty(0);
+	
+	/**
+	 * Gibt die PositionY an auf der sich die Node befindet
+	 */
+	private SimpleDoubleProperty layoutY = new SimpleDoubleProperty(0);
 	
 	public GameObjekt(GameObjektType type) 
 	{
 		this.TYPE = type;
 	}
 	
-	public GameObjekt(GameObjektType type, int x, int y, int z) 
+	/**
+	 * erstellt ein GameObjekt mit vorgegebener Laenge Breite und Hohe
+	 * @param type
+	 * @param width
+	 * @param height
+	 * @param depth
+	 */
+	public GameObjekt(GameObjektType type, int width, int height, int depth) 
 	{
 		this.TYPE = type;
-		laenge= x;
-		breite = y;
-		hohe = z;
-		
+		this.width.setValue(width);
+		this.height.setValue(height);
+		this.depth.setValue(depth);		
 	}
 	
 	public synchronized ArrayList<Aktion> getAktionen() {
@@ -84,14 +103,6 @@ public abstract class GameObjekt
 	 */
 	public abstract Node ladeNodeObjekt();
 	
-	/**
-	 * @param localX position in X
-	 * @param localY position in Y
-	 * @return
-	 */
-	public abstract Node ladeNodeObjekt(int localX, int localY);
-
-	
 	public synchronized void setNodeObjekt(GameObjektV nodeObjekt) {
 		this.nodeObjekt = nodeObjekt;
 	}
@@ -104,36 +115,48 @@ public abstract class GameObjekt
 		return TYPE;
 	}
 
-	public synchronized double getX() {
-		return laenge;
+	public synchronized void setWidth(double value) {
+		this.width.setValue(value);
 	}
 
-	public synchronized void setX(double laenge) {
-		this.laenge = laenge;
-		if (nodeObjekt != null)
-			this.nodeObjekt.setX(laenge);
+
+	public synchronized void setHeight(double value) {
+		this.height.setValue(value);
 	}
 
-	public synchronized double getY() {
-		return breite;
-	}
 
-	public synchronized void setY(double breite) {
-		this.breite = breite;
-		if (nodeObjekt != null)
-			this.nodeObjekt.setY(breite);
-	}
-
-	public synchronized double getZ() {
-		return hohe;
-	}
-
-	public synchronized void setZ(double hohe) {
-		this.hohe = hohe;
-		if (nodeObjekt != null)
-			this.nodeObjekt.setZ(hohe);
+	public synchronized void setDepth(double value) {
+		this.depth.setValue(value);
 	} 
 	
+	public synchronized SimpleDoubleProperty getWidth() {
+		return width;
+	}
+
+	public synchronized SimpleDoubleProperty getHeight() {
+		return height;
+	}
+
+	public synchronized SimpleDoubleProperty getDepth() {
+		return depth;
+	}
+
+	public synchronized SimpleDoubleProperty getLayoutX() {
+		return layoutX;
+	}
+
+	public synchronized SimpleDoubleProperty getLayoutY() {
+		return layoutY;
+	}
+
+	public synchronized void setLayoutX(double value) {
+		this.layoutX.setValue(value);
+	}
+
+	public synchronized void setLayoutY(double value) {
+		this.layoutY.setValue(value);
+	}
+
 	/**
 	 * gibt den Typ eines GamObjektes (z.B. ein Moebelstueck) zurueck, passend zu dem String der Uebergeben wird. 
 	 * @param type Beispiel: fuer dien Type Schrank, muss der String "Schrank" heiﬂen
@@ -171,4 +194,5 @@ public abstract class GameObjekt
 			return null;
 		}
 	}
+
 }

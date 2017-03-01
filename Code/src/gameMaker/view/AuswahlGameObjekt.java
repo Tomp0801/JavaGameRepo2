@@ -10,6 +10,7 @@ import gameMaker.view.einstellungGameObjekte.EinstellungTisch;
 import gameMaker.view.einstellungGameObjekte.EinstellungTuer;
 import javafx.scene.Node;
 import personensicht.model.gameObjekte.Bett;
+import personensicht.model.gameObjekte.GameObjekt;
 import personensicht.model.gameObjekte.GameObjektType;
 import personensicht.model.gameObjekte.Mauer;
 import personensicht.model.gameObjekte.Schrank;
@@ -29,41 +30,50 @@ public class AuswahlGameObjekt {
 	 * Rechte Anzeige, mit der Einstellungen am GameObjet unternommen werden koennen
 	 */
 	private EinstellungGameObjekt einstellungGameObjket; 
-	
+	private GameObjekt gameObjekt; 
+	private final GameObjektType TYPE;
 	
 	AuswahlGameObjekt(GameObjektType type) 
 	{
+		this.TYPE = type; 
 		switch (type)
 		{
 		case Bett:
 			Bett bett = new Bett(); 
 			einstellungGameObjket = new EinstellungBett(bett); 
+			gameObjekt = bett; 
 			break; 
 		case Item:
 			break;
 		case Mensch:
 			Mensch mensch = new Mensch("DefaultName");
 			einstellungGameObjket = new EinstellungMensch(mensch);
+			gameObjekt = mensch; 
 			break;
 		case Schrank:
 			Schrank schrank = new Schrank();
 			einstellungGameObjket = new EinstellungSchrank(schrank);
+			gameObjekt = schrank; 
 			break;
 		case Tuer:
 			Tuer tuer = new Tuer();
 			einstellungGameObjket = new EinstellungTuer(tuer); 
+			gameObjekt = tuer; 
 			break;
 		case Stuhl:
 			Stuhl stuhl = new Stuhl();
 			einstellungGameObjket = new EinstellungStuhl(stuhl); 
+			gameObjekt = stuhl;
 			break;
 		case Tisch:
 			Tisch tisch = new Tisch();
 			einstellungGameObjket = new EinstellungTisch(tisch); 
+			gameObjekt = tisch; 
 			break;
 		case Mauer:
 			Mauer mauer = new Mauer();
 			einstellungGameObjket = new EinstellungMauer(mauer); 
+			gameObjekt = mauer; 
 			break;
 		default:
 			break;
@@ -78,6 +88,14 @@ public class AuswahlGameObjekt {
 
 	public synchronized Node getNode() {
 		return node;
+	}
+
+	public synchronized GameObjektType getTYPE() {
+		return TYPE;
+	}
+
+	public synchronized GameObjekt getGameObjekt() {
+		return gameObjekt;
 	}	
 }		
 

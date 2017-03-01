@@ -14,38 +14,40 @@ public class SchrankV extends GameObjektV
 	public final static int MINSIZE_Y = 20; 
 	public final static int MINSIZE_Z = 20; 
 	
-	private Box schrank = new Box(); 
+	private Box root = new Box(); 
 	
 	public SchrankV(Schrank schrank)
 	{
-		this.setNode(this.schrank);
-		this.schrank.setHeight(schrank.getY());
-		this.schrank.setWidth(schrank.getX());
-		this.schrank.setDepth(schrank.getZ());
+		this.setNode(this.root);
+		this.root.heightProperty().bind(schrank.getHeight());
+		this.root.widthProperty().bind(schrank.getWidth());
+		this.root.depthProperty().bind(schrank.getDepth());
+		this.root.layoutXProperty().bind(schrank.getLayoutX());
+		this.root.layoutYProperty().bind(schrank.getLayoutY());
 	}
 	
 	
 	@Override
-	public void setY(double hohe) {
+	public void setHeight(double hohe) {
 		
-		this.schrank.setHeight(hohe);
+		this.root.setHeight(hohe);
 	}
 
 	@Override
-	public void setX(double hohe) {
+	public void setWidth(double hohe) {
 		
-		this.schrank.setWidth(hohe);
+		this.root.setWidth(hohe);
 	}
 
 	@Override
-	public void setZ(double hohe) {
-		this.schrank.setDepth(hohe);
+	public void setDepth(double hohe) {
+		this.root.setDepth(hohe);
 	}
 
 
 	@Override
 	public void setColor(Color color)
 	{
-		Shape3DZusatzMethoden.hintergundFarbeSetzen(this.schrank, color);
+		Shape3DZusatzMethoden.hintergundFarbeSetzen(this.root, color);
 	}
 }

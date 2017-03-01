@@ -2,7 +2,6 @@ package personensicht.view.gameObjekte;
 
 import javafx.scene.Node;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Shape3D;
 
 public abstract class GameObjektV
 {
@@ -18,15 +17,33 @@ public abstract class GameObjektV
 		this.node = node;
 	}
 	
-	public abstract void setX(double hohe);
+	public abstract void setWidth(double value);
 	
-	public abstract void setY(double hohe);
+	public abstract void setHeight(double value);
 	
-	public abstract void setZ(double hohe);
+	public abstract void setDepth(double value);
 	
-	/**
-	 * setzt eine Farbe
-	 * @param color
-	 */
 	public abstract void setColor(Color color);
+	
+//	/**
+//	 * setzt die Position der Node
+//	 * @param value
+//	 */
+//	public void setLayoutX(double value){
+//		if (node != null)
+//		this.node.setLayoutX(value);
+//		else
+//		System.out.println("Node wurde noch nicht geladen");
+//	}
+//	
+//	/**
+//	 * setzt die Position der Node
+//	 * @param value
+//	 */
+//	public void setLayoutY(double value){
+//		if (node != null)
+//		this.node.setLayoutY(value);
+//		else
+//		System.out.println("Node wurde noch nicht geladen");	
+//	}
 }

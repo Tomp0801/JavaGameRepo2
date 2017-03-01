@@ -79,8 +79,7 @@ public class EinstellungBett extends EinstellungGameObjekt
 					i = BettV.MINSIZE_X;
 				}
 					
-					
-				bett.setX(i);
+				bett.setWidth(i);
 		}	
 	}});
 	laengeXBox.getChildren().addAll(bedeutungLabelLaengeX, textFieldLaenge);
@@ -113,7 +112,7 @@ public class EinstellungBett extends EinstellungGameObjekt
 					textFieldBreiteY.setText(""+BettV.MAXSIZE_Y);
 					i = BettV.MAXSIZE_Y; 
 				}
-				bett.setY(i);
+				bett.setHeight(i);
 
 		}}	
 	});
@@ -147,7 +146,7 @@ public class EinstellungBett extends EinstellungGameObjekt
 					textFieldHoheZ.setText(""+BettV.MAXSIZE_Z);
 					i = BettV.MAXSIZE_Z; 
 				}
-				bett.setZ(i);
+				bett.setDepth(i);
 			}	
 		}	
 	});

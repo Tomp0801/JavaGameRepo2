@@ -8,11 +8,11 @@ import personensicht.view.gameObjekte.BettV;
 public class Bett extends GameObjekt
 {	
 	private int erholungswert = 10;
-	private Color color;
+	private Color color; //testen, kann eventuell nicht mit gespeichert werden
 	
 	public Bett()
 	{
-		super(GameObjektType.Bett);
+		super(GameObjektType.Bett, 50 ,50 ,50);
 		this.setName("Bett");
 		initAktionsListe();
 	}
@@ -45,12 +45,6 @@ public class Bett extends GameObjekt
 		return this.getNodeObjekt().getNode();
 	}
 
-	@Override
-	public Node ladeNodeObjekt(int localX, int localY) 
-	{
-		return null;
-	}
-
 	public void setColor(Color color) 
 	{
 		this.color = color; 
@@ -59,5 +53,9 @@ public class Bett extends GameObjekt
 			BettV bettV = (BettV) this.getNodeObjekt();
 			bettV.setColor(color);
 		}
+	}
+
+	public synchronized Color getColor() {
+		return color;
 	}
 }

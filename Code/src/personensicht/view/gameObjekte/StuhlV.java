@@ -13,39 +13,39 @@ public class StuhlV extends GameObjektV
 	public final static int MAXSIZE_Z = 50; 
 	public final static int MINSIZE_X = 20; 
 	public final static int MINSIZE_Y = 20; 
-	public final static int MINSIZE_Z = 20; 
+	public final static int MINSIZE_Z = 20; 	
+	Box root = new Box(); 
 	
-	Box stuhl = new Box(); 
-	
-	public StuhlV(Stuhl stuhl)
-	{
-		this.setNode(this.stuhl);
-		this.stuhl.setHeight(stuhl.getY());
-		this.stuhl.setWidth(stuhl.getX());
-		this.stuhl.setDepth(stuhl.getZ());
+	public StuhlV(Stuhl stuhl){
+		this.setNode(this.root);
+		this.root.heightProperty().bind(stuhl.getHeight());
+		this.root.widthProperty().bind(stuhl.getWidth());
+		this.root.depthProperty().bind(stuhl.getDepth());
+		this.root.layoutXProperty().bind(stuhl.getLayoutX());
+		this.root.layoutYProperty().bind(stuhl.getLayoutY());
 	}
 
 	@Override
-	public void setY(double hohe) {
-		this.stuhl.setHeight(hohe);
+	public void setHeight(double value) {
+		this.root.setHeight(value);
 		
 	}
 
 	@Override
-	public void setX(double hohe) {
-		this.stuhl.setWidth(hohe);
+	public void setWidth(double value) {
+		this.root.setWidth(value);
 		
 	}
 
 	@Override
-	public void setZ(double hohe) {
-		this.stuhl.setDepth(hohe);
+	public void setDepth(double value) {
+		this.root.setDepth(value);
 		
 	}
 
 	@Override
 	public void setColor(Color color) {
-		Shape3DZusatzMethoden.hintergundFarbeSetzen(this.stuhl, color);
+		Shape3DZusatzMethoden.hintergundFarbeSetzen(this.root, color);
 		
 	}
 

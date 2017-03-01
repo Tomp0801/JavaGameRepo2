@@ -1,8 +1,10 @@
 package personensicht.model.welt.map;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import personensicht.model.gameObjekte.GameObjekt;
+import personensicht.view.welt.map.RegionV;
 
 /**
  * Bescheibt eine Region. 
@@ -13,103 +15,77 @@ import personensicht.model.gameObjekte.GameObjekt;
  * @author Dennis
  *
  */
-public class Region 
+public class Region implements Serializable
 {
-	/**
-	 * Name des Ortes
-	 */
+
 	private String nameDerRegion;
 	
+//	/**
+//	 * Inhalt der Region. 
+//	 * Das Array beinhaltet alle Elemente die sich auf dieser Region befinden.
+//	 */
+//	private ArrayList<GameObjekt> objektListe = new ArrayList<GameObjekt>(); 
+	
+	
+//	/**
+//	 * verweist auf die Orte, die von diesem Ort aus zu erreichen ist
+//	 */
+//	private ArrayList<Region> nachbarsOrte = new ArrayList<Region>();  // veraltet
+//	
+//	/**
+//	 * Beschreibung des Ortes
+//	 */
+//	private String beschreibung = "Dies ist ein schöner Ort, den wir befinden uns in Baven"; //veraltet
+//	
 	/**
-	 * Minimale große der Region in Pixel. 
+	 * eine Liste von GameObjekten die sich auf dieser Region befinden
 	 */
-	public static final int SIZEMIN = 400;
+	private ArrayList<GameObjekt> children = new ArrayList<GameObjekt>(); 
 	
 	/**
-	 * Maximale große der Region in Pixel. 
+	 * Breite der Region
 	 */
-	public static final int SIZEMAX = 10000;
-
+	private double width = RegionV.SIZEMIN;
 	/**
-	 * Inhalt der Region. 
-	 * Das Array beinhaltet alle Elemente die sich auf dieser Region befinden.
+	 * Hohe der Region
 	 */
-	private ArrayList<GameObjekt> objektListe = new ArrayList<GameObjekt>();
+	private double height = RegionV.SIZEMIN;
 	
-	/**
-	 * Eine Liste mit Integer[] Arrays von der Groeße 2.
-	 * Der Inhalt dieser Integer steht fuer die Position des jeweiligen Objekts in der ObjektListe.
-	 */
-	private ArrayList<Integer[]> positionDerObjekteInDerListe = new ArrayList<Integer[]>();
+	public Region(){
+	}
 	
-	/**
-	 * verweist auf die Orte, die von diesem Ort aus zu erreichen ist
-	 */
-	private ArrayList<Region> nachbarsOrte = new ArrayList<Region>();  // veraltet
-	
-	/**
-	 * Beschreibung des Ortes
-	 */
-	private String beschreibung = "Dies ist ein schöner Ort, den wir befinden uns in Baven"; //veraltet
-	
-	/**
-	 * eine Liste von GameObjekten die sich auf diesem Spielfeld befinden
-	 * 
-	 */
-	private ArrayList<GameObjekt> objekte = new ArrayList<GameObjekt>(); //veraltet
-	
-	/**
-	 *  ein zwei Diminsionales Array mit der groeße der Region. 
-	 */
-	private int size[] = {SIZEMIN, SIZEMIN};
-
-	
-	public Region(String nameDesOrtes, ArrayList<GameObjekt> objektListe, ArrayList<Integer[]> positionDerObjekteInDerListe) 		
-	{
+	public Region(String nameDesOrtes, ArrayList<GameObjekt> children) 		{
 		this.nameDerRegion = nameDesOrtes; 
-		this.objektListe = objektListe;
-		this.positionDerObjekteInDerListe = positionDerObjekteInDerListe; 
+		this.children = children;
 	}
 	
 	
-	public Region(String nameDesOrtes) 			// veraltet
+	public Region(String nameDesOrtes) 			
 	{
 		this.nameDerRegion = nameDesOrtes; 
 	}
 	
-//	public Region(String nameDesOrtes, ArrayList<Region> nachbarOrte)	veraltet
+	
+//	public void addObjekt(GameObjekt objekt) // veraltet
 //	{
-//		this(nameDesOrtes);
-//		this.nameVomOrt = nameDesOrtes; 
+//		this.objekte.add(objekt);
 //	}
-
-	public Region(String nameDesOrtes, ArrayList<GameObjekt> felder)
-	{	
-		this.nameDerRegion = nameDesOrtes;
-	
-	}
-	
-	
-	public void addObjekt(GameObjekt objekt) // veraltet
-	{
-		this.objekte.add(objekt);
-	}
-	
-	public Region(String nameDesOrtes, Region nachbarOrte) // veraltet
-	{
-		this.nameDerRegion = nameDesOrtes; 
-		this.nachbarsOrte.add(nachbarOrte);
-	}
+//	
+//	public Region(String nameDesOrtes, Region nachbarOrte) // veraltet
+//	{
+//		this.nameDerRegion = nameDesOrtes; 
+//		this.nachbarsOrte.add(nachbarOrte);
+//	}
 
 		
 	
-	public synchronized ArrayList<Region> getNachbarsOrte() {
-		return nachbarsOrte;
-	}
-
-	public synchronized void setNachbarsOrte(ArrayList<Region> nachbarsOrte) {
-		this.nachbarsOrte = nachbarsOrte;
-	}
+//	public synchronized ArrayList<Region> getNachbarsOrte() {
+//		return nachbarsOrte;
+//	}
+//
+//	public synchronized void setNachbarsOrte(ArrayList<Region> nachbarsOrte) {
+//		this.nachbarsOrte = nachbarsOrte;
+//	}
 
 	public synchronized String getName() {
 		return nameDerRegion;
@@ -119,54 +95,53 @@ public class Region
 		this.nameDerRegion = name;
 	}
 
-	public synchronized ArrayList<GameObjekt> getObjekte() {
-		return objekte;
-	}
+//	public synchronized ArrayList<GameObjekt> getObjekte() {
+//		return objekte;
+//	}
+//
+//	public synchronized void setObjekte(ArrayList<GameObjekt> objekte) {
+//		this.objekte = objekte;
+//	}
+//
+//	public synchronized String getBeschreibung() {
+//		return beschreibung;
+//	}
+//
+//	public synchronized void setBeschreibung(String beschreibung) {
+//		this.beschreibung = beschreibung;
+//	}
+//
+//	public void addNachbarn(Region ort) 
+//	{
+//		this.nachbarsOrte.add(ort);	
+//	}
 
-	public synchronized void setObjekte(ArrayList<GameObjekt> objekte) {
-		this.objekte = objekte;
-	}
-
-	public synchronized String getBeschreibung() {
-		return beschreibung;
-	}
-
-	public synchronized void setBeschreibung(String beschreibung) {
-		this.beschreibung = beschreibung;
-	}
-
-	public void addNachbarn(Region ort) 
-	{
-		this.nachbarsOrte.add(ort);	
-	}
-
-
-	public static synchronized int getSizemin() {
-		return SIZEMIN;
-	}
-
-
-	public static synchronized int getSizemax() {
-		return SIZEMAX;
-	}
+//	public synchronized ArrayList<GameObjekt> getObjektListe() {
+//		return objektListe;
+//	}
 
 
-	public synchronized ArrayList<GameObjekt> getObjektListe() {
-		return objektListe;
+	public synchronized ArrayList<GameObjekt> getChildren() {
+		return children;
 	}
 
 
-	public synchronized int[] getSize() {
-		return size;
+	public synchronized double getWidth() {
+		return width;
 	}
 
 
-	public synchronized ArrayList<Integer[]> getPositionDerObjekteInDerListe() {
-		return positionDerObjekteInDerListe;
+	public synchronized double getHeight() {
+		return height;
 	}
 
 
-	public synchronized void setPositionDerObjekteInDerListe(ArrayList<Integer[]> positionDerObjekteInDerListe) {
-		this.positionDerObjekteInDerListe = positionDerObjekteInDerListe;
+	public synchronized void setWidth(double width) {
+		this.width = width;
+	}
+
+
+	public synchronized void setHeight(double height) {
+		this.height = height;
 	}
 }

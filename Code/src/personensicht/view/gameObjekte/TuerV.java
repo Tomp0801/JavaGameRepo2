@@ -15,36 +15,38 @@ public class TuerV extends GameObjektV
 	public final static int MINSIZE_Y = 20; 
 	public final static int MINSIZE_Z = 400; 
 	
-	private Box tuer = new Box();
+	private Box root = new Box();
 	
 	public TuerV(Tuer tuer)
 	{
-		this.setNode(this.tuer);
-		this.tuer.setHeight(tuer.getY());
-		this.tuer.setWidth(tuer.getX());
-		this.tuer.setDepth(tuer.getZ());
+		this.setNode(this.root);
+		this.root.heightProperty().bind(tuer.getHeight());
+		this.root.widthProperty().bind(tuer.getWidth());
+		this.root.depthProperty().bind(tuer.getDepth());
+		this.root.layoutXProperty().bind(tuer.getLayoutX());
+		this.root.layoutYProperty().bind(tuer.getLayoutY());
 	}
 	
 	@Override
-	public void setY(double hohe) {
-		this.tuer.setHeight(hohe);
+	public void setHeight(double hohe) {
+		this.root.setHeight(hohe);
 		
 	}
 
 	@Override
-	public void setX(double hohe) {
-		this.tuer.setWidth(hohe);
+	public void setWidth(double hohe) {
+		this.root.setWidth(hohe);
 		
 	}
 
 	@Override
-	public void setZ(double hohe) {
-		this.tuer.setDepth(hohe);
+	public void setDepth(double hohe) {
+		this.root.setDepth(hohe);
 		
 	}
 
 	@Override
 	public void setColor(Color color) {
-		Shape3DZusatzMethoden.hintergundFarbeSetzen(this.tuer, color);	
+		Shape3DZusatzMethoden.hintergundFarbeSetzen(this.root, color);	
 	}
 }

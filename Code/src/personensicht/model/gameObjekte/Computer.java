@@ -21,11 +21,4 @@ public class Computer extends GameObjekt
 		// TODO Auto-generated method stub
 		return null;
 	}
-
-	@Override
-	public Node ladeNodeObjekt(int localX, int localY) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }

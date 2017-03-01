@@ -18,7 +18,7 @@ public class TischV extends GameObjektV
 	/**
 	 * die Tischplatte
 	 */
-	private Box tischplatte = new Box();
+	private Box root = new Box();
 	
 	/**
 	 * vier Tischbeine
@@ -27,38 +27,40 @@ public class TischV extends GameObjektV
 	
 	public TischV(Tisch tisch)
 	{
-		this.setNode(this.tischplatte);
-		this.tischplatte.setHeight(tisch.getY());
-		this.tischplatte.setWidth(tisch.getX());
-		this.tischplatte.setDepth(20);
+		this.setNode(this.root);
+		this.root.heightProperty().bind(tisch.getHeight());
+		this.root.widthProperty().bind(tisch.getWidth());
+		this.root.depthProperty().bind(tisch.getDepth());
+		this.root.layoutXProperty().bind(tisch.getLayoutX());
+		this.root.layoutYProperty().bind(tisch.getLayoutY());
 	}
 
 	@Override
-	public void setY(double hohe) {
-		this.tischplatte.setHeight(hohe);
+	public void setHeight(double hohe) {
+		this.root.setHeight(hohe);
 	}
 
 	@Override
-	public void setX(double hohe) {
-		this.tischplatte.setWidth(hohe);
+	public void setWidth(double hohe) {
+		this.root.setWidth(hohe);
 		
 	}
 
 	@Override
-	public void setZ(double hohe) {
-		this.tischplatte.setDepth(hohe);
+	public void setDepth(double hohe) {
+		this.root.setDepth(hohe);
 		
 	}
 
 	@Override
 	public void setColor(Color color) 
 	{
-		Shape3DZusatzMethoden.hintergundFarbeSetzen(this.tischplatte, color);
+		Shape3DZusatzMethoden.hintergundFarbeSetzen(this.root, color);
 		
 	}
 
 	public synchronized Box getTischplatte() {
-		return tischplatte;
+		return root;
 	}
 
 	public synchronized Box[] getTischBeine() {
@@ -66,7 +68,7 @@ public class TischV extends GameObjektV
 	}
 
 	public synchronized void setTischplatte(Box tischplatte) {
-		this.tischplatte = tischplatte;
+		this.root = tischplatte;
 	}
 
 	public synchronized void setTischBeine(Box[] tischBeine) {

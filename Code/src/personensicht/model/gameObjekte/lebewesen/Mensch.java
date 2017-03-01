@@ -58,12 +58,4 @@ public class Mensch extends GameObjekt
 		MenschV menschV = new MenschV();
 		return menschV.getRoot();
 	}
-
-	@Override
-	public Node ladeNodeObjekt(int localX, int localY) {
-		return null;
-	}
-
-
-
 }

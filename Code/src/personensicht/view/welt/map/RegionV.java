@@ -9,6 +9,16 @@ import personensicht.model.welt.map.Region;
 public class RegionV extends AnchorPane
 {
 	/**
+	 * Minimale große der Region in Pixel. 
+	 */
+	public static final int SIZEMIN = 400;
+	
+	/**
+	 * Maximale große der Region in Pixel. 
+	 */
+	public static final int SIZEMAX = 10000;
+	
+	/**
 	 * verweist auf die Obejkte, die sich in diser Region befinden. 
 	 * Diese Liste wird verwendte um zum Beispiel Kollision zu erkennen. 
 	 */
@@ -23,18 +33,18 @@ public class RegionV extends AnchorPane
 	{
 		this.region = region;
 		
-		for (int i = 0; region.getObjektListe().size() > i; i++)
-		{
-			//wenn der Platz frei ist, dann setze die Node
-			if (isPlaceFree(region.getObjektListe().get(i).getNodeObjekt().getNode()))
-			{
-				this.getChildren().add(region.getObjektListe().get(i).ladeNodeObjekt(region.getPositionDerObjekteInDerListe().get(i)[0] ,region.getPositionDerObjekteInDerListe().get(i)[1] ));
-			}
-			else
-			{
-				System.err.println("Der Platz für "+region.getObjektListe().get(i)+" "+i+" ist belegt");
-			}
-		}
+//		for (int i = 0; region.getObjektListe().size() > i; i++) TODO
+//		{
+//			//wenn der Platz frei ist, dann setze die Node
+//			if (isPlaceFree(region.getObjektListe().get(i).getNodeObjekt().getNode()))
+//			{
+//				this.getChildren().add(region.getObjektListe().get(i).ladeNodeObjekt());
+//			}
+//			else
+//			{
+//				System.err.println("Der Platz für "+region.getObjektListe().get(i)+" "+i+" ist belegt");
+//			}
+//		}
 	}
 	
 	/**

@@ -59,31 +59,33 @@ public class ListeGameObjektLinks extends VBox{
 					  if (auswahlGetroffen == false)
 					  {
 						  AuswahlGameObjekt auswahl =  new AuswahlGameObjekt( GameObjekt.getTypeOfGameObjekt(GameObjektAuswalListeTitledPane.getSelectionModel().getSelectedItem() ) ); 
-						  instance.gameObjekteOnRegion.add(auswahl);
+						  instance.getGameObjekteOnRegion().add(auswahl);
 						  if (auswahl.getEinstellungGameObjket().getGameObjekt() instanceof Mauer){
 							  instance.platzierungMauer(auswahl);
 						  }
 						  else{
-							  instance.setzeGameObjektAufDieRegion(instance.gameObjekteOnRegion.get(instance.gameObjekteOnRegion.size()-1));
+							  instance.setzeGameObjektAufDieRegion(instance.getGameObjekteOnRegion().get(instance.getGameObjekteOnRegion().size()-1));
 							
 						  }
 						  setAuswahlGetroffen(true);
 						  }
-					  instance.setPositionDesGameObjekt( instance.gameObjekteOnRegion.get(instance.gameObjekteOnRegion.size()-1).getNode(), mouseEvent);
+					  instance.setPositionDesGameObjekt( instance.getGameObjekteOnRegion().get(instance.getGameObjekteOnRegion().size()-1).getGameObjekt(), mouseEvent);
+						System.out.println("bin hier");
 				  }
 			});	
 			GameObjektAuswalListeTitledPane.setOnMouseReleased(new EventHandler<MouseEvent>(){
 				RegionMakerV instance = RegionMakerV.getInstance();
 				  @Override public void handle(MouseEvent mouseEvent) {
-					  if (instance.gameObjekteOnRegion.size() > 0)
+					  if (instance.getGameObjekteOnRegion().size() > 0)
 					  { 
-						Node node = instance.gameObjekteOnRegion.get(instance.gameObjekteOnRegion.size()-1).getNode();
-						instance.randNodeSetztTest(node);
-						Node nodeBlockerung =  instance.ueberpruefeDiePositionAufSetzbarkeit(node);
-						if (nodeBlockerung != null)
+						GameObjekt gameObjet = instance.getGameObjekteOnRegion().get(instance.getGameObjekteOnRegion().size()-1).getGameObjekt();
+						Node node = instance.getGameObjekteOnRegion().get(instance.getGameObjekteOnRegion().size()-1).getNode();
+						instance.randNodeSetztTest(gameObjet);
+						GameObjekt objektBlockerung =  instance.ueberpruefeDiePositionAufSetzbarkeit(gameObjet);
+						if (objektBlockerung != null)
 						{
 							//wenn die Node nicht setzbar ist dann ...
-							if (instance.wennNodeSetzbarDannSetzeAufDieMoeglichePosition(node, nodeBlockerung) ==  false)
+							if (instance.wennNodeSetzbarDannSetzeAufDieMoeglichePosition(gameObjet, objektBlockerung) ==  false)
 							{
 								instance.removeNodeFromRegion(node);	
 							}	

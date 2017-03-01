@@ -27,7 +27,9 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Box;
 import javafx.scene.transform.Rotate;
 import personensicht.model.gameObjekte.GameObjekt;
+import personensicht.model.gameObjekte.GameObjektType;
 import personensicht.model.welt.map.Region;
+import personensicht.view.welt.map.RegionV;
 
 /**
  * Diese Scene soll das erstellen von Regionen mit einer GUI ermoeglichen
@@ -57,17 +59,21 @@ public class RegionMakerV
 	 */
 	private Node ausgewaehterNode; 
 	
-	private BorderPane root = new BorderPane();
-	
 	/**
-	 * Die Region, auf dem Objekte Platziert werden koennen
+	 * root Pane
 	 */
-	private AnchorPaneRegion zentrumRegion = new AnchorPaneRegion();
+	private BorderPane root = new BorderPane();
+	/**
+	 * Auf dem Pane werden die GameObjekte platziert. 
+	 */
+	private AnchorPane regionPane = new AnchorPane();
+	private StackPane zentrumVomBoarderPane = new StackPane();
+	private SubScene subScene;
 	
 	/**
 	 * hier werden die GameObjekte drin gespeichert, die sich auf der Region befinden
 	 */
-	ArrayList<AuswahlGameObjekt> gameObjekteOnRegion = new ArrayList<AuswahlGameObjekt>(); 
+	private ArrayList<AuswahlGameObjekt> gameObjekteOnRegion = new ArrayList<AuswahlGameObjekt>(); 
 	
 	/**
 	 * variable fuer das Umsetzten von Nodes.
@@ -77,33 +83,56 @@ public class RegionMakerV
 	 * variable fier das Umsetzen von Nodes
 	 */
 	private double layoutY = 0;  
-	
-	private SubScene subScene;
-	
-	private StackPane zentrumBoarderPane = new StackPane();
-	
 	private static RegionMakerV instance ;
-	//--------------------------------------------Konsturktor----------------------------------------------------------------------//
-	private RegionMakerV() 
-	{		
+	
+	private RegionMakerV() {		
 		instance = this; 
+		initBoarderPane();
+		initRegionPane();
+		initZentrumBoarderPane();
+		initSubScene();
+		initScene();
+	}
+	
+	private void initBoarderPane(){
 		MenuGameMaker obereMenuLeiste = new MenuGameMaker();
-		
-		ListeGameObjektLinks objektListe = new ListeGameObjektLinks();
-		
-		//--------------Zentrum-------------------------------------------------
-		zentrumRegion.setPrefSize(Region.getSizemin(),Region.getSizemin());
-		zentrumRegion.setStyle("-fx-background-color: GREY");
-		zentrumRegion.setMinSize(Region.getSizemin(), Region.getSizemin());
-		zentrumRegion.setMaxSize(Region.getSizemin(), Region.getSizemin());
-		addRegionZentrum();
+		ListeGameObjektLinks objektListe = new ListeGameObjektLinks();	
 		root.setTop(obereMenuLeiste);
 		root.setLeft(objektListe);
-		
+		root.setCenter(zentrumVomBoarderPane);
+	}
+	
+	private void initRegionPane(){
+		regionPane.setPrefSize(RegionV.SIZEMIN,RegionV.SIZEMIN);
+		regionPane.setStyle("-fx-background-color: GREY");
+		regionPane.setMinSize(RegionV.SIZEMIN, RegionV.SIZEMIN);
+		regionPane.setMaxSize(RegionV.SIZEMIN, RegionV.SIZEMIN);
+		regionPane.setPickOnBounds(false);	
+	}
+	
+	private void initZentrumBoarderPane(){
+		zentrumVomBoarderPane.setPrefSize(RegionV.SIZEMIN + 200,RegionV.SIZEMIN+200);
+		zentrumVomBoarderPane.setStyle("-fx-background-color: BLACK");
+		zentrumVomBoarderPane.setAlignment(Pos.CENTER);
+	}
+	
+	private void initSubScene(){
+		subScene = new SubScene(regionPane,zentrumVomBoarderPane.getPrefWidth(), zentrumVomBoarderPane.getPrefHeight(), true, SceneAntialiasing.BALANCED );
+		PerspectiveCamera kamera = new PerspectiveCamera();
+		kamera.setTranslateZ(-300); 
+		kamera.setNearClip(0.01);
+		kamera.setFieldOfView(45);
+		kamera.setRotationAxis(Rotate.X_AXIS);
+		kamera.setRotate(30);
+		subScene.setCamera(kamera);
+		zentrumVomBoarderPane.getChildren().add(subScene); 
+	}
+	
+	private void initScene(){
 		this.scene = new Scene(root);
-		
 		scene.setOnKeyReleased(new EventHandler<KeyEvent>(){			
-			@Override
+			
+			@Override 
 			public void handle(KeyEvent event) {
 				if (event.getCode() == KeyCode.DELETE){
 					if (ausgewaehterNode != null){
@@ -114,58 +143,48 @@ public class RegionMakerV
 				}
 			}
 		});
-		zentrumRegion.setPickOnBounds(false);
 	}
 	
-	private void addRegionZentrum()
-	{
-		zentrumBoarderPane.setPrefSize(Region.getSizemin()+200,Region.getSizemin()+200);
-		zentrumBoarderPane.setStyle("-fx-background-color: BLACK");
-		zentrumBoarderPane.setAlignment(Pos.CENTER);
-		subScene = new SubScene(zentrumRegion,zentrumBoarderPane.getPrefWidth(), zentrumBoarderPane.getPrefHeight(), true, SceneAntialiasing.BALANCED );
-		PerspectiveCamera kamera = new PerspectiveCamera();
-		kamera.setTranslateZ(-300); 
-		kamera.setNearClip(0.01);
-		kamera.setFieldOfView(45);
-		kamera.setRotationAxis(Rotate.X_AXIS);
-		kamera.setRotate(30);
-		subScene.setCamera(kamera);
-		zentrumBoarderPane.getChildren().add(subScene); 
-		root.setCenter(zentrumBoarderPane);
+	private void setGameMakerInStartzustand(){
+		layoutX = 0; 
+		layoutY = 0; 
+		this.gameObjekteOnRegion = new ArrayList<AuswahlGameObjekt>();
+		regionPane = new AnchorPane(); 
+		ausgewaehterNode = null; 
+		durtyBit = false;
+		regionPane.getChildren().removeAll();
+		ListeGameObjektLinks objektListe = new ListeGameObjektLinks();	
+		root.setLeft(objektListe);
 	}
-	
 	
 	/**
 	 * loescht eine Node von der Region
 	 * @param node
 	 */
-	void removeNodeFromRegion(Node node)
-	{
-		zentrumRegion.getChildren().remove(node);
+	void removeNodeFromRegion(Node node){
+		regionPane.getChildren().remove(node);
 		gameObjekteOnRegion.remove(node);
 	}
 	
-	/**
-	 * erstellt eine RegionMakerView mit vorgegebener Groeße des Zentrums
-	 * @param sizeX
-	 * @param sizeY
-	 */
-	public RegionMakerV(int sizeX, int sizeY)
-	{
-		this();
-		if (sizeX >= Region.getSizemin() && sizeY >= Region.getSizemin())
-			if (sizeX < Region.getSizemax() && sizeY < Region.getSizemax()){
-				zentrumRegion.setPrefSize(sizeX, sizeY);
-				subScene.setWidth(sizeY);
-				subScene.setHeight(sizeX);
-			}
-			else
-				System.err.println("Die eingestellte Größe ist zu Groß");
-		else
-			System.err.println("Die groeße für die Region ist zu klein");
-	}
+//	/**
+//	 * erstellt eine RegionMakerView mit vorgegebener Groeße des Zentrums
+//	 * @param sizeX
+//	 * @param sizeY
+//	 */
+//	public RegionMakerV(int sizeX, int sizeY){
+//		this();
+//		if (sizeX >= RegionV.SIZEMIN && sizeY >= RegionV.SIZEMAX)
+//			if (sizeX < RegionV.SIZEMAX && sizeY < RegionV.SIZEMAX){
+//				regionPane.setPrefSize(sizeX, sizeY);
+//				subScene.setWidth(sizeY);
+//				subScene.setHeight(sizeX);
+//			}
+//			else
+//				System.err.println("Die eingestellte Größe ist zu Groß");
+//		else
+//			System.err.println("Die groeße für die Region ist zu klein");
+//	}
 	
-	//----------------------------------------------------------------------------------------------------------------------------//
 	
 	/**
 	 * platzierzt eine Mauer
@@ -175,9 +194,7 @@ public class RegionMakerV
 		setNodeOnRegion(node);
 		MauerSetzHandler mouseHandler = new MauerSetzHandler(objekt.getEinstellungGameObjket().getGameObjekt());
 		node.setOnMouseDragged(mouseHandler);
-	
 		node.setOnMouseReleased(new EventHandler<MouseEvent>() {
-
 			@Override
 			public void handle(MouseEvent event) {
 				mouseHandler.setStartZustand();
@@ -192,8 +209,9 @@ public class RegionMakerV
 		//makiert die Region als bearbeitet
 		durtyBit = true; 
 		// setzt die Node auf die Region
-		zentrumRegion.getChildren().add(node);
+		regionPane.getChildren().add(node);
 	}
+
 	
 	/**
 	 * seztz ein GameObjekt mithilfe der Kalsse AuswahlEinesGameObejekt auf das zentrum (Region).
@@ -201,15 +219,15 @@ public class RegionMakerV
 	 * Rotiert die Node, um diese in 3D zu sehen
 	 * @param node
 	 */
-	void setzeGameObjektAufDieRegion(AuswahlGameObjekt objekt){
-		Node node = objekt.getNode();
+	void setzeGameObjektAufDieRegion(AuswahlGameObjekt objektAuswahl){
+		GameObjekt objekt = objektAuswahl.getGameObjekt();
+		Node node = objektAuswahl.getNode();
 		setNodeOnRegion(node);	
 		//erstellt EventHandler. Um das Umsetzen einer Node zu ermoeglichen
 		node.setOnMouseDragged(new EventHandler<MouseEvent>(){
-			
 			  @Override public void handle(MouseEvent mouseEvent) {
 				  //laesst die Node dem Courser folgen
-				  setPositionDesGameObjekt(node , mouseEvent);
+				  setPositionDesGameObjekt(objekt , mouseEvent);
 			  }
 		});	
 		//Dieses Event, beschreibt was passiert wenn die ein Node gesetzt wird. Dazu wird ueberprueft ob diese Position
@@ -219,32 +237,32 @@ public class RegionMakerV
 			public void handle(MouseEvent mouseEvent) 	{
 				//Ueberprueft ob die Position setzbar ist. Wenn dies nicht der Falls ist, wird de Node, die blockiert 
 				//auf nodeBlockierung referenziert
-				Node nodeBlockierung = ueberpruefeDiePositionAufSetzbarkeit(node);
+				GameObjekt objektBlockierung = ueberpruefeDiePositionAufSetzbarkeit(objekt);
 				//blockiert eine Node den Ziel Ort, dann ...
-				if (nodeBlockierung != null)
+				if (objektBlockierung != null)
 				{
 					//schaue on die Node ueberhaupt setztbat ist und wenn nicht dann ...
-					if (wennNodeSetzbarDannSetzeAufDieMoeglichePosition(node, nodeBlockierung) == false)
+					if (wennNodeSetzbarDannSetzeAufDieMoeglichePosition(objekt, objektBlockierung) == false)
 					{
 						//versetze die Node auf ihre anfangsPosition zurueck
-						node.setLayoutX(layoutX);
-						node.setLayoutY(layoutY);
+						objekt.setLayoutX(layoutX);
+						objekt.setLayoutY(layoutY);
 					}
 				}
-					randNodeSetztTest(node);
+					randNodeSetztTest(objektAuswahl.getGameObjekt());
 				}	
 		});
 		node.setOnMousePressed(new EventHandler<Event>() {
 			@Override
 			public void handle(Event event) {
-				changPositionVonNode(node.getLayoutX(), node.getLayoutY());	
+				changPositionVonNode(objekt.getLayoutX().get(), objekt.getLayoutY().get());	
 			}
 		});
 		
 		node.setOnMouseClicked(new EventHandler<Event>() {
 			@Override
 			public void handle(Event event) 	{
-				root.setRight(objekt.getEinstellungGameObjket());	
+				root.setRight(objektAuswahl.getEinstellungGameObjket());	
 			}
 		});
 	}
@@ -262,34 +280,33 @@ public class RegionMakerV
 	
 	/**
 	 * ueberprueft ob eine gesetzte Node innerhalb der Region liegt. Und setzt diese gegebenfalls auf den Rand
-	 * @param node
+	 * @param objekt
 	 */
-	void randNodeSetztTest(Node node)
+	void randNodeSetztTest(GameObjekt objekt)
 	{
-		
-		 if (node.getLayoutX()+node.getBoundsInLocal().getWidth()/2 > subScene.getWidth())
+		 if (objekt.getLayoutX().get()+objekt.getWidth().get()/2 > subScene.getWidth())
 		 {
-			 node.setLayoutX(subScene.getWidth()-node.getBoundsInLocal().getWidth()/2);
+			 objekt.setLayoutX(subScene.getWidth()-objekt.getWidth().get()/2);
 		 }
-		 if (node.getLayoutY()+node.getBoundsInLocal().getHeight()/2 > subScene.getHeight())
+		 if (objekt.getLayoutY().get()+objekt.getHeight().get()/2 > subScene.getHeight())
 		 {
-			 node.setLayoutY(subScene.getHeight()-node.getBoundsInLocal().getHeight()/2);
+			 objekt.setLayoutY(subScene.getHeight()-objekt.getHeight().get()/2);
 		 }
-		 if (node.getLayoutX()-node.getBoundsInLocal().getWidth()/2 < 0)
+		 if (objekt.getLayoutX().get()-objekt.getWidth().get()/2 < 0)
 		 {
-			 node.setLayoutX(0+node.getBoundsInLocal().getWidth()/2);
+			 objekt.setLayoutX(0+objekt.getWidth().get()/2);
 		 }
-		 if (node.getLayoutY()-node.getBoundsInLocal().getHeight()/2 < 0)
+		 if (objekt.getLayoutY().get()-objekt.getHeight().get()/2 < 0)
 		 {
-			 node.setLayoutY(node.getBoundsInLocal().getHeight()/2);
+			 objekt.setLayoutY(objekt.getHeight().get()/2);
 		 }
 	}
 
 	//setzt die Position einer Node auf die Position des Coursers
-	void setPositionDesGameObjekt(Node node, MouseEvent mouseEvent){ 
-		 node.setLayoutX(mouseEvent.getSceneX()-root.getCenter().getLayoutX()-subScene.getLayoutX());
-		 node.setLayoutY(mouseEvent.getSceneY()-root.getCenter().getLayoutY()-subScene.getLayoutY());
-		 ausgewaehterNode = node;
+	public	void setPositionDesGameObjekt(GameObjekt objekt, MouseEvent mouseEvent){ 
+		 objekt.setLayoutX(mouseEvent.getSceneX()-root.getCenter().getLayoutX()-subScene.getLayoutX());
+		 objekt.setLayoutY(mouseEvent.getSceneY()-root.getCenter().getLayoutY()-subScene.getLayoutY());
+		 ausgewaehterNode = objekt.getNodeObjekt().getNode();
 		 durtyBit = true;
 	}
 
@@ -298,15 +315,16 @@ public class RegionMakerV
 	 * @param node
 	 * @return
 	 */
-	Node ueberpruefeDiePositionAufSetzbarkeit(Node node)
+	public GameObjekt ueberpruefeDiePositionAufSetzbarkeit(GameObjekt objekt)
 	{
+		Node node = objekt.getNodeObjekt().getNode();
 		for (int i = 0; this.gameObjekteOnRegion.size() > i ; i++)
 		{
 			if (this.gameObjekteOnRegion.get(i).getNode() != node)
 			{
 				if (this.gameObjekteOnRegion.get(i).getNode().getBoundsInParent().intersects(node.getBoundsInParent()))
 				{
-					return this.gameObjekteOnRegion.get(i).getNode(); 
+					return this.gameObjekteOnRegion.get(i).getGameObjekt(); 
 				}	
 			}
 		}
@@ -315,20 +333,20 @@ public class RegionMakerV
 	
 	/**
 	 * Ueberprueft ob eine Node setzbar ist.
-	 * @param node
+	 * @param objekt
 	 * @return
 	 */
-	private Boolean ueberpruefeDiePositionAufSetzbarkeitMitBoolean(Node node)
+	private Boolean ueberpruefeDiePositionAufSetzbarkeitMitBoolean(GameObjekt objekt)
 	{
 		for (int i = 0; this.gameObjekteOnRegion.size() > i ; i++)
 		{
-			if (this.gameObjekteOnRegion.get(i).getNode() != node)
+			if (this.gameObjekteOnRegion.get(i).getNode() != objekt.getNodeObjekt().getNode())
 			{
-				if (this.gameObjekteOnRegion.get(i).getNode().getBoundsInParent().intersects(node.getBoundsInParent()))
+				if (this.gameObjekteOnRegion.get(i).getNode().getBoundsInParent().intersects(objekt.getNodeObjekt().getNode().getBoundsInParent()))
 				{
 					return false; 
 				}	
-				if (node.getLayoutX() < 0 || node.getLayoutY() < 0 || node.getLayoutX()+node.getBoundsInLocal().getWidth() > zentrumRegion.getPrefWidth() || node.getBoundsInLocal().getHeight() + node.getLayoutY() > zentrumRegion.getPrefHeight())
+				if (objekt.getLayoutX().get() < 0 || objekt.getLayoutY().get() < 0 || objekt.getLayoutX().get()+objekt.getWidth().get() > regionPane.getPrefWidth() || objekt.getHeight().get() + objekt.getLayoutY().get() > regionPane.getPrefHeight())
 				{
 					return false; 
 				}
@@ -342,16 +360,16 @@ public class RegionMakerV
 	 * falls eine Node von einer andern Node blockiert wird, wird diese Methode benoetigt. sie ueberprueft ob eine Alternative
 	 * vorhanden ist und setzt die Node dann auf diese Alternative.
 	 * 
-	 * @param node
+	 * @param objekt
 	 * @param blockiernderNode
 	 */
-	Boolean wennNodeSetzbarDannSetzeAufDieMoeglichePosition(Node node, Node blockiernderNode)
+	Boolean wennNodeSetzbarDannSetzeAufDieMoeglichePosition(GameObjekt objekt, GameObjekt blockierndesObjekt)
 	{
 		//nach den bestmoeglichen setzbare freien Platz ausschau halten.
-	    Bounds bounds = node.getBoundsInParent();
+	    Bounds bounds = objekt.getNodeObjekt().getNode().getBoundsInParent();
 	    
-	    double x =  blockiernderNode.getLayoutX();
-	    double y =  blockiernderNode.getLayoutY();
+	    double x =  blockierndesObjekt.getLayoutX().get();
+	    double y =  blockierndesObjekt.getLayoutY().get();
 	    
 	    int xRichtung = 2; 
 	    int yRichtung = 2; 
@@ -367,28 +385,28 @@ public class RegionMakerV
 			   if (r == 0)
 				   yZusatz = 0; 
 			   
-				node.setLayoutX(x+xZusatz+bounds.getWidth()*i);
-				node.setLayoutY(y+yZusatz+bounds.getHeight()*r);
-				if (ueberpruefeDiePositionAufSetzbarkeitMitBoolean(node)){
+				objekt.setLayoutX(x+xZusatz+bounds.getWidth()*i);
+				objekt.setLayoutY(y+yZusatz+bounds.getHeight()*r);
+				if (ueberpruefeDiePositionAufSetzbarkeitMitBoolean(objekt)){
 					return true; 
 				}
-				node.setLayoutX(x-xZusatz-bounds.getWidth()*i);
-				node.setLayoutY(y-yZusatz-bounds.getHeight()*r);
-				if (ueberpruefeDiePositionAufSetzbarkeitMitBoolean(node)){	
+				objekt.setLayoutX(x-xZusatz-objekt.getWidth().get()*i);
+				objekt.setLayoutY(y-yZusatz-objekt.getHeight().get()*r);
+				if (ueberpruefeDiePositionAufSetzbarkeitMitBoolean(objekt)){	
 					return true; 
 				}
-				node.setLayoutX(x+xZusatz+bounds.getWidth()*i);
-				node.setLayoutY(y-yZusatz-bounds.getHeight()*r);
-				if (ueberpruefeDiePositionAufSetzbarkeitMitBoolean(node)){	
+				objekt.setLayoutX(x+xZusatz+objekt.getWidth().get()*i);
+				objekt.setLayoutY(y-yZusatz-objekt.getHeight().get()*r);
+				if (ueberpruefeDiePositionAufSetzbarkeitMitBoolean(objekt)){	
 					return true; 
 				}
-				node.setLayoutX(x-xZusatz-bounds.getWidth()*i);
-				node.setLayoutY(y+yZusatz+bounds.getHeight()*r);
-				if (ueberpruefeDiePositionAufSetzbarkeitMitBoolean(node)){	
+				objekt.setLayoutX(x-xZusatz-objekt.getWidth().get()*i);
+				objekt.setLayoutY(y+yZusatz+objekt.getHeight().get()*r);
+				if (ueberpruefeDiePositionAufSetzbarkeitMitBoolean(objekt)){	
 					return true; 
 				}
-				node.setLayoutX(x+xZusatz+bounds.getWidth()*i);
-				node.setLayoutY(y-yZusatz-bounds.getHeight()*r);
+				objekt.setLayoutX(x+xZusatz+objekt.getWidth().get()*i);
+				objekt.setLayoutY(y-yZusatz-objekt.getHeight().get()*r);
 		   }
 	   } 
 	   return false; 
@@ -420,12 +438,18 @@ public class RegionMakerV
 	void speicherUnterNameRegion(){ //TODO hier dran wird nun gearbeitet
 		//suche eine Datei unter der gespeichert werden soll
 		//endung hinzufuegen
-	
+		//Modelklasse Region erstellen und die Region speichern
+		ArrayList<GameObjekt> objektListe = new ArrayList<GameObjekt>();
+		for (int i = 0; this.gameObjekteOnRegion.size() > i ; i++){
+			objektListe.add(gameObjekteOnRegion.get(i).getGameObjekt());
+		}
+		Region region = new Region("defaul",objektListe);
+		
 		FileOutputStream fos = null;
 		
 		try 
 		{
-			fos = new FileOutputStream ("demo.edit");
+			fos = new FileOutputStream ("demo.edit"); //TODO Namen aussuchen
 		} 
 		catch (FileNotFoundException e) 
 		{
@@ -436,12 +460,13 @@ public class RegionMakerV
 	    try 
 		{
 			oos = new ObjectOutputStream (fos);
-			oos.writeObject(zentrumRegion);
+			oos.writeObject(region);
 		} 
 	    catch (IOException e) 
 	    {
 			e.printStackTrace();
 		}	
+	    System.out.println("gespeichert");
 	}
 	
 	/**
@@ -453,7 +478,7 @@ public class RegionMakerV
 		
 		FileInputStream fis = null;
 		try {
-			fis = new FileInputStream ("demo.edit");
+			fis = new FileInputStream ("demo.edit"); //TODO auswaehlen welche Region geladen werden soll.
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
@@ -464,8 +489,23 @@ public class RegionMakerV
 			e.printStackTrace();
 		} 
 	   try {
-		zentrumRegion = (AnchorPaneRegion) ois.readObject ();
-		addRegionZentrum();
+		Region region = (Region) ois.readObject (); //TODO
+		setGameMakerInStartzustand();
+		initRegionPane();
+		for (int i = 0 ; region.getChildren().size() > i; i++)
+		{
+			AuswahlGameObjekt auswahlGameObjekt = new AuswahlGameObjekt(region.getChildren().get(i).getTyp());
+			if (GameObjektType.Mauer == region.getChildren().get(i).getTyp()){
+				this.platzierungMauer(auswahlGameObjekt);
+			}
+			else{
+				this.setzeGameObjektAufDieRegion(auswahlGameObjekt);
+				
+			}
+		}
+		
+		
+		initSubScene();
 	} catch (ClassNotFoundException e) {
 		e.printStackTrace();
 	} catch (IOException e) {
@@ -473,7 +513,7 @@ public class RegionMakerV
 	}
 	   
 	
-	   
+	   System.out.println("geladen");
 	}
 	
 	/**
@@ -490,6 +530,15 @@ public class RegionMakerV
 	}			
 	
 
+	
+	//--------------------------------------EventHandler---------------------------------------------------------------------------------------//
+	
+	
+	
+	
+	
+	
+	//-----------------------------------------------------------------------------------------------------------------------------------------
 	private class MauerSetzHandler implements EventHandler<MouseEvent>{		
 		private GameObjekt objekt;
 		/**
@@ -504,15 +553,14 @@ public class RegionMakerV
 		private double startSizeY;
 		private double startLayoutX;
 		private double startLayoutY;
-		
 		private Box box;
 		
 		private MauerSetzHandler(GameObjekt objekt){
 			
 			this.box = (Box) objekt.getNodeObjekt().getNode();
 			this.objekt = objekt; 
-			startSizeX = box.getWidth();
-			startSizeY = box.getHeight();
+			startSizeX = objekt.getWidth().get();
+			startSizeY = objekt.getHeight().get();
 		}
 		
 		@Override
@@ -522,10 +570,10 @@ public class RegionMakerV
 				//legt den start position des Coursers fest. dies beeinflußt ob die Mauer groeßer oder kleiner werdden soll
 				startPositionCourserX = mouseEvent.getSceneX();
 				startPositionCourserY = mouseEvent.getSceneY();
-				startSizeX = box.getWidth();
-				startSizeY = box.getHeight();
-				startLayoutX = box.getLayoutX();
-				startLayoutY = box.getLayoutY();
+				startSizeX = objekt.getWidth().get();
+				startSizeY = objekt.getHeight().get();
+				startLayoutX = objekt.getLayoutX().get();
+				startLayoutY = objekt.getLayoutY().get();
 				//wenn die Maus ehr weiter rechts gedruckt wurde, dann ...
 				if (mouseEvent.getX() > 0){
 					richtungRechts = true;
@@ -549,14 +597,14 @@ public class RegionMakerV
 				//wenn nach recht vergroeßert werden soll dann ..
 				if (richtungRechts){
 					if (startSizeX+sizeChange > 3){
-						objekt.setX(startSizeX+sizeChange);	
-						this.box.setLayoutX(startLayoutX+sizeChange/2.0);
+						objekt.setWidth(startSizeX+sizeChange);	
+						objekt.setLayoutX(startLayoutX+sizeChange/2.0);
 					}
 				}//wenn nach links dann...
 				else{
 					if (startSizeX-sizeChange > 3){
-						objekt.setX(startSizeX-sizeChange);
-						this.box.setLayoutX(startLayoutX+sizeChange/2.0);
+						objekt.setWidth(startSizeX-sizeChange);
+						objekt.setLayoutX(startLayoutX+sizeChange/2.0);
 					}
 				}
 				
@@ -567,22 +615,25 @@ public class RegionMakerV
 				//wenn nach recht vergroeßert werden soll dann ..
 				if (richtungUnten){
 					if (startSizeY+sizeChange > 3){
-						objekt.setY(startSizeY+sizeChange);		
-						this.box.setLayoutY(startLayoutY+sizeChange/2.0);
+						objekt.setHeight(startSizeY+sizeChange);		
+						objekt.setLayoutY(startLayoutY+sizeChange/2.0);
 					}
 				}//wenn nach links dann...
 				else{
 					if (startSizeY-sizeChange > 3){
-						objekt.setY(startSizeY-sizeChange);
-						this.box.setLayoutY(startLayoutY+sizeChange/2.0);
+						objekt.setHeight(startSizeY-sizeChange);
+						objekt.setLayoutY(startLayoutY+sizeChange/2.0);
 					}
 				}
 			
 			}
 			else if (mouseEvent.getButton() == MouseButton.MIDDLE){
-				setPositionDesGameObjekt(box, mouseEvent);				
+				setPositionDesGameObjekt(objekt, mouseEvent);				
 		}	
 			positionAnpassen();	
+			objekt.setWidth(box.getWidth());
+			objekt.setHeight(box.getHeight());
+			objekt.setDepth(box.getDepth());
 	}	
 		
 		private void setStartZustand(){
@@ -595,21 +646,26 @@ public class RegionMakerV
 		private void positionAnpassen(){	
 			
 			if (box.getBoundsInParent().getMinX() < 0){
-				box.setLayoutX(box.getLayoutX()- box.getBoundsInParent().getMinX());
-				objekt.setX(objekt.getX()+ box.getBoundsInParent().getMinX());		
+				objekt.setLayoutX(objekt.getLayoutX().get()- box.getBoundsInParent().getMinX());
+				objekt.setWidth(objekt.getWidth().get()+ box.getBoundsInParent().getMinX());		
 			}
-			if (box.getBoundsInParent().getMinX()+box.getWidth() > zentrumRegion.getWidth()){
-				objekt.setX(zentrumRegion.getWidth()-box.getBoundsInParent().getMinX());	
-				box.setLayoutX(zentrumRegion.getWidth()-box.getWidth()/2);		
+			if (box.getBoundsInParent().getMinX()+objekt.getWidth().get() > regionPane.getWidth()){
+				objekt.setWidth(regionPane.getWidth()-box.getBoundsInParent().getMinX());	
+				objekt.setLayoutX(regionPane.getWidth()-objekt.getWidth().get()/2);		
 			}
 			if (box.getBoundsInParent().getMinY() < 0){
-				box.setLayoutY(box.getLayoutY()- box.getBoundsInParent().getMinY());
-				objekt.setY(objekt.getY()+ box.getBoundsInParent().getMinY());		
+				objekt.setLayoutY(box.getLayoutY()- box.getBoundsInParent().getMinY());
+				objekt.setHeight(objekt.getHeight().get()+ box.getBoundsInParent().getMinY());		
 			}
-			if (box.getBoundsInParent().getMinY()+box.getHeight() > zentrumRegion.getHeight()){
-				objekt.setY(zentrumRegion.getHeight()-box.getBoundsInParent().getMinY());	
-				box.setLayoutY(zentrumRegion.getHeight()-box.getHeight()/2);		
+			if (box.getBoundsInParent().getMinY()+objekt.getHeight().get() > regionPane.getHeight()){
+				objekt.setHeight(regionPane.getHeight()-box.getBoundsInParent().getMinY());	
+				objekt.setLayoutY(regionPane.getHeight()-objekt.getHeight().get()/2);		
 			}
+			System.out.println("jo");
 		}
+	}
+
+	public synchronized ArrayList<AuswahlGameObjekt> getGameObjekteOnRegion() {
+		return gameObjekteOnRegion;
 	}
 }

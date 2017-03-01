@@ -2,7 +2,6 @@ package personensicht.model.gameObjekte;
 
 import javafx.scene.Node;
 import javafx.scene.layout.Region;
-import personensicht.view.gameObjekte.TischV;
 import personensicht.view.gameObjekte.TuerV;
 
 /**
@@ -41,11 +40,4 @@ public class Tuer extends GameObjekt
 	public synchronized Region getZielRegion() {
 		return zielRegion;
 	}
-
-	@Override
-	public Node ladeNodeObjekt(int localX, int localY) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }

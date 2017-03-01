@@ -23,11 +23,4 @@ public class Stuhl extends GameObjekt
 		this.setNodeObjekt(new StuhlV(this)); 
 		return this.getNodeObjekt().getNode();
 	}
-
-	@Override
-	public Node ladeNodeObjekt(int localX, int localY) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }

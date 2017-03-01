@@ -15,40 +15,43 @@ public class BettV extends GameObjektV
 	public final static int MINSIZE_Z = 20; 
 	
 	
-	private Box bett = new Box();
+	private Box root= new Box();
 	
 	public BettV(Bett bettModel)
 	{
-		this.setNode(bett);
-		this.bett.setHeight(bettModel.getY());
-		this.bett.setWidth(bettModel.getX());
-		this.bett.setDepth(bettModel.getZ());
+		this.setNode(root);
+		this.root.heightProperty().bind(bettModel.getHeight());
+		this.root.widthProperty().bind(bettModel.getWidth());
+		this.root.depthProperty().bind(bettModel.getDepth());
+		this.root.layoutXProperty().bind(bettModel.getLayoutX());
+		this.root.layoutYProperty().bind(bettModel.getLayoutY());
 	}
 
 	@Override
-	public void setZ(double hohe)
+	public void setDepth(double value)
 	{
-		this.bett.setDepth(hohe);
+		this.root.setDepth(value);
 	}
 
 	@Override
-	public void setY(double breite) 
+	public void setHeight(double breite) 
 	{
-		this.bett.setHeight(breite);
+		this.root.setHeight(breite);
 	}
 
 	@Override
-	public void setX(double laenge) 
+	public void setWidth(double breite) 
 	{
-		this.bett.setWidth(laenge);
+		this.root.setWidth(breite);
 	}
 	
 	/**
 	 * setzt eine Farbe
 	 * @param color
 	 */
+	@Override
 	public void setColor(Color color)
 	{
-		Shape3DZusatzMethoden.hintergundFarbeSetzen(this.bett, color);
+		Shape3DZusatzMethoden.hintergundFarbeSetzen(this.root, color);
 	}
 }

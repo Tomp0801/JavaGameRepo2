@@ -15,35 +15,37 @@ public class MauerV extends GameObjektV
 	public final static int MINSIZE_Y = 20; 
 	public final static int MINSIZE_Z = 20; 
 
-	private Box mauer = new Box();
+	private Box root = new Box();
 	
 	public MauerV(Mauer mauer)
 	{
-		this.setNode(this.mauer);
-		this.mauer.setHeight(mauer.getY());
-		this.mauer.setWidth(mauer.getX());
-		this.mauer.setDepth(mauer.getZ());
+		this.setNode(this.root);
+		this.root.heightProperty().bind(mauer.getHeight());
+		this.root.widthProperty().bind(mauer.getWidth());
+		this.root.depthProperty().bind(mauer.getDepth());
+		this.root.layoutXProperty().bind(mauer.getLayoutX());
+		this.root.layoutYProperty().bind(mauer.getLayoutY());
 	}
 	
 
 
 	@Override
-	public void setX(double hohe) {
-		this.mauer.setWidth(hohe);
+	public void setWidth(double value) {
+		this.root.setWidth(value);
 	}
 	
 	@Override
-	public void setY(double hohe) {
-		this.mauer.setHeight(hohe);	
+	public void setHeight(double value) {
+		this.root.setHeight(value);	
 	}
 
 	@Override
-	public void setZ(double hohe) {
-		this.mauer.setDepth(hohe);
+	public void setDepth(double value) {
+		this.root.setDepth(value);
 	}
 
 	@Override
 	public void setColor(Color color) {
-		Shape3DZusatzMethoden.hintergundFarbeSetzen(this.mauer, color);	
+		Shape3DZusatzMethoden.hintergundFarbeSetzen(this.root, color);	
 	}
 }
