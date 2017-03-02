@@ -8,7 +8,18 @@ import javafx.beans.value.ObservableValue;
 import javafx.scene.Group;
 import karte.model.Map;
 
+/**
+ * Klasse für die Grafische Darstellung einer Karte
+ * erbt von Group
+ * es werden die Einzelnen Felder nebeneinander dargestellt
+ * 
+ * @author Thomas
+ *
+ */
 public class MapGrafics extends Group {
+	public static final int STANDARDFELDWIDTH = 20;
+	public static final int STANDARDFELDHEIGHT = 20;
+	
 	private Map model;
 	
 	private IntegerProperty MapWidth;
@@ -18,7 +29,11 @@ public class MapGrafics extends Group {
 	private IntegerProperty FeldWidth;
 	private IntegerProperty FeldHeight;
 	
-	public MapGrafics(Map map, int width, int height) {
+	/**
+	 * Erstellt die grafische Darstellung der abngegebenen Karte
+	 * @param map Karte zu der dieses View-Objekt erstellt werden soll
+	 */
+	public MapGrafics(Map map) {
 		this.model = map;
 		map.setGrafics(this);
 		
@@ -30,8 +45,8 @@ public class MapGrafics extends Group {
 		
 		init();
 		
-		MapWidth.set(width);
-		MapHeight.set(height);
+		MapWidth.set(map.getWidth() * STANDARDFELDWIDTH);
+		MapHeight.set(map.getHeight() * STANDARDFELDHEIGHT);
 	}
 	
 	private void init() {
@@ -50,46 +65,78 @@ public class MapGrafics extends Group {
 				FeldHeight.set(newValue.intValue() / model.getHeight());
 			}
 		});
-		
-		//fields hinzufügen
-		FeldGrafics feld;
-		for (int x = 0; x < model.getWidth(); x++) {
-			for (int y = 0; y < model.getHeight(); y++) {
-				feld = model.getFeld(x, y).getGroup();
-				feld.layoutXProperty().bind(FeldWidth.multiply(x));
-				feld.layoutYProperty().bind(FeldHeight.multiply(y));
-				this.getChildren().add(feld);
-				feld.bindProperties();
-			}
-		}
 	}
 
 	/**
-	 * @return the model
+	 * @return das zu diesem Grafik-Objekt zugehörige Model-Objekt
 	 */
 	public Map getModel() {
 		return model;
 	}
 
 	/**
-	 * @return the mapWidth
+	 * @return die Breite der Karte in Pixeln
 	 */
 	public int getMapWidth() {
 		return MapWidth.get();
 	}
 	
+	/**
+	 * Setzt die Breite der Karte in Pixeln
+	 * @param width Breite der Karte in Pixeln
+	 */
 	public void setMapWidth(int width) {
+		setMapWidth(width, false);
+	}
+	
+	/**
+	 * Setzt die Breite der Karte in Pixeln und passt die Höhe automatisch so an,
+	 * dass die Felder quadratisch sind
+	 * @param width Breite der Karte in Pixeln
+	 * @param autoAdjust wenn true, Automatische Anpassung der Kartenhöhe
+	 */
+	public void setMapWidth(int width, boolean autoAdjust) {
 		MapWidth.set(width);
+		if (autoAdjust) {
+			MapHeight.set(FeldWidth.get() * model.getHeight());
+		}
 	}
 
 	/**
-	 * @return the mapHeight
+	 * @return die Höhe der Karte in Pixeln
 	 */
 	public int getMapHeight() {
 		return MapHeight.get();
 	}
 	
+	/**
+	 * Setzt die Höhe der Karte in Pixeln
+	 * @param height Höhe der Karte in Pixeln
+	 */
 	public void setMapHeight(int height) {
+		setMapHeight(height, false);
+	}
+	
+	/**
+	 * Setzt die Höhe der Karte in Pixeln und passt die Breite automatisch so an,
+	 * dass die Felder quadratisch sind
+	 * @param height Höhe der Karte in Pixeln
+	 * @param autoAdjust wenn true, Automatische Anpassung der Kartenbreite
+	 */
+	public void setMapHeight(int height, boolean autoAdjust) {
+		MapHeight.set(height);
+		if (autoAdjust) {
+			MapWidth.set(FeldHeight.get() * model.getWidth());
+		}
+	}
+	
+	/**
+	 * Setzt Breite und Höhe der Karte in Pixeln
+	 * @param width Breite der Karte
+	 * @param height Höhe der Karte
+	 */
+	public void setDimensions(int width, int height) {
+		MapWidth.set(width);
 		MapHeight.set(height);
 	}
 

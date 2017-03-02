@@ -1,4 +1,4 @@
-package ressource;
+package ressource.model;
 
 /**
  * Interface für alle Ressourcen, die zur Herstellung von Objekten verwendet werden können

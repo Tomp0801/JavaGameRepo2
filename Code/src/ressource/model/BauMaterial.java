@@ -1,4 +1,4 @@
-package ressource;
+package ressource.model;
 
 /**
  * Interface für alle Materialien, die zum Bau von Gebäuden, Raumschiffen o.Ä. 

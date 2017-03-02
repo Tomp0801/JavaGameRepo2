@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 import javafx.geometry.Point2D;
 import obersteEbene.controller.Random;
-import ressource.Material;
+import ressource.model.Material;
 
 public class Generator {
 	

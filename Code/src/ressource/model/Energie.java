@@ -1,4 +1,4 @@
-package ressource;
+package ressource.model;
 
 //import draufsicht.map.objekte.Platzierbar;
 

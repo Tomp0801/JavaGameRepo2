@@ -6,7 +6,7 @@ import javafx.geometry.Point2D;
 import javafx.stage.Stage;
 import karte.model.*;
 import obersteEbene.controller.Random;
-import ressource.Material;
+import ressource.model.Material;
 
 public class Test extends Application {
 	public static void main(String[] args) {
@@ -22,7 +22,7 @@ public class Test extends Application {
 		Generator gen = new Generator(prng, Material.ERDE);
 		gen.addMaterial(Material.WASSER, 32);
 		gen.addMaterial(Material.STEIN, 15);
-		Map map = gen.generateMap(40, 40);
+		Map map = gen.generateMap(40, 30);
 		
 		map = gen.smoothMap();
 		
@@ -35,6 +35,8 @@ public class Test extends Application {
 		mine2.place(map, new Point2D(3, 9));
 		Mine mine3 = new Mine();
 		mine3.place(map, new Point2D(32, 20));
+		
+		//map.getGrafics().setMapWidth(1024, true);
 		
 	}
 	

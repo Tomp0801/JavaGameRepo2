@@ -1,7 +1,12 @@
-package ressource;
+package ressource.model;
 
-import java.awt.Color;
+import javafx.scene.paint.Color;
 import java.io.Serializable;
+
+import javafx.geometry.Insets;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
 
 /**
  * Grundklasse für alle Stoffe Materialen, etc.
@@ -30,15 +35,12 @@ public class Material implements Serializable {
 	private Color color;
 	
 	/**
-	 * die durchsichtigkeit der Farbe des Materials. 0 = durchsichtig, 1 = undurchsichtig
-	 */
-	private double opacity;
-	
-	/**
 	 * das Gewicht der Material pro Einheit
 	 * relevant für den Transport
 	 */
 	private float gewicht;
+	
+	private Background background; 
 	
 	/**
 	 * Kosntruktor mit javafx Color, da diese die opacity mit enthält
@@ -46,11 +48,12 @@ public class Material implements Serializable {
 	 * @param name des Materials
 	 * @param color (javafx.scene.paint)
 	 */
-	public Material(String name, javafx.scene.paint.Color color) 
+	public Material(String name, Color color) 
 	{
 		this.name = name;
-		this.color = new Color((float)color.getRed(), (float)color.getGreen(), (float)color.getBlue());
-		this.opacity = color.getOpacity();
+		this.color = color;
+		
+		background = new Background(new BackgroundFill(color, CornerRadii.EMPTY, Insets.EMPTY));
 	}
 	
 	/**
@@ -70,8 +73,8 @@ public class Material implements Serializable {
 	/**
 	 * @return die Farbe als jafafx Color
 	 */
-	public javafx.scene.paint.Color getColor() {
-		return new javafx.scene.paint.Color((double)color.getRed()/255.0, (double)color.getGreen()/255.0, (double)color.getBlue()/255.0, opacity);
+	public Color getColor() {
+		return color;
 	}
 
 	/**
@@ -80,19 +83,13 @@ public class Material implements Serializable {
 	protected void setColor(Color color) {
 		this.color = color;
 	}
-
+	
 	/**
-	 * @return the opacity der Farbe
+	 * Gibt einen Hintergrund zurück mit der Farbe dieses Materials
+	 * @return
 	 */
-	public double getOpacity() {
-		return opacity;
-	}
-
-	/**
-	 * @param opacity the opacity to set
-	 */
-	public void setOpacity(double opacity) {
-		this.opacity = opacity;
+	public Background asBackground() {
+		return background;
 	}
 
 	/**

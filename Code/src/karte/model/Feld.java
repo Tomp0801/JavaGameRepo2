@@ -4,7 +4,7 @@ import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import karte.view.FeldGrafics;
-import ressource.Material;
+import ressource.model.Material;
 
 /**
  * Ein Feld einer Karte
@@ -37,7 +37,7 @@ public class Feld implements EventHandler<MouseEvent>{
 	/**
 	 * Die Grafik des Feldes
 	 */
-	private FeldGrafics group;
+	private FeldGrafics grafics;
 	
 	/**
 	 * Das BodenMaterial des Feldes
@@ -49,14 +49,17 @@ public class Feld implements EventHandler<MouseEvent>{
 	 * @param parent
 	 * @param x x-Position des Felds
 	 * @param y y-Position des Felds
+	 * @throws IllegalArgumentException, wenn die übergebene Karte null ist, oder dessen Grafik-Objekt null ist
 	 */
-	public Feld(Map parent, int x, int y) {
+	public Feld(Map parent, int x, int y) throws IllegalArgumentException {
+		if (parent == null) throw new IllegalArgumentException("Das übergebene Map-Objekt darf nicht null sein");
+		if (parent.getGrafics() == null) throw new IllegalArgumentException("Das übergebene Map-Objekt muss ein gültiges Grafik-Objekt besitzen");
+
 		this.karte = parent;
 		this.x = x;
 		this.y = y;
 		
-		group = new FeldGrafics(this);
-
+		grafics = new FeldGrafics(this);
 	}
 	
 	/**
@@ -75,7 +78,7 @@ public class Feld implements EventHandler<MouseEvent>{
 	public void place(Placeable object) throws IllegalStateException {
 		if (this.object != null) throw new IllegalStateException("Es steht bereits ein Objekt auf dem Feld.");
 		this.object = object;
-		this.group.getChildren().add(object.getGrafics());
+		this.grafics.getChildren().add(object.getGrafics());
 	}
 	
 	/**
@@ -106,8 +109,8 @@ public class Feld implements EventHandler<MouseEvent>{
 	 * Gibt den Node zurück, der in einer Scene gezeichnet werden kann
 	 * @return Node (Rectangle Objekt)
 	 */
-	public FeldGrafics getGroup() {
-		return group;
+	public FeldGrafics getGrafics() {
+		return grafics;
 	}
 	
 	/**
@@ -118,12 +121,16 @@ public class Feld implements EventHandler<MouseEvent>{
 		return boden;
 	}
 
+	/**
+	 * Setzt das Bodenmaterial für dieses Feld
+	 * @param boden Material für den Boden
+	 */
 	public void setBodenMaterial(Material boden) {
 		this.boden = boden;
 		if (boden == null) {
-			group.getBoden().setFill(Color.BLACK);
+			grafics.setBoden(Color.BLACK);		
 		} else {
-			group.getBoden().setFill(boden.getColor());
+			grafics.setBoden(boden.getColor());
 		}
 	}
 	

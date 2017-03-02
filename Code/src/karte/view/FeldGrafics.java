@@ -1,65 +1,95 @@
 package karte.view;
 
 import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.scene.Group;
 import javafx.scene.Node;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import karte.model.Feld;
 
-public class FeldGrafics extends Group {
+/**
+ * Klasse für Grafische Darstellung eines Feldes
+ * die Eigenschaft boden legt einen Hintergrund fest, darauf wird das Objekt dargestellt, das auf
+ * diesem Feld steht
+ * Das Feld hat ein BorderLayout
+ * 
+ * @author Thomas
+ *
+ */
+public class FeldGrafics extends StackPane {
 
-	
-	private IntegerProperty Width;
-	private IntegerProperty Height;
-	
+	/**
+	 * Daten-Objekt, das zu diesem View-Objekt gehört
+	 */
 	private Feld model;
 	
+	/**
+	 * Boden Fläche. Stellt eine Farbe dar, wird an unterste Stelle platziert
+	 */
 	private Rectangle boden;
-	
+		
+	/**
+	 * Erstellt die Grafische Darstellung eines Feldes
+	 * @param feld zugehöriges Feld für diese grafische Darstellung
+	 */
 	public FeldGrafics(Feld feld) {
 		model = feld;
-		this.setOnMouseClicked(feld);
-		
-		Width = new SimpleIntegerProperty();
-		Height = new SimpleIntegerProperty();
 		
 		boden = new Rectangle();
-		boden.setFill(Color.BLACK);
 		
+		this.setOnMouseClicked(feld);					
 		this.getChildren().add(boden);
-	}
-	
-	public void bindProperties() {
-		Width.bind(model.getKarte().getGrafics().feldWidthProperty());
-		Height.bind(model.getKarte().getGrafics().feldHeightProperty());
 		
-		boden.widthProperty().bind(Width);
-		boden.heightProperty().bind(Height);
+		this.bindProperties();
+		//model.karte.grafics ist zu diesem Zeitpunkt null
+		
+		feld.getKarte().getGrafics().getChildren().add(this);
 	}
 	
-	public void addChild(Group child) {
-		this.getChildren().add(child);
+	/**
+	 * Bindet die nötigen Properties dieses Objekts an die entsprechenden Properties
+	 */
+	public void bindProperties() {
+		//binde die breite und Höhe an die von der Karte vorgegebenen Werte
+		IntegerProperty width = model.getKarte().getGrafics().feldWidthProperty();
+		IntegerProperty height = model.getKarte().getGrafics().feldHeightProperty(); 
+
+		boden.widthProperty().bind(width);
+		boden.heightProperty().bind(height);
+		
+		this.layoutXProperty().bind(width.multiply(model.getX()));
+		this.layoutYProperty().bind(height.multiply(model.getY()));
 	}
 	
+	/**
+	 * Fügt dem Feld-Group eine zusätzliche Komponente hinzu (in der Mitte)
+	 * @param child Grafische Komponente zum Hinzufügen
+	 */
 	public void addChild(Node child) {
 		this.getChildren().add(child);
 	}
 	
+	/**
+	 * gibt das zu diesem Grafischen Objekt zugehörige Model-Objekt zurück
+	 * @return Model-Objekt dieses Grafik-Objekts
+	 */
 	public Feld getModel() {
 		return model;
 	}
 	
-	public Rectangle getBoden() {
-		return boden;
+	/**
+	 * Gibt die Farbe des Bodens dieses Feldes zurück
+	 * @return Farbe des Bodens
+	 */
+	public Color getBoden() {
+		return (Color) boden.getFill();
 	}
 	
-	public IntegerProperty widthProperty() {
-		return Width;
-	}
-	
-	public IntegerProperty heightProperty() {
-		return Height;
+	/**
+	 * Setzt die Farbe des Bodens dieses Feldes
+	 * @param boden Farbe des Bodens
+	 */
+	public void setBoden(Color boden) {
+		this.boden.setFill(boden);;
 	}
 }

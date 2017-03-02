@@ -1,4 +1,4 @@
-package ressource;
+package ressource.model;
 
 import javafx.scene.paint.Color;
 

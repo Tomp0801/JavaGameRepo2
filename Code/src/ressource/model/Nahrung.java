@@ -1,4 +1,4 @@
-package ressource;
+package ressource.model;
 
 /**
  * Interface für Materialien, die essbar sein sollen.

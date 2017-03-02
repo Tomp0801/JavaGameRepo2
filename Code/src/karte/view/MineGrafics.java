@@ -18,10 +18,10 @@ public class MineGrafics extends BuildingGrafics {
 	private void init() {
 		mainRoom = new Rectangle(10, 10, Color.BROWN);
 		sideRoom = new Rectangle(2, 2, Color.DARKGRAY);
-		mainRoom.setX(1);
-		mainRoom.setY(1);
-		sideRoom.setX(11);
-		sideRoom.setY(1);
+		mainRoom.setX(0);
+		mainRoom.setY(0);
+		sideRoom.setX(10);
+		sideRoom.setY(0);
 		this.getChildren().add(mainRoom);
 		this.getChildren().add(sideRoom);
 	}

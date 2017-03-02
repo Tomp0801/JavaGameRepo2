@@ -36,8 +36,11 @@ public class Map {
 		this.width = width;
 		this.height = height;
 		felder = new Feld[width][height];
+		
+		grafics = new MapGrafics(this);
 	
 		init();
+		
 	}
 	
 	/**
