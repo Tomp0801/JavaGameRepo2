@@ -10,7 +10,7 @@ import javafx.scene.layout.VBox;
 import personensicht.model.gameObjekte.GameObjekt;
 import personensicht.model.gameObjekte.Mauer;
 
-public class ListeGameObjektLinks extends VBox{
+public class ListeGameObjektLinks extends VBox {
 
 	public ListeGameObjektLinks()
 	{
@@ -70,7 +70,6 @@ public class ListeGameObjektLinks extends VBox{
 						  setAuswahlGetroffen(true);
 						  }
 					  instance.setPositionDesGameObjekt( instance.getGameObjekteOnRegion().get(instance.getGameObjekteOnRegion().size()-1).getGameObjekt(), mouseEvent);
-						System.out.println("bin hier");
 				  }
 			});	
 			GameObjektAuswalListeTitledPane.setOnMouseReleased(new EventHandler<MouseEvent>(){

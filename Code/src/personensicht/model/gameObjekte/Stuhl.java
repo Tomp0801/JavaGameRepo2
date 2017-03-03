@@ -23,4 +23,16 @@ public class Stuhl extends GameObjekt
 		this.setNodeObjekt(new StuhlV(this)); 
 		return this.getNodeObjekt().getNode();
 	}
+
+	@Override
+	public void serializ() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void deserializ() {
+		// TODO Auto-generated method stub
+		
+	}
 }

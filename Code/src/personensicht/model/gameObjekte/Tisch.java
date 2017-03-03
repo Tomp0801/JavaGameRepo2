@@ -80,4 +80,16 @@ public class Tisch extends GameObjekt
 			tischV.getTischplatte().setDepth(z);
 		}
 	}
+
+	@Override
+	public void serializ() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void deserializ() {
+		// TODO Auto-generated method stub
+		
+	}
 }

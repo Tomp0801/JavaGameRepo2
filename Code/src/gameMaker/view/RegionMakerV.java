@@ -1,5 +1,6 @@
 package gameMaker.view;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -8,6 +9,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
+import gameMaker.controll.StageCrt;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.geometry.Bounds;
@@ -26,6 +28,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Box;
 import javafx.scene.transform.Rotate;
+import javafx.stage.FileChooser;
 import personensicht.model.gameObjekte.GameObjekt;
 import personensicht.model.gameObjekte.GameObjektType;
 import personensicht.model.welt.map.Region;
@@ -44,6 +47,11 @@ public class RegionMakerV
 	 */
 	private Boolean durtyBit = false; 
 		
+	/**
+	 * enthaehlt den weg zum Verzeichnis in dem gespeichert wird.
+	 */
+	private String verzeichnisPath = System.getProperty("user.home");
+	
 	/**
 	 * der String enthaelt den namen der Datei, die verwendet wird um die Region zu speichern
 	 */
@@ -430,49 +438,68 @@ public class RegionMakerV
 	void speicherRegion(){
 		//nur moeglich wenn was geandert wurde. Sonst ausgegraut oder nicht anklickbar
 		//speichert unter den verwendeten namen
+		if (durtyBit == true){
+			speichern(new File(path));
+		}
 	}
 	
 	/**
-	 * speichert die erstellte Region
+	 * oeffnet einen FileChooser, mit der die Region gespeichert werden kann.
 	 */
-	void speicherUnterNameRegion(){ //TODO hier dran wird nun gearbeitet
-		//suche eine Datei unter der gespeichert werden soll
-		//endung hinzufuegen
-		//Modelklasse Region erstellen und die Region speichern
-		ArrayList<GameObjekt> objektListe = new ArrayList<GameObjekt>();
-		for (int i = 0; this.gameObjekteOnRegion.size() > i ; i++){
-			objektListe.add(gameObjekteOnRegion.get(i).getGameObjekt());
+	void speicherUnterNameRegion(){
+		FileChooser fileChooser = new FileChooser();
+		fileChooser.setTitle("Speichern");
+	    FileChooser.ExtensionFilter extFilter = 
+                new FileChooser.ExtensionFilter("TEXT files (*.region)" , "(*.region)");
+		fileChooser.getExtensionFilters().add(extFilter);
+		fileChooser.setInitialDirectory(
+		            new File(verzeichnisPath) 
+		        );
+		File file = fileChooser.showSaveDialog(StageCrt.getInstance().getStage());
+		speichern(file);
+	}
+	
+	private void speichern(File file){
+		if (file != null){	
+			FileOutputStream fos = null;
+			//Modelklasse Region erstellen und die Region speichern
+			ArrayList<GameObjekt> objektListe = new ArrayList<GameObjekt>();
+			for (int i = 0; this.gameObjekteOnRegion.size() > i ; i++){
+				objektListe.add(gameObjekteOnRegion.get(i).getGameObjekt());
+			}
+			Region region = new Region("defaul",objektListe); //TODO der Name muss noch gewahlt werden
+			region.serializ();
+			
+			
+			verzeichnisPath = file.getParentFile().toPath().toString();
+			path = file.getAbsoluteFile().getPath();
+			try 
+			{
+				fos = new FileOutputStream (file.getAbsoluteFile()); 
+			} 
+			catch (FileNotFoundException e) 
+			{
+				e.printStackTrace();
+			}
+		    ObjectOutputStream oos = null;
+			
+		    try 
+			{
+				oos = new ObjectOutputStream (fos);
+				oos.writeObject(region);
+			} 
+		    catch (IOException e) 
+		    {
+				e.printStackTrace();
+			}	
+		    System.out.println("gespeichert");
 		}
-		Region region = new Region("defaul",objektListe);
-		
-		FileOutputStream fos = null;
-		
-		try 
-		{
-			fos = new FileOutputStream ("demo.edit"); //TODO Namen aussuchen
-		} 
-		catch (FileNotFoundException e) 
-		{
-			e.printStackTrace();
-		}
-	    ObjectOutputStream oos = null;
-		
-	    try 
-		{
-			oos = new ObjectOutputStream (fos);
-			oos.writeObject(region);
-		} 
-	    catch (IOException e) 
-	    {
-			e.printStackTrace();
-		}	
-	    System.out.println("gespeichert");
 	}
 	
 	/**
 	 * lead eine andere Region
 	 */
-	void ladeAndereRegion(){
+   void ladeAndereRegion(){
 		//Oeffne ein Ordner in dennen Regionen gespeichert sind
 		//nach dem auswahlen einer Datei, nach speichern fragen, falls was geaendert wurde
 		
@@ -490,17 +517,17 @@ public class RegionMakerV
 		} 
 	   try {
 		Region region = (Region) ois.readObject (); //TODO
+		region.deserializ();
 		setGameMakerInStartzustand();
 		initRegionPane();
 		for (int i = 0 ; region.getChildren().size() > i; i++)
 		{
-			AuswahlGameObjekt auswahlGameObjekt = new AuswahlGameObjekt(region.getChildren().get(i).getTyp());
+			AuswahlGameObjekt auswahlGameObjekt = new AuswahlGameObjekt(region.getChildren().get(i));
 			if (GameObjektType.Mauer == region.getChildren().get(i).getTyp()){
 				this.platzierungMauer(auswahlGameObjekt);
 			}
 			else{
 				this.setzeGameObjektAufDieRegion(auswahlGameObjekt);
-				
 			}
 		}
 		
@@ -511,8 +538,6 @@ public class RegionMakerV
 	} catch (IOException e) {
 		e.printStackTrace();
 	}
-	   
-	
 	   System.out.println("geladen");
 	}
 	
@@ -661,7 +686,6 @@ public class RegionMakerV
 				objekt.setHeight(regionPane.getHeight()-box.getBoundsInParent().getMinY());	
 				objekt.setLayoutY(regionPane.getHeight()-objekt.getHeight().get()/2);		
 			}
-			System.out.println("jo");
 		}
 	}
 

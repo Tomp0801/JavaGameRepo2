@@ -17,14 +17,14 @@ public class BettV extends GameObjektV
 	
 	private Box root= new Box();
 	
-	public BettV(Bett bettModel)
+	public BettV(Bett model)
 	{
-		this.setNode(root);
-		this.root.heightProperty().bind(bettModel.getHeight());
-		this.root.widthProperty().bind(bettModel.getWidth());
-		this.root.depthProperty().bind(bettModel.getDepth());
-		this.root.layoutXProperty().bind(bettModel.getLayoutX());
-		this.root.layoutYProperty().bind(bettModel.getLayoutY());
+		this.setNode(this.root);
+		this.root.heightProperty().bindBidirectional(model.getHeight());
+		this.root.widthProperty().bindBidirectional(model.getWidth());
+		this.root.depthProperty().bindBidirectional(model.getDepth());
+		this.root.layoutXProperty().bindBidirectional(model.getLayoutX());
+		this.root.layoutYProperty().bindBidirectional(model.getLayoutY());
 	}
 
 	@Override

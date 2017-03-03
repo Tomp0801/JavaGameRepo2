@@ -48,4 +48,8 @@ public class StageCrt extends Application
 	{
 		return stageController;
 	}
+
+	public synchronized Stage getStage() {
+		return stage;
+	}
 }

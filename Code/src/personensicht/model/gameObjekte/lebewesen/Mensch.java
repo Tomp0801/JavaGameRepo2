@@ -58,4 +58,16 @@ public class Mensch extends GameObjekt
 		MenschV menschV = new MenschV();
 		return menschV.getRoot();
 	}
+
+	@Override
+	public void serializ() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void deserializ() {
+		// TODO Auto-generated method stub
+		
+	}
 }

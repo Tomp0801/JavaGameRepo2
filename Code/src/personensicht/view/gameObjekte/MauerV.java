@@ -17,14 +17,14 @@ public class MauerV extends GameObjektV
 
 	private Box root = new Box();
 	
-	public MauerV(Mauer mauer)
+	public MauerV(Mauer model)
 	{
 		this.setNode(this.root);
-		this.root.heightProperty().bind(mauer.getHeight());
-		this.root.widthProperty().bind(mauer.getWidth());
-		this.root.depthProperty().bind(mauer.getDepth());
-		this.root.layoutXProperty().bind(mauer.getLayoutX());
-		this.root.layoutYProperty().bind(mauer.getLayoutY());
+		this.root.heightProperty().bindBidirectional(model.getHeight());
+		this.root.widthProperty().bindBidirectional(model.getWidth());
+		this.root.depthProperty().bindBidirectional(model.getDepth());
+		this.root.layoutXProperty().bindBidirectional(model.getLayoutX());
+		this.root.layoutYProperty().bindBidirectional(model.getLayoutY());
 	}
 	
 

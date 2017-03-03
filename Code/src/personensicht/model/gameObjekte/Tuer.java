@@ -40,4 +40,16 @@ public class Tuer extends GameObjekt
 	public synchronized Region getZielRegion() {
 		return zielRegion;
 	}
+
+	@Override
+	public void serializ() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void deserializ() {
+		// TODO Auto-generated method stub
+		
+	}
 }

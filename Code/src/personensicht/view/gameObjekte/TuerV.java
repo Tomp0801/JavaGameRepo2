@@ -17,14 +17,14 @@ public class TuerV extends GameObjektV
 	
 	private Box root = new Box();
 	
-	public TuerV(Tuer tuer)
+	public TuerV(Tuer model)
 	{
 		this.setNode(this.root);
-		this.root.heightProperty().bind(tuer.getHeight());
-		this.root.widthProperty().bind(tuer.getWidth());
-		this.root.depthProperty().bind(tuer.getDepth());
-		this.root.layoutXProperty().bind(tuer.getLayoutX());
-		this.root.layoutYProperty().bind(tuer.getLayoutY());
+		this.root.heightProperty().bindBidirectional(model.getHeight());
+		this.root.widthProperty().bindBidirectional(model.getWidth());
+		this.root.depthProperty().bindBidirectional(model.getDepth());
+		this.root.layoutXProperty().bindBidirectional(model.getLayoutX());
+		this.root.layoutYProperty().bindBidirectional(model.getLayoutY());
 	}
 	
 	@Override

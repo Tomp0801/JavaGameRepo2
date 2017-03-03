@@ -16,14 +16,14 @@ public class SchrankV extends GameObjektV
 	
 	private Box root = new Box(); 
 	
-	public SchrankV(Schrank schrank)
+	public SchrankV(Schrank model)
 	{
 		this.setNode(this.root);
-		this.root.heightProperty().bind(schrank.getHeight());
-		this.root.widthProperty().bind(schrank.getWidth());
-		this.root.depthProperty().bind(schrank.getDepth());
-		this.root.layoutXProperty().bind(schrank.getLayoutX());
-		this.root.layoutYProperty().bind(schrank.getLayoutY());
+		this.root.heightProperty().bindBidirectional(model.getHeight());
+		this.root.widthProperty().bindBidirectional(model.getWidth());
+		this.root.depthProperty().bindBidirectional(model.getDepth());
+		this.root.layoutXProperty().bindBidirectional(model.getLayoutX());
+		this.root.layoutYProperty().bindBidirectional(model.getLayoutY());
 	}
 	
 	

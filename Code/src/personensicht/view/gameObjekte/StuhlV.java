@@ -16,13 +16,13 @@ public class StuhlV extends GameObjektV
 	public final static int MINSIZE_Z = 20; 	
 	Box root = new Box(); 
 	
-	public StuhlV(Stuhl stuhl){
+	public StuhlV(Stuhl model){
 		this.setNode(this.root);
-		this.root.heightProperty().bind(stuhl.getHeight());
-		this.root.widthProperty().bind(stuhl.getWidth());
-		this.root.depthProperty().bind(stuhl.getDepth());
-		this.root.layoutXProperty().bind(stuhl.getLayoutX());
-		this.root.layoutYProperty().bind(stuhl.getLayoutY());
+		this.root.heightProperty().bindBidirectional(model.getHeight());
+		this.root.widthProperty().bindBidirectional(model.getWidth());
+		this.root.depthProperty().bindBidirectional(model.getDepth());
+		this.root.layoutXProperty().bindBidirectional(model.getLayoutX());
+		this.root.layoutYProperty().bindBidirectional(model.getLayoutY());
 	}
 
 	@Override

@@ -60,4 +60,16 @@ public class Schrank extends GameObjekt implements Inventataeger
 		this.setNodeObjekt(new SchrankV(this)); 
 		return this.getNodeObjekt().getNode();
 	}
+
+	@Override
+	public void serializ() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void deserializ() {
+		// TODO Auto-generated method stub
+		
+	}
 }

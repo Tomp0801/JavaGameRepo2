@@ -1,14 +1,12 @@
 package personensicht.model.gameObjekte;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
+import ioHandler.SerializableNew;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.Node;
-import javafx.scene.shape.Shape3D;
 import personensicht.model.aktionen.Aktion;
 import personensicht.view.gameObjekte.GameObjektV;
-import sun.java2d.pipe.SpanShapeRenderer.Simple;
 
 
 /**
@@ -16,7 +14,7 @@ import sun.java2d.pipe.SpanShapeRenderer.Simple;
  * @author Demix
  *
  */
-public abstract class GameObjekt implements Serializable
+public abstract class GameObjekt implements SerializableNew
 {
 	/**
 	 * Name des GameObjektes.
@@ -41,31 +39,54 @@ public abstract class GameObjekt implements Serializable
 	/**
 	 * x size der root Node.
 	 */
-	private SimpleDoubleProperty width = new SimpleDoubleProperty(60);
+	private transient SimpleDoubleProperty width = new SimpleDoubleProperty(60);
 	
 	/**
 	 * y size der root Node.
 	 */
-	private SimpleDoubleProperty height = new SimpleDoubleProperty(40);
+	private transient SimpleDoubleProperty height = new SimpleDoubleProperty(40);
 	
 	/**
 	 * z size der root Node.
 	 */
-	private SimpleDoubleProperty depth = new SimpleDoubleProperty(20); 
-	
+	private transient SimpleDoubleProperty depth = new SimpleDoubleProperty(20); 
+		
 	/**
 	 * gibt die Position X an, auf der sich die Node befindet
 	 */
-	private SimpleDoubleProperty layoutX = new SimpleDoubleProperty(0);
+	private transient SimpleDoubleProperty layoutX = new SimpleDoubleProperty(0);
 	
 	/**
 	 * Gibt die PositionY an auf der sich die Node befindet
 	 */
-	private SimpleDoubleProperty layoutY = new SimpleDoubleProperty(0);
+	private transient SimpleDoubleProperty layoutY = new SimpleDoubleProperty(0);
+	
+	/**
+	 * the variable is for the serializ the value of width 
+	 */
+	private double widthSerializ = 0;
+	/**
+	 * the variable is for the serializ the value of height 
+	 */
+	private double heightSerializ = 0;
+	/**
+	 * the variable is for the serializ the value of depht 
+	 */
+	private double depthSerializ = 0;
+	/**
+	 * the variable is for the serializ the value of layoutX 
+	 */
+	private double layoutXSerializ = 0;
+	/**
+	 * the variable is for the serializ the value of layoutY
+	 */
+	private double layoutYSerializ = 0;
+	
 	
 	public GameObjekt(GameObjektType type) 
 	{
 		this.TYPE = type;
+		
 	}
 	
 	/**
@@ -80,7 +101,7 @@ public abstract class GameObjekt implements Serializable
 		this.TYPE = type;
 		this.width.setValue(width);
 		this.height.setValue(height);
-		this.depth.setValue(depth);		
+		this.depth.setValue(depth);	
 	}
 	
 	public synchronized ArrayList<Aktion> getAktionen() {
@@ -116,17 +137,34 @@ public abstract class GameObjekt implements Serializable
 	}
 
 	public synchronized void setWidth(double value) {
-		this.width.setValue(value);
+		if(this.width  != null){
+			this.width.setValue(value);
+		}
+		else{
+			this.width = new SimpleDoubleProperty(value);
+		}
+		
 	}
 
 
 	public synchronized void setHeight(double value) {
-		this.height.setValue(value);
+		if(this.height != null){
+			this.height.setValue(value);
+		}
+		else{
+			this.height = new SimpleDoubleProperty(value);
+		}
+		
 	}
 
 
 	public synchronized void setDepth(double value) {
-		this.depth.setValue(value);
+		if (this.depth != null){
+			this.depth.setValue(value);	
+		}
+		else{
+			this.depth = new SimpleDoubleProperty(value);
+		}
 	} 
 	
 	public synchronized SimpleDoubleProperty getWidth() {
@@ -150,11 +188,23 @@ public abstract class GameObjekt implements Serializable
 	}
 
 	public synchronized void setLayoutX(double value) {
-		this.layoutX.setValue(value);
+		if(this.layoutX != null){
+			this.layoutX.setValue(value);
+		}
+		else{
+			this.layoutX = new SimpleDoubleProperty(value);
+		}
 	}
 
 	public synchronized void setLayoutY(double value) {
-		this.layoutY.setValue(value);
+		if (this.layoutY != null){
+			this.layoutY.setValue(value);
+		}
+		else{
+			this.layoutY = new SimpleDoubleProperty(value);
+		}
+
+		
 	}
 
 	/**
@@ -195,4 +245,43 @@ public abstract class GameObjekt implements Serializable
 		}
 	}
 
+	protected synchronized double getWidthSerializ() {
+		return widthSerializ;
+	}
+
+	protected synchronized double getHeightSerializ() {
+		return heightSerializ;
+	}
+
+	protected synchronized double getDepthSerializ() {
+		return depthSerializ;
+	}
+
+	protected synchronized double getLayoutXSerializ() {
+		return layoutXSerializ;
+	}
+
+	protected synchronized double getLayoutYSerializ() {
+		return layoutYSerializ;
+	}
+
+	protected synchronized void setWidthSerializ(double widthSerializ) {
+		this.widthSerializ = widthSerializ;
+	}
+
+	protected synchronized void setHeightSerializ(double heightSerializ) {
+		this.heightSerializ = heightSerializ;
+	}
+
+	protected synchronized void setDepthSerializ(double depthSerializ) {
+		this.depthSerializ = depthSerializ;
+	}
+
+	protected synchronized void setLayoutXSerializ(double layoutXSerializ) {
+		this.layoutXSerializ = layoutXSerializ;
+	}
+
+	protected synchronized void setLayoutYSerializ(double layoutYSerializ) {
+		this.layoutYSerializ = layoutYSerializ;
+	}
 }

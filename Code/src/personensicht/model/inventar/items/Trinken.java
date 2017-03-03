@@ -45,4 +45,16 @@ public class Trinken extends Item
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public void serializ() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void deserializ() {
+		// TODO Auto-generated method stub
+		
+	}
 }

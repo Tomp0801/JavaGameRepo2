@@ -1,8 +1,8 @@
 package personensicht.model.welt.map;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
+import ioHandler.SerializableNew;
 import personensicht.model.gameObjekte.GameObjekt;
 import personensicht.view.welt.map.RegionV;
 
@@ -15,28 +15,11 @@ import personensicht.view.welt.map.RegionV;
  * @author Dennis
  *
  */
-public class Region implements Serializable
+public class Region implements SerializableNew
 {
 
 	private String nameDerRegion;
 	
-//	/**
-//	 * Inhalt der Region. 
-//	 * Das Array beinhaltet alle Elemente die sich auf dieser Region befinden.
-//	 */
-//	private ArrayList<GameObjekt> objektListe = new ArrayList<GameObjekt>(); 
-	
-	
-//	/**
-//	 * verweist auf die Orte, die von diesem Ort aus zu erreichen ist
-//	 */
-//	private ArrayList<Region> nachbarsOrte = new ArrayList<Region>();  // veraltet
-//	
-//	/**
-//	 * Beschreibung des Ortes
-//	 */
-//	private String beschreibung = "Dies ist ein schöner Ort, den wir befinden uns in Baven"; //veraltet
-//	
 	/**
 	 * eine Liste von GameObjekten die sich auf dieser Region befinden
 	 */
@@ -51,42 +34,23 @@ public class Region implements Serializable
 	 */
 	private double height = RegionV.SIZEMIN;
 	
-	public Region(){
+	public Region(){	
+		System.out.println("ich bin im Konstuktor der Klasse Region");
 	}
 	
 	public Region(String nameDesOrtes, ArrayList<GameObjekt> children) 		{
 		this.nameDerRegion = nameDesOrtes; 
 		this.children = children;
+		System.out.println("ich bin im Konstuktor der Klasse Region");
 	}
 	
 	
 	public Region(String nameDesOrtes) 			
 	{
 		this.nameDerRegion = nameDesOrtes; 
+		System.out.println("ich bin im Konstuktor der Klasse Region");
 	}
 	
-	
-//	public void addObjekt(GameObjekt objekt) // veraltet
-//	{
-//		this.objekte.add(objekt);
-//	}
-//	
-//	public Region(String nameDesOrtes, Region nachbarOrte) // veraltet
-//	{
-//		this.nameDerRegion = nameDesOrtes; 
-//		this.nachbarsOrte.add(nachbarOrte);
-//	}
-
-		
-	
-//	public synchronized ArrayList<Region> getNachbarsOrte() {
-//		return nachbarsOrte;
-//	}
-//
-//	public synchronized void setNachbarsOrte(ArrayList<Region> nachbarsOrte) {
-//		this.nachbarsOrte = nachbarsOrte;
-//	}
-
 	public synchronized String getName() {
 		return nameDerRegion;
 	}
@@ -94,32 +58,6 @@ public class Region implements Serializable
 	public synchronized void setName(String name) {
 		this.nameDerRegion = name;
 	}
-
-//	public synchronized ArrayList<GameObjekt> getObjekte() {
-//		return objekte;
-//	}
-//
-//	public synchronized void setObjekte(ArrayList<GameObjekt> objekte) {
-//		this.objekte = objekte;
-//	}
-//
-//	public synchronized String getBeschreibung() {
-//		return beschreibung;
-//	}
-//
-//	public synchronized void setBeschreibung(String beschreibung) {
-//		this.beschreibung = beschreibung;
-//	}
-//
-//	public void addNachbarn(Region ort) 
-//	{
-//		this.nachbarsOrte.add(ort);	
-//	}
-
-//	public synchronized ArrayList<GameObjekt> getObjektListe() {
-//		return objektListe;
-//	}
-
 
 	public synchronized ArrayList<GameObjekt> getChildren() {
 		return children;
@@ -143,5 +81,19 @@ public class Region implements Serializable
 
 	public synchronized void setHeight(double height) {
 		this.height = height;
+	}
+
+	@Override
+	public void serializ() {
+		for ( int i = 0; this.children.size() > i ; i++){
+			this.children.get(i).serializ();
+		}
+	}
+
+	@Override
+	public void deserializ() {
+		for ( int i = 0; this.children.size() > i ; i++){
+			this.children.get(i).deserializ();
+		}
 	}
 }

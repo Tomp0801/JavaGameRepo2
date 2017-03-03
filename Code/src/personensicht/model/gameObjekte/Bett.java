@@ -58,4 +58,16 @@ public class Bett extends GameObjekt
 	public synchronized Color getColor() {
 		return color;
 	}
+
+	@Override
+	public void serializ() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void deserializ() {
+		// TODO Auto-generated method stub
+		
+	}
 }

@@ -25,14 +25,14 @@ public class TischV extends GameObjektV
 	 */
 	private Box[] tischBeine = new Box[4];
 	
-	public TischV(Tisch tisch)
+	public TischV(Tisch model)
 	{
 		this.setNode(this.root);
-		this.root.heightProperty().bind(tisch.getHeight());
-		this.root.widthProperty().bind(tisch.getWidth());
-		this.root.depthProperty().bind(tisch.getDepth());
-		this.root.layoutXProperty().bind(tisch.getLayoutX());
-		this.root.layoutYProperty().bind(tisch.getLayoutY());
+		this.root.heightProperty().bindBidirectional(model.getHeight());
+		this.root.widthProperty().bindBidirectional(model.getWidth());
+		this.root.depthProperty().bindBidirectional(model.getDepth());
+		this.root.layoutXProperty().bindBidirectional(model.getLayoutX());
+		this.root.layoutYProperty().bindBidirectional(model.getLayoutY());
 	}
 
 	@Override

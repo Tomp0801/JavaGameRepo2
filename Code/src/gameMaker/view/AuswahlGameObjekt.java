@@ -33,52 +33,119 @@ public class AuswahlGameObjekt {
 	private GameObjekt gameObjekt; 
 	private final GameObjektType TYPE;
 	
-	AuswahlGameObjekt(GameObjektType type) 
+	/**
+	 * 
+	 * @param type
+	 */
+	AuswahlGameObjekt(GameObjektType type) //TODO
 	{
 		this.TYPE = type; 
-		switch (type)
+		initEinstellungGameObjekt();
+		this.node = einstellungGameObjket.getGameObjekt().ladeNodeObjekt(); 
+	}
+	
+	/**
+	 * ist das GameObjekt bereits beannt, dann muss dieser Konstuktor verwendet werden
+	 * @param objekt
+	 */
+	AuswahlGameObjekt(GameObjekt objekt) 
+	{
+		this.TYPE = objekt.getTyp();
+		this.node = objekt.ladeNodeObjekt();
+		this.gameObjekt = objekt; 
+		initEinstellungGameObjekt();
+	}
+	
+	/**
+	 * erstellt eine Viewkomponente zum Einstellen des Objektes.
+	 * ist noch keine Modelklasse des Objektes verfuegbar wird eine neue erstellt
+	 */
+	private void initEinstellungGameObjekt(){
+		switch (TYPE)
 		{
 		case Bett:
-			Bett bett = new Bett(); 
-			einstellungGameObjket = new EinstellungBett(bett); 
+			Bett bett;
+			if (this.gameObjekt == null){
+			bett = new Bett(); 
 			gameObjekt = bett; 
+			}
+			else{
+				bett = (Bett) gameObjekt;
+			}
+			einstellungGameObjket = new EinstellungBett(bett); 
+			
 			break; 
-		case Item:
+		case Item://TODO
 			break;
 		case Mensch:
-			Mensch mensch = new Mensch("DefaultName");
+			Mensch mensch;
+			if (this.gameObjekt == null){
+				mensch = new Mensch("DefaultName");
+			}
+			else{
+				mensch = (Mensch) gameObjekt;
+			}
 			einstellungGameObjket = new EinstellungMensch(mensch);
 			gameObjekt = mensch; 
 			break;
 		case Schrank:
-			Schrank schrank = new Schrank();
+			Schrank schrank;
+			if (this.gameObjekt == null){
+				schrank = new Schrank();
+			}
+			else{
+				schrank = (Schrank) gameObjekt;
+			}
 			einstellungGameObjket = new EinstellungSchrank(schrank);
 			gameObjekt = schrank; 
 			break;
 		case Tuer:
-			Tuer tuer = new Tuer();
+			Tuer tuer;
+			if (this.gameObjekt == null){
+				tuer = new Tuer();
+			}
+			else{
+				tuer = (Tuer) gameObjekt; 
+			}
 			einstellungGameObjket = new EinstellungTuer(tuer); 
 			gameObjekt = tuer; 
 			break;
 		case Stuhl:
-			Stuhl stuhl = new Stuhl();
+			Stuhl stuhl;
+			if (this.gameObjekt == null){
+				stuhl = new Stuhl();
+			}
+			else{
+				stuhl = (Stuhl) gameObjekt; 
+			}
 			einstellungGameObjket = new EinstellungStuhl(stuhl); 
 			gameObjekt = stuhl;
 			break;
 		case Tisch:
-			Tisch tisch = new Tisch();
+			Tisch tisch;
+			if (this.gameObjekt == null){
+				tisch = new Tisch();
+			}
+			else{
+				tisch = (Tisch) gameObjekt; 
+			}
 			einstellungGameObjket = new EinstellungTisch(tisch); 
 			gameObjekt = tisch; 
 			break;
 		case Mauer:
-			Mauer mauer = new Mauer();
+			Mauer mauer;
+			if (this.gameObjekt == null){
+				mauer = new Mauer();
+				gameObjekt = mauer; 
+			}
+			else{
+				mauer = (Mauer) this.gameObjekt; 
+			}
 			einstellungGameObjket = new EinstellungMauer(mauer); 
-			gameObjekt = mauer; 
 			break;
 		default:
 			break;
 		}
-		this.node = einstellungGameObjket.getGameObjekt().ladeNodeObjekt(); 
 	}
 	
 	public synchronized EinstellungGameObjekt getEinstellungGameObjket() 
