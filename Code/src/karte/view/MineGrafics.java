@@ -1,17 +1,16 @@
 package karte.view;
 
+import javafx.scene.Group;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import karte.model.Building;
+import karte.model.Mine;
 
-public class MineGrafics extends BuildingGrafics {
+public class MineGrafics extends Group {
 
 	private Rectangle mainRoom;
 	private Rectangle sideRoom;
 	
-	public MineGrafics(Building parent) {
-		super(parent);
-		
+	public MineGrafics(Mine parent) {
 		init();
 	}
 	

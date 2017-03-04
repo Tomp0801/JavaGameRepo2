@@ -35,7 +35,6 @@ public class MapGrafics extends Group {
 	 */
 	public MapGrafics(Map map) {
 		this.model = map;
-		map.setGrafics(this);
 		
 		MapWidth = new SimpleIntegerProperty();
 		MapHeight = new SimpleIntegerProperty();

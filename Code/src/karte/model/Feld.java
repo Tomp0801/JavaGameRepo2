@@ -1,5 +1,7 @@
 package karte.model;
 
+import java.util.HashMap;
+
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
@@ -12,7 +14,7 @@ import ressource.model.Material;
  * @author Thomas
  *
  */
-public class Feld implements EventHandler<MouseEvent>{
+public class Feld implements EventHandler<MouseEvent> {
 
 	/**
 	 * Objekt, das auf diesem Feld steht
@@ -43,6 +45,11 @@ public class Feld implements EventHandler<MouseEvent>{
 	 * Das BodenMaterial des Feldes
 	 */
 	private Material boden;
+	
+	/**
+	 * Auflistung der Rohstoffe und deren Menge, die das Feld enthält
+	 */
+	private HashMap<Material, Float> bodenschatzVorkommen;
 		
 	/**
 	 * Erstellt ein Feld, das zu der angegebenen Karte gehört
@@ -54,7 +61,7 @@ public class Feld implements EventHandler<MouseEvent>{
 	public Feld(Map parent, int x, int y) throws IllegalArgumentException {
 		if (parent == null) throw new IllegalArgumentException("Das übergebene Map-Objekt darf nicht null sein");
 		if (parent.getGrafics() == null) throw new IllegalArgumentException("Das übergebene Map-Objekt muss ein gültiges Grafik-Objekt besitzen");
-
+		
 		this.karte = parent;
 		this.x = x;
 		this.y = y;
@@ -134,15 +141,52 @@ public class Feld implements EventHandler<MouseEvent>{
 		}
 	}
 	
-	@Override
-	public void handle(MouseEvent event) {
-		//TODO set this Feld als Scene
-		System.out.println("Feld " + x + "|" + y + " angeklickt.");
-		System.out.println("Bodenart: " + boden.getName());
-		if (this.object != null) {
-			System.out.println("Hier steht: " + object.getName());
+	/**
+	 * Gibt das Nachbarfeld zurück
+	 * @param richtung Himmelsrichtung in der das Nachbarfeld liegt
+	 * @return Das nachbarfeld
+	 */
+	public Feld getNachbar(Kompass richtung) throws ArrayIndexOutOfBoundsException {
+		switch (richtung) {
+		case NORTH:
+			return karte.getFeld(x, y - 1);
+		case EAST:
+			return karte.getFeld(x + 1, y);
+		case SOUTH:
+			return karte.getFeld(x, y + 1);
+		case WEST:
+			return karte.getFeld(x - 1, y);
+		case NORTHEAST:
+			return karte.getFeld(x + 1, y - 1);
+		case SOUTHEAST:
+			return karte.getFeld(x + 1, y + 1);
+		case NORTHWEST:
+			return karte.getFeld(x - 1, y - 1);
+		case SOUTHWEST:
+			return karte.getFeld(x - 1, y + 1);
+		default:
+			return null;
 		}
 	}
 	
-
+	/**
+	 * Gibt das Objekt zurück, das auf diesem Feld steht
+	 * @return das Objekt, das auf diesem Feld steht
+	 */
+	public Placeable getObject() {
+		return this.object;
+	}
+	
+	@Override
+	public void handle(MouseEvent event) {
+		//TODO set this Feld als Scene
+		
+		if (event.getEventType() == MouseEvent.MOUSE_CLICKED) {
+			System.out.println("Feld " + x + "|" + y + " angeklickt.");
+			System.out.println("Bodenart: " + boden.getName());
+			if (this.object != null) {
+				System.out.println("Hier steht: " + object.getName());
+			}
+		}
+	}
 }

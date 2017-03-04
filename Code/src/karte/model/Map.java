@@ -36,11 +36,10 @@ public class Map {
 		this.width = width;
 		this.height = height;
 		felder = new Feld[width][height];
-		
-		grafics = new MapGrafics(this);
+	
+		loadGrafics();
 	
 		init();
-		
 	}
 	
 	/**
@@ -52,6 +51,13 @@ public class Map {
 				felder[x][y] = new Feld(this, x, y);
 			}
 		}
+	}
+	
+	/**
+	 * Erstellt ein neues Grafikobjekt das zu dieser Karte passt
+	 */
+	public void loadGrafics() {
+		grafics = new MapGrafics(this);
 	}
 	
 	/**
@@ -102,9 +108,5 @@ public class Map {
 	
 	public MapGrafics getGrafics() {
 		return grafics;
-	}
-	
-	public void setGrafics(MapGrafics mapGrafics) {
-		grafics = mapGrafics;
 	}
 }

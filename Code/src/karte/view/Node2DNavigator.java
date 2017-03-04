@@ -1,4 +1,4 @@
-package karte.model;
+package karte.view;
 
 import com.sun.javafx.geom.Point2D;
 

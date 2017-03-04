@@ -1,4 +1,4 @@
-package karte.model;
+package karte.view;
 
 import javafx.event.EventHandler;
 import javafx.scene.Node;
@@ -15,7 +15,6 @@ public class Node2DZoomer implements EventHandler<ScrollEvent> {
 	@Override
 	public void handle(ScrollEvent event) {
 		if (event.getEventType() == ScrollEvent.SCROLL) {
-			System.out.println("Scroll!" + event.getDeltaY() + " " + event.getDeltaX());
 			graficsNode.setScaleX(graficsNode.getScaleX() + event.getDeltaY() / 200);
 			graficsNode.setScaleY(graficsNode.getScaleY() + event.getDeltaY() / 200);
 			//Scale nciht kleiner als 0

@@ -8,6 +8,13 @@ import karte.model.*;
 import obersteEbene.controller.Random;
 import ressource.model.Material;
 
+/**
+ * Klasse zum Testen der Map View
+ * erstellt eine eigene Application, getrennt von dem restlichen Programm
+ * 
+ * @author Thomas
+ *
+ */
 public class Test extends Application {
 	public static void main(String[] args) {
 		launch(args);
@@ -17,12 +24,12 @@ public class Test extends Application {
 	public void start(Stage primaryStage) throws Exception {
 		
 		
-		Random prng = new Random("rghh4g");
+		Random prng = new Random("karte");
 		
 		Generator gen = new Generator(prng, Material.ERDE);
 		gen.addMaterial(Material.WASSER, 32);
 		gen.addMaterial(Material.STEIN, 15);
-		Map map = gen.generateMap(40, 30);
+		Map map = gen.generateMap(100, 30);
 		
 		map = gen.smoothMap();
 		
@@ -35,6 +42,9 @@ public class Test extends Application {
 		mine2.place(map, new Point2D(3, 9));
 		Mine mine3 = new Mine();
 		mine3.place(map, new Point2D(32, 20));
+		
+		Wohnhaus w1 = new Wohnhaus();
+		w1.place(map, 4, 7);
 		
 		//map.getGrafics().setMapWidth(1024, true);
 		
