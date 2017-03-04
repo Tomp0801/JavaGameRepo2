@@ -35,20 +35,17 @@ public class Region implements SerializableNew
 	private double height = RegionV.SIZEMIN;
 	
 	public Region(){	
-		System.out.println("ich bin im Konstuktor der Klasse Region");
 	}
 	
-	public Region(String nameDesOrtes, ArrayList<GameObjekt> children) 		{
+	public Region(String nameDesOrtes, ArrayList<GameObjekt> children) {
 		this.nameDerRegion = nameDesOrtes; 
 		this.children = children;
-		System.out.println("ich bin im Konstuktor der Klasse Region");
 	}
 	
 	
 	public Region(String nameDesOrtes) 			
 	{
 		this.nameDerRegion = nameDesOrtes; 
-		System.out.println("ich bin im Konstuktor der Klasse Region");
 	}
 	
 	public synchronized String getName() {

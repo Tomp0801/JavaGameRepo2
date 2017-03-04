@@ -11,12 +11,12 @@ public class RegionV extends AnchorPane
 	/**
 	 * Minimale groﬂe der Region in Pixel. 
 	 */
-	public static final int SIZEMIN = 400;
-	
+	public static final int SIZEMIN = 100;
+
 	/**
 	 * Maximale groﬂe der Region in Pixel. 
 	 */
-	public static final int SIZEMAX = 10000;
+	public static final int SIZEMAX = 2500;
 	
 	/**
 	 * verweist auf die Obejkte, die sich in diser Region befinden. 

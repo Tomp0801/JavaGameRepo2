@@ -24,29 +24,4 @@ public class StuhlV extends GameObjektV
 		this.root.layoutXProperty().bindBidirectional(model.getLayoutX());
 		this.root.layoutYProperty().bindBidirectional(model.getLayoutY());
 	}
-
-	@Override
-	public void setHeight(double value) {
-		this.root.setHeight(value);
-		
-	}
-
-	@Override
-	public void setWidth(double value) {
-		this.root.setWidth(value);
-		
-	}
-
-	@Override
-	public void setDepth(double value) {
-		this.root.setDepth(value);
-		
-	}
-
-	@Override
-	public void setColor(Color color) {
-		Shape3DZusatzMethoden.hintergundFarbeSetzen(this.root, color);
-		
-	}
-
 }

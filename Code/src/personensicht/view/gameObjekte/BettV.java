@@ -27,29 +27,6 @@ public class BettV extends GameObjektV
 		this.root.layoutYProperty().bindBidirectional(model.getLayoutY());
 	}
 
-	@Override
-	public void setDepth(double value)
-	{
-		this.root.setDepth(value);
-	}
-
-	@Override
-	public void setHeight(double breite) 
-	{
-		this.root.setHeight(breite);
-	}
-
-	@Override
-	public void setWidth(double breite) 
-	{
-		this.root.setWidth(breite);
-	}
-	
-	/**
-	 * setzt eine Farbe
-	 * @param color
-	 */
-	@Override
 	public void setColor(Color color)
 	{
 		Shape3DZusatzMethoden.hintergundFarbeSetzen(this.root, color);

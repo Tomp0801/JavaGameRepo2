@@ -18,9 +18,9 @@ public class MenuGameMaker extends MenuBar{
 		MenuItem laden = new MenuItem("laden");
 		laden.setOnAction(e -> RegionMakerV.getInstance().ladeAndereRegion());
 		MenuItem speichern = new MenuItem("speichern");
-		speichern.setOnAction(e -> RegionMakerV.getInstance().speicherRegion());
+		speichern.setOnAction(e -> RegionMakerV.getInstance().fastSave());
 		MenuItem speichernAls = new MenuItem("speichern unter");
-		speichernAls.setOnAction(e -> RegionMakerV.getInstance().speicherUnterNameRegion());
+		speichernAls.setOnAction(e -> RegionMakerV.getInstance().fileChooserSave());
 		datei.getItems().addAll(neu,laden,speichern,speichernAls);
 		//--------------------------Region---------------------------//
 		//Einstellungen zur Region zu ¥m Beipiel die Groeﬂe

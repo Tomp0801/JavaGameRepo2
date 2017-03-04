@@ -10,6 +10,7 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
 import gameMaker.controll.StageCrt;
+import gameMaker.view.dialog.MapSizeDialog;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.geometry.Bounds;
@@ -29,6 +30,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Box;
 import javafx.scene.transform.Rotate;
 import javafx.stage.FileChooser;
+import javafx.stage.Modality;
 import personensicht.model.gameObjekte.GameObjekt;
 import personensicht.model.gameObjekte.GameObjektType;
 import personensicht.model.welt.map.Region;
@@ -50,12 +52,12 @@ public class RegionMakerV
 	/**
 	 * enthaehlt den weg zum Verzeichnis in dem gespeichert wird.
 	 */
-	private String verzeichnisPath = System.getProperty("user.home");
+	private String verzeichnisPath = System.getProperty("user.home"); //TODO 
 	
 	/**
 	 * der String enthaelt den namen der Datei, die verwendet wird um die Region zu speichern
 	 */
-	private String path;
+	private File fileRegion;
 	
 	/**
 	 * die Scene die verwendet wird
@@ -423,7 +425,8 @@ public class RegionMakerV
 	
 	void einstellungRegionGroeße()	
 	{
-		//oeffne ein Wizard um die Große einzustellen
+		MapSizeDialog dialog = new MapSizeDialog(subScene.getWidth(), subScene.getHeight()); //TODO
+        dialog.show();
 	}
 	
 	public static synchronized RegionMakerV getInstance() {
@@ -435,22 +438,27 @@ public class RegionMakerV
 	/**
 	 * speichert die erstellte Region in die Datei, die vorher verwendet wurde
 	 */
-	void speicherRegion(){
+	void fastSave(){
 		//nur moeglich wenn was geandert wurde. Sonst ausgegraut oder nicht anklickbar
 		//speichert unter den verwendeten namen
 		if (durtyBit == true){
-			speichern(new File(path));
+			if (fileRegion != null){
+				speichern(fileRegion);
+			}
+			else{
+				System.out.println("keine Speicherung Möglich. Path fehlt");
+			}
 		}
 	}
 	
 	/**
 	 * oeffnet einen FileChooser, mit der die Region gespeichert werden kann.
 	 */
-	void speicherUnterNameRegion(){
+	void fileChooserSave(){ 
 		FileChooser fileChooser = new FileChooser();
 		fileChooser.setTitle("Speichern");
 	    FileChooser.ExtensionFilter extFilter = 
-                new FileChooser.ExtensionFilter("TEXT files (*.region)" , "(*.region)");
+                new FileChooser.ExtensionFilter("REGION" , "*.region");
 		fileChooser.getExtensionFilters().add(extFilter);
 		fileChooser.setInitialDirectory(
 		            new File(verzeichnisPath) 
@@ -467,12 +475,11 @@ public class RegionMakerV
 			for (int i = 0; this.gameObjekteOnRegion.size() > i ; i++){
 				objektListe.add(gameObjekteOnRegion.get(i).getGameObjekt());
 			}
-			Region region = new Region("defaul",objektListe); //TODO der Name muss noch gewahlt werden
+			Region region = new Region("defaul",objektListe); 
 			region.serializ();
-			
-			
+					
 			verzeichnisPath = file.getParentFile().toPath().toString();
-			path = file.getAbsoluteFile().getPath();
+			fileRegion = file;
 			try 
 			{
 				fos = new FileOutputStream (file.getAbsoluteFile()); 
@@ -502,43 +509,53 @@ public class RegionMakerV
    void ladeAndereRegion(){
 		//Oeffne ein Ordner in dennen Regionen gespeichert sind
 		//nach dem auswahlen einer Datei, nach speichern fragen, falls was geaendert wurde
-		
-		FileInputStream fis = null;
-		try {
-			fis = new FileInputStream ("demo.edit"); //TODO auswaehlen welche Region geladen werden soll.
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
-	    ObjectInputStream ois = null;
-		try {
-			ois = new ObjectInputStream (fis);
-		} catch (IOException e) {
-			e.printStackTrace();
-		} 
-	   try {
-		Region region = (Region) ois.readObject (); //TODO
-		region.deserializ();
-		setGameMakerInStartzustand();
-		initRegionPane();
-		for (int i = 0 ; region.getChildren().size() > i; i++)
-		{
-			AuswahlGameObjekt auswahlGameObjekt = new AuswahlGameObjekt(region.getChildren().get(i));
-			if (GameObjektType.Mauer == region.getChildren().get(i).getTyp()){
-				this.platzierungMauer(auswahlGameObjekt);
+	   	FileChooser fileChooser = new FileChooser();
+		fileChooser.setTitle("Laden");
+	    FileChooser.ExtensionFilter extFilter = 
+               new FileChooser.ExtensionFilter("REGION" , "*.region");
+		fileChooser.getExtensionFilters().add(extFilter);
+		fileChooser.setInitialDirectory(
+		            new File(verzeichnisPath) 
+		        );
+		File file = fileChooser.showOpenDialog(StageCrt.getInstance().getStage());
+	   
+		if (file != null){
+			FileInputStream fis = null;
+			try {
+				fis = new FileInputStream (file); //TODO auswaehlen welche Region geladen werden soll.
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
 			}
-			else{
-				this.setzeGameObjektAufDieRegion(auswahlGameObjekt);
+		    ObjectInputStream ois = null;
+			try {
+				ois = new ObjectInputStream (fis);
+			} catch (IOException e) {
+				e.printStackTrace();
+			} 
+		    try {
+			Region region = (Region) ois.readObject (); 
+			region.deserializ();
+			setGameMakerInStartzustand();
+			initRegionPane();
+			for (int i = 0 ; region.getChildren().size() > i; i++)
+			{
+				AuswahlGameObjekt auswahlGameObjekt = new AuswahlGameObjekt(region.getChildren().get(i));
+				if (GameObjektType.Mauer == region.getChildren().get(i).getTyp()){
+					this.platzierungMauer(auswahlGameObjekt);
+				}
+				else{
+					this.setzeGameObjektAufDieRegion(auswahlGameObjekt);
+				}
 			}
+			
+			initSubScene();
+		    } catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		    } catch (IOException e) {
+			e.printStackTrace();
+		    }
+		    System.out.println("geladen");
 		}
-		
-		
-		initSubScene();
-	} catch (ClassNotFoundException e) {
-		e.printStackTrace();
-	} catch (IOException e) {
-		e.printStackTrace();
-	}
-	   System.out.println("geladen");
 	}
 	
 	/**
@@ -563,6 +580,24 @@ public class RegionMakerV
 	
 	
 	
+	public synchronized SubScene getSubScene() {
+		return subScene;
+	}
+
+	public synchronized void setSubScene(SubScene subScene) {
+		this.subScene = subScene;
+	}
+
+	public synchronized AnchorPane getRegionPane() {
+		return regionPane;
+	}
+
+	public synchronized void setRegionPane(AnchorPane regionPane) {
+		this.regionPane = regionPane;
+	}
+
+
+
 	//-----------------------------------------------------------------------------------------------------------------------------------------
 	private class MauerSetzHandler implements EventHandler<MouseEvent>{		
 		private GameObjekt objekt;

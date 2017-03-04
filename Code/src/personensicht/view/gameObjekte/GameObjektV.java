@@ -16,15 +16,7 @@ public abstract class GameObjektV
 	{
 		this.node = node;
 	}
-	
-	public abstract void setWidth(double value);
-	
-	public abstract void setHeight(double value);
-	
-	public abstract void setDepth(double value);
-	
-	public abstract void setColor(Color color);
-	
+		
 //	/**
 //	 * setzt die Position der Node
 //	 * @param value

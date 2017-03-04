@@ -25,29 +25,4 @@ public class SchrankV extends GameObjektV
 		this.root.layoutXProperty().bindBidirectional(model.getLayoutX());
 		this.root.layoutYProperty().bindBidirectional(model.getLayoutY());
 	}
-	
-	
-	@Override
-	public void setHeight(double hohe) {
-		
-		this.root.setHeight(hohe);
-	}
-
-	@Override
-	public void setWidth(double hohe) {
-		
-		this.root.setWidth(hohe);
-	}
-
-	@Override
-	public void setDepth(double hohe) {
-		this.root.setDepth(hohe);
-	}
-
-
-	@Override
-	public void setColor(Color color)
-	{
-		Shape3DZusatzMethoden.hintergundFarbeSetzen(this.root, color);
-	}
 }

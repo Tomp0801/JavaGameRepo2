@@ -1,7 +1,12 @@
 package personensicht.view.gameObjekte;
 
+import javafx.geometry.Pos;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Box;
+import javafx.scene.transform.Rotate;
 import personensicht.model.gameObjekte.Tisch;
 import personensicht.view.Shape3DZusatzMethoden;
 
@@ -18,8 +23,9 @@ public class TischV extends GameObjektV
 	/**
 	 * die Tischplatte
 	 */
-	private Box root = new Box();
+	private VBox root = new VBox();
 	
+	private Box tischplatte = new Box();
 	/**
 	 * vier Tischbeine
 	 */
@@ -28,51 +34,68 @@ public class TischV extends GameObjektV
 	public TischV(Tisch model)
 	{
 		this.setNode(this.root);
-		this.root.heightProperty().bindBidirectional(model.getHeight());
-		this.root.widthProperty().bindBidirectional(model.getWidth());
-		this.root.depthProperty().bindBidirectional(model.getDepth());
+		this.root.setAlignment(Pos.TOP_LEFT);
+		this.root.setRotationAxis(Rotate.X_AXIS);
+		this.root.setRotate(-90);
+		this.root.prefHeightProperty().bindBidirectional(model.getHeight());
+		this.root.prefWidthProperty().bindBidirectional(model.getWidth());
+		this.root.translateZProperty().bindBidirectional(model.getDepth());
 		this.root.layoutXProperty().bindBidirectional(model.getLayoutX());
 		this.root.layoutYProperty().bindBidirectional(model.getLayoutY());
+		intiTischplatte(model);
+		initTischbeine(model);
 	}
 
-	@Override
-	public void setHeight(double hohe) {
-		this.root.setHeight(hohe);
+	private void intiTischplatte(Tisch model){
+		this.tischplatte.widthProperty().bindBidirectional(model.getTischplatte()[0]);   	//X
+		this.tischplatte.heightProperty().bindBidirectional(model.getTischplatte()[2]);  	//Y
+		this.tischplatte.depthProperty().bindBidirectional(model.getTischplatte()[1]);  	//Z
+		this.tischplatte.layoutXProperty().bindBidirectional(model.getTischplatte()[3]); 	//LayoutX
+		this.tischplatte.layoutYProperty().bindBidirectional(model.getTischplatte()[5]);  	//LayoutY
+		this.tischplatte.translateZProperty().bindBidirectional(model.getTischplatte()[4]); //LayoutZ
+		this.root.getChildren().add(tischplatte);
 	}
+	
+	private void initTischbeine(Tisch model){
+		AnchorPane tischBeinPane = new AnchorPane();
+		tischBeinPane.prefHeightProperty().bindBidirectional(tischplatte.heightProperty());
+		tischBeinPane.prefWidthProperty().bindBidirectional(tischplatte.widthProperty());
+//		tischBeinPane.setRotationAxis(Rotate.X_AXIS);
+//		tischBeinPane.setRotate(-90);
+//		
+		for (int i = 0; tischBeine.length > i ; i++){ 
+			// Property zuordnen
+//			tischBeine[i].setRotationAxis(Rotate.X_AXIS);
+//			tischBeine[i].setRotate(-90);
+			tischBeine[i] = new Box();
+			tischBeine[i].widthProperty().bindBidirectional(model.getTischBeineSize()[i][0]);	   //X
+			tischBeine[i].heightProperty().bindBidirectional(model.getTischBeineSize()[i][2]);	   //Y
+			tischBeine[i].depthProperty().bindBidirectional(model.getTischBeineSize()[i][1]);	   //Z
+			tischBeine[i].layoutXProperty().bindBidirectional(model.getTischBeineSize()[i][3]);	   //LayoutX
+			tischBeine[i].layoutYProperty().bindBidirectional(model.getTischBeineSize()[i][5]);	   //LayoutY
+			tischBeine[i].translateZProperty().bindBidirectional(model.getTischBeineSize()[i][4]); //LayoutZ
+			tischBeinPane.getChildren().add(tischBeine[i]);
+		}	
+//			HBox tischBeineLinks = new HBox();
+//			tischBeineLinks.getChildren().addAll(tischBeine[0], tischBeine[1]);
+//			tischBeineLinks.setRotationAxis(Rotate.Y_AXIS);
+//			tischBeineLinks.setRotate(90);
+//			HBox tischBeineRechts = new HBox();
+//			tischBeineRechts.setRotationAxis(Rotate.Y_AXIS);
+//			tischBeineRechts.setRotate(90);
+//			tischBeineRechts.getChildren().addAll(tischBeine[2], tischBeine[3]);
+//			HBox alleTischBeine = new HBox(tischBeineLinks, tischBeineRechts);
+			
+			this.root.getChildren().add(tischBeinPane);
+	}
+	
+	
 
-	@Override
-	public void setWidth(double hohe) {
-		this.root.setWidth(hohe);
-		
-	}
-
-	@Override
-	public void setDepth(double hohe) {
-		this.root.setDepth(hohe);
-		
-	}
-
-	@Override
-	public void setColor(Color color) 
-	{
-		Shape3DZusatzMethoden.hintergundFarbeSetzen(this.root, color);
-		
-	}
-
-	public synchronized Box getTischplatte() {
-		return root;
-	}
 
 	public synchronized Box[] getTischBeine() {
 		return tischBeine;
 	}
-
-	public synchronized void setTischplatte(Box tischplatte) {
-		this.root = tischplatte;
-	}
-
 	public synchronized void setTischBeine(Box[] tischBeine) {
 		this.tischBeine = tischBeine;
 	}
-
 }
