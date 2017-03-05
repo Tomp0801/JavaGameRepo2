@@ -2,9 +2,6 @@ package karte.model;
 
 import java.util.HashMap;
 
-import javafx.event.EventHandler;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.paint.Color;
 import karte.view.FeldGrafics;
 import ressource.model.Material;
 
@@ -14,7 +11,7 @@ import ressource.model.Material;
  * @author Thomas
  *
  */
-public class Feld implements EventHandler<MouseEvent> {
+public class Feld implements PlaceableOnThis, Versorger {
 
 	/**
 	 * Objekt, das auf diesem Feld steht
@@ -58,15 +55,34 @@ public class Feld implements EventHandler<MouseEvent> {
 	 * @param y y-Position des Felds
 	 * @throws IllegalArgumentException, wenn die übergebene Karte null ist, oder dessen Grafik-Objekt null ist
 	 */
-	public Feld(Map parent, int x, int y) throws IllegalArgumentException {
+	public Feld(Map parent, int x, int y, Material grundMaterial) throws IllegalArgumentException {
 		if (parent == null) throw new IllegalArgumentException("Das übergebene Map-Objekt darf nicht null sein");
 		if (parent.getGrafics() == null) throw new IllegalArgumentException("Das übergebene Map-Objekt muss ein gültiges Grafik-Objekt besitzen");
 		
 		this.karte = parent;
 		this.x = x;
 		this.y = y;
+		this.boden = grundMaterial;
+		
+		if (grundMaterial.isFest()) {
+			generateBodenschaetze();
+		}
 		
 		grafics = new FeldGrafics(this);
+	}
+	
+	private void generateBodenschaetze() {
+		bodenschatzVorkommen = new HashMap<Material, Float>();
+		bodenschatzVorkommen.put(boden, 100f);		//Bodenmaterial ist immer verfügbar
+		
+		HashMap<Material, Float> moeglichkeiten = karte.getBodenschaetze();
+		
+		//je nach Wahrscheinlichkeit, andere Bodenschätze hinzufügen
+		for (Material m : moeglichkeiten.keySet()) {
+			if (moeglichkeiten.get(m) > karte.getPrng().random(0, 100)) {
+				bodenschatzVorkommen.put(m, m.getBodenVorkommen());
+			}
+		}
 	}
 	
 	/**
@@ -127,19 +143,6 @@ public class Feld implements EventHandler<MouseEvent> {
 	public Material getBodenMaterial() {
 		return boden;
 	}
-
-	/**
-	 * Setzt das Bodenmaterial für dieses Feld
-	 * @param boden Material für den Boden
-	 */
-	public void setBodenMaterial(Material boden) {
-		this.boden = boden;
-		if (boden == null) {
-			grafics.setBoden(Color.BLACK);		
-		} else {
-			grafics.setBoden(boden.getColor());
-		}
-	}
 	
 	/**
 	 * Gibt das Nachbarfeld zurück
@@ -177,16 +180,26 @@ public class Feld implements EventHandler<MouseEvent> {
 		return this.object;
 	}
 	
+	public HashMap<Material, Float> getBodenschatzVorkommen() {
+		return bodenschatzVorkommen;
+	}
+
 	@Override
-	public void handle(MouseEvent event) {
-		//TODO set this Feld als Scene
-		
-		if (event.getEventType() == MouseEvent.MOUSE_CLICKED) {
-			System.out.println("Feld " + x + "|" + y + " angeklickt.");
-			System.out.println("Bodenart: " + boden.getName());
-			if (this.object != null) {
-				System.out.println("Hier steht: " + object.getName());
-			}
+	public float getMaterialMenge(Material material) {
+		if (bodenschatzVorkommen.get(material) != null) {
+			return bodenschatzVorkommen.get(material);
+		} else {
+			return 0;	
 		}
 	}
+
+	@Override
+	public void setMaterialMenge(Material material, float menge) {
+		if (bodenschatzVorkommen.get(material) != null) {
+			bodenschatzVorkommen.replace(material, menge);
+		}
+	}
+
+
+
 }

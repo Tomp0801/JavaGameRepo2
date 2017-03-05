@@ -3,6 +3,7 @@ package karte.model;
 import javafx.geometry.Point2D;
 import javafx.scene.Group;
 import karte.view.MineGrafics;
+import ressource.model.Material;
 /**
  * Ein Gebäude, das Rohstoffe aus Feldern einer Karte abbauen kann
  * Vorraussetzung für das Laufen der Mine sind Arbeitskräfte
@@ -10,35 +11,43 @@ import karte.view.MineGrafics;
  * @author Thomas
  *
  */
-public class Mine extends RunningObject implements Placeable {
+public class Mine extends RunningObject implements Placeable, Verbraucher {
 	
 	private Feld feld;
 	
 	private MineGrafics grafics;
 	
-	/**
-	 * die Felder der Karte, auf die diese Mine zugreifen kann
-	 * TODO  Nutzen?
-	 */
-	protected Area sources;
-	
 	private int benoetigteArbeiter;
 	
 	private int arbeiter;
 	
+	private Material minbaresMaterial;
+
+	private float maxStauraum;
+	
+	private float stauraum;
+	
+	private float materialProSekunde;
+	
 	/**
 	 * Erstellt eine Mine
 	 */
-	public Mine() {
-		loadGrafics();
+	public Mine(Material minbaresMaterial) {
+		this.minbaresMaterial = minbaresMaterial;
+		maxStauraum = 10f;
+		stauraum = 0f;
 		benoetigteArbeiter = 10;
 		arbeiter = 0;
+		materialProSekunde = 1f;
+		
+		loadGrafics();
 	}
 	
 	private boolean canRun() {
-		if (arbeiter == benoetigteArbeiter) {
+		if (stauraum < maxStauraum) {
 			return true;
 		} else {
+			getPassedTime();		//Zeit updaten		TODO
 			return false;
 		}
 	}
@@ -58,9 +67,13 @@ public class Mine extends RunningObject implements Placeable {
 				
 		//check Umgebung nach Arbeitskräften
 		if (canRun()) {
-			System.out.println("Auf dem Feld wurde für die Zeit von " + time + " ms Rohstoffe gemint.");
+			float gemintesMaterial = time / 1000f * materialProSekunde;
+			gemintesMaterial = feld.requestMaterial(this, minbaresMaterial, gemintesMaterial);
+			System.out.println("Die Mine hat in " + time + " ms " + gemintesMaterial + " " + this.minbaresMaterial.getName() + " gemint.");
+			System.out.println("Im Stauraum der Mine befinden sich " + stauraum + " " + minbaresMaterial.getName());
+			System.out.println(minbaresMaterial.getName() + " im Feld: " + this.feld.getMaterialMenge(minbaresMaterial));
 		} else {
-			System.out.println("Nicht genügend Arbeiter, um die Mine zu betreiben");
+			System.out.println("Mine ist nicht aktiv");
 		}
 		
 	}
@@ -73,7 +86,7 @@ public class Mine extends RunningObject implements Placeable {
 
 	@Override
 	public String getName() {
-		return "Mine";
+		return minbaresMaterial.getName() + "mine";
 	}
 
 	@Override
@@ -98,4 +111,38 @@ public class Mine extends RunningObject implements Placeable {
 		feld = null;
 	}
 
+	@Override
+	public float addMaterial(Material material, float menge) {
+		if (material == this.minbaresMaterial) {
+			if (stauraum + menge > maxStauraum) {
+				menge = maxStauraum - stauraum;
+			}
+			stauraum += menge;
+		}
+		return menge;
+	}
+	
+	public Material getMinbaresMaterial() {
+		return minbaresMaterial;
+	}
+	
+	public int getBenoetigteArbeiter() {
+		return benoetigteArbeiter;
+	}
+
+	public int getArbeiter() {
+		return arbeiter;
+	}
+
+	public float getMaxStauraum() {
+		return maxStauraum;
+	}
+
+	public float getStauraum() {
+		return stauraum;
+	}
+
+	public float getMaterialProSekunde() {
+		return materialProSekunde;
+	}
 }

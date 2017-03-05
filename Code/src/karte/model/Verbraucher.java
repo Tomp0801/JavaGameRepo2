@@ -1,5 +1,10 @@
 package karte.model;
 
+import ressource.model.Material;
+
 public interface Verbraucher {
-	//TODO
+	
+	public float addMaterial(Material material, float menge);
+	
+	
 }

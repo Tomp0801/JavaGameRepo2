@@ -1,22 +1,28 @@
 package karte.view;
 
 import javafx.beans.property.IntegerProperty;
+import javafx.event.EventHandler;
+import javafx.scene.Group;
 import javafx.scene.Node;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import karte.model.Feld;
+import karte.model.RunningObject;
+import ressource.model.Material;
 
 /**
  * Klasse für Grafische Darstellung eines Feldes
- * die Eigenschaft boden legt einen Hintergrund fest, darauf wird das Objekt dargestellt, das auf
+ * die Eigenschaft bodenNode legt einen Hintergrund fest, darauf wird das Objekt dargestellt, das auf
  * diesem Feld steht
  * Das Feld hat ein BorderLayout
  * 
  * @author Thomas
  *
  */
-public class FeldGrafics extends StackPane {
+public class FeldGrafics extends StackPane implements EventHandler<MouseEvent> {
 
 	/**
 	 * Daten-Objekt, das zu diesem View-Objekt gehört
@@ -26,7 +32,9 @@ public class FeldGrafics extends StackPane {
 	/**
 	 * Boden Fläche. Stellt eine Farbe dar, wird an unterste Stelle platziert
 	 */
-	private Rectangle boden;
+	private Rectangle bodenNode;
+	
+	private Group bodenschaetzeNode;
 		
 	/**
 	 * Erstellt die Grafische Darstellung eines Feldes
@@ -35,13 +43,17 @@ public class FeldGrafics extends StackPane {
 	public FeldGrafics(Feld feld) {
 		model = feld;
 		
-		boden = new Rectangle();
+		bodenNode = new Rectangle();
+		bodenNode.setFill(model.getBodenMaterial().getColor());
+		bodenschaetzeNode = new Group();
 		
-		this.setOnMouseClicked(feld);					
-		this.getChildren().add(boden);
+		this.setOnMouseClicked(this);
+		this.getChildren().add(bodenNode);
+		
+		this.setBodenschaetzeNode();
+		this.getChildren().add(bodenschaetzeNode);
 		
 		this.bindProperties();
-		//model.karte.grafics ist zu diesem Zeitpunkt null
 		
 		feld.getKarte().getGrafics().getChildren().add(this);
 	}
@@ -54,8 +66,10 @@ public class FeldGrafics extends StackPane {
 		IntegerProperty width = model.getKarte().getGrafics().feldWidthProperty();
 		IntegerProperty height = model.getKarte().getGrafics().feldHeightProperty(); 
 
-		boden.widthProperty().bind(width);
-		boden.heightProperty().bind(height);
+		bodenNode.widthProperty().bind(width);
+		bodenNode.heightProperty().bind(height);
+	//	bodenschaetzeNode.widthProperty().bind(width);
+	//	bodenschaetzeNode.heightProperty().bind(height);
 		
 		this.layoutXProperty().bind(width.multiply(model.getX()));
 		this.layoutYProperty().bind(height.multiply(model.getY()));
@@ -67,6 +81,40 @@ public class FeldGrafics extends StackPane {
 	 */
 	public void addChild(Node child) {
 		this.getChildren().add(child);
+	}
+	
+	public void setBodenschaetzeNode() {
+		ImagePattern pattern;
+		Rectangle dots;
+		if (model.getBodenschatzVorkommen() != null) {
+			for (Material m : model.getBodenschatzVorkommen().keySet()) {
+				pattern = new ImagePattern(m.getGrafics().getDotImage());
+				dots = new Rectangle();
+				dots.widthProperty().bind(this.widthProperty());
+				dots.heightProperty().bind(this.heightProperty());
+				dots.setFill(pattern);
+				bodenschaetzeNode.getChildren().add(dots);
+			}
+		}
+		
+	}
+	
+	@Override
+	public void handle(MouseEvent event) {
+		//TODO set this Feld als Scene
+		
+		if (event.getEventType() == MouseEvent.MOUSE_CLICKED) {
+			System.out.println("Feld " + model.getX() + "|" + model.getY() + " angeklickt.");
+			System.out.println("Bodenart: " + model.getBodenMaterial().getName());
+			if (model.getObject() != null) {
+				System.out.println("Hier steht: " + model.getObject().getName());
+				
+				if (model.getObject() instanceof RunningObject) {
+					RunningObject obj = (RunningObject) model.getObject();
+					obj.run();
+				}
+			}
+		}
 	}
 	
 	/**
@@ -81,15 +129,8 @@ public class FeldGrafics extends StackPane {
 	 * Gibt die Farbe des Bodens dieses Feldes zurück
 	 * @return Farbe des Bodens
 	 */
-	public Color getBoden() {
-		return (Color) boden.getFill();
+	public Color getBodenColor() {
+		return (Color) bodenNode.getFill();
 	}
 	
-	/**
-	 * Setzt die Farbe des Bodens dieses Feldes
-	 * @param boden Farbe des Bodens
-	 */
-	public void setBoden(Color boden) {
-		this.boden.setFill(boden);;
-	}
 }

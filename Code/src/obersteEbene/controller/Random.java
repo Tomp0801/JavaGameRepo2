@@ -111,6 +111,20 @@ public class Random {
 	}
 	
 	/**
+	 * Gibt einen zufälligen bool-Wert zurück, 
+	 * wobei die Chance für ein true der angegebenen Prozentzahl entspricht
+	 * @return true mit der Wahrscheinlichkeit der angegebenen Prozentzahl, oder false
+	 */
+	public boolean randomBoolean(float prozent) {
+		int random = random(0, 100);
+		if (random <= prozent) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	/**
 	 * Gibt den benutzten seed der PRNG wieder
 	 * @return den Seed, der zum initialisieren benutzt wurde
 	 */

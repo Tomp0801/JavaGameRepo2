@@ -1,12 +1,9 @@
 package ressource.model;
 
 import javafx.scene.paint.Color;
-import java.io.Serializable;
+import ressource.view.MaterialGrafics;
 
-import javafx.geometry.Insets;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.CornerRadii;
+import java.io.Serializable;
 
 /**
  * Grundklasse für alle Stoffe Materialen, etc.
@@ -40,7 +37,11 @@ public class Material implements Serializable {
 	 */
 	private float gewicht;
 	
-	private Background background; 
+	private MaterialGrafics grafics;
+	
+	private float bodenVorkommen;
+	
+	private Aggregat aggregatzustand;
 	
 	/**
 	 * Kosntruktor mit javafx Color, da diese die opacity mit enthält
@@ -52,8 +53,25 @@ public class Material implements Serializable {
 	{
 		this.name = name;
 		this.color = color;
+		this.bodenVorkommen = 0f;
 		
-		background = new Background(new BackgroundFill(color, CornerRadii.EMPTY, Insets.EMPTY));
+		this.grafics = new MaterialGrafics(this);
+	}
+	
+	/**
+	 * Kosntruktor mit javafx Color, da diese die opacity mit enthält
+	 * 
+	 * @param name des Materials
+	 * @param color (javafx.scene.paint)
+	 * @param bodenVorkommen Menge, mit der dieses Material im Boden Vorkommen kann
+	 */
+	public Material(String name, Color color, float bodenVorkommen) 
+	{
+		this.name = name;
+		this.color = color;
+		this.bodenVorkommen = bodenVorkommen;
+		
+		this.grafics = new MaterialGrafics(this);
 	}
 	
 	/**
@@ -83,14 +101,6 @@ public class Material implements Serializable {
 	protected void setColor(Color color) {
 		this.color = color;
 	}
-	
-	/**
-	 * Gibt einen Hintergrund zurück mit der Farbe dieses Materials
-	 * @return
-	 */
-	public Background asBackground() {
-		return background;
-	}
 
 	/**
 	 * relevant für den Transport von Ressourcen
@@ -107,9 +117,52 @@ public class Material implements Serializable {
 		this.gewicht = gewicht;
 	}
 	
+	public Aggregat getAggregatzustand() {
+		return aggregatzustand;
+	}
 	
+	public boolean isFluessig() {
+		if (aggregatzustand == Aggregat.FLUESSIG) return true; 
+		return false;
+	}
 	
+	public boolean isFest() {
+		if (aggregatzustand == Aggregat.FEST) return true; 
+		return false;
+	}
+	
+	public boolean isGas() {
+		if (aggregatzustand == Aggregat.GAS) return true; 
+		return false;
+	}
+
+	protected void setAggregatzustand(Aggregat aggregatzustand) {
+		this.aggregatzustand = aggregatzustand;
+	}
+
+	public float getBodenVorkommen() {
+		return bodenVorkommen;
+	}
+	
+	/**
+	 * Gibt die Grafikkomponente dieses Materials zurück
+	 * diese enthält unterschiedliche Grafiken für dieses Material
+	 * @return MaterialGrafics von diesem Material
+	 */
+	public MaterialGrafics getGrafics() {
+		return grafics;
+	}
+
+
 	public static Material WASSER = new Material("Wasser", javafx.scene.paint.Color.BLUE);
 	public static Material ERDE = new Material("Erde", javafx.scene.paint.Color.PERU);
-	public static Material STEIN = new Material("Stein", javafx.scene.paint.Color.DARKGRAY);
+	public static Material STEIN = new Material("Stein", javafx.scene.paint.Color.DARKGRAY, 100f);
+	public static Material GOLD = new Material("Gold", javafx.scene.paint.Color.GOLD, 15f);
+	
+	static {
+		WASSER.setAggregatzustand(Aggregat.FLUESSIG);
+		ERDE.setAggregatzustand(Aggregat.FEST);
+		STEIN.setAggregatzustand(Aggregat.FEST);
+		GOLD.setAggregatzustand(Aggregat.FEST);
+	}
 }
