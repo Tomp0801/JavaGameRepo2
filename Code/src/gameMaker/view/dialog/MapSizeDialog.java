@@ -1,6 +1,7 @@
 package gameMaker.view.dialog;
 
-import gameMaker.view.RegionMakerV;
+import gameMaker.controll.RegionMakerCrt;
+import gameMaker.view.RegionMakerScene;
 import gameMaker.view.dialog.komponenten.BestaetigenAbbrechen;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -63,7 +64,7 @@ public class MapSizeDialog extends Dialog {
 	 * @param string
 	 * @return
 	 */
-	private int ueberpruefeEingabe(String string){
+	private static int ueberpruefeEingabe(String string){
 		int i = -1;
 		try{
 			i = Integer.valueOf(string);
@@ -101,9 +102,7 @@ public class MapSizeDialog extends Dialog {
 		}
 		
 		if (valueY != -1 && valueX != -1){
-			RegionMakerV.getInstance().getRegionPane().setPrefSize(valueX, valueY);
-			RegionMakerV.getInstance().getSubScene().setHeight(valueY);
-			RegionMakerV.getInstance().getSubScene().setWidth(valueX);
+			RegionMakerCrt.getInstance().getRegionMakerScene().getRegionPane().setPrefSize(valueX, valueY);
 			this.close();
 		}
 		else{

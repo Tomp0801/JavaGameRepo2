@@ -19,7 +19,7 @@ public class Tisch extends GameObjekt
 	/**
 	 * groeße der Tischbeine (Bein 1, Bein 2, Bein 3, Bein 4)(x,y,z,layoutX,layoutY, layoutZ)
 	 */
-	private SimpleIntegerProperty[][] tischBeineSize = new SimpleIntegerProperty[4][6];
+	private transient SimpleIntegerProperty[][] tischBeineSize = new SimpleIntegerProperty[4][6];
 	
 	/**
 	 * Size der Tischplatte zum laden und spechern (x,y,z,layoutX, layoutY, layoutZ)
@@ -29,7 +29,7 @@ public class Tisch extends GameObjekt
 	/**
 	 * tischplatten size (x,y,z,layoutX, layoutY, layoutZ)
 	 */
-	private SimpleIntegerProperty[] tischplatte = new SimpleIntegerProperty[6];
+	private transient SimpleIntegerProperty[] tischplatte = new SimpleIntegerProperty[6];
 	
 	
 	public Tisch() {
@@ -68,10 +68,10 @@ public class Tisch extends GameObjekt
 	
 	@Override
 	public void refleshAktionsListe() {
-		// TODO Auto-generated method stub
-		
+		// TODO Auto-generated method stub	
 	}
 
+	
 	@Override
 	public Node ladeNodeObjekt() {
 		this.setNodeObjekt(new TischV(this)); 
@@ -143,6 +143,9 @@ public class Tisch extends GameObjekt
 
 	@Override
 	public void deserializ() {
+		this.tischBeineSize = new SimpleIntegerProperty[4][6];
+		this.tischplatte = new SimpleIntegerProperty[6];
+		initSimpleProperty();
 		for(int i = 0; tischBeineSizeSerializ.length >i ;i++){
 			for(int r = 0; tischBeineSizeSerializ[i].length > r; r++){
 				tischBeineSize[i][r].setValue(tischBeineSizeSerializ[i][r]);

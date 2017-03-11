@@ -48,7 +48,7 @@ public class Bett extends GameObjekt
 	public void setColor(Color color) 
 	{
 		this.color = color; 
-		if (this.getNodeObjekt() != null)
+		if (this.ladeNodeObjekt() != null)
 		{
 			BettV bettV = (BettV) this.getNodeObjekt();
 			bettV.setColor(color);

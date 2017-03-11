@@ -31,6 +31,10 @@ public class Mensch extends GameObjekt
 		initAktionsListe(null);
 	}
 	
+	public Mensch(){
+		super(GameObjektType.Mensch);
+	}
+	
 	/**
 	 * 
 	 * @param name
@@ -53,7 +57,6 @@ public class Mensch extends GameObjekt
 	public void refleshAktionsListe() {	
 	}
 
-	@Override
 	public Node ladeNodeObjekt() {
 		MenschV menschV = new MenschV();
 		return menschV.getRoot();

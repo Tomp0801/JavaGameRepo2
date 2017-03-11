@@ -1,5 +1,6 @@
 package gameMaker.view;
 
+import gameMaker.controll.RegionMakerCrt;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
@@ -14,19 +15,19 @@ public class MenuGameMaker extends MenuBar{
 		//------------------Datei-------------------------------------//
 		Menu datei = new Menu("Datei");
 		MenuItem neu = new MenuItem("neu");
-		neu.setOnAction(e -> RegionMakerV.getInstance().erstelleNeueRegion());
+		neu.setOnAction(e -> RegionMakerCrt.getInstance().erstelleNeueRegion());
 		MenuItem laden = new MenuItem("laden");
-		laden.setOnAction(e -> RegionMakerV.getInstance().ladeAndereRegion());
+		laden.setOnAction(e -> RegionMakerCrt.getInstance().ladeRegion());
 		MenuItem speichern = new MenuItem("speichern");
-		speichern.setOnAction(e -> RegionMakerV.getInstance().fastSave());
+		speichern.setOnAction(e -> RegionMakerCrt.getInstance().fastSave());
 		MenuItem speichernAls = new MenuItem("speichern unter");
-		speichernAls.setOnAction(e -> RegionMakerV.getInstance().fileChooserSave());
+		speichernAls.setOnAction(e -> RegionMakerCrt.getInstance().fileChooserSave());
 		datei.getItems().addAll(neu,laden,speichern,speichernAls);
 		//--------------------------Region---------------------------//
 		//Einstellungen zur Region zu ´m Beipiel die Groeße
 		Menu regionEinstellungMenu = new Menu("Region");
 		MenuItem size = new MenuItem("Größe");
-		size.setOnAction(e -> RegionMakerV.getInstance().einstellungRegionGroeße());
+		size.setOnAction(e -> RegionMakerCrt.getInstance().einstellungRegionSize());
 		regionEinstellungMenu.getItems().add(size);
 		//------------------Hilfe------------------------------------//
 		Menu hilfe = new Menu("Hilfe");

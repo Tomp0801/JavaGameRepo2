@@ -6,6 +6,7 @@ import ioHandler.SerializableNew;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.Node;
 import personensicht.model.aktionen.Aktion;
+import personensicht.model.gameObjekte.lebewesen.*;
 import personensicht.view.gameObjekte.GameObjektV;
 
 
@@ -239,6 +240,37 @@ public abstract class GameObjekt implements SerializableNew
 			return GameObjektType.Tisch; 
 		case "Mauer":
 			return GameObjektType.Mauer; 
+		default: 
+			System.err.println("Fehler der Typ: "+type+" gib es nicht in Der Klasse RegionMakerView, Methode GameObjekteType");
+			return null;
+		}
+	}
+	
+	/**
+	 * gibt den Typ eines GamObjektes (z.B. ein Moebelstueck) zurueck, passend zu dem String der Uebergeben wird. 
+	 * @param type Beispiel: fuer dien Type Schrank, muss der String "Schrank" heiﬂen
+	 * @return den Typen
+	 */
+	public static GameObjekt getANewGameObjektOfType(GameObjektType type)
+	{		
+		switch (type)
+		{
+		case Schrank:
+			return new Schrank();
+		case Bett:
+			return new Bett();
+		case Mensch:
+			return new Mensch();
+		case Tuer:
+			return new Tuer();
+		case Stuhl:
+			return new Stuhl();
+		case Computer:
+			return new Computer(); 
+		case Tisch:
+			return new Tisch(); 
+		case Mauer:
+			return new Mauer(); 
 		default: 
 			System.err.println("Fehler der Typ: "+type+" gib es nicht in Der Klasse RegionMakerView, Methode GameObjekteType");
 			return null;

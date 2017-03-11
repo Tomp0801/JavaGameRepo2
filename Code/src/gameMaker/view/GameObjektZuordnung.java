@@ -8,6 +8,7 @@ import gameMaker.view.einstellungGameObjekte.EinstellungSchrank;
 import gameMaker.view.einstellungGameObjekte.EinstellungStuhl;
 import gameMaker.view.einstellungGameObjekte.EinstellungTisch;
 import gameMaker.view.einstellungGameObjekte.EinstellungTuer;
+import ioHandler.SerializableNew;
 import javafx.scene.Node;
 import personensicht.model.gameObjekte.Bett;
 import personensicht.model.gameObjekte.GameObjekt;
@@ -20,11 +21,15 @@ import personensicht.model.gameObjekte.Tuer;
 import personensicht.model.gameObjekte.lebewesen.Mensch;
 
 /**
- * Ermoeglicht das Auswaehlen von GameObjekten. Diese Funktion wird im GameMaker auf der linken Seite gezeigt
+ * Um Nods auf der Region den entsprechenden GameObjekten zuzuordnen, wird diese Klasse verwendet. 
  * @author Dennis
  */
-public class AuswahlGameObjekt {
+public class GameObjektZuordnung{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Node node; 
 	/**
 	 * Rechte Anzeige, mit der Einstellungen am GameObjet unternommen werden koennen
@@ -37,7 +42,7 @@ public class AuswahlGameObjekt {
 	 * 
 	 * @param type
 	 */
-	AuswahlGameObjekt(GameObjektType type) //TODO
+	GameObjektZuordnung(GameObjektType type) //TODO
 	{
 		this.TYPE = type; 
 		initEinstellungGameObjekt();
@@ -48,7 +53,7 @@ public class AuswahlGameObjekt {
 	 * ist das GameObjekt bereits beannt, dann muss dieser Konstuktor verwendet werden
 	 * @param objekt
 	 */
-	AuswahlGameObjekt(GameObjekt objekt) 
+	GameObjektZuordnung(GameObjekt objekt) 
 	{
 		this.TYPE = objekt.getTyp();
 		this.node = objekt.ladeNodeObjekt();
@@ -163,6 +168,6 @@ public class AuswahlGameObjekt {
 
 	public synchronized GameObjekt getGameObjekt() {
 		return gameObjekt;
-	}	
+	}
 }		
 
