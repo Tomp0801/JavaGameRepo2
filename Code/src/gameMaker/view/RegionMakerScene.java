@@ -1,5 +1,6 @@
 package gameMaker.view;
 
+import gameMaker.controll.EventCrt;
 import gameMaker.controll.RegionMakerCrt;
 import gameMaker.model.RegionMaker;
 import gameMaker.view.einstellungGameObjekte.EinstellungGameObjekt;
@@ -68,7 +69,18 @@ public class RegionMakerScene
 	
 	public RegionMakerScene(RegionMaker regionMaker){
 		this();
-		RegionMakerCrt.getInstance().setGameObjekt(regionMaker.getRegion().getChildren());
+		this.regionMaker = regionMaker;
+		System.out.println(regionMaker.getRegion().getChildren().size());
+//		RegionMakerCrt.getInstance().setGameObjekt(regionMaker.getRegion().getChildren());
+//		System.out.println("For der ForSchleife "+this.regionMaker.getRegion().getChildren().size());
+		
+		for (int i = 0; this.regionMaker.getRegion().getChildren().size() > i;i++){
+//			System.out.println("Nach der ForSchleife "+this.regionMaker.getRegion().getChildren().size());
+			regionMaker.getRegion().getChildren().get(i).ladeNodeObjekt();
+			this.regionPane.getChildren().add(regionMaker.getRegion().getChildren().get(i).getNodeObjekt().getNode());
+			System.out.println();
+			EventCrt.getInstance().setNodePassendenEventHandler(regionMaker.getRegion().getChildren().get(i));
+		}
 	}
 	
 	private void initBoarderPane(){

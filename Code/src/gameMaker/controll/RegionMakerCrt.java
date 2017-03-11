@@ -76,6 +76,7 @@ public class RegionMakerCrt {
 		regionMaker = new RegionMaker();
 		startGameMakerCrt();
 	}
+		
 	
 	/**
 	 * lade eine Region mit hilfe eines FileChoosers
@@ -118,7 +119,7 @@ public class RegionMakerCrt {
 			e.printStackTrace();
 		    }
 		    System.out.println("geladen");
-		    erstelleNeueRegion();
+		    startGameMakerCrt();
 		}
 	}
 
@@ -214,15 +215,16 @@ public class RegionMakerCrt {
 		//fuegt der Region dieses neue Objekt hinzu.
 		regionMaker.getRegion().getChildren().add(objekt);
 		//fuegt der View dieses neue Objekt hinzu.
+		System.out.println("hier om Controller");
 		objekt.ladeNodeObjekt();
 		regionMakerScene.getRegionPane().getChildren().add(objekt.getNodeObjekt().getNode());
 		//sucht die passende EventHandler und setzt diese zu dem Objekt
 		EventCrt.getInstance().setNodePassendenEventHandler(objekt);
 	}
 	
-	public void setGameObjekt(ArrayList<GameObjekt> arrayList) {
-		for (int i = 0; arrayList.size() > i; i++){
-			setGameObjekt(arrayList.get(i));
-		}		
-	}
+//	public void setGameObjekt(ArrayList<GameObjekt> arrayList) {
+//		for (int i = 0; arrayList.size() > i; i++){
+//			setGameObjekt(arrayList.get(i));
+//		}		
+//	}
 }
