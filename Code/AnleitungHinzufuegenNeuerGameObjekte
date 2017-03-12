@@ -3,6 +3,54 @@ Die Anleitung beschreibt die Schritte die unternommen werden muessen, wenn ein N
 1 Im Paket Personensicht
 	1.1 model
 		1.1.1 muss von GameObjekt erben
+		
+		Vorlage:
+		
+		private int ... speicherbare Groeﬂe der Node
+		//Groeﬂen der Node
+		private SimmpleIntegerProperty ...
+		
+		public Computer() 
+			{
+				super(GameObjektType.Computer);
+			}
+		
+			@Override
+			public void refleshAktionsListe() {
+				// TODO Auto-generated method stub
+				
+			}
+		
+			@Override
+			public Node ladeNodeObjekt() {
+				// TODO Auto-generated method stub
+				return null;
+			}
+		
+			@Override
+			public void serializ() {
+				// TODO Auto-generated method stub
+				
+			}
+		
+			@Override
+			public void deserializ() {
+				// TODO Auto-generated method stub	
+			}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		1.1.2 Klasse GameObjekt: Methode getTypeOfGameObjekt(String type) muss angepasst werden. 
 			  Der passende String zum typen muss vorkommen
 	1.2 view
