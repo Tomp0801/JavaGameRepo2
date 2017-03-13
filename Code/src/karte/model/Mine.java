@@ -1,6 +1,5 @@
 package karte.model;
 
-import javafx.geometry.Point2D;
 import javafx.scene.Group;
 import karte.view.MineGrafics;
 import ressource.model.Material;
@@ -90,7 +89,7 @@ public class Mine extends RunningObject implements Placeable, Verbraucher {
 	}
 
 	@Override
-	public Feld getFeld() {
+	public Feld getGrund() {
 		return feld;
 	}
 
@@ -98,11 +97,6 @@ public class Mine extends RunningObject implements Placeable, Verbraucher {
 	public void place(Feld feld) {
 		feld.place(this);
 		this.feld = feld;
-	}
-
-	@Override
-	public void place(Map parent, Point2D position) throws ArrayIndexOutOfBoundsException {
-		place(parent.getFeld(position));
 	}
 
 	@Override

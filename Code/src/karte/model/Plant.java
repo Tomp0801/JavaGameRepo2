@@ -36,7 +36,7 @@ public class Plant extends RunningObject implements Placeable  {
 	}
 
 	@Override
-	public Feld getFeld() {
+	public Feld getGrund() {
 		// TODO Auto-generated method stub
 		return null;
 	}

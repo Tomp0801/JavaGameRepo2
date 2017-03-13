@@ -55,7 +55,7 @@ public class Wohnhaus implements Placeable {
 	}
 
 	@Override
-	public Feld getFeld() {
+	public Feld getGrund() {
 		return feld;
 	}
 

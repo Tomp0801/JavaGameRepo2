@@ -24,7 +24,7 @@ public class Test extends Application {
 	public void start(Stage primaryStage) throws Exception {
 		
 		
-		Random prng = new Random("twhrb4fggsgh");
+		Random prng = new Random("test");
 		
 		Generator gen = new Generator(prng, Material.ERDE);
 		gen.addMaterial(Material.WASSER, 10);

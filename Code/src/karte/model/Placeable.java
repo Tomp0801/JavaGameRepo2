@@ -14,7 +14,7 @@ public interface Placeable {
 	 * Gibt das Feld des Objekts wieder
 	 * @return das Feld, auf dem das Objekt steht
 	 */
-	public Feld getFeld();
+	public PlaceableOnThis getGrund();
 	
 	/**
 	 * Platziert das Objekt auf dem angegebenen Feld
@@ -27,7 +27,9 @@ public interface Placeable {
 	 * @param parent Karte, auf der das Objekt platziert werden soll 
 	 * @param position Position, an der das Objekt platziert werden soll
 	 */
-	public void place(Map parent, Point2D position) throws IllegalArgumentException;
+	public default void place(Map parent, Point2D position) throws IllegalArgumentException {
+		place(parent.getFeld(position));
+	}
 	
 	/**
 	 * Platziert das Objekt auf der Angegebenen Karte an der angegebenen Position
@@ -36,13 +38,22 @@ public interface Placeable {
 	 * @param y y-Wert der Position des Objekts
 	 */
 	public default void place(Map parent, int x, int y) throws IllegalArgumentException {
-		place(parent, new Point2D(x, y));
+		place(parent.getFeld(x, y));
 	}
 	
 	/**
 	 * Entfernt das Objekt von dem Feld, auf dem es steht
 	 */
 	public void unplace();
+	
+	/**
+	 * Gibt an, ob das Objekt platziert ist
+	 * 
+	 * @return true, wenn Objekt platziert
+	 */
+	public default boolean isPlaced() {
+		return (getGrund() != null);
+	}
 	
 	/**
 	 * Gibt die Grafik des Objekts als Node wieder
