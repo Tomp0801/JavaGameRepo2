@@ -1,10 +1,9 @@
 package gameMaker.controll;
 
-import gameMaker.view.RegionMakerView;
+
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import personensicht.view.SpielerfigurErstellenScene;
 
 /**
  * setzt die Scene und bietet eine Methode um diese weder zu wechseln
@@ -34,7 +33,8 @@ public class StageCrt extends Application
 	{
 		StageCrt.stageController = this;
 		this.stage = primaryStage; 
-		this.setScene(new RegionMakerView().getScene());
+//		this.setScene(RegionMakerScene.getInstance().getScene());
+		RegionMakerCrt.getInstance().startGameMakerCrt();
 		primaryStage.show();
 	}
 	
@@ -47,5 +47,9 @@ public class StageCrt extends Application
 	public static StageCrt getInstance()
 	{
 		return stageController;
+	}
+
+	public synchronized Stage getStage() {
+		return stage;
 	}
 }

@@ -47,8 +47,14 @@ public class Trinken extends Item
 	}
 
 	@Override
-	public Node ladeNodeObjekt(int localX, int localY) {
+	public void serializ() {
 		// TODO Auto-generated method stub
-		return null;
+		
+	}
+
+	@Override
+	public void deserializ() {
+		// TODO Auto-generated method stub
+		
 	}
 }

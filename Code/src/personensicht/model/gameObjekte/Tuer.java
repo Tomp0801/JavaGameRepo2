@@ -2,6 +2,7 @@ package personensicht.model.gameObjekte;
 
 import javafx.scene.Node;
 import javafx.scene.layout.Region;
+import personensicht.view.gameObjekte.TuerV;
 
 /**
  * eine Tuer verweist auf eine andere Region
@@ -12,9 +13,14 @@ public class Tuer extends GameObjekt
 {
 	private Region zielRegion;
 	
+	public Tuer()
+	{
+		super(GameObjektType.Tuer, 150, 40, 1000);
+	}
+	
 	public Tuer(Region region)
 	{
-		super(GameObjektType.Tuer);
+		this();
 		this.zielRegion = region;
 	}
 	
@@ -27,7 +33,8 @@ public class Tuer extends GameObjekt
 	@Override
 	public Node ladeNodeObjekt() 
 	{
-		return null;
+		this.setNodeObjekt(new TuerV(this)); 
+		return this.getNodeObjekt().getNode();
 	}
 
 	public synchronized Region getZielRegion() {
@@ -35,9 +42,14 @@ public class Tuer extends GameObjekt
 	}
 
 	@Override
-	public Node ladeNodeObjekt(int localX, int localY) {
+	public void serializ() {
 		// TODO Auto-generated method stub
-		return null;
+		
 	}
 
+	@Override
+	public void deserializ() {
+		// TODO Auto-generated method stub
+		
+	}
 }

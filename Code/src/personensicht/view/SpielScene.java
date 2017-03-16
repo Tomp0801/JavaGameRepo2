@@ -17,7 +17,6 @@ import personensicht.view.inventar.InventarView;
 import personensicht.view.spieler.PersoenlicheSpielerInfoView;
 import personensicht.view.spieler.SpielerInformationenView;
 import personensicht.view.welt.Navigation;
-import personensicht.view.welt.OrtBeschreibung;
 import personensicht.view.welt.Umgebunsbeschreibung;
 
 /**
@@ -80,11 +79,11 @@ public class SpielScene
 		public SteuerungDesZentrumsV()
 		{
 			Button ortsbeschreibung = new Button("Der Ort");
-			ortsbeschreibung.setOnAction(new EventHandler<ActionEvent>() {
+			ortsbeschreibung.setOnAction(new EventHandler<ActionEvent>() { // veraltet
 				@Override
 				public void handle(ActionEvent event) {
-					System.out.println(Spielzustand.getOrt());
-					SpieloberflaecheCrt.getInstanceOfViewSpieloberflaeche().setMittelfeld(new OrtBeschreibung(Spielzustand.getOrt().getBeschreibung()));
+//					System.out.println(Spielzustand.getOrt()); veraltet
+//					SpieloberflaecheCrt.getInstanceOfViewSpieloberflaeche().setMittelfeld(new OrtBeschreibung(Spielzustand.getOrt().getBeschreibung()));
 				}
 			});
 			Button inDerUmgebung = new Button("Die Umgebung");

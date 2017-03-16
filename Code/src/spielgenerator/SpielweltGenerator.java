@@ -4,8 +4,8 @@ import java.util.ArrayList;
 
 import personensicht.model.gameObjekte.Bett;
 import personensicht.model.gameObjekte.GameObjekt;
-import personensicht.model.gameObjekte.Mensch;
 import personensicht.model.gameObjekte.Schrank;
+import personensicht.model.gameObjekte.lebewesen.Mensch;
 import personensicht.model.inventar.items.Essen;
 import personensicht.model.inventar.items.Item;
 import personensicht.model.inventar.items.Trinken;
@@ -33,34 +33,35 @@ public class SpielweltGenerator
 		Region fahrstuhl = new Region("Fahrstuhl");
 				
 		//Stockwerk
-		for (int r = 0; 10 > r ; r++)
-		{
-			stockwerk.add(new Region("Stockwerk "+r, fahrstuhl));
-			fahrstuhl.addNachbarn(stockwerk.get(r));
-			//Flure
-			for (int i = 0; 5 > i ; i++)
-			{
-				flure.add(new Region("Flur "+(i), stockwerk.get(r)));
-				stockwerk.get(r).addNachbarn(flure.get(flure.size()-1));
-				
-				for (int j = 0; 10 > j ; j++)
-				{
-					Region ort = new Region("Quatier "+j , flure.get(flure.size()-1));
-					
-					ort.addObjekt(new Bett(5));
-					Item[] items = {new Essen(), new Essen(), new Trinken()};
-					ort.addObjekt(new Schrank(items));
-					
-					flure.get(flure.size()-1).addNachbarn(ort);
-				}
-			}
-		}
+//		for (int r = 0; 10 > r ; r++)
+//		{
+//			stockwerk.add(new Region("Stockwerk "+r, fahrstuhl));
+//			fahrstuhl.addNachbarn(stockwerk.get(r));
+//			//Flure
+//			for (int i = 0; 5 > i ; i++)
+//			{
+//				flure.add(new Region("Flur "+(i), stockwerk.get(r)));
+//				stockwerk.get(r).addNachbarn(flure.get(flure.size()-1));
+//				
+//				for (int j = 0; 10 > j ; j++)
+//				{
+//					Region ort = new Region("Quatier "+j , flure.get(flure.size()-1));
+//					
+//					ort.addObjekt(new Bett(5));
+//					Item[] items = {new Essen(), new Essen(), new Trinken()};
+//					ort.addObjekt(new Schrank(items));
+//					
+//					flure.get(flure.size()-1).addNachbarn(ort);
+//				}
+//			}
+//		}
 		
-		Region zentrale = new Region("Zuhause", fahrstuhl); 
-		Mensch mensch = new Mensch("Dennis");
-		zentrale.addObjekt(mensch);
-		
-		return zentrale;
+//		Region zentrale = new Region("Zuhause", fahrstuhl); 
+//		Mensch mensch = new Mensch("Dennis");
+//		zentrale.addObjekt(mensch);
+//		
+//		return zentrale;
+		return null;
 	}
 	
 	/**
@@ -75,6 +76,6 @@ public class SpielweltGenerator
 		//fuegt einen Menschen hinzu
 		objekte.add(new Mensch("Name"));
 		
-		Region startRegion = new Region("Eigenes Quatier", objekte, position);
+//		Region startRegion = new Region("Eigenes Quatier", objekte, position);
 	}
 }

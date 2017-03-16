@@ -6,7 +6,11 @@ import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
+import javafx.scene.ParallelCamera;
+import javafx.scene.PerspectiveCamera;
 import javafx.scene.Scene;
+import javafx.scene.SceneAntialiasing;
+import javafx.scene.SubScene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
@@ -21,12 +25,13 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.scene.transform.Rotate;
 import personensicht.crt.spielablauf.Spielcontroller;
 import personensicht.model.spieler.Aussehen;
 import personensicht.model.spieler.Geschlecht;
 import personensicht.model.spieler.Spieler;
 import personensicht.model.spieler.klamotten.Klamotte;
-import personensicht.view.gameObjekte.lebewesen.Mensch3D;
+import personensicht.view.gameObjekte.lebewesen.MenschV;
 
 /**
  * Diese Scene, wird zum Erstellen der Spielfigur verwendet.
@@ -52,6 +57,8 @@ public class SpielerfigurErstellenScene
 	 */
 	public SpielerfigurErstellenScene()
 	{ 	
+		
+		
 		HBox namensEingabe = new HBox(); 
 		TextField namensFeld = new TextField("Name");
 		namensFeld.setStyle("-fx-background-color:  transparent");
@@ -74,6 +81,7 @@ public class SpielerfigurErstellenScene
         ImageView hintergrund = new ImageView(img);
         hintergrund.setScaleX(2);
         hintergrund.setScaleY(2);
+        hintergrund.setTranslateZ(0);
         
         VBox geschlechterBox = new VBox();
         ToggleGroup group = new ToggleGroup();
@@ -109,7 +117,6 @@ public class SpielerfigurErstellenScene
 				try 
 				{
 					double i = Double.valueOf(wert);
-					System.out.println(i);
 					if (i > 2.5 || i < 0.5)
 						i = 1.8;
 					großeAnzeige.setText(""+i);
@@ -125,7 +132,7 @@ public class SpielerfigurErstellenScene
 		koerperGroße.setSpacing(12);
 		koerperGroße.setAlignment(Pos.TOP_CENTER);
 		
-        Mensch3D mensch = new Mensch3D();
+        MenschV mensch = new MenschV();
 		Button spielStart = new Button("starte Spiel");
 		spielStart.setPrefSize(200, 60);
 		VBox hautFarbenBox = new VBox();
@@ -175,7 +182,10 @@ public class SpielerfigurErstellenScene
 		rechteBox.setMinWidth(250);
 		rechteBox.setMaxWidth(250);
 		BorderPane boarderPane = new BorderPane();
-		boarderPane.setCenter(mensch.getMensch());
+	
+		SubScene subScene = new SubScene(mensch.getMensch(), 500, 500, true, SceneAntialiasing.BALANCED);
+		subScene.setFill(Color.TRANSPARENT);
+		boarderPane.setCenter(subScene);
 		boarderPane.setLeft(klamottenwahl);
 		boarderPane.setRight(rechteBox);	
 		
@@ -184,9 +194,9 @@ public class SpielerfigurErstellenScene
 		frontNods.setSpacing(60);
 		
 		root.getChildren().addAll(hintergrund, frontNods);
-		scene = new Scene(root);
+		scene = new Scene(root); 
 		
-
+		
 		spielStart.setOnAction(new EventHandler<ActionEvent>() 
 		{	
 			@Override
@@ -217,7 +227,7 @@ public class SpielerfigurErstellenScene
 				Spieler spieler = new Spieler(name,aussehen,geschlecht,18);
 				Spielcontroller.getInstance().spielStarten(spieler);
 			}
-		});	
+		});		
 	}
 	
 	public Scene getScene()

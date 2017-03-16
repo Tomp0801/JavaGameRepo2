@@ -4,6 +4,7 @@ import java.awt.MouseInfo;
 
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
+import javafx.scene.DepthTest;
 import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
@@ -14,7 +15,7 @@ import javafx.scene.transform.Rotate;
 import personensicht.model.spieler.Spieler;
 import personensicht.view.Shape3DZusatzMethoden;
 
-public class Mensch3D
+public class MenschV
 {
 	private VBox root = new VBox();
 	private Sphere kopf;
@@ -24,11 +25,14 @@ public class Mensch3D
 	private Box linkesBein;
 	private Box rechtesBein;
 		
-	public Mensch3D()
+	public MenschV()
 	{
+		root.setRotationAxis(Rotate.X_AXIS); //TODO
+		root.setRotate(90);
 		kopf = new Sphere();
 		kopf.setRadius(40);
 		root.getChildren().add(kopf);
+		root.setStyle("-fx-background-color: transparent;"); //TODO
 		koerper = new Box();
 		koerper.setHeight(200);
 		koerper.setWidth(90);
@@ -66,7 +70,7 @@ public class Mensch3D
 		initMenschRotation();
 	}
 	
-	public Mensch3D(Spieler spieler)
+	public MenschV(Spieler spieler)
 	{
 		this();
 		Shape3DZusatzMethoden.hintergundFarbeSetzen(this.kopf, spieler.getAussehen().getHautfarbe());

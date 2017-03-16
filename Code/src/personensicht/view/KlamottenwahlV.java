@@ -24,7 +24,7 @@ import personensicht.model.spieler.klamotten.Jacke;
 import personensicht.model.spieler.klamotten.Klamotte;
 import personensicht.model.spieler.klamotten.Schuhe;
 import personensicht.model.spieler.klamotten.TShirt;
-import personensicht.view.gameObjekte.lebewesen.Mensch3D;
+import personensicht.view.gameObjekte.lebewesen.MenschV;
 
 /**
  * beinhaltet eine View, mit der sich Klamotten wie Hose, Jacke ect. bearbeiten lassen.
@@ -46,7 +46,7 @@ public class KlamottenwahlV extends VBox
 	private Hut hut = new Hut("Hut");
 	private TabPane root0 = new TabPane();
 	
-	public KlamottenwahlV(Mensch3D mensch)
+	public KlamottenwahlV(MenschV mensch)
 	{
 		Tab hut = new Tab("Hut"); 
 		hut.setClosable(false);

@@ -3,6 +3,7 @@ package draufsicht.controller;
 import java.io.IOException;
 import java.util.LinkedList;
 
+import draufsicht.view.hauptmenu.HauptmenuCrt;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
@@ -45,8 +46,7 @@ public class StageController extends Application
 	 * Die Mainklasse 
 	 * @param args
 	 */
-	public static void main(String[] args)
-	{
+	public static void main(String[] args){
 		launch(args);
 	}
 	
@@ -65,8 +65,9 @@ public class StageController extends Application
 		primaryStage.setFullScreenExitHint("");
 		primaryStage.centerOnScreen();
 		primaryStage.show();
-
-		this.setScene(this.generateScen(new FXMLLoader(getClass().getResource("/view/hauptmenu/fxml/Hauptmenu.fxml"))));
+		this.setScene(HauptmenuCrt.getInstance().getStartmenu().getScene());
+		HauptmenuCrt.getInstance().start();
+//		this.setScene(this.generateScen(new FXMLLoader(getClass().getResource("/draufsicht/view/hauptmenu/fxml/Hauptmenu.fxml"))));
 	}
 	
 	
@@ -129,7 +130,7 @@ public class StageController extends Application
 	
 	/**
 	 * generriert eine Scene aus dem FXMLLoader der uebergeben wird. In dieser Methode wird 
-	 * die funktion load vom FXMLLoader mir aufgerufen
+	 * die Funktion load vom FXMLLoader aufgerufen
 	 * @param loader
 	 * @return eine Scene mit den Root des FXMLLoaders das uebergeben wurde
 	 */

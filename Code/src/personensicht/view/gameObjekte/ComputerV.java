@@ -1,5 +1,5 @@
 package personensicht.view.gameObjekte;
 
-public class LeererRaumV {
+public class ComputerV {
 
 }

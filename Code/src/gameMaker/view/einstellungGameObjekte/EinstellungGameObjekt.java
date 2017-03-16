@@ -21,6 +21,7 @@ public abstract class EinstellungGameObjekt extends VBox
 		eigenschaften = new TitledPane();
 		rootEigenschaften = new VBox();
 		eigenschaften.setContent(rootEigenschaften);
+		eigenschaften.setText("Eigenschaften");
 		HBox namesEingabeBox = new HBox();
 		namesEingabeBox.setSpacing(6);
 		namesEingabeBox.setAlignment(Pos.CENTER);
@@ -48,7 +49,7 @@ public abstract class EinstellungGameObjekt extends VBox
 	}
 
 
-	public synchronized GameObjekt getObjekt() {
+	public synchronized GameObjekt getGameObjekt() {
 		return objekt;
 	}
 }
