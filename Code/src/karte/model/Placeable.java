@@ -1,7 +1,7 @@
 package karte.model;
 
 import javafx.geometry.Point2D;
-import javafx.scene.shape.Shape;
+import javafx.scene.Node;
 
 /**
  * Interface für ein Objekt, dass auf einem Map-Objekt plaziert werden kann
@@ -11,32 +11,25 @@ import javafx.scene.shape.Shape;
  */
 public interface Placeable {
 	/**
-	 * Gibt die Position des Objekts auf der Karte wieder
-	 * @return die Position des Objekts auf der Karte
+	 * Gibt das Feld des Objekts wieder
+	 * @return das Feld, auf dem das Objekt steht
 	 */
-	public Point2D getPosition();
+	public PlaceableOnThis getGrund();
 	
 	/**
-	 * Setzt die Position des Objekts
-	 * @param point Position des Objekts
+	 * Platziert das Objekt auf dem angegebenen Feld
+	 * @param feld Feld, auf dem das Objekt platziert werden soll 
 	 */
-	public void setPosition(Point2D point);
-	
-	/**
-	 * Setzt die Position des Objekts
-	 * @param x x-Position des Objekts
-	 * @param y y-Position des Objekts
-	 */
-	public default void setPosition(int x, int y) {
-		setPosition(new Point2D(x, y));
-	}
+	public void place(Feld feld);
 	
 	/**
 	 * Platziert das Objekt auf der Angegebenen Karte an der angegebenen Position
 	 * @param parent Karte, auf der das Objekt platziert werden soll 
 	 * @param position Position, an der das Objekt platziert werden soll
 	 */
-	public void place(Map parent, Point2D position);
+	public default void place(Map parent, Point2D position) throws IllegalArgumentException {
+		place(parent.getFeld(position));
+	}
 	
 	/**
 	 * Platziert das Objekt auf der Angegebenen Karte an der angegebenen Position
@@ -44,19 +37,33 @@ public interface Placeable {
 	 * @param x x-Wert der Position des Objekts
 	 * @param y y-Wert der Position des Objekts
 	 */
-	public default void place(Map parent, int x, int y) {
-		place(parent, new Point2D(x, y));
+	public default void place(Map parent, int x, int y) throws IllegalArgumentException {
+		place(parent.getFeld(x, y));
 	}
 	
 	/**
-	 * Gibt den Platz des Objekts wieder, den es auf der Karte ein einnimmt
-	 * @return ein Shape-Objekt, dass die Maße des Objekts wiedergibt
+	 * Entfernt das Objekt von dem Feld, auf dem es steht
 	 */
-	public Shape getBody();
+	public void unplace();
 	
 	/**
-	 * Gibt die Karte zurück, auf der das Objekt platziert ist
-	 * @return die Karte, auf der das Objekt platziert ist
+	 * Gibt an, ob das Objekt platziert ist
+	 * 
+	 * @return true, wenn Objekt platziert
 	 */
-	public Map getParent();
+	public default boolean isPlaced() {
+		return (getGrund() != null);
+	}
+	
+	/**
+	 * Gibt die Grafik des Objekts als Node wieder
+	 * @return Grafische darstellung des Objekts als Node
+	 */
+	public Node getGrafics();
+		
+	/**
+	 * Gibt die Bezeichnung des Objekts wieder
+	 * @return Name des Objekts
+	 */
+	public String getName();
 }

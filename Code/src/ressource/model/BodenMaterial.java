@@ -1,9 +1,10 @@
-package draufsicht.ressource;
+package ressource.model;
 
 import javafx.scene.paint.Color;
 
 /**
- * Material, die von Feldern abgebaut werden kann
+ * Material, das von Feldern abgebaut werden kann
+ * hat zusätzlich zu Material eine Vorkommenswahrscheinlichkeit
  * 
  * @author Thomas
  *
@@ -21,8 +22,10 @@ public class BodenMaterial extends Material {
 	private float vorkommensWkeit;
 
 	/**
-	 * Konstruktor
-	 * @param abbauMethode legt abbauMethode oder Werkzeug fest
+	 * 
+	 * @param name Name des Materials
+	 * @param color javafx Color, Farbe des Materials
+	 * @param vorkommensWkeit Vorkommenswahrscheinlichkeit
 	 */
 	public BodenMaterial(String name, Color color, float vorkommensWkeit) {
 		super(name, color);

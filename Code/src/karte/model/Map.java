@@ -1,6 +1,11 @@
 package karte.model;
 
+import java.util.HashMap;
+
 import javafx.geometry.Point2D;
+import karte.view.*;
+import obersteEbene.controller.Random;
+import ressource.model.Material;
 
 /**
  * Eine 2 Dimensionale Karte, bestehend aus einzelnen Feldern
@@ -23,29 +28,45 @@ public class Map {
 	 * Höhe der Karte
 	 */
 	private int height;
+	
+	private MapGrafics grafics;
+	
+	private Random prng;
+	
+	private HashMap<Material, Float> bodenschaetze;
 		
 	/**
 	 * Erstellt eine Karte mit angegebener Breite und Höhe
-	 * @param width breite der Karte
-	 * @param height höhe der Karte
+	 * @param width breite der Karte in Feldern
+	 * @param height höhe der Karte in Feldern
 	 */
-	public Map(int width, int height) {
+	public Map(int width, int height, int seed, HashMap<Material, Float> bodenschaetze) {
+		this.prng = new Random(seed);
 		this.width = width;
 		this.height = height;
+		this.bodenschaetze = bodenschaetze;
 		felder = new Feld[width][height];
 	
-		init();
+		loadGrafics();
 	}
 	
 	/**
-	 * erstellt alle Feld-Objekte der Karte
+	 * Erstellt ein neues Grafikobjekt das zu dieser Karte passt
 	 */
-	private void init() {
-		for (int x = 0; x < width; x++) {
-			for (int y = 0; y < height; y++) {
-				felder[x][y] = new Feld(this, x, y);
-			}
-		}
+	public void loadGrafics() {
+		grafics = new MapGrafics(this);
+	}
+	
+	/**
+	 * Erstellt das Feld an angegebener Stelle
+	 * Sollte nur von der Generatorklasse verwendet werden!
+	 * 
+	 * @param x x-Postion des Feldes
+	 * @param y y-Position des Feldes
+	 * @param grundMaterial BodenMaterial von dem Feld
+	 */
+	void initFeld(int x, int y, Material grundMaterial) {
+		felder[x][y] = new Feld(this, x, y, grundMaterial);
 	}
 	
 	/**
@@ -92,5 +113,21 @@ public class Map {
 	 */
 	public int getHeight() {
 		return height;
+	}
+	
+	public HashMap<Material, Float> getBodenschaetze() {
+		return bodenschaetze;
+	}
+
+	/**
+	 * Gibt die Grafikkomponente dieser Map zurück
+	 * @return das MapGrafics-Objekt das zu dieser Karte gehört
+	 */
+	public MapGrafics getGrafics() {
+		return grafics;
+	}
+
+	public Random getPrng() {
+		return prng;
 	}
 }

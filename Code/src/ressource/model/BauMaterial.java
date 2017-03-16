@@ -1,8 +1,10 @@
-package draufsicht.ressource;
+package ressource.model;
 
 /**
- * Interface für alle Materialien, die zumm Bau von Gebäuden, Raumschiffen o.Ä. 
+ * Interface für alle Materialien, die zum Bau von Gebäuden, Raumschiffen o.Ä. 
  * verwendet werden können
+ * 
+ * TODO arbeiten mit resistenzen? Hitzeresistenz, Strahlungsresistenz...
  * 
  * @author Thomas
  *

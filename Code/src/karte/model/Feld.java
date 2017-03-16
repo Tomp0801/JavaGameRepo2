@@ -1,8 +1,9 @@
 package karte.model;
 
-import javafx.event.EventHandler;
-import javafx.scene.input.MouseEvent;
-import karte.view.FeldNode;
+import java.util.HashMap;
+
+import karte.view.FeldGrafics;
+import ressource.model.Material;
 
 /**
  * Ein Feld einer Karte
@@ -10,7 +11,7 @@ import karte.view.FeldNode;
  * @author Thomas
  *
  */
-public class Feld implements EventHandler<MouseEvent>{
+public class Feld implements PlaceableOnThis, Versorger {
 
 	/**
 	 * Objekt, das auf diesem Feld steht
@@ -32,20 +33,56 @@ public class Feld implements EventHandler<MouseEvent>{
 	 */
 	private int y;
 	
-	private FeldNode node;
+	/**
+	 * Die Grafik des Feldes
+	 */
+	private FeldGrafics grafics;
+	
+	/**
+	 * Das BodenMaterial des Feldes
+	 */
+	private Material boden;
+	
+	/**
+	 * Auflistung der Rohstoffe und deren Menge, die das Feld enthält
+	 */
+	private HashMap<Material, Float> bodenschatzVorkommen;
 		
 	/**
 	 * Erstellt ein Feld, das zu der angegebenen Karte gehört
 	 * @param parent
 	 * @param x x-Position des Felds
 	 * @param y y-Position des Felds
+	 * @throws IllegalArgumentException, wenn die übergebene Karte null ist, oder dessen Grafik-Objekt null ist
 	 */
-	public Feld(Map parent, int x, int y) {
+	public Feld(Map parent, int x, int y, Material grundMaterial) throws IllegalArgumentException {
+		if (parent == null) throw new IllegalArgumentException("Das übergebene Map-Objekt darf nicht null sein");
+		if (parent.getGrafics() == null) throw new IllegalArgumentException("Das übergebene Map-Objekt muss ein gültiges Grafik-Objekt besitzen");
+		
 		this.karte = parent;
 		this.x = x;
 		this.y = y;
+		this.boden = grundMaterial;
 		
-		node = new FeldNode(this);
+		if (grundMaterial.isFest()) {
+			generateBodenschaetze();
+		}
+		
+		grafics = new FeldGrafics(this);
+	}
+	
+	private void generateBodenschaetze() {
+		bodenschatzVorkommen = new HashMap<Material, Float>();
+		bodenschatzVorkommen.put(boden, 100f);		//Bodenmaterial ist immer verfügbar
+		
+		HashMap<Material, Float> moeglichkeiten = karte.getBodenschaetze();
+		
+		//je nach Wahrscheinlichkeit, andere Bodenschätze hinzufügen
+		for (Material m : moeglichkeiten.keySet()) {
+			if (moeglichkeiten.get(m) > karte.getPrng().random(0, 100)) {
+				bodenschatzVorkommen.put(m, m.getBodenVorkommen());
+			}
+		}
 	}
 	
 	/**
@@ -64,6 +101,7 @@ public class Feld implements EventHandler<MouseEvent>{
 	public void place(Placeable object) throws IllegalStateException {
 		if (this.object != null) throw new IllegalStateException("Es steht bereits ein Objekt auf dem Feld.");
 		this.object = object;
+		this.grafics.getChildren().add(object.getGrafics());
 	}
 	
 	/**
@@ -94,17 +132,74 @@ public class Feld implements EventHandler<MouseEvent>{
 	 * Gibt den Node zurück, der in einer Scene gezeichnet werden kann
 	 * @return Node (Rectangle Objekt)
 	 */
-	public FeldNode getNode() {
-		return node;
+	public FeldGrafics getGrafics() {
+		return grafics;
 	}
 	
-
+	/**
+	 * Gibt zurück, aus welchem Material der Boden auf diesem Feld besteht
+	 * @return Das Bodenmaterial des Feldes
+	 */
+	public Material getBodenMaterial() {
+		return boden;
+	}
+	
+	/**
+	 * Gibt das Nachbarfeld zurück
+	 * @param richtung Himmelsrichtung in der das Nachbarfeld liegt
+	 * @return Das nachbarfeld
+	 */
+	public Feld getNachbar(Kompass richtung) throws ArrayIndexOutOfBoundsException {
+		switch (richtung) {
+		case NORTH:
+			return karte.getFeld(x, y - 1);
+		case EAST:
+			return karte.getFeld(x + 1, y);
+		case SOUTH:
+			return karte.getFeld(x, y + 1);
+		case WEST:
+			return karte.getFeld(x - 1, y);
+		case NORTHEAST:
+			return karte.getFeld(x + 1, y - 1);
+		case SOUTHEAST:
+			return karte.getFeld(x + 1, y + 1);
+		case NORTHWEST:
+			return karte.getFeld(x - 1, y - 1);
+		case SOUTHWEST:
+			return karte.getFeld(x - 1, y + 1);
+		default:
+			return null;
+		}
+	}
+	
+	/**
+	 * Gibt das Objekt zurück, das auf diesem Feld steht
+	 * @return das Objekt, das auf diesem Feld steht
+	 */
+	public Placeable getObject() {
+		return this.object;
+	}
+	
+	public HashMap<Material, Float> getBodenschatzVorkommen() {
+		return bodenschatzVorkommen;
+	}
 
 	@Override
-	public void handle(MouseEvent event) {
-		//TODO set this Feld als Scene
-		System.out.println("Feld " + x + "|" + y + " angeklickt.");
+	public float getMaterialMenge(Material material) {
+		if (bodenschatzVorkommen.get(material) != null) {
+			return bodenschatzVorkommen.get(material);
+		} else {
+			return 0;	
+		}
 	}
-	
+
+	@Override
+	public void setMaterialMenge(Material material, float menge) {
+		if (bodenschatzVorkommen.get(material) != null) {
+			bodenschatzVorkommen.replace(material, menge);
+		}
+	}
+
+
 
 }

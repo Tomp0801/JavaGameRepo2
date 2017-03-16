@@ -1,28 +1,30 @@
 package karte.view;
 
-import javafx.scene.Node;
+import javafx.scene.ParallelCamera;
 import javafx.scene.Scene;
-import javafx.scene.layout.GridPane;
+import javafx.scene.SubScene;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.input.ScrollEvent;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import karte.model.*;
 
 public class MapScene {
+	private static ParallelCamera camera;
 	
 	private static void initScene(Scene scene, Map map) {
-		StackPane layout = new StackPane();
+		BorderPane layout = new BorderPane();
+				
+		SubScene subScene = new SubScene(map.getGrafics(), map.getGrafics().getMapWidth(), map.getGrafics().getMapHeight());
+		camera = new ParallelCamera();
+		subScene.setCamera(camera);
+		camera.setNearClip(0.01);
 		
-		GridPane mapPaint = new GridPane();		
+		scene.addEventHandler(MouseEvent.ANY, new Node2DNavigator(map.getGrafics()));
 		
-		//fields zeichnen
-		Node feld;
-		for (int x = 0; x < map.getWidth(); x++) {
-			for (int y = 0; y < map.getHeight(); y++) {
-				feld = map.getFeld(x, y).getNode();
-				mapPaint.add(feld, x, y);
-			}
-		}
+		scene.addEventHandler(ScrollEvent.ANY, new Node2DZoomer(map.getGrafics()));
 		
-		layout.getChildren().add(mapPaint);
+		layout.setCenter(subScene);
 		
 		scene.setRoot(layout);
 	}
