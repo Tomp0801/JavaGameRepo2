@@ -3,7 +3,7 @@ package ressource.model;
 import javafx.scene.paint.Color;
 import ressource.view.MaterialGrafics;
 
-import java.io.Serializable;
+import ressource.model.Serializable;
 
 /**
  * Grundklasse für alle Stoffe Materialen, etc.
@@ -15,11 +15,6 @@ import java.io.Serializable;
  *
  */
 public class Material implements Serializable {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 4161272941765820029L;
-
 	/**
 	 * Bezeichnung für das Material
 	 */
@@ -42,6 +37,10 @@ public class Material implements Serializable {
 	private float bodenVorkommen;
 	
 	private Aggregat aggregatzustand;
+	
+	public Material() {
+		
+	}
 	
 	/**
 	 * Kosntruktor mit javafx Color, da diese die opacity mit enthält
@@ -164,5 +163,46 @@ public class Material implements Serializable {
 		ERDE.setAggregatzustand(Aggregat.FEST);
 		STEIN.setAggregatzustand(Aggregat.FEST);
 		GOLD.setAggregatzustand(Aggregat.FEST);
+	}
+
+	@Override
+	public String serializeData() {
+		String data = "";
+		data += Serializable.serializePrimitive("name", name);
+		int rgbInt = Math.round((float)color.getOpacity() * 255f) << 6;
+		rgbInt = Math.round((float)color.getRed() * 255f) << 4;
+		rgbInt |= Math.round((float)color.getGreen() * 255f) << 2;
+		rgbInt |= Math.round((float)color.getBlue() * 255f);
+		data += Serializable.serializePrimitive("color", "" + rgbInt);	//TODO
+		data += Serializable.serializePrimitive("gewicht", "" + gewicht);
+		data += Serializable.serializePrimitive("bodenVorkommen", "" + bodenVorkommen);
+		data += Serializable.serializePrimitive("aggregatzustand", aggregatzustand.toString());
+		return data;
+	}
+
+	@Override
+	public void deserializeDataFrom(String objectString) {
+		this.name = Serializable.findValue(objectString, "name");
+		try {
+			int rgbInt = Integer.parseInt(Serializable.findValue(objectString, "color"));
+			int opacity = (rgbInt >> 24) & 0x000000FF;
+			int red = (rgbInt >> 16) & 0x000000FF;
+			int green = (rgbInt >> 8) & 0x000000FF;
+			int blue = rgbInt & 0x000000FF;
+			this.color = Color.rgb(red, green, blue, opacity / 255.0);
+		} catch (NumberFormatException e) {
+			throw new NumberFormatException("In dem Abschnitt " + objectString + " ist der Wert für color fehlerhaft werden.");
+		}
+		try {
+			this.gewicht = Float.parseFloat(Serializable.findValue(objectString, "gewicht"));
+		} catch (NumberFormatException e) {
+			throw new NumberFormatException("In dem Abschnitt " + objectString + " ist der Wert für gewicht fehlerhaft werden.");			
+		}
+		try {
+			this.bodenVorkommen = Float.parseFloat(Serializable.findValue(objectString, "bodenVorkommen"));
+		} catch (NumberFormatException e) {
+			throw new NumberFormatException("In dem Abschnitt " + objectString + " ist der Wert für bodenVorkommen fehlerhaft werden.");			
+		}
+		//aggregat TODO
 	}
 }

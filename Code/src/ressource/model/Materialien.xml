@@ -1,0 +1,28 @@
+<Material>
+	<name>       Stein         </name>
+	<color>      11119017      </color>
+	<aggregatzustand>fest          </aggregatzustand>
+	<gewicht>    0             </gewicht>
+	<bodenVorkommen>100           </bodenVorkommen>
+</Material>
+<Material>
+	<name>       Erde          </name>
+	<color>      13468991      </color>
+	<aggregatzustand>fest          </aggregatzustand>
+	<gewicht>    0             </gewicht>
+	<bodenVorkommen>90            </bodenVorkommen>
+</Material>
+<Material>
+	<name>       Gold          </name>
+	<color>      16766720      </color>
+	<aggregatzustand>fest          </aggregatzustand>
+	<gewicht>    0             </gewicht>
+	<bodenVorkommen>10            </bodenVorkommen>
+</Material>
+<Material>
+	<name>       Wasser        </name>
+	<color>      255           </color>
+	<aggregatzustand>fluessig      </aggregatzustand>
+	<gewicht>    0             </gewicht>
+	<bodenVorkommen>100           </bodenVorkommen>
+</Material>
