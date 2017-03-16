@@ -1,7 +1,6 @@
 package personensicht.view.gameObjekte;
 
 import javafx.scene.Node;
-import javafx.scene.paint.Color;
 
 public abstract class GameObjektV
 {

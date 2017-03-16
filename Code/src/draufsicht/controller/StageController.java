@@ -46,8 +46,7 @@ public class StageController extends Application
 	 * Die Mainklasse 
 	 * @param args
 	 */
-	public static void main(String[] args)
-	{
+	public static void main(String[] args){
 		launch(args);
 	}
 	

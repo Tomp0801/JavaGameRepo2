@@ -60,13 +60,9 @@ public class TischV extends GameObjektV
 		AnchorPane tischBeinPane = new AnchorPane();
 		tischBeinPane.prefHeightProperty().bindBidirectional(tischplatte.heightProperty());
 		tischBeinPane.prefWidthProperty().bindBidirectional(tischplatte.widthProperty());
-//		tischBeinPane.setRotationAxis(Rotate.X_AXIS);
-//		tischBeinPane.setRotate(-90);
-//		
+		
 		for (int i = 0; tischBeine.length > i ; i++){ 
 			// Property zuordnen
-//			tischBeine[i].setRotationAxis(Rotate.X_AXIS);
-//			tischBeine[i].setRotate(-90);
 			tischBeine[i] = new Box();
 			tischBeine[i].widthProperty().bindBidirectional(model.getTischBeineSize()[i][0]);	   //X
 			tischBeine[i].heightProperty().bindBidirectional(model.getTischBeineSize()[i][2]);	   //Y
@@ -75,23 +71,11 @@ public class TischV extends GameObjektV
 			tischBeine[i].layoutYProperty().bindBidirectional(model.getTischBeineSize()[i][5]);	   //LayoutY
 			tischBeine[i].translateZProperty().bindBidirectional(model.getTischBeineSize()[i][4]); //LayoutZ
 			tischBeinPane.getChildren().add(tischBeine[i]);
-		}	
-//			HBox tischBeineLinks = new HBox();
-//			tischBeineLinks.getChildren().addAll(tischBeine[0], tischBeine[1]);
-//			tischBeineLinks.setRotationAxis(Rotate.Y_AXIS);
-//			tischBeineLinks.setRotate(90);
-//			HBox tischBeineRechts = new HBox();
-//			tischBeineRechts.setRotationAxis(Rotate.Y_AXIS);
-//			tischBeineRechts.setRotate(90);
-//			tischBeineRechts.getChildren().addAll(tischBeine[2], tischBeine[3]);
-//			HBox alleTischBeine = new HBox(tischBeineLinks, tischBeineRechts);
-			
+		}				
 			this.root.getChildren().add(tischBeinPane);
 	}
 	
 	
-
-
 	public synchronized Box[] getTischBeine() {
 		return tischBeine;
 	}
