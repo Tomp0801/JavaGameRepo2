@@ -9,11 +9,11 @@ public interface SerializableNew extends Serializable{
 	 * Auchtung: zu beachten ist dabei, dass auch die Modelklassen, auf die das zu speicherende Objekt verweist 
 	 * vorher diese Methode aufrufen muessen. 
 	 */
-	public abstract void serializ();
+	public void serializ();
 	
 	/**
 	 * lead die Modelkasse 
 	 */
-	public abstract void deserializ(); 
+	public void deserializ(); 
 	
 }

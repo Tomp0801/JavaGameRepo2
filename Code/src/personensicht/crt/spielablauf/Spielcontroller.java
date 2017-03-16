@@ -6,7 +6,6 @@ import personensicht.model.spieler.Spieler;
 import personensicht.model.welt.Spielzustand;
 import personensicht.model.welt.map.Region;
 import personensicht.view.SpielerfigurErstellenScene;
-import spielgenerator.SpielweltGenerator;
 
 public class Spielcontroller 
 {
@@ -27,10 +26,10 @@ public class Spielcontroller
 	public void spielStarten(Spieler spieler)
 	{
 		this.spieler = spieler;
-		Region startOrt = SpielweltGenerator.generriereDemoWelt();
-		Spielzustand.setOrt(startOrt);
-		SpieloberflaecheCrt.getInstance().startView(startOrt);
-		zeitcontroller = new ZeitCrt(spieler);
+//		Region startOrt = SpielweltGenerator.generriereDemoWelt();
+//		Spielzustand.setOrt(startOrt);
+//		SpieloberflaecheCrt.getInstance().startView(startOrt);
+//		zeitcontroller = new ZeitCrt(spieler);
 		zeitcontroller.startZeit();
 	}
 	

@@ -1,0 +1,6 @@
+
+/**
+ * @author Demix
+ *
+ */
+package spielmodel;
