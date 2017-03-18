@@ -1,12 +1,10 @@
 package spielmodel.ressource.view;
 
-import javafx.geometry.Insets;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.image.Image;
 import javafx.scene.image.PixelWriter;
 import javafx.scene.image.WritableImage;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Color;
 import spielctr.controller.Random;
 import spielmodel.ressource.model.Material;
@@ -15,20 +13,18 @@ public class MaterialGrafics {
 	private Material model;
 	
 	private Image[] dotImages;
-	
-	private Background background;
-	
+		
 	private Random prng;
-
+	
+	private ObjectProperty<Color> Color;
 	
 	public MaterialGrafics(Material model) {
 		this.model = model;
 		
 		prng = new Random(model.hashCode());
+		Color = new SimpleObjectProperty<Color>();
 		
 		makeDotImages();
-		
-		background = new Background(new BackgroundFill(model.getColor(), CornerRadii.EMPTY, Insets.EMPTY));
 	}
 	
 	private void makeDotImages() {
@@ -64,12 +60,8 @@ public class MaterialGrafics {
 	public Image getDotImage() {
 		return dotImages[prng.random(0, dotImages.length - 1)];
 	}
-	
-	/**
-	 * Gibt einen Hintergrund zurück mit der Farbe dieses Materials
-	 * @return
-	 */
-	public Background asBackground() {
-		return background;
+
+	public ObjectProperty<Color> getColorProperty() {
+		return Color;
 	}
 }
