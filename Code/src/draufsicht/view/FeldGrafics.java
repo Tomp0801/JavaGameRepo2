@@ -42,12 +42,12 @@ public class FeldGrafics extends StackPane implements EventHandler<MouseEvent> {
 	 */
 	public FeldGrafics(Feld feld) {
 		model = feld;
+
+		this.setOnMouseClicked(this);
 		
 		bodenNode = new Rectangle();
-		bodenNode.setFill(model.getBodenMaterial().getColor());
 		bodenschaetzeNode = new Group();
 		
-		this.setOnMouseClicked(this);
 		this.getChildren().add(bodenNode);
 		
 		this.setBodenschaetzeNode();
@@ -68,8 +68,7 @@ public class FeldGrafics extends StackPane implements EventHandler<MouseEvent> {
 
 		bodenNode.widthProperty().bind(width);
 		bodenNode.heightProperty().bind(height);
-	//	bodenschaetzeNode.widthProperty().bind(width);
-	//	bodenschaetzeNode.heightProperty().bind(height);
+		bodenNode.fillProperty().bind(model.getBodenMaterial().getGrafics().getColorProperty());
 		
 		this.layoutXProperty().bind(width.multiply(model.getX()));
 		this.layoutYProperty().bind(height.multiply(model.getY()));

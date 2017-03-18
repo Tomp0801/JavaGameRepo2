@@ -22,7 +22,8 @@ public class Test extends Application {
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		
+//		Material.initStaticMaterials("src/spielmodel/ressource/model/Materialien.xml");
+
 		
 		Random prng = new Random("test");
 		
@@ -58,7 +59,7 @@ public class Test extends Application {
 		Wohnhaus w1 = new Wohnhaus();
 		w1.place(map, 4, 7);
 		
-		//map.getGrafics().setMapWidth(1024, true);
+//		map.getGrafics().setMapWidth(1024, true);
 		
 	}
 	
