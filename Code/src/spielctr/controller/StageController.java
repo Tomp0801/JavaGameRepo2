@@ -1,9 +1,7 @@
-package draufsicht.controller;
+package spielctr.controller;
 
 import java.io.IOException;
 import java.util.LinkedList;
-
-import draufsicht.view.hauptmenu.HauptmenuCrt;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
@@ -13,8 +11,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 /**
- * Die Main Klasse. Diese Klasse startet das Programm als eine JavaFX Anwengun und verwaltet zu gleich die Stage.
- * Sie bietet eine Methode an um das wechseln zu einer neuen Scenen zu ermoeglichen.
+ * Die Bossklasse. Hier wird das Spiel gestartet.
+ * Sie bietet Methoden an um das wechseln zu einer neuen Scenen zu ermoeglichen.
  * 
  * @author Dennis
  *
@@ -35,7 +33,7 @@ public class StageController extends Application
 	 * in der Liste werden alle Scenen gespeichert die mit der setScene() Methode aufgerufen wurden. 
 	 * wird die openLastScene methode aufgerufen, wird die aktuell verwendete Scene aus der Liste entfernt
 	 */
-	private LinkedList<Scene> scenListe = new LinkedList<Scene>();
+	private LinkedList<Scene> scenListe = new LinkedList<Scene>(); //eventuell veraltet
 	
 	/**
 	 * die Stage auf der das Spielgeschehen zu sehen ist.
@@ -64,9 +62,9 @@ public class StageController extends Application
 		//Damit keine Nachricht erscheint nach dem eröffnen des FullScreens
 		primaryStage.setFullScreenExitHint("");
 		primaryStage.centerOnScreen();
-		primaryStage.show();
-		this.setScene(HauptmenuCrt.getInstance().getStartmenu().getScene());
-		HauptmenuCrt.getInstance().start();
+		primaryStage.show();	
+//		this.setScene(HauptmenuCrt.getInstance().getStartmenu().getScene());
+//		HauptmenuCrt.getInstance().start();
 //		this.setScene(this.generateScen(new FXMLLoader(getClass().getResource("/draufsicht/view/hauptmenu/fxml/Hauptmenu.fxml"))));
 	}
 	
