@@ -32,8 +32,9 @@ public class Test extends Application {
 		gen.addMaterial(Material.STEIN, 50);
 		gen.generateMap(40, 20);
 		
-		gen.addBodenschatz(Material.GOLD, 5f);
-		gen.addBodenschatz(Material.STEIN, 20f);
+		gen.addBodenschatz(Material.GOLD, 100f);
+		gen.addBodenschatz(Material.STEIN, 100f);
+		gen.addBodenschatz(Material.materialien.get(4), 100f);
 		
 		gen.setSmoothIterations(10000);
 		gen.setSmoothRadius(1);

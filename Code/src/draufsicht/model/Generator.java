@@ -186,7 +186,7 @@ public class Generator {
 	}
 	
 	public void addBodenschatz(Material bodenschatz, float vorkommenswahrscheinlichkeit) {
-		this.bodenschaetze.put(bodenschatz, vorkommenswahrscheinlichkeit);
+		this.bodenschaetze.put(bodenschatz, vorkommenswahrscheinlichkeit * bodenschatz.getBodenVorkommen() / 100f);
 	}
 	
 	public void setBodenschaetze(HashMap<Material, Float> bodenschaetze) {

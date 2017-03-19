@@ -1,30 +1,44 @@
 <materialien>
 <Material>
 	<name>       Stein         </name>
-	<color>      4289309097    </color>
+	<color>       4286611584   </color>
 	<aggregatzustand>FEST          </aggregatzustand>
 	<gewicht>    0             </gewicht>
 	<bodenVorkommen>100           </bodenVorkommen>
 </Material>
 <Material>
 	<name>       Erde          </name>
-	<color>      4291659071    </color>
+	<color>       4284887808   </color>
 	<aggregatzustand>FEST          </aggregatzustand>
 	<gewicht>    0             </gewicht>
-	<bodenVorkommen>90            </bodenVorkommen>
+	<bodenVorkommen>80            </bodenVorkommen>
 </Material>
 <Material>
 	<name>       Gold          </name>
-	<color>      4294956800    </color>
+	<color>       4294967142   </color>
 	<aggregatzustand>FEST          </aggregatzustand>
 	<gewicht>    0             </gewicht>
 	<bodenVorkommen>10            </bodenVorkommen>
 </Material>
 <Material>
 	<name>       Wasser        </name>
-	<color>      4278190335    </color>
+	<color>       1714657791   </color>
 	<aggregatzustand>FLUESSIG      </aggregatzustand>
 	<gewicht>    0             </gewicht>
-	<bodenVorkommen>100           </bodenVorkommen>
+	<bodenVorkommen>80            </bodenVorkommen>
+</Material>
+<Material>
+	<name>       Diamant       </name>
+	<color>       4288282623   </color>
+	<aggregatzustand>FEST          </aggregatzustand>
+	<gewicht>    0             </gewicht>
+	<bodenVorkommen>5             </bodenVorkommen>
+</Material>
+<Material>
+	<name>       Eisen         </name>
+	<color>       4291611852   </color>
+	<aggregatzustand>FEST          </aggregatzustand>
+	<gewicht>    0             </gewicht>
+	<bodenVorkommen>30            </bodenVorkommen>
 </Material>
 </materialien>

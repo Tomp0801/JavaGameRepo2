@@ -23,8 +23,6 @@ public class MaterialGrafics {
 		
 		prng = new Random(model.hashCode());
 		Color = new SimpleObjectProperty<Color>();
-		
-		makeDotImages();
 	}
 	
 	private void makeDotImages() {
@@ -58,6 +56,9 @@ public class MaterialGrafics {
 	}
 	
 	public Image getDotImage() {
+		if (dotImages == null) {
+			makeDotImages();
+		}
 		return dotImages[prng.random(0, dotImages.length - 1)];
 	}
 
