@@ -18,7 +18,7 @@ import personensicht.model.gameObjekte.Schrank;
 import personensicht.model.gameObjekte.Stuhl;
 import personensicht.model.gameObjekte.Tisch;
 import personensicht.model.gameObjekte.Tuer;
-import personensicht.model.gameObjekte.lebewesen.Mensch;
+import personensicht.model.gameObjekte.lebewesen.mensch.Koerper;
 
 /**
  * Um Nods auf der Region den entsprechenden GameObjekten zuzuordnen, wird diese Klasse verwendet. 
@@ -83,12 +83,12 @@ public class GameObjektZuordnung{
 		case Item://TODO
 			break;
 		case Mensch:
-			Mensch mensch;
+			Koerper mensch;
 			if (this.gameObjekt == null){
-				mensch = new Mensch("DefaultName");
+				mensch = new Koerper("DefaultName");
 			}
 			else{
-				mensch = (Mensch) gameObjekt;
+				mensch = (Koerper) gameObjekt;
 			}
 			einstellungGameObjket = new EinstellungMensch(mensch);
 			gameObjekt = mensch; 

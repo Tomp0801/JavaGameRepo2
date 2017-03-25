@@ -1,4 +1,4 @@
-package draufsicht.view;
+package draufsicht.view; 
 
 import draufsicht.model.*;
 import javafx.scene.ParallelCamera;

@@ -1,4 +1,4 @@
-package personensicht.model.gameObjekte.lebewesen;
+package personensicht.model.gameObjekte.lebewesen.mensch;
 
 import java.io.BufferedReader;
 import java.io.File;

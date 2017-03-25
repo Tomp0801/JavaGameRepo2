@@ -7,6 +7,7 @@ import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.Node;
 import personensicht.model.aktionen.Aktion;
 import personensicht.model.gameObjekte.lebewesen.*;
+import personensicht.model.gameObjekte.lebewesen.mensch.Koerper;
 import personensicht.view.gameObjekte.GameObjektV;
 
 
@@ -260,7 +261,7 @@ public abstract class GameObjekt implements SerializableNew
 		case Bett:
 			return new Bett();
 		case Mensch:
-			return new Mensch();
+			return new Koerper();
 		case Tuer:
 			return new Tuer();
 		case Stuhl:

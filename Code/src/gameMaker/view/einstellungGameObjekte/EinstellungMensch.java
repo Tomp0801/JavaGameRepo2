@@ -1,11 +1,11 @@
 package gameMaker.view.einstellungGameObjekte;
 
-import personensicht.model.gameObjekte.lebewesen.Mensch;
+import personensicht.model.gameObjekte.lebewesen.mensch.Koerper;
 
 public class EinstellungMensch extends EinstellungGameObjekt
 {
 
-	public EinstellungMensch(Mensch mensch) 
+	public EinstellungMensch(Koerper mensch) 
 	{
 		super(mensch);
 	}

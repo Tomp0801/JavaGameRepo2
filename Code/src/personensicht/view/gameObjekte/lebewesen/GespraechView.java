@@ -11,8 +11,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import personensicht.model.gameObjekte.lebewesen.AntwortGespraech;
-import personensicht.model.gameObjekte.lebewesen.TextGespraech;
+import personensicht.model.gameObjekte.lebewesen.mensch.AntwortGespraech;
+import personensicht.model.gameObjekte.lebewesen.mensch.TextGespraech;
 
 public class GespraechView
 {

@@ -10,6 +10,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Box;
 import personensicht.model.gameObjekte.*;
 import personensicht.model.gameObjekte.lebewesen.*;
+import personensicht.model.gameObjekte.lebewesen.mensch.Koerper;
 
 public class EventCrt {
 
@@ -90,7 +91,7 @@ public class EventCrt {
 		case Item://TODO
 			break;
 		case Mensch:
-			Mensch mensch = new Mensch("DefaultName");
+			Koerper mensch = new Koerper("DefaultName");
 			einstellungGameObjket = new EinstellungMensch(mensch);
 			break;
 		case Schrank:

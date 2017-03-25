@@ -1,7 +1,7 @@
 package spielctr.controller;
 
 import draufsicht.crt.DraufsichtCtr;
-import personensicht.PersonensichtCtr;
+import personensicht.crt.PersonensichtCtr;
 
 /**
  * Der Boss Kontroller. 
@@ -27,5 +27,13 @@ public class SpielCtr {
 			new SpielCtr();
 		}
 		return instance; 
+	}
+	
+	/**
+	 * Diese Methode startet ein neues Spiel
+	 */
+	public void starteNeuesSpiel(){
+		//erstellte eine Spielwelt
+		//erstelle einen Spieler
 	}
 }

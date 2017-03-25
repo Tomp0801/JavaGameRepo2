@@ -11,7 +11,7 @@ import personensicht.model.aktionen.AktionNehmen;
 import personensicht.model.aktionen.AktionSchlafen;
 import personensicht.model.aktionen.AktionTrinken;
 import personensicht.model.gameObjekte.Inventar;
-import personensicht.model.gameObjekte.lebewesen.GespraechAktion;
+import personensicht.model.gameObjekte.lebewesen.mensch.GespraechAktion;
 import personensicht.model.spieler.Spieler;
 import personensicht.view.gameObjekte.lebewesen.GespraechView;
 import personensicht.view.inventar.InventarView;

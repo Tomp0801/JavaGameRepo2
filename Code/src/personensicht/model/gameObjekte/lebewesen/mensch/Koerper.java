@@ -1,11 +1,17 @@
-package personensicht.model.gameObjekte.lebewesen;
+package personensicht.model.gameObjekte.lebewesen.mensch;
 
 import javafx.scene.Node;
 import personensicht.model.gameObjekte.GameObjekt;
 import personensicht.model.gameObjekte.GameObjektType;
 import personensicht.view.gameObjekte.lebewesen.MenschV;
 
-public class Mensch extends GameObjekt
+/**
+ * Beschreibt einen menschichen Koerper. Groeﬂe, Farbe ect.
+ * 
+ * @author Dennis
+ *
+ */
+public class Koerper extends GameObjekt
 {	
 	/**
 	 * size der Arme. (links, rechts) (x,y,z)
@@ -24,14 +30,14 @@ public class Mensch extends GameObjekt
 	
 	private int radiusKopf = 40; 
 	
-	public Mensch(String name)
+	public Koerper(String name)
 	{
 		super(GameObjektType.Mensch);
 		this.setName(name);
 		initAktionsListe(null);
 	}
 	
-	public Mensch(){
+	public Koerper(){
 		super(GameObjektType.Mensch);
 	}
 	
@@ -40,7 +46,7 @@ public class Mensch extends GameObjekt
 	 * @param name
 	 * @param path der weg zu der Datei, die fuer das Gespraech verwendet wird
 	 */
-	public Mensch(String name, String path)
+	public Koerper(String name, String path)
 	{
 		super(GameObjektType.Mensch);
 		this.setName(name);
